@@ -37,3 +37,4 @@ export const updatePost = (id, formData) =>
 
 export const deletePost = (id) =>
   api.delete(`blog/admin/posts/${id}/`);
+

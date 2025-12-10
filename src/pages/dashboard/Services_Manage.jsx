@@ -17,19 +17,16 @@ export default function Services_Manage() {
     deleteService,
   } = useServicesStore();
 
-  // =========================
-  // AREA STATE
-  // =========================
+  // ========================= AREA STATE =========================
   const [areaForm, setAreaForm] = useState({
     name_ar: "",
     name_en: "",
     slug: "",
+    is_active: true,
   });
   const [editingArea, setEditingArea] = useState(null);
 
-  // =========================
-  // SERVICE STATE
-  // =========================
+  // ========================= SERVICE STATE =========================
   const [serviceForm, setServiceForm] = useState({
     title_ar: "",
     title_en: "",
@@ -37,20 +34,17 @@ export default function Services_Manage() {
     description_en: "",
     area: "",
     is_featured: false,
+    is_active: true,
   });
   const [editingService, setEditingService] = useState(null);
 
-  // =========================
-  // LOAD DATA
-  // =========================
+  // ========================= LOAD DATA =========================
   useEffect(() => {
     fetchAreas();
     fetchServices();
   }, []);
 
-  // =========================
-  // AREA HANDLERS
-  // =========================
+  // ========================= AREA HANDLERS =========================
   const handleAreaSave = async () => {
     if (!areaForm.name_ar.trim())
       return toast.error("Arabic name is required");
@@ -58,17 +52,13 @@ export default function Services_Manage() {
     const payload = {
       name_ar: areaForm.name_ar,
       name_en: areaForm.name_en,
+      slug: areaForm.slug.trim() || undefined,
+      is_active: true,
     };
 
-    if (areaForm.slug.trim()) payload.slug = areaForm.slug;
-
-    let result;
-
-    if (editingArea) {
-      result = await updateArea(editingArea.id, payload);
-    } else {
-      result = await createArea(payload);
-    }
+    let result = editingArea
+      ? await updateArea(editingArea.id, payload)
+      : await createArea(payload);
 
     if (result.success) {
       toast.success("Area saved successfully");
@@ -76,7 +66,6 @@ export default function Services_Manage() {
       setEditingArea(null);
     } else {
       toast.error("Error saving area");
-      console.error(result.message);
     }
   };
 
@@ -96,9 +85,7 @@ export default function Services_Manage() {
     else toast.error("Error deleting area");
   };
 
-  // =========================
-  // SERVICE HANDLERS
-  // =========================
+  // ========================= SERVICE HANDLERS =========================
   const handleServiceChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -117,26 +104,17 @@ export default function Services_Manage() {
       title_en: serviceForm.title_en,
       description_ar: serviceForm.description_ar,
       description_en: serviceForm.description_en,
-
-      // IMPORTANT — send null instead of empty string
-      area: serviceForm.area === "" ? null : serviceForm.area,
-
+      practice_area: serviceForm.area || null,
       is_featured: serviceForm.is_featured,
+      is_active: true,
     };
 
-    let result;
-
-    if (editingService) {
-      result = await updateService(editingService.id, payload);
-    } else {
-      result = await createService(payload);
-    }
+    let result = editingService
+      ? await updateService(editingService.id, payload)
+      : await createService(payload);
 
     if (result.success) {
-      toast.success(
-        editingService ? "Service updated" : "Service created"
-      );
-
+      toast.success(editingService ? "Service updated" : "Service created");
       setEditingService(null);
       setServiceForm({
         title_ar: "",
@@ -148,7 +126,6 @@ export default function Services_Manage() {
       });
     } else {
       toast.error("Error saving service");
-      console.error(result.message);
     }
   };
 
@@ -156,19 +133,19 @@ export default function Services_Manage() {
     const areaId =
       service.practice_area ||
       service.practice_area_id ||
-      service.area ||
       service.area_data?.id ||
       "";
 
     setEditingService(service);
 
     setServiceForm({
-      title_ar: service.title_ar || "",
-      title_en: service.title_en || "",
-      description_ar: service.description_ar || "",
-      description_en: service.description_en || "",
+      title_ar: service.title_ar,
+      title_en: service.title_en,
+      description_ar: service.description_ar,
+      description_en: service.description_en,
       area: areaId,
       is_featured: !!service.is_featured,
+      is_active: true,
     });
   };
 
@@ -179,9 +156,7 @@ export default function Services_Manage() {
     else toast.error("Error deleting service");
   };
 
-  // =========================
-  // UI
-  // =========================
+  // ========================= UI =========================
   return (
     <div style={{ padding: 20 }}>
       <h1>Services Management</h1>
@@ -201,18 +176,18 @@ export default function Services_Manage() {
           <input
             placeholder="Name EN"
             value={areaForm.name_en}
-            style={{ marginLeft: 8 }}
             onChange={(e) =>
               setAreaForm({ ...areaForm, name_en: e.target.value })
             }
+            style={{ marginLeft: 8 }}
           />
           <input
             placeholder="Slug (optional)"
             value={areaForm.slug}
-            style={{ marginLeft: 8 }}
             onChange={(e) =>
               setAreaForm({ ...areaForm, slug: e.target.value })
             }
+            style={{ marginLeft: 8 }}
           />
 
           <button onClick={handleAreaSave} style={{ marginLeft: 8 }}>
@@ -220,7 +195,7 @@ export default function Services_Manage() {
           </button>
         </div>
 
-        <table border={1} cellPadding={8} width="100%">
+        <table border={1} width="100%" cellPadding={8}>
           <thead>
             <tr>
               <th>ID</th>
@@ -230,7 +205,6 @@ export default function Services_Manage() {
               <th>Actions</th>
             </tr>
           </thead>
-
           <tbody>
             {areas.map((a) => (
               <tr key={a.id}>
@@ -246,7 +220,6 @@ export default function Services_Manage() {
                 </td>
               </tr>
             ))}
-
             {areas.length === 0 && (
               <tr>
                 <td colSpan={5}>No areas yet.</td>
@@ -270,9 +243,9 @@ export default function Services_Manage() {
           <input
             placeholder="Title EN"
             name="title_en"
-            style={{ marginLeft: 8 }}
             value={serviceForm.title_en}
             onChange={handleServiceChange}
+            style={{ marginLeft: 8 }}
           />
         </div>
 
@@ -325,12 +298,7 @@ export default function Services_Manage() {
           {editingService ? "Update Service" : "Create Service"}
         </button>
 
-        <table
-          border={1}
-          cellPadding={8}
-          width="100%"
-          style={{ marginTop: 20 }}
-        >
+        <table border={1} width="100%" cellPadding={8} style={{ marginTop: 20 }}>
           <thead>
             <tr>
               <th>ID</th>
@@ -342,29 +310,20 @@ export default function Services_Manage() {
           </thead>
 
           <tbody>
-            {services.map((s) => {
-              const areaName =
-                s.area_data?.name_ar ||
-                s.practice_area?.name_ar ||
-                s.area?.name_ar ||
-                "";
-
-              return (
-                <tr key={s.id}>
-                  <td>{s.id}</td>
-                  <td>{s.title_ar}</td>
-                  <td>{areaName}</td>
-                  <td>{s.is_featured ? "Yes" : "No"}</td>
-                  <td>
-                    <button onClick={() => handleServiceEdit(s)}>Edit</button>
-                    <button onClick={() => handleServiceDelete(s.id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-
+            {services.map((s) => (
+              <tr key={s.id}>
+                <td>{s.id}</td>
+                <td>{s.title_ar}</td>
+                <td>{s.area_data?.name_ar || ""}</td>
+                <td>{s.is_featured ? "Yes" : "No"}</td>
+                <td>
+                  <button onClick={() => handleServiceEdit(s)}>Edit</button>
+                  <button onClick={() => handleServiceDelete(s.id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
             {services.length === 0 && (
               <tr>
                 <td colSpan={5}>No services yet.</td>

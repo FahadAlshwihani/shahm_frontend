@@ -1,10 +1,11 @@
-// src/router/AppRouter.jsx
+import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 // Public pages
 import Home from "../pages/public/Home";
 import Services from "../pages/public/Services";
+import AreaDetails from "../pages/public/AreaDetails";   // ✅ NEW
 import Team from "../pages/public/Team";
 import Blog from "../pages/public/Blog";
 import BlogDetails from "../pages/public/BlogDetails";
@@ -35,24 +36,26 @@ import EmailTemplates from "../pages/dashboard/EmailTemplates";
 import CMS_Header from "../pages/dashboard/CMS_Header";
 import CMS_Footer from "../pages/dashboard/CMS_Footer";
 
-
 export default function AppRouter() {
   return (
     <Routes>
 
-      {/* Public */}
+      {/* ---------------- Public ---------------- */}
       <Route path="/" element={<Home />} />
+
       <Route path="/services" element={<Services />} />
+      <Route path="/services/:slug" element={<AreaDetails />} /> {/* ✅ NEW */}
+
       <Route path="/team" element={<Team />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogDetails />} />
       <Route path="/legal/:slug" element={<LegalPage />} />
       <Route path="/page/:slug" element={<Page />} />
 
-      {/* Auth */}
+      {/* ---------------- Auth ---------------- */}
       <Route path="/login" element={<Login />} />
 
-      {/* Dashboard Home */}
+      {/* ---------------- Dashboard ---------------- */}
       <Route
         path="/dashboard"
         element={
@@ -71,6 +74,7 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/dashboard/users/create"
         element={
@@ -79,6 +83,7 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/dashboard/users/:id"
         element={
@@ -97,6 +102,7 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/dashboard/cms/pages"
         element={
@@ -126,7 +132,7 @@ export default function AppRouter() {
         }
       />
 
-      {/* Messages Dashboard */}
+      {/* Messages */}
       <Route
         path="/dashboard/messages"
         element={
@@ -136,7 +142,6 @@ export default function AppRouter() {
         }
       />
 
-      {/* Single Message */}
       <Route
         path="/dashboard/messages/:id"
         element={
@@ -176,7 +181,7 @@ export default function AppRouter() {
         }
       />
 
-      {/* Mail Settings */}
+      {/* Email */}
       <Route
         path="/dashboard/email-settings"
         element={
@@ -186,7 +191,6 @@ export default function AppRouter() {
         }
       />
 
-      {/* Email Templates */}
       <Route
         path="/dashboard/email-templates"
         element={
@@ -196,7 +200,7 @@ export default function AppRouter() {
         }
       />
 
-      {/* CMS HEADER */}
+      {/* CMS Header */}
       <Route
         path="/dashboard/cms/header"
         element={
@@ -206,7 +210,7 @@ export default function AppRouter() {
         }
       />
 
-      {/* CMS FOOTER */}
+      {/* CMS Footer */}
       <Route
         path="/dashboard/cms/footer"
         element={
@@ -215,7 +219,6 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
-
 
     </Routes>
   );

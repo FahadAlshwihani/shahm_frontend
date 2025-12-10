@@ -7,6 +7,12 @@ import {
   adminCreateHero,
   adminEditHero,
   adminDeleteHero,
+
+  adminGetHeroMedia,
+  adminCreateHeroMedia,
+  adminEditHeroMedia,
+  adminDeleteHeroMedia,
+
   adminPages,
   adminCreatePage,
   adminEditPage,
@@ -14,36 +20,35 @@ import {
 } from "../api/cmsApi";
 
 export const useCmsStore = create((set, get) => ({
-  // Public
+  // ==========================
+  // PUBLIC DATA
+  // ==========================
   hero: null,
-  footer: null,
+  footer: [],
 
-  // Heroes
+  // ==========================
+  // FETCH PUBLIC HOME
+  // ==========================
+fetchPublicHome: async () => {
+  try {
+    const res = await getPublicHome();
+    set({
+      hero: res.data.hero || null,
+      footer: res.data.footer_columns || [],
+    });
+  } catch (err) {
+    console.error("Public Home Error:", err);
+  }
+},
+
+
+  // ==========================
+  // HEROES (ADMIN)
+  // ==========================
   heroes: [],
   loadingHeroes: false,
+  heroMedia: [],
 
-  // Pages
-  pages: [],
-  loadingPages: false,
-
-  // ================================
-  // PUBLIC HOME
-  // ================================
-  fetchPublicHome: async () => {
-    try {
-      const res = await getPublicHome();
-      set({
-        hero: res.data.hero || null,
-        footer: res.data.footer_columns || [],
-      });
-    } catch (err) {
-      console.error("Public Home Error:", err);
-    }
-  },
-
-  // ================================
-  // ADMIN: HEROES
-  // ================================
   fetchAdminHeroes: async () => {
     try {
       set({ loadingHeroes: true });
@@ -54,76 +59,75 @@ export const useCmsStore = create((set, get) => ({
     }
   },
 
-  createHero: async (formData) => {
-    try {
-      await adminCreateHero(formData);
-      await get().fetchAdminHeroes();
-      return { success: true };
-    } catch (err) {
-      return { success: false };
-    }
+  createHero: async (data) => {
+    await adminCreateHero(data);
+    await get().fetchAdminHeroes();
+    return { success: true };
   },
 
-  updateHero: async (id, formData) => {
-    try {
-      await adminEditHero(id, formData);
-      await get().fetchAdminHeroes();
-      return { success: true };
-    } catch {
-      return { success: false };
-    }
+  updateHero: async (id, data) => {
+    await adminEditHero(id, data);
+    await get().fetchAdminHeroes();
+    return { success: true };
   },
 
   deleteHero: async (id) => {
-    try {
-      await adminDeleteHero(id);
-      await get().fetchAdminHeroes();
-      return { success: true };
-    } catch {
-      return { success: false };
-    }
+    await adminDeleteHero(id);
+    await get().fetchAdminHeroes();
+    return { success: true };
   },
 
-  // ================================
-  // ADMIN: PAGES
-  // ================================
+  // ==========================
+  // HERO MEDIA
+  // ==========================
+  fetchAdminHeroMedia: async (heroId) => {
+    const res = await adminGetHeroMedia(heroId);
+    set({ heroMedia: res.data });
+  },
+
+  createHeroMedia: async (heroId, fd) => {
+    await adminCreateHeroMedia(heroId, fd);
+    await get().fetchAdminHeroMedia(heroId);
+    return { success: true };
+  },
+
+  updateHeroMedia: async (id, fd, heroId) => {
+    await adminEditHeroMedia(id, fd);
+    await get().fetchAdminHeroMedia(heroId);
+    return { success: true };
+  },
+
+  deleteHeroMedia: async (id, heroId) => {
+    await adminDeleteHeroMedia(id);
+    await get().fetchAdminHeroMedia(heroId);
+    return { success: true };
+  },
+
+  // ==========================
+  // PAGES (ADMIN)
+  // ==========================
+  pages: [],
+
   fetchAdminPages: async () => {
-    try {
-      set({ loadingPages: true });
-      const res = await adminPages();
-      set({ pages: res.data, loadingPages: false });
-    } catch {
-      set({ loadingPages: false });
-    }
+    const res = await adminPages();
+    set({ pages: res.data });
   },
 
   createPage: async (data) => {
-    try {
-      await adminCreatePage(data);
-      await get().fetchAdminPages();
-      return { success: true };
-    } catch {
-      return { success: false };
-    }
+    await adminCreatePage(data);
+    await get().fetchAdminPages();
+    return { success: true };
   },
 
   updatePage: async (id, data) => {
-    try {
-      await adminEditPage(id, data);
-      await get().fetchAdminPages();
-      return { success: true };
-    } catch {
-      return { success: false };
-    }
+    await adminEditPage(id, data);
+    await get().fetchAdminPages();
+    return { success: true };
   },
 
   deletePage: async (id) => {
-    try {
-      await adminDeletePage(id);
-      await get().fetchAdminPages();
-      return { success: true };
-    } catch {
-      return { success: false };
-    }
+    await adminDeletePage(id);
+    await get().fetchAdminPages();
+    return { success: true };
   },
 }));

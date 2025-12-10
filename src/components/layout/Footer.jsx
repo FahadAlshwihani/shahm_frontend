@@ -29,11 +29,9 @@ export default function Footer() {
 
   return (
     <footer style={{ padding: "40px", background: "#f8f8f8" }}>
-
       <div style={{ display: "flex", gap: "40px", flexWrap: "wrap" }}>
         {columns.map((col) => (
           <div key={col.id} style={{ minWidth: "220px" }}>
-
             <h3>{col.title_ar}</h3>
 
             {/* Newsletter Form */}
@@ -54,32 +52,32 @@ export default function Footer() {
               <ul>
                 {col.links.map((lnk) => (
                   <li key={lnk.id}>
-                    <a href={lnk.url}>{lnk.label_ar}</a>
+                    {lnk.is_coming_soon ? (
+                      // رمادي وبدون رابط
+                      <span style={{ color: "#999" }}>{lnk.label_ar}</span>
+                    ) : (
+                      <a href={lnk.url}>{lnk.label_ar}</a>
+                    )}
                   </li>
                 ))}
               </ul>
             )}
-
           </div>
         ))}
       </div>
 
-      {/* -------------------------------- */}
-      {/*  Country / Language */}
-      {/* -------------------------------- */}
+      {/* Country / Language */}
       {settings && (
         <div style={{ marginTop: "20px", textAlign: "center" }}>
-          {settings.country} — ({settings.locale === "ar" ? "العربية" : "EN"})
+          {settings.country} — (
+          {settings.locale === "ar" ? "العربية" : "EN"})
         </div>
       )}
 
-      {/* -------------------------------- */}
-      {/*  COPYRIGHT */}
-      {/* -------------------------------- */}
+      {/* COPYRIGHT */}
       <p style={{ marginTop: "20px", textAlign: "center" }}>
         © {year} — مكتب شهم للمحاماة
       </p>
-
     </footer>
   );
 }

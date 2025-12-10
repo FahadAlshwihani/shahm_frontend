@@ -21,6 +21,7 @@ export default function CMS_Pages() {
     slug: "",
     content_ar: "",
     content_en: "",
+    page_status: "active",
     is_published: true,
   });
 
@@ -29,7 +30,11 @@ export default function CMS_Pages() {
   }, []);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setForm({
+      ...form,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const resetForm = () => {
@@ -40,6 +45,7 @@ export default function CMS_Pages() {
       slug: "",
       content_ar: "",
       content_en: "",
+      page_status: "active",
       is_published: true,
     });
   };
@@ -65,6 +71,7 @@ export default function CMS_Pages() {
       slug: p.slug,
       content_ar: p.content_ar,
       content_en: p.content_en,
+      page_status: p.page_status || "active",
       is_published: p.is_published,
     });
   };
@@ -77,13 +84,28 @@ export default function CMS_Pages() {
       <form onSubmit={handleSubmit} style={{ marginBottom: 40 }}>
         <h3>{edit ? "Edit Page" : "Create New Page"}</h3>
 
-        <input name="title_ar" placeholder="Title AR" value={form.title_ar} onChange={handleChange} />
+        <input
+          name="title_ar"
+          placeholder="Title AR"
+          value={form.title_ar}
+          onChange={handleChange}
+        />
         <br />
 
-        <input name="title_en" placeholder="Title EN" value={form.title_en} onChange={handleChange} />
+        <input
+          name="title_en"
+          placeholder="Title EN"
+          value={form.title_en}
+          onChange={handleChange}
+        />
         <br />
 
-        <input name="slug" placeholder="Slug" value={form.slug} onChange={handleChange} />
+        <input
+          name="slug"
+          placeholder="Slug"
+          value={form.slug}
+          onChange={handleChange}
+        />
         <br />
 
         <textarea
@@ -106,12 +128,41 @@ export default function CMS_Pages() {
         />
         <br />
 
+        {/* حالة الصفحة: نشطة أو قيد التطوير */}
+        <label>
+          Page Status{" "}
+          <select
+            name="page_status"
+            value={form.page_status}
+            onChange={handleChange}
+          >
+            <option value="active">نشطة</option>
+            <option value="coming_soon">قيد التطوير</option>
+          </select>
+        </label>
+        <br />
+
+        <label>
+          Published{" "}
+          <input
+            type="checkbox"
+            name="is_published"
+            checked={form.is_published}
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+
         <button type="submit">
           {loadingPages ? "Saving..." : edit ? "Update" : "Create"}
         </button>
 
         {edit && (
-          <button type="button" onClick={resetForm} style={{ marginLeft: 10 }}>
+          <button
+            type="button"
+            onClick={resetForm}
+            style={{ marginLeft: 10 }}
+          >
             Cancel
           </button>
         )}
@@ -125,6 +176,7 @@ export default function CMS_Pages() {
             <th>ID</th>
             <th>Slug</th>
             <th>Title AR</th>
+            <th>Status</th>
             <th>Published</th>
             <th>Actions</th>
           </tr>
@@ -136,6 +188,9 @@ export default function CMS_Pages() {
               <td>{p.id}</td>
               <td>{p.slug}</td>
               <td>{p.title_ar}</td>
+              <td>
+                {p.page_status === "coming_soon" ? "قيد التطوير" : "نشطة"}
+              </td>
               <td>{p.is_published ? "Yes" : "No"}</td>
 
               <td>

@@ -5,12 +5,16 @@ import {
   adminUpdateMessage,
   adminGetSubscribers,
   adminBroadcast,
+  adminDeleteSubscriber,
+  adminGetBroadcastLogs,
+  adminExportSubscribers,
 } from "../api/messagesApi";
 
 export const useMessagesStore = create((set) => ({
   messages: [],
   subscribers: [],
   selectedMessage: null,
+  broadcastLogs: [],
 
   // تحميل جميع الرسائل
   loadMessages: async () => {
@@ -22,6 +26,26 @@ export const useMessagesStore = create((set) => ({
   loadSubscribers: async () => {
     const res = await adminGetSubscribers();
     set({ subscribers: res.data });
+  },
+
+  // حذف مشترك من النشرة
+  deleteSubscriber: async (id) => {
+    await adminDeleteSubscriber(id);
+    const res = await adminGetSubscribers();
+    set({ subscribers: res.data });
+    return { success: true };
+  },
+
+  // تحميل سجل الرسائل المرسلة
+  loadBroadcastLogs: async () => {
+    const res = await adminGetBroadcastLogs();
+    set({ broadcastLogs: res.data });
+  },
+
+  // تصدير المشتركين (نعيد الـ response للـ component عشان يعمل download)
+  exportSubscribers: async () => {
+    const res = await adminExportSubscribers();
+    return res;
   },
 
   // إرسال بريد جماعي

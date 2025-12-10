@@ -1,4 +1,3 @@
-// src/pages/dashboard/Blog_Manage.jsx
 import React, { useEffect, useState } from "react";
 import { useBlogStore } from "../../store/useBlogStore";
 import toast from "react-hot-toast";
@@ -25,9 +24,9 @@ export default function Blog_Manage() {
     deletePost,
   } = useBlogStore();
 
-  // =========================================
-  // STATES — Categories
-  // =========================================
+  /* ======================================================
+     CATEGORY STATES
+  ====================================================== */
   const [catForm, setCatForm] = useState({
     name_ar: "",
     name_en: "",
@@ -35,9 +34,9 @@ export default function Blog_Manage() {
   });
   const [editingCat, setEditingCat] = useState(null);
 
-  // =========================================
-  // STATES — Tags
-  // =========================================
+  /* ======================================================
+     TAG STATES
+  ====================================================== */
   const [tagForm, setTagForm] = useState({
     name_ar: "",
     name_en: "",
@@ -45,9 +44,9 @@ export default function Blog_Manage() {
   });
   const [editingTag, setEditingTag] = useState(null);
 
-  // =========================================
-  // STATES — Posts
-  // =========================================
+  /* ======================================================
+     POST STATES
+  ====================================================== */
   const [postForm, setPostForm] = useState({
     title_ar: "",
     title_en: "",
@@ -55,22 +54,24 @@ export default function Blog_Manage() {
     content_en: "",
     category: "",
     tags: [],
+    cover_image: null,
     image: null,
   });
+
   const [editPost, setEditPost] = useState(null);
 
-  // =========================================
-  // LOAD DATA ON MOUNT
-  // =========================================
+  /* ======================================================
+     LOAD DATA
+  ====================================================== */
   useEffect(() => {
     fetchCategories();
     fetchTags();
     fetchPosts();
   }, []);
 
-  // =========================================
-  // CATEGORY HANDLERS
-  // =========================================
+  /* ======================================================
+     CATEGORY HANDLERS
+  ====================================================== */
   const saveCategory = async () => {
     if (!catForm.name_ar.trim())
       return toast.error("Category AR is required");
@@ -82,16 +83,12 @@ export default function Blog_Manage() {
 
     if (catForm.slug.trim()) payload.slug = catForm.slug;
 
-    let result;
-
-    if (editingCat) {
-      result = await updateCategory(editingCat.id, payload);
-    } else {
-      result = await createCategory(payload);
-    }
+    let result = editingCat
+      ? await updateCategory(editingCat.id, payload)
+      : await createCategory(payload);
 
     if (result.success) toast.success("Category saved successfully");
-    else toast.error("Error creating/updating category");
+    else toast.error("Error while saving");
 
     setEditingCat(null);
     setCatForm({ name_ar: "", name_en: "", slug: "" });
@@ -106,11 +103,11 @@ export default function Blog_Manage() {
     });
   };
 
-  // =========================================
-  // TAG HANDLERS
-  // =========================================
+  /* ======================================================
+     TAG HANDLERS
+  ====================================================== */
   const saveTag = async () => {
-    if (!tagForm.name_ar.trim()) return toast.error("Tag AR required");
+    if (!tagForm.name_ar.trim()) return toast.error("Tag AR is required");
 
     let payload = {
       name_ar: tagForm.name_ar,
@@ -119,16 +116,12 @@ export default function Blog_Manage() {
 
     if (tagForm.slug.trim()) payload.slug = tagForm.slug;
 
-    let result;
-
-    if (editingTag) {
-      result = await updateTag(editingTag.id, payload);
-    } else {
-      result = await createTag(payload);
-    }
+    let result = editingTag
+      ? await updateTag(editingTag.id, payload)
+      : await createTag(payload);
 
     if (result.success) toast.success("Tag saved successfully");
-    else toast.error("Error creating/updating tag");
+    else toast.error("Error saving tag");
 
     setEditingTag(null);
     setTagForm({ name_ar: "", name_en: "", slug: "" });
@@ -143,26 +136,9 @@ export default function Blog_Manage() {
     });
   };
 
-  // =========================================
-  // LOAD POST INTO FORM (FIX)
-  // =========================================
-  const loadPostIntoForm = (post) => {
-    setPostForm({
-      title_ar: post.title_ar || "",
-      title_en: post.title_en || "",
-      content_ar: post.content_ar || "",
-      content_en: post.content_en || "",
-      category: post.category || post.category_data?.id || "",
-      tags: post.tags ? post.tags.map((t) => t.id) : [],
-      image: null,
-    });
-
-    setEditPost(post);
-  };
-
-  // =========================================
-  // POST HANDLERS
-  // =========================================
+  /* ======================================================
+     POST FORM HANDLERS
+  ====================================================== */
   const handlePostChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -181,18 +157,40 @@ export default function Blog_Manage() {
     }));
   };
 
+  const loadPostIntoForm = (post) => {
+    setPostForm({
+      title_ar: post.title_ar,
+      title_en: post.title_en,
+      content_ar: post.content_ar,
+      content_en: post.content_en,
+      category: post.category || post.category_data?.id || "",
+      tags: post.tags ? post.tags.map((t) => t.id) : [],
+      cover_image: null,
+      image: null,
+    });
+
+    setEditPost(post);
+  };
+
+  /* ======================================================
+     SAVE POST (CREATE / UPDATE)
+  ====================================================== */
   const savePost = async () => {
     const fd = new FormData();
 
     Object.entries(postForm).forEach(([key, value]) => {
       if (key === "tags") {
         value.forEach((tagId) => fd.append("tag_ids", tagId));
-      } else {
+      } else if (value) {
         fd.append(key, value);
       }
     });
 
+    // 🔥 Force publish every post
+    fd.append("status", "published");
+
     let result;
+
     if (editPost) {
       result = await updatePost(editPost.id, fd);
       if (result.success) toast.success("Post updated successfully");
@@ -204,6 +202,7 @@ export default function Blog_Manage() {
     }
 
     setEditPost(null);
+
     setPostForm({
       title_ar: "",
       title_en: "",
@@ -211,21 +210,21 @@ export default function Blog_Manage() {
       content_en: "",
       category: "",
       tags: [],
+      cover_image: null,
       image: null,
     });
   };
 
-  // =========================================
-  // UI
-  // =========================================
+  /* ======================================================
+     UI
+  ====================================================== */
   return (
     <div style={{ padding: 20 }}>
       <h1>Blog Management</h1>
 
-      {/* ===================================================== */}
-      {/* ====================== CATEGORIES ==================== */}
-      {/* ===================================================== */}
-
+      {/* =====================================================
+          CATEGORIES
+      ===================================================== */}
       <h2>Categories</h2>
 
       <input
@@ -245,19 +244,16 @@ export default function Blog_Manage() {
       <input
         placeholder="Slug (optional)"
         value={catForm.slug}
-        onChange={(e) => setCatForm({ ...catForm, slug: e.target.value })}
+        onChange={(e) =>
+          setCatForm({ ...catForm, slug: e.target.value })
+        }
       />
 
       <button onClick={saveCategory}>
         {editingCat ? "Update Category" : "Create Category"}
       </button>
 
-      <table
-        border={1}
-        width="100%"
-        cellPadding={10}
-        style={{ marginTop: 10 }}
-      >
+      <table border={1} width="100%" cellPadding={10} style={{ marginTop: 10 }}>
         <tbody>
           {categories.map((c) => (
             <tr key={c.id}>
@@ -265,12 +261,8 @@ export default function Blog_Manage() {
               <td>{c.name_en}</td>
               <td>{c.slug}</td>
               <td>
-                <button onClick={() => editCategoryHandler(c)}>
-                  Edit
-                </button>
-                <button onClick={() => deleteCategory(c.id)}>
-                  Delete
-                </button>
+                <button onClick={() => editCategoryHandler(c)}>Edit</button>
+                <button onClick={() => deleteCategory(c.id)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -279,10 +271,9 @@ export default function Blog_Manage() {
 
       <hr />
 
-      {/* ===================================================== */}
-      {/* ======================== TAGS ======================== */}
-      {/* ===================================================== */}
-
+      {/* =====================================================
+          TAGS
+      ===================================================== */}
       <h2>Tags</h2>
 
       <input
@@ -302,19 +293,16 @@ export default function Blog_Manage() {
       <input
         placeholder="Slug (optional)"
         value={tagForm.slug}
-        onChange={(e) => setTagForm({ ...tagForm, slug: e.target.value })}
+        onChange={(e) =>
+          setTagForm({ ...tagForm, slug: e.target.value })
+        }
       />
 
       <button onClick={saveTag}>
         {editingTag ? "Update Tag" : "Create Tag"}
       </button>
 
-      <table
-        border={1}
-        width="100%"
-        cellPadding={10}
-        style={{ marginTop: 10 }}
-      >
+      <table border={1} width="100%" cellPadding={10} style={{ marginTop: 10 }}>
         <tbody>
           {tags.map((t) => (
             <tr key={t.id}>
@@ -332,10 +320,9 @@ export default function Blog_Manage() {
 
       <hr />
 
-      {/* ===================================================== */}
-      {/* ======================== POSTS ======================= */}
-      {/* ===================================================== */}
-
+      {/* =====================================================
+          POSTS
+      ===================================================== */}
       <h2>Blog Posts</h2>
 
       <input
@@ -344,7 +331,6 @@ export default function Blog_Manage() {
         value={postForm.title_ar}
         onChange={handlePostChange}
       />
-      <br />
 
       <input
         placeholder="Title EN"
@@ -352,7 +338,6 @@ export default function Blog_Manage() {
         value={postForm.title_en}
         onChange={handlePostChange}
       />
-      <br />
 
       <textarea
         placeholder="Content AR"
@@ -360,7 +345,6 @@ export default function Blog_Manage() {
         value={postForm.content_ar}
         onChange={handlePostChange}
       />
-      <br />
 
       <textarea
         placeholder="Content EN"
@@ -368,7 +352,6 @@ export default function Blog_Manage() {
         value={postForm.content_en}
         onChange={handlePostChange}
       />
-      <br />
 
       {/* Category */}
       <select
@@ -398,19 +381,20 @@ export default function Blog_Manage() {
         ))}
       </div>
 
-      {/* Cover image */}
+      {/* Cover Image */}
+      <p style={{ marginTop: 10 }}>Cover Image:</p>
+      <input type="file" name="cover_image" onChange={handlePostChange} />
+
+      {/* Article Image */}
+      <p>Internal Image:</p>
       <input type="file" name="image" onChange={handlePostChange} />
 
       <button onClick={savePost} style={{ marginTop: 10 }}>
         {editPost ? "Update Post" : "Create Post"}
       </button>
 
-      <table
-        border={1}
-        width="100%"
-        cellPadding={10}
-        style={{ marginTop: 20 }}
-      >
+      {/* TABLE */}
+      <table border={1} width="100%" cellPadding={10} style={{ marginTop: 20 }}>
         <thead>
           <tr>
             <th>ID</th>
@@ -433,9 +417,7 @@ export default function Blog_Manage() {
                 )}
               </td>
               <td>
-                <button onClick={() => loadPostIntoForm(p)}>
-                  Edit
-                </button>
+                <button onClick={() => loadPostIntoForm(p)}>Edit</button>
                 <button
                   onClick={() =>
                     window.confirm("Delete this post?") &&

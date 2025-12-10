@@ -13,8 +13,8 @@ import {
 
 export const useServicesStore = create((set, get) => ({
 
-  // ========== AREAS ==========
   areas: [],
+  services: [],
 
   fetchAreas: async () => {
     const res = await getAreas();
@@ -50,9 +50,6 @@ export const useServicesStore = create((set, get) => ({
       return { success: false };
     }
   },
-
-  // ========== SERVICES ==========
-  services: [],
 
   fetchServices: async () => {
     const res = await getServices();

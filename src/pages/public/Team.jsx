@@ -1,6 +1,8 @@
 // src/pages/public/Team.jsx
+
 import React, { useEffect, useState } from "react";
-import { getPublicTeam, getPublicSEO } from "../../api/publicApi";
+import { getPublicTeam } from "../../api/teamApi";
+import { getPublicSEO } from "../../api/publicApi";
 import { Helmet } from "react-helmet";
 
 export default function Team() {
@@ -8,11 +10,11 @@ export default function Team() {
   const [seo, setSEO] = useState(null);
 
   useEffect(() => {
-    load();
+    loadTeam();
     loadSEO();
   }, []);
 
-  async function load() {
+  async function loadTeam() {
     const res = await getPublicTeam();
     setTeam(res.data || []);
   }
@@ -32,13 +34,22 @@ export default function Team() {
 
       <h1>فريق العمل</h1>
 
-      {!team.length && <p>لا يوجد أعضاء.</p>}
+      {!team.length && <p>لا يوجد أعضاء حالياً.</p>}
 
       {team.map((m) => (
         <div key={m.id} style={{ marginBottom: 20 }}>
           <h2>{m.name_ar}</h2>
           <p>{m.job_title_ar}</p>
           <p>{m.bio_ar}</p>
+
+          {m.profile_image_url && (
+            <img
+              src={m.profile_image_url}
+              alt={m.name_ar}
+              width={100}
+              style={{ borderRadius: 6, marginTop: 8 }}
+            />
+          )}
         </div>
       ))}
     </div>

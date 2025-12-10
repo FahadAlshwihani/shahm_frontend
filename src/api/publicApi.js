@@ -1,4 +1,3 @@
-// src/api/publicApi.js
 import api from "./axiosClient";
 
 // ================================
@@ -28,12 +27,13 @@ export const getPublicBlog = () => api.get("public/blog/");
 export const getPublicBlogPost = (slug) => api.get(`public/blog/${slug}/`);
 
 // ================================
-// SERVICES
+// SERVICES  ✅ FIXED
 // ================================
-export const getPublicServices = () => api.get("public/services/");
+export const getPublicServices = () => api.get("services/public/");
+export const getPublicServiceArea = (slug) => api.get(`services/public/${slug}/`);
 
 // ================================
-// SEO (Default + Page SEO)
+// SEO
 // ================================
 export const getPublicSEO = (slug = null) =>
   slug ? api.get(`public/seo/${slug}/`) : api.get("public/seo/");
@@ -41,4 +41,3 @@ export const getPublicSEO = (slug = null) =>
 export const getPublicHeader = () => api.get("public/header/");
 export const getPublicFooter = () => api.get("public/footer/");
 export const getPublicSettings = () => api.get("public/settings/");
-
