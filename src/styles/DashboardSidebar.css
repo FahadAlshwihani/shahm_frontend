@@ -1,0 +1,291 @@
+/* ================= DASHBOARD SIDEBAR ================= */
+.sh-dashboard-sidebar {
+  width: 280px;
+  background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+  border-right: 1px solid #1a1a1a;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Scrollbar */
+.sh-dashboard-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sh-dashboard-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sh-dashboard-sidebar::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 2px;
+}
+
+.sh-dashboard-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* ================= BRAND ================= */
+.sh-dashboard-sidebar-brand {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 0 4px;
+}
+
+.sh-dashboard-sidebar-brand span {
+  display: block;
+  font-size: 11px;
+  opacity: 0.5;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+  background: none;
+  -webkit-text-fill-color: #666666;
+}
+
+/* ================= NAVIGATION ================= */
+.sh-dashboard-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sh-dashboard-nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sh-dashboard-nav-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: #666666;
+  margin-bottom: 12px;
+  padding: 0 12px;
+}
+
+/* ================= NAVIGATION LINKS ================= */
+.sh-dashboard-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #b3b3b3;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sh-dashboard-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: #ffffff;
+  border-radius: 0 2px 2px 0;
+  transition: height 0.2s ease;
+}
+
+.sh-dashboard-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.sh-dashboard-link:hover::before {
+  height: 20px;
+}
+
+.sh-dashboard-link.active {
+  background: #ffffff;
+  color: #000000;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+.sh-dashboard-link.active::before {
+  display: none;
+}
+
+/* ================= LOGOUT BUTTON ================= */
+.sh-dashboard-logout {
+  margin-top: 24px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sh-dashboard-logout::before {
+  content: '←';
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.sh-dashboard-logout:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.sh-dashboard-logout:hover::before {
+  transform: translateX(-3px);
+}
+
+.sh-dashboard-logout:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet and below (1024px) - Sidebar becomes overlay */
+@media (max-width: 1024px) {
+  .sh-dashboard-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .sh-dashboard-sidebar.active {
+    transform: translateX(0);
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .sh-dashboard-sidebar {
+    width: 280px;
+    padding: 24px 16px;
+  }
+
+  .sh-dashboard-sidebar-brand {
+    font-size: 22px;
+    margin-bottom: 32px;
+  }
+
+  .sh-dashboard-nav {
+    gap: 24px;
+  }
+}
+
+/* Mobile (640px) */
+@media (max-width: 640px) {
+  .sh-dashboard-sidebar {
+    width: 85%;
+    max-width: 320px;
+  }
+}
+
+/* Small Mobile (480px) */
+@media (max-width: 480px) {
+  .sh-dashboard-sidebar {
+    width: 90%;
+    padding: 20px 12px;
+  }
+
+  .sh-dashboard-sidebar-brand {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  .sh-dashboard-nav {
+    gap: 20px;
+  }
+
+  .sh-dashboard-nav-title {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  .sh-dashboard-link {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .sh-dashboard-logout {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
+
+/* ================= ACCESSIBILITY ================= */
+.sh-dashboard-link:focus-visible,
+.sh-dashboard-logout:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.sh-dashboard-nav-section {
+  animation: slideIn 0.3s ease forwards;
+}
+
+.sh-dashboard-nav-section:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.sh-dashboard-nav-section:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.sh-dashboard-nav-section:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.sh-dashboard-nav-section:nth-child(4) {
+  animation-delay: 0.2s;
+}

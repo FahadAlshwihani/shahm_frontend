@@ -1,0 +1,102 @@
+/* ================= DASHBOARD ROOT ================= */
+.sh-dashboard-root {
+  display: flex;
+  min-height: 100vh;
+  background: #000000;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Noto Kufi Arabic', sans-serif;
+  position: relative;
+}
+
+/* ================= MAIN CONTENT AREA ================= */
+.sh-dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevents overflow issues */
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sh-dashboard-content {
+  flex: 1;
+  padding: 32px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= MOBILE OVERLAY ================= */
+.sh-dashboard-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sh-dashboard-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet and below (1024px) */
+@media (max-width: 1024px) {
+  .sh-dashboard-content {
+    padding: 24px;
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .sh-dashboard-root {
+    flex-direction: column;
+  }
+
+  .sh-dashboard-content {
+    padding: 20px 16px;
+  }
+}
+
+/* Mobile (640px) */
+@media (max-width: 640px) {
+  .sh-dashboard-content {
+    padding: 16px 12px;
+  }
+}
+
+/* Small Mobile (480px) */
+@media (max-width: 480px) {
+  .sh-dashboard-content {
+    padding: 16px;
+  }
+}
+
+/* ================= PRINT STYLES ================= */
+@media print {
+  .sh-dashboard-root {
+    display: block;
+  }
+
+  .sh-dashboard-content {
+    padding: 0;
+    max-width: none;
+  }
+}

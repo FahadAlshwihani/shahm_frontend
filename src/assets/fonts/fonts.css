@@ -1,0 +1,57 @@
+/* ================================
+   HT SONATA – Arabic Headings
+================================ */
+
+@font-face {
+  font-family: "HT Sonata";
+  src: url("./HTSonata/HTSonata-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "HT Sonata";
+  src: url("./HTSonata/HTSonata-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* ================================
+   CICLO DISPLAY – English Headings
+================================ */
+
+@font-face {
+  font-family: "Ciclo Display";
+  src: url("./CicloDisplay/CicloDisplay-Regular.otf") format("opentype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Ciclo Display";
+  src: url("./CicloDisplay/CicloDisplay-Bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+/* ================================
+   NOTO KUFI ARABIC – Content
+================================ */
+
+@font-face {
+  font-family: "Noto Kufi Arabic";
+  src: url("./Noto_Kufi_Arabic/NotoKufiArabic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 300 700;
+}
+
+/* ================================
+   GLOBAL VARIABLES
+================================ */
+
+:root {
+  --font-ar-heading: "HT Sonata", serif;
+  --font-en-heading: "Ciclo Display", sans-serif;
+  --font-content: "Noto Kufi Arabic", sans-serif;
+
+  --color-primary: #33383c;
+  --color-secondary: #7b8487;
+}

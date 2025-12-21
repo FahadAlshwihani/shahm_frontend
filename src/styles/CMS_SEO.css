@@ -1,0 +1,423 @@
+/* ===== SEO CMS CONTAINER ===== */
+.seo-cms-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.seo-cms-header {
+  margin-bottom: 40px;
+  animation: slideIn 0.3s ease forwards;
+}
+
+.seo-cms-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.seo-cms-subtitle {
+  font-size: 14px;
+  color: #666666;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ===== DEFAULT SEO CARD ===== */
+.seo-default-card {
+  background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border: 1px solid #1a1a1a;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideIn 0.3s ease forwards;
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.seo-default-card:hover {
+  border-color: #2a2a2a;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== PAGE SEO CARD ===== */
+.seo-page-card {
+  background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border: 1px solid #1a1a1a;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideIn 0.3s ease forwards;
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+
+.seo-page-card:hover {
+  border-color: #2a2a2a;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== CARD HEADER ===== */
+.seo-card-header {
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.seo-card-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* ===== PAGE SELECTOR ===== */
+.seo-page-selector {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  border: 1px solid #1a1a1a;
+}
+
+/* ===== EMPTY STATE ===== */
+.seo-empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  border: 1px dashed #2a2a2a;
+}
+
+.seo-empty-state p {
+  font-size: 14px;
+  color: #666666;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ===== FORM SECTIONS ===== */
+.seo-form-section {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  border: 1px solid #1a1a1a;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideIn 0.3s ease forwards;
+}
+
+.seo-form-section:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: #2a2a2a;
+}
+
+.seo-form-section:nth-child(1) {
+  animation-delay: 0.05s;
+  opacity: 0;
+}
+
+.seo-form-section:nth-child(2) {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.seo-form-section:nth-child(3) {
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+
+.seo-form-section:nth-child(4) {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.seo-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+
+.seo-section-title::before {
+  content: '';
+  width: 3px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ===== FORM GRID ===== */
+.seo-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.seo-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seo-form-group.seo-full-width {
+  grid-column: span 2;
+}
+
+.seo-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #b3b3b3;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* ===== INPUTS ===== */
+.seo-input,
+.seo-select,
+.seo-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #5d5d5d;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.seo-input:focus,
+.seo-select:focus,
+.seo-textarea:focus {
+  outline: none;
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.seo-input::placeholder,
+.seo-textarea::placeholder {
+  color: #666666;
+}
+
+.seo-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 16px center;
+  padding-left: 40px;
+}
+
+.seo-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.seo-input-file {
+  padding: 10px;
+  border: 1px dashed #2a2a2a;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #b3b3b3;
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.seo-input-file:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ===== BUTTONS ===== */
+.seo-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #1a1a1a;
+}
+
+.seo-btn-primary {
+  padding: 12px 32px;
+  margin-top: 10px;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seo-btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.seo-btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.seo-btn-delete {
+  padding: 12px 24px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seo-btn-delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  transform: translateY(-2px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .seo-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seo-form-group.seo-full-width {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .seo-cms-container {
+    padding: 32px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .seo-cms-container {
+    padding: 24px 16px;
+  }
+
+  .seo-cms-title {
+    font-size: 26px;
+  }
+
+  .seo-default-card,
+  .seo-page-card {
+    padding: 24px 20px;
+    border-radius: 10px;
+  }
+
+  .seo-form-section {
+    padding: 20px;
+  }
+
+  .seo-form-actions {
+    flex-direction: column;
+  }
+
+  .seo-btn-primary,
+  .seo-btn-delete {
+    width: 100%;
+  }
+
+  .seo-page-selector {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .seo-cms-container {
+    padding: 20px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .seo-cms-title {
+    font-size: 22px;
+  }
+
+  .seo-section-title {
+    font-size: 16px;
+  }
+
+  .seo-default-card,
+  .seo-page-card {
+    padding: 20px 16px;
+  }
+
+  .seo-form-section {
+    padding: 16px;
+  }
+}
+
+/* ===== SMOOTH SCROLLING ===== */
+* {
+  scroll-behavior: smooth;
+}
+
+/* ===== CUSTOM SCROLLBAR FOR CONTAINER ===== */
+.seo-cms-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.seo-cms-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.seo-cms-container::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 2px;
+}
+
+.seo-cms-container::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* ===== FOCUS STATES ===== */
+.seo-input:focus-visible,
+.seo-select:focus-visible,
+.seo-textarea:focus-visible,
+.seo-btn-primary:focus-visible,
+.seo-btn-delete:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}

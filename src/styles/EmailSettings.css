@@ -1,0 +1,74 @@
+.email-settings-container {
+  padding: 30px;
+  max-width: 820px;
+  margin: auto;
+}
+
+.section {
+  background: #f7f7f7;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 25px;
+  border: 1px solid #ddd;
+}
+
+.section h2 {
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+.row {
+  margin-top: 10px;
+}
+
+.actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.btn.test {
+  background: #0070f3;
+}
+
+.btn.reset {
+  background: #777;
+}
+
+.btn.save {
+  background: #000;
+}
+
+.oauth-btn {
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.oauth-btn.google {
+  background: #db4437;
+}
+
+.oauth-btn.outlook {
+  background: #0072c6;
+}

@@ -1,0 +1,144 @@
+/* =====================================================
+   DASHBOARD HOME
+===================================================== */
+.dash-home {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* ================= HEADER ================= */
+.dash-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.dash-header p {
+  margin-top: 6px;
+  color: rgba(255,255,255,0.55);
+  font-size: 14.5px;
+}
+
+/* ================= LOADING ================= */
+.dash-loading {
+  padding: 60px;
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* ================= STATS ================= */
+.dash-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.dash-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 26px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.dash-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+.dash-card-title {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+
+.dash-card-value {
+  margin-top: 10px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+/* ================= GRID ================= */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ================= BOX ================= */
+.dash-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px;
+  padding: 26px;
+}
+
+.dash-box.full {
+  width: 100%;
+}
+
+.dash-box h2 {
+  font-size: 18px;
+  margin-bottom: 18px;
+}
+
+/* ================= ITEMS ================= */
+.dash-item {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash-item:last-child {
+  border-bottom: none;
+}
+
+.dash-item strong {
+  font-size: 14px;
+}
+
+.dash-item span,
+.dash-item small {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ================= EMPTY ================= */
+.dash-empty {
+  opacity: 0.5;
+  font-size: 13px;
+}
+
+/* ================= TOP PAGES ================= */
+.dash-top-pages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dash-top-pages li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.dash-top-pages li:last-child {
+  border-bottom: none;
+}
+
+.dash-top-pages span {
+  opacity: 0.7;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+  .dash-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+}

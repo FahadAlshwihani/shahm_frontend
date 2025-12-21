@@ -1,0 +1,157 @@
+/* ================= ROOT ================= */
+.msgdash-root {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* ================= TITLES ================= */
+.msgdash-title {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.msgdash-section-title {
+  font-size: 19px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+/* ================= SECTION ================= */
+.msgdash-section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 22px;
+}
+
+/* ================= TABLE ================= */
+.msgdash-table-wrap {
+  overflow-x: auto;
+}
+
+.msgdash-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.msgdash-table th,
+.msgdash-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.msgdash-table th {
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.msgdash-table tr:hover td {
+  background: rgba(255,255,255,0.03);
+}
+
+.msgdash-table td.wrap {
+  max-width: 420px;
+  white-space: pre-wrap;
+}
+
+.msgdash-table .empty {
+  text-align: center;
+  opacity: 0.6;
+  padding: 26px;
+}
+
+/* ================= BUTTONS ================= */
+.msgdash-btn {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: #fff;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.msgdash-btn:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.msgdash-btn.primary {
+  background: #fff;
+  color: #000;
+  border: none;
+}
+
+.msgdash-btn.primary:hover {
+  opacity: 0.88;
+}
+
+.msgdash-btn.outline {
+  border-color: rgba(255,255,255,0.3);
+}
+
+.msgdash-btn.danger {
+  background: #ff4d4d;
+  border: none;
+  color: #fff;
+}
+
+.msgdash-btn.danger:hover {
+  opacity: 0.88;
+}
+
+/* ================= INPUT ================= */
+.msgdash-input {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  padding: 0 14px;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+/* ================= TOOLBAR ================= */
+.msgdash-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.msgdash-toolbar .counter {
+  opacity: 0.7;
+  font-size: 13px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ================= CENTER ================= */
+.msgdash-center {
+  text-align: center;
+  margin-top: 18px;
+}
+
+/* ================= STATUS ================= */
+.status.new {
+  color: #4da6ff;
+}
+
+.status.in_progress {
+  color: #ffc107;
+}
+
+.status.closed {
+  color: #4caf50;
+}

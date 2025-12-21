@@ -1,0 +1,404 @@
+/* ===== SETTINGS CMS CONTAINER ===== */
+.settings-cms-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.settings-cms-header {
+  margin-bottom: 40px;
+  animation: slideIn 0.3s ease forwards;
+}
+
+.settings-cms-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.settings-cms-subtitle {
+  font-size: 14px;
+  color: #666666;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ===== LOADING STATE ===== */
+.settings-loading {
+  padding: 80px 20px;
+  text-align: center;
+  color: #666666;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ===== FORM CARD ===== */
+.settings-form-card {
+  background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border: 1px solid #1a1a1a;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-form-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.settings-form-card:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.settings-form-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.settings-form-card:nth-child(4) {
+  animation-delay: 0.25s;
+}
+
+.settings-form-card:nth-child(5) {
+  animation-delay: 0.3s;
+}
+
+.settings-form-card:nth-child(6) {
+  animation-delay: 0.35s;
+}
+
+.settings-form-card:hover {
+  border-color: #2a2a2a;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== CARD HEADER ===== */
+.settings-card-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.settings-card-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-card-header h2::before {
+  content: '';
+  width: 3px;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ===== FORM SECTION ===== */
+.settings-form-section {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  border: 1px solid #1a1a1a;
+}
+
+/* ===== FORM GRID ===== */
+.settings-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.settings-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-form-group.settings-full-width {
+  grid-column: span 2;
+}
+
+.settings-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #b3b3b3;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* ===== INPUTS ===== */
+.settings-input,
+.settings-select,
+.settings-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.settings-input:focus,
+.settings-select:focus,
+.settings-textarea:focus {
+  outline: none;
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.settings-input::placeholder,
+.settings-textarea::placeholder {
+  color: #666666;
+}
+
+.settings-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 16px center;
+  padding-left: 40px;
+}
+
+.settings-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.settings-input-file {
+  padding: 10px;
+  border: 1px dashed #2a2a2a;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #b3b3b3;
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-input-file:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ===== LOGO SECTION ===== */
+.settings-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.settings-logo-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-logo-preview {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.settings-logo-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.settings-logo-preview:empty {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.01),
+    rgba(255, 255, 255, 0.01) 10px,
+    rgba(255, 255, 255, 0.02) 10px,
+    rgba(255, 255, 255, 0.02) 20px
+  );
+}
+
+.settings-logo-preview:empty::after {
+  content: 'No logo uploaded';
+  color: #666666;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===== FORM ACTIONS ===== */
+.settings-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  animation: slideIn 0.3s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.settings-btn-primary {
+  padding: 14px 40px;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+}
+
+.settings-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.settings-btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.settings-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-form-group.settings-full-width {
+    grid-column: span 1;
+  }
+
+  .settings-logo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .settings-cms-container {
+    padding: 32px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings-cms-container {
+    padding: 24px 16px;
+  }
+
+  .settings-cms-title {
+    font-size: 26px;
+  }
+
+  .settings-form-card {
+    padding: 24px 20px;
+    border-radius: 10px;
+  }
+
+  .settings-form-section {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .settings-cms-container {
+    padding: 20px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-cms-title {
+    font-size: 22px;
+  }
+
+  .settings-form-card {
+    padding: 20px 16px;
+  }
+
+  .settings-form-section {
+    padding: 16px;
+  }
+}
+
+/* ===== SMOOTH SCROLLING ===== */
+* {
+  scroll-behavior: smooth;
+}
+
+/* ===== CUSTOM SCROLLBAR FOR CONTAINER ===== */
+.settings-cms-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.settings-cms-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-cms-container::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 2px;
+}
+
+.settings-cms-container::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* ===== FOCUS STATES ===== */
+.settings-input:focus-visible,
+.settings-select:focus-visible,
+.settings-textarea:focus-visible,
+.settings-btn-primary:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}

@@ -1,0 +1,33 @@
+/* ===============================
+   App Root
+================================ */
+
+.App {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #33383C;
+}
+
+/* ===============================
+   Common Helpers
+================================ */
+
+.text-muted {
+  color: #7B8487;
+}
+
+.text-primary {
+  color: #33383C;
+}
+
+.text-secondary {
+  color: #7B8487;
+}
+
+/* ===============================
+   Utility
+================================ */
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,615 @@
+/* ===== SERVICE CMS CONTAINER ===== */
+.service-cms-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.service-cms-header {
+  margin-bottom: 40px;
+  animation: serviceSlideIn 0.3s ease forwards;
+}
+
+.service-cms-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.service-cms-subtitle {
+  font-size: 14px;
+  color: #666666;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ===== FORM CARD ===== */
+.service-form-card {
+  background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border: 1px solid #1a1a1a;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: serviceSlideIn 0.3s ease forwards;
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+@keyframes serviceSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-form-card:hover {
+  border-color: #2a2a2a;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.service-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.service-form-header h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* ===== FORM SECTIONS ===== */
+.service-form-section {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  border: 1px solid #1a1a1a;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-form-section:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: #2a2a2a;
+}
+
+.service-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+
+.service-section-title::before {
+  content: '';
+  width: 3px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ===== FORM GRID ===== */
+.service-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.service-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-form-group.full-width {
+  grid-column: span 2;
+}
+
+.service-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #b3b3b3;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* ===== INPUTS ===== */
+.service-input,
+.service-select,
+.service-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #5d5d5d;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.service-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.service-input:focus,
+.service-select:focus,
+.service-textarea:focus {
+  outline: none;
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.service-input::placeholder,
+.service-textarea::placeholder {
+  color: #666666;
+}
+
+.service-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+/* ===== CHECKBOXES ===== */
+.service-checkbox-group {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.service-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.service-checkbox-label:hover .service-checkbox-text {
+  color: #ffffff;
+}
+
+.service-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #ffffff;
+}
+
+.service-checkbox-text {
+  font-size: 14px;
+  color: #b3b3b3;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+/* ===== BUTTONS ===== */
+.service-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #1a1a1a;
+}
+
+.service-btn-primary {
+  padding: 12px 32px;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+}
+
+.service-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.service-btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+.service-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.service-btn-secondary,
+.service-btn-cancel {
+  padding: 12px 24px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.service-btn-secondary:hover,
+.service-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.service-btn-secondary:active,
+.service-btn-cancel:active {
+  transform: translateY(0);
+}
+
+/* ===== LIST CARD ===== */
+.service-list-card {
+  background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border: 1px solid #1a1a1a;
+  animation: serviceSlideIn 0.3s ease forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.service-list-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 24px;
+  letter-spacing: -0.02em;
+}
+
+/* ===== TABLE ===== */
+.service-table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid #1a1a1a;
+}
+
+.service-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.service-table-wrapper::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.service-table-wrapper::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+.service-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.service-table thead {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.service-table th {
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #666666;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid #1a1a1a;
+  white-space: nowrap;
+}
+
+.service-table td {
+  padding: 16px 20px;
+  font-size: 14px;
+  color: #b3b3b3;
+  border-bottom: 1px solid #0f0f0f;
+}
+
+.service-table tbody tr {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.service-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.service-table-id {
+  font-weight: 700;
+  color: #666666;
+}
+
+.service-table-title {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.service-table-slug {
+  font-weight: 500;
+  color: #b3b3b3;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+
+.service-table-area {
+  font-weight: 500;
+  color: #3b82f6;
+}
+
+.service-table-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.service-table-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ===== STATUS BADGE ===== */
+.service-status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.service-status-badge.featured {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.service-status-badge.regular {
+  background: rgba(100, 116, 139, 0.2);
+  color: #64748b;
+  border: 1px solid rgba(100, 116, 139, 0.3);
+}
+
+/* ===== ACTION BUTTONS ===== */
+.service-btn-edit {
+  padding: 8px 16px;
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.service-btn-edit:hover {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+  transform: translateY(-2px);
+}
+
+.service-btn-delete {
+  padding: 8px 16px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.service-btn-delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  transform: translateY(-2px);
+}
+
+/* ===== DIVIDER ===== */
+.service-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #2a2a2a 50%, transparent);
+  margin: 48px 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .service-form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .service-form-group.full-width {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .service-cms-container {
+    padding: 32px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .service-cms-container {
+    padding: 24px 16px;
+  }
+
+  .service-cms-title {
+    font-size: 26px;
+  }
+
+  .service-form-card,
+  .service-list-card {
+    padding: 24px 20px;
+    border-radius: 10px;
+  }
+
+  .service-form-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .service-form-section {
+    padding: 20px;
+  }
+
+  .service-table-wrapper {
+    overflow-x: scroll;
+  }
+
+  .service-table {
+    min-width: 700px;
+  }
+
+  .service-form-actions {
+    flex-direction: column;
+  }
+
+  .service-btn-primary,
+  .service-btn-secondary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .service-cms-container {
+    padding: 20px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-cms-title {
+    font-size: 22px;
+  }
+
+  .service-section-title {
+    font-size: 16px;
+  }
+
+  .service-checkbox-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .service-form-card,
+  .service-list-card {
+    padding: 20px 16px;
+  }
+}
+
+/* ===== SMOOTH SCROLLING ===== */
+.service-cms-container * {
+  scroll-behavior: smooth;
+}
+
+/* ===== CUSTOM SCROLLBAR FOR CONTAINER ===== */
+.service-cms-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.service-cms-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.service-cms-container::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+.service-cms-container::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* ===== FOCUS STATES ===== */
+.service-input:focus-visible,
+.service-select:focus-visible,
+.service-textarea:focus-visible,
+.service-btn-primary:focus-visible,
+.service-btn-secondary:focus-visible,
+.service-btn-edit:focus-visible,
+.service-btn-delete:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ===== ANIMATIONS ===== */
+.service-form-section {
+  animation: serviceSlideIn 0.3s ease forwards;
+}
+
+.service-form-section:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.service-form-section:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.service-form-section:nth-child(3) {
+  animation-delay: 0.15s;
+}

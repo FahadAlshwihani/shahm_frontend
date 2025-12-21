@@ -1,0 +1,505 @@
+/* ===== ROOT ===== */
+.sh-login-root {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+  display: flex;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Noto Kufi Arabic', sans-serif;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* ===== LAYOUT ===== */
+.sh-login-shell {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sh-login-shell.is-shaking {
+  animation: shake 0.45s ease;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* ===== LEFT PANEL ===== */
+.sh-login-brand {
+  position: relative;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+  border-right: 1px solid #1a1a1a;
+  overflow: hidden;
+}
+
+/* ===== 3D GRID BACKGROUND ===== */
+.sh-login-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gridMove {
+  0% { transform: perspective(500px) rotateX(60deg) translateZ(0); }
+  100% { transform: perspective(500px) rotateX(60deg) translateZ(100px); }
+}
+
+/* ===== 3D ELEMENTS ===== */
+.sh-login-3d-elements {
+  position: absolute;
+  inset: 0;
+  perspective: 1000px;
+  pointer-events: none;
+}
+
+/* 3D Cube */
+.sh-3d-cube {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 15%;
+  left: 10%;
+  transform-style: preserve-3d;
+  animation: rotateCube 20s infinite linear;
+}
+
+@keyframes rotateCube {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+.cube-face {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.cube-face.front { transform: translateZ(50px); }
+.cube-face.back { transform: rotateY(180deg) translateZ(50px); }
+.cube-face.left { transform: rotateY(-90deg) translateZ(50px); }
+.cube-face.right { transform: rotateY(90deg) translateZ(50px); }
+.cube-face.top { transform: rotateX(90deg) translateZ(50px); }
+.cube-face.bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+/* 3D Sphere */
+.sh-3d-sphere {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: 60%;
+  left: 70%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.03));
+  box-shadow: 
+    inset -20px -20px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(255, 255, 255, 0.1);
+  animation: floatSphere 8s ease-in-out infinite;
+}
+
+@keyframes floatSphere {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+/* 3D Pyramid */
+.sh-3d-pyramid {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 40%;
+  right: 15%;
+  transform-style: preserve-3d;
+  animation: rotatePyramid 15s infinite linear;
+}
+
+@keyframes rotatePyramid {
+  0% { transform: rotateY(0deg) rotateX(20deg); }
+  100% { transform: rotateY(360deg) rotateX(20deg); }
+}
+
+.pyramid-face {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 86px solid rgba(255, 255, 255, 0.08);
+}
+
+.pyramid-face.side1 { transform: rotateY(0deg) translateZ(28px); }
+.pyramid-face.side2 { transform: rotateY(90deg) translateZ(28px); }
+.pyramid-face.side3 { transform: rotateY(180deg) translateZ(28px); }
+.pyramid-face.side4 { transform: rotateY(270deg) translateZ(28px); }
+
+/* ===== BRAND CONTENT ===== */
+.sh-login-brand-content {
+  position: relative;
+  z-index: 10;
+}
+
+.sh-login-mark {
+  width: 60px;
+  height: auto;
+  margin-bottom: 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.1));
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.sh-login-brandName {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.sh-login-brandHint {
+  max-width: 480px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 48px;
+}
+
+/* ===== STATS ===== */
+.sh-login-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.sh-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.sh-stat-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.sh-stat-icon {
+  font-size: 32px;
+  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.2));
+}
+
+.sh-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.sh-stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===== RIGHT PANEL ===== */
+.sh-login-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+}
+
+.sh-login-formWrapper {
+  width: 100%;
+  max-width: 480px;
+  padding: 64px 48px;
+}
+
+/* ===== FORM HEADER ===== */
+.sh-login-header {
+  margin-bottom: 40px;
+  animation: slideUp 0.6s ease 0.2s backwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sh-login-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sh-login-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}
+
+/* ===== FORM FIELDS ===== */
+.sh-login-field {
+  margin-bottom: 24px;
+  animation: slideUp 0.6s ease 0.3s backwards;
+}
+
+.sh-login-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #b3b3b3;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sh-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sh-input-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sh-login-input {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px 0 52px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.sh-login-input:focus {
+  outline: none;
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.sh-login-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.sh-login-field.has-error .sh-login-input {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.sh-password-toggle {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.sh-password-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== SUBMIT BUTTON ===== */
+.sh-login-actions {
+  margin-top: 32px;
+  animation: slideUp 0.6s ease 0.4s backwards;
+}
+
+.sh-login-btn {
+  width: 100%;
+  height: 56px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+}
+
+.sh-login-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+}
+
+.sh-login-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.sh-login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sh-btn-arrow {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.sh-login-btn:hover:not(:disabled) .sh-btn-arrow {
+  transform: translateX(4px);
+}
+
+.sh-btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #000000;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== FOOTER ===== */
+.sh-login-footer {
+  margin-top: 32px;
+  text-align: center;
+  animation: slideUp 0.6s ease 0.5s backwards;
+}
+
+.sh-login-footer-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .sh-login-shell {
+    grid-template-columns: 50% 50%;
+  }
+
+  .sh-login-brand {
+    padding: 60px 40px;
+  }
+
+  .sh-login-stats {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sh-login-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sh-login-brand {
+    display: none;
+  }
+
+  .sh-login-formWrapper {
+    padding: 48px 32px;
+    max-width: 100%;
+  }
+
+  .sh-login-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sh-login-formWrapper {
+    padding: 32px 24px;
+  }
+
+  .sh-login-title {
+    font-size: 24px;
+  }
+
+  .sh-login-input {
+    height: 52px;
+  }
+
+  .sh-login-btn {
+    height: 52px;
+  }
+}
+
+/* ===== RTL SUPPORT ===== */
+[dir="rtl"] .sh-input-icon {
+  left: auto;
+  right: 16px;
+}
+
+[dir="rtl"] .sh-login-input {
+  padding: 0 52px 0 16px;
+}
+
+[dir="rtl"] .sh-password-toggle {
+  right: auto;
+  left: 16px;
+}
+
+[dir="rtl"] .sh-btn-arrow {
+  transform: scaleX(-1);
+}
