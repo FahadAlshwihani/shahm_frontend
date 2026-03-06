@@ -23,7 +23,10 @@ export default function Blog_Manage() {
     createPost,
     updatePost,
     deletePost,
+    fetchBlogSettings,
+    updateBlogSettings
   } = useBlogStore();
+
 
   /* ====================================================== CATEGORY STATES */
   const [catForm, setCatForm] = useState({
@@ -51,8 +54,21 @@ export default function Blog_Manage() {
     tags: [],
     cover_image: null,
     image: null,
+    clauses: [],
+    related_people: [],
   });
+
   const [editPost, setEditPost] = useState(null);
+  const [postType, setPostType] = useState("news");
+  const [settingsForm, setSettingsForm] = useState({
+    page_title_ar: "",
+    page_title_en: "",
+    last_update_title_ar: "",
+    last_update_title_en: "",
+    last_update_description_ar: "",
+    last_update_description_en: ""
+  });
+
 
   /* ====================================================== LOAD DATA */
   useEffect(() => {
@@ -60,6 +76,23 @@ export default function Blog_Manage() {
     fetchTags();
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      const data = await fetchBlogSettings();
+      if (data) {
+        setSettingsForm(data);
+      }
+    };
+    loadSettings();
+  }, []);
+
+
+
+  useEffect(() => {
+    fetchPosts(postType);
+  }, [postType]);
+
 
   /* ====================================================== CATEGORY HANDLERS */
   const saveCategory = async () => {
@@ -93,6 +126,34 @@ export default function Blog_Manage() {
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const addPerson = () => {
+    setPostForm(prev => ({
+      ...prev,
+      related_people: [
+        ...prev.related_people,
+        {
+          name_ar: "",
+          name_en: "",
+          description_ar: "",
+          description_en: "",
+          order: prev.related_people.length + 1
+        }
+      ]
+    }));
+  };
+
+  const updatePerson = (index, field, value) => {
+    const updated = [...postForm.related_people];
+    updated[index][field] = value;
+    setPostForm({ ...postForm, related_people: updated });
+  };
+
+  const removePerson = (index) => {
+    const updated = postForm.related_people.filter((_, i) => i !== index);
+    setPostForm({ ...postForm, related_people: updated });
+  };
+
 
   /* ====================================================== TAG HANDLERS */
   const saveTag = async () => {
@@ -145,6 +206,35 @@ export default function Blog_Manage() {
     }));
   };
 
+  const addClause = () => {
+    setPostForm(prev => ({
+      ...prev,
+      clauses: [
+        ...prev.clauses,
+        {
+          title_ar: "",
+          title_en: "",
+          content_ar: "",
+          content_en: "",
+          order: prev.clauses.length + 1
+        }
+      ]
+    }));
+  };
+
+
+  const updateClause = (index, field, value) => {
+    const updated = [...postForm.clauses];
+    updated[index][field] = value;
+    setPostForm({ ...postForm, clauses: updated });
+  };
+
+  const removeClause = (index) => {
+    const updated = postForm.clauses.filter((_, i) => i !== index);
+    setPostForm({ ...postForm, clauses: updated });
+  };
+
+
   const loadPostIntoForm = (post) => {
     setPostForm({
       title_ar: post.title_ar,
@@ -155,6 +245,8 @@ export default function Blog_Manage() {
       tags: post.tags ? post.tags.map((t) => t.id) : [],
       cover_image: null,
       image: null,
+      clauses: post.clauses || [],
+      related_people: post.related_people || []
     });
     setEditPost(post);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -171,7 +263,22 @@ export default function Blog_Manage() {
         fd.append(key, value);
       }
     });
+    fd.append("clauses_data", JSON.stringify(postForm.clauses));
+    postForm.related_people.forEach((person, index) => {
+      fd.append(`related_people_data[${index}][name_ar]`, person.name_ar);
+      fd.append(`related_people_data[${index}][name_en]`, person.name_en);
+      fd.append(`related_people_data[${index}][description_ar]`, person.description_ar);
+      fd.append(`related_people_data[${index}][description_en]`, person.description_en);
+      fd.append(`related_people_data[${index}][order]`, person.order);
 
+      if (person.image) {
+        fd.append(`related_people_data[${index}][image]`, person.image);
+      }
+    });
+
+
+
+    fd.append("post_type", postType);
     fd.append("status", "published");
 
     let result;
@@ -198,8 +305,21 @@ export default function Blog_Manage() {
       tags: [],
       cover_image: null,
       image: null,
+      clauses: [],          // ✅ مهم
+      related_people: [],   // ✅ مهم
     });
   };
+
+  const saveSettings = async () => {
+    const result = await updateBlogSettings(settingsForm);
+
+    if (result.success) {
+      toast.success("تم حفظ إعدادات الصفحة بنجاح");
+    } else {
+      toast.error("فشل حفظ الإعدادات");
+    }
+  };
+
 
   /* ====================================================== UI */
   return (
@@ -208,6 +328,115 @@ export default function Blog_Manage() {
         <h1 className="blog-cms-title">{t("cms.blog.title")}</h1>
         <p className="blog-cms-subtitle">{t("cms.blog.subtitle")}</p>
       </div>
+
+      {/* ==================== PAGE SETTINGS ==================== */}
+      <div className="blog-form-card">
+        <div className="blog-form-header">
+          <h2>⚙️ إعدادات صفحة المدونة</h2>
+        </div>
+
+        <div className="blog-form-section">
+          <div className="blog-form-grid">
+
+            {/* Page Title */}
+            <div className="blog-form-group">
+              <label className="blog-label">عنوان الصفحة (عربي)</label>
+              <input
+                className="blog-input"
+                value={settingsForm.page_title_ar}
+                onChange={(e) =>
+                  setSettingsForm({
+                    ...settingsForm,
+                    page_title_ar: e.target.value
+                  })
+                }
+              />
+            </div>
+
+            <div className="blog-form-group">
+              <label className="blog-label">Page Title (English)</label>
+              <input
+                className="blog-input"
+                value={settingsForm.page_title_en}
+                onChange={(e) =>
+                  setSettingsForm({
+                    ...settingsForm,
+                    page_title_en: e.target.value
+                  })
+                }
+              />
+            </div>
+
+            {/* Last Update Title */}
+            <div className="blog-form-group">
+              <label className="blog-label">عنوان "آخر تحديث" (عربي)</label>
+              <input
+                className="blog-input"
+                value={settingsForm.last_update_title_ar}
+                onChange={(e) =>
+                  setSettingsForm({
+                    ...settingsForm,
+                    last_update_title_ar: e.target.value
+                  })
+                }
+              />
+            </div>
+
+            <div className="blog-form-group">
+              <label className="blog-label">Last Update Title (English)</label>
+              <input
+                className="blog-input"
+                value={settingsForm.last_update_title_en}
+                onChange={(e) =>
+                  setSettingsForm({
+                    ...settingsForm,
+                    last_update_title_en: e.target.value
+                  })
+                }
+              />
+            </div>
+
+            {/* Description */}
+            <div className="blog-form-group full-width">
+              <label className="blog-label">وصف آخر تحديث (عربي)</label>
+              <textarea
+                className="blog-textarea"
+                value={settingsForm.last_update_description_ar}
+                onChange={(e) =>
+                  setSettingsForm({
+                    ...settingsForm,
+                    last_update_description_ar: e.target.value
+                  })
+                }
+              />
+            </div>
+
+            <div className="blog-form-group full-width">
+              <label className="blog-label">Last Update Description (English)</label>
+              <textarea
+                className="blog-textarea"
+                value={settingsForm.last_update_description_en}
+                onChange={(e) =>
+                  setSettingsForm({
+                    ...settingsForm,
+                    last_update_description_en: e.target.value
+                  })
+                }
+              />
+            </div>
+
+          </div>
+        </div>
+
+        <div className="blog-form-actions">
+          <button className="blog-btn-primary" onClick={saveSettings}>
+            حفظ الإعدادات
+          </button>
+        </div>
+      </div>
+
+      <div className="blog-divider"></div>
+
 
       {/* ==================== CATEGORIES ==================== */}
       <div className="blog-form-card">
@@ -477,7 +706,25 @@ export default function Blog_Manage() {
         </div>
       </div>
 
+
       <div className="blog-divider"></div>
+
+      <div style={{ marginBottom: 20 }}>
+        <button
+          className={postType === "news" ? "active-tab" : ""}
+          onClick={() => setPostType("news")}
+        >
+          📰 الأخبار
+        </button>
+
+        <button
+          className={postType === "article" ? "active-tab" : ""}
+          onClick={() => setPostType("article")}
+        >
+          📝 المقالات
+        </button>
+      </div>
+
 
       {/* ==================== POSTS ==================== */}
       <div className="blog-form-card">
@@ -589,15 +836,15 @@ export default function Blog_Manage() {
               />
             </div>
 
+
             <div className="blog-form-group full-width">
               <label className="blog-label">{t("cms.blog.fields.tags")}</label>
               <div className="blog-tags-selector">
                 {tags.map((tItem) => (
                   <label
                     key={tItem.id}
-                    className={`blog-tag-checkbox ${
-                      postForm.tags.includes(tItem.id) ? "selected" : ""
-                    }`}
+                    className={`blog-tag-checkbox ${postForm.tags.includes(tItem.id) ? "selected" : ""
+                      }`}
                   >
                     <input
                       type="checkbox"
@@ -613,6 +860,165 @@ export default function Blog_Manage() {
                   </span>
                 )}
               </div>
+            </div>
+            <div className="blog-form-group full-width">
+              <label className="blog-label">📑 Clauses</label>
+
+              {postForm.clauses?.map((clause, index) => (
+                <div key={index} style={{
+                  border: "1px solid #e0e0e0",
+                  padding: 15,
+                  marginBottom: 10,
+                  borderRadius: 6
+                }}>
+
+                  <input
+                    className="blog-input"
+                    placeholder="Clause Title (Arabic)"
+                    value={clause.title_ar}
+                    onChange={(e) =>
+                      updateClause(index, "title_ar", e.target.value)
+                    }
+                    style={{ marginBottom: 8 }}
+                  />
+
+                  <input
+                    className="blog-input"
+                    placeholder="Clause Title (English)"
+                    value={clause.title_en}
+                    onChange={(e) =>
+                      updateClause(index, "title_en", e.target.value)
+                    }
+                    style={{ marginBottom: 8 }}
+                  />
+
+                  <textarea
+                    className="blog-textarea"
+                    placeholder="Clause Content (Arabic)"
+                    value={clause.content_ar || ""}
+                    onChange={(e) =>
+                      updateClause(index, "content_ar", e.target.value)
+                    }
+                    style={{ marginBottom: 8 }}
+                  />
+
+                  <textarea
+                    className="blog-textarea"
+                    placeholder="Clause Content (English)"
+                    value={clause.content_en || ""}
+                    onChange={(e) =>
+                      updateClause(index, "content_en", e.target.value)
+                    }
+                    style={{ marginBottom: 8 }}
+                  />
+
+
+
+
+                  <input
+                    className="blog-input"
+                    type="number"
+                    placeholder="Order"
+                    value={clause.order}
+                    onChange={(e) =>
+                      updateClause(index, "order", e.target.value)
+                    }
+                    style={{ marginBottom: 8 }}
+                  />
+
+                  <button
+                    type="button"
+                    className="blog-btn-delete"
+                    onClick={() => removeClause(index)}
+                  >
+                    Remove
+                  </button>
+
+                </div>
+              ))}
+
+              <button
+                type="button"
+                className="blog-btn-primary"
+                onClick={addClause}
+              >
+                + Add Clause
+              </button>
+            </div>
+
+            <div className="blog-form-group full-width">
+              <label className="blog-label">👤 Related People</label>
+
+              {postForm.related_people?.map((person, index) => (
+                <div key={index} style={{
+                  border: "1px solid #e0e0e0",
+                  padding: 15,
+                  marginBottom: 10,
+                  borderRadius: 6
+                }}>
+
+                  <input
+                    className="blog-input"
+                    placeholder="Name (Arabic)"
+                    value={person.name_ar}
+                    onChange={(e) =>
+                      updatePerson(index, "name_ar", e.target.value)
+                    }
+                  />
+
+                  <input
+                    className="blog-input"
+                    placeholder="Name (English)"
+                    value={person.name_en}
+                    onChange={(e) =>
+                      updatePerson(index, "name_en", e.target.value)
+                    }
+                  />
+
+                  <textarea
+                    className="blog-textarea"
+                    placeholder="Description (Arabic)"
+                    value={person.description_ar}
+                    onChange={(e) =>
+                      updatePerson(index, "description_ar", e.target.value)
+                    }
+                  />
+
+                  <textarea
+                    className="blog-textarea"
+                    placeholder="Description (English)"
+                    value={person.description_en}
+                    onChange={(e) =>
+                      updatePerson(index, "description_en", e.target.value)
+                    }
+                  />
+
+                  <input
+                    type="file"
+                    className="blog-input-file"
+                    onChange={(e) =>
+                      updatePerson(index, "image", e.target.files[0])
+                    }
+                  />
+
+                  <button
+                    type="button"
+                    className="blog-btn-delete"
+                    onClick={() => removePerson(index)}
+                  >
+                    Remove
+                  </button>
+
+                </div>
+              ))}
+
+              <button
+                type="button"
+                className="blog-btn-primary"
+                onClick={addPerson}
+              >
+                + Add Person
+              </button>
             </div>
           </div>
         </div>

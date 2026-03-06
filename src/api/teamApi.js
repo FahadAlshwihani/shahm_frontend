@@ -19,3 +19,16 @@ export const adminUpdateMember = (id, formData) =>
 
 export const adminDeleteMember = (id) =>
   api.delete(`/team/admin/members/${id}/`);
+
+export const getTeamPage = () => api.get("/team/public/page/");
+
+
+// ================= TEAM PAGE CMS =================
+
+export const adminGetTeamPage = () =>
+  api.get("/team/admin/page/");
+
+export const adminSaveTeamPage = (formData) =>
+  api.post("/team/admin/page/", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });

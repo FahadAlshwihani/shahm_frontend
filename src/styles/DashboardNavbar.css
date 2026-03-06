@@ -1,20 +1,328 @@
-.sh-dashboard-navbar {
-  height: 64px;
+/* ================= DASHBOARD NAVBAR ================= */
+.dashboard-navbar {
+  height: 72px;
   padding: 0 32px;
-  background: #0f0f0f;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: white;
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  animation: slideDown 0.4s ease;
 }
 
-.sh-dashboard-navbar-title {
-  font-size: 15px;
+/* ================= LEFT SECTION ================= */
+.dashboard-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Mobile Menu Toggle */
+.dashboard-navbar-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-navbar-menu-toggle:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.dashboard-navbar-menu-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Breadcrumb */
+.dashboard-navbar-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-primary);
+}
+
+.dashboard-navbar-breadcrumb svg {
+  color: var(--color-secondary);
+}
+
+.dashboard-navbar-title {
+  font-family: var(--font-en-heading);
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.4px;
+  color: var(--color-primary);
+  letter-spacing: -0.01em;
 }
 
-.sh-dashboard-navbar-user {
-  font-size: 13px;
-  color: rgba(255,255,255,0.65);
+/* ================= RIGHT SECTION ================= */
+.dashboard-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
+
+/* User Profile */
+.dashboard-navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 8px 8px;
+  background: rgba(51, 56, 60, 0.04);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.dashboard-navbar-user:hover {
+  background: rgba(51, 56, 60, 0.08);
+  border-color: var(--color-primary);
+}
+
+.dashboard-navbar-user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--color-primary);
+  border-radius: 10px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.dashboard-navbar-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dashboard-navbar-user-greeting {
+  font-family: var(--font-content);
+  font-size: 11px;
+  color: var(--color-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dashboard-navbar-user-name {
+  font-family: var(--font-content);
+  font-size: 14px;
+  color: var(--color-primary);
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Icon Button */
+.dashboard-navbar-icon-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-navbar-icon-btn:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.dashboard-navbar-icon-btn:active {
+  transform: translateY(0);
+}
+
+/* Notification Badge */
+.dashboard-navbar-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: #dc2626;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9px;
+  border: 2px solid white;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet and below (1024px) - Show mobile menu toggle */
+@media (max-width: 1024px) {
+  .dashboard-navbar {
+    padding: 0 24px;
+    height: 64px;
+  }
+
+  .dashboard-navbar-menu-toggle {
+    display: flex;
+  }
+
+  .dashboard-navbar-breadcrumb svg {
+    display: none;
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .dashboard-navbar {
+    padding: 0 16px;
+  }
+
+  .dashboard-navbar-left {
+    gap: 12px;
+  }
+
+  .dashboard-navbar-title {
+    font-size: 15px;
+  }
+
+  .dashboard-navbar-user-info {
+    display: none;
+  }
+
+  .dashboard-navbar-user {
+    padding: 8px;
+  }
+}
+
+/* Mobile (640px) */
+@media (max-width: 640px) {
+  .dashboard-navbar {
+    padding: 0 12px;
+    height: 60px;
+  }
+
+  .dashboard-navbar-right {
+    gap: 12px;
+  }
+
+  .dashboard-navbar-icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .dashboard-navbar-user-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .dashboard-navbar-menu-toggle {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Small Mobile (480px) */
+@media (max-width: 480px) {
+  .dashboard-navbar-title {
+    font-size: 14px;
+  }
+
+  .dashboard-navbar-icon-btn {
+    border: none;
+    background: transparent;
+  }
+
+  .dashboard-navbar-icon-btn:hover {
+    background: rgba(51, 56, 60, 0.06);
+  }
+}
+
+/* ================= RTL SUPPORT ================= */
+[dir="rtl"] .dashboard-navbar-left {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .dashboard-navbar-right {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .dashboard-navbar-breadcrumb {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .dashboard-navbar-title {
+  font-family: var(--font-ar-heading);
+}
+
+[dir="rtl"] .dashboard-navbar-user-greeting,
+[dir="rtl"] .dashboard-navbar-user-name {
+  font-family: var(--font-content);
+  text-align: right;
+}
+
+[dir="rtl"] .dashboard-navbar-badge {
+  right: auto;
+  left: -4px;
+}
+
+/* ================= ACCESSIBILITY ================= */
+.dashboard-navbar-menu-toggle:focus-visible,
+.dashboard-navbar-icon-btn:focus-visible,
+.dashboard-navbar-user:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-navbar,
+  .dashboard-navbar-badge {
+    animation: none;
+  }
+  
+  .dashboard-navbar-icon-btn:hover {
+    transform: none;
+  }
+}
+

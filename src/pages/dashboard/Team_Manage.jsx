@@ -1,467 +1,552 @@
-import React, { useEffect, useState } from "react";
-import { useTeamStore } from "../../store/useTeamStore";
+import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
-import "../../styles/CMS_TEAM.css";
-import SunEditor from "suneditor-react";
-import "suneditor/dist/css/suneditor.min.css";
 
-export default function Team_Manage() {
-  const { t } = useTranslation();
-  const { members, fetchMembers, createMember, updateMember, deleteMember } =
-    useTeamStore();
+import {
+  adminTeamList,
+  adminAddMember,
+  adminUpdateMember,
+  adminDeleteMember,
+  adminGetTeamPage,
+  adminSaveTeamPage,
+} from "../../api/teamApi";
 
-  const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState({
-    name_ar: "",
-    name_en: "",
-    job_title_ar: "",
-    job_title_en: "",
-    role: "lawyer",
-    bio_ar: "",
-    bio_en: "",
-    experience_ar: "",
-    experience_en: "",
-    linkedin_url: "",
-    order: 0,
-    is_active: true,
-    profile_image: null,
-  });
 
+/* ======================================================
+   Quill Editor (بديل SunEditor / React-Quill)
+   - بدون findDOMNode
+   - يدعم: خط/حجم/ألوان/محاذاة/قوائم/روابط
+====================================================== */
+function QuillEditor({
+  value,
+  onChange,
+  placeholder = "",
+  height = 250,
+}) {
+  const containerRef = useRef(null);
+  const quillRef = useRef(null);
+  const lastHtmlRef = useRef(value || "");
+
+  // init once
   useEffect(() => {
-    fetchMembers();
+    let mounted = true;
+
+    async function init() {
+      if (!containerRef.current || quillRef.current) return;
+
+      const Quill = (await import("quill")).default;
+
+      const toolbarOptions = [
+        ["bold", "italic", "underline"],
+        [{ size: ["small", false, "large", "huge"] }],
+        [{ color: [] }, { background: [] }],
+        [{ align: [] }],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link"],
+        ["clean"],
+      ];
+
+      const quill = new Quill(containerRef.current, {
+        theme: "snow",
+        placeholder,
+        modules: {
+          toolbar: toolbarOptions,
+        },
+      });
+
+      // Height
+      const editor = containerRef.current.querySelector(".ql-editor");
+      if (editor) editor.style.minHeight = `${height}px`;
+
+      // initial content
+      if (value) {
+        quill.clipboard.dangerouslyPasteHTML(value);
+        lastHtmlRef.current = value;
+      } else {
+        lastHtmlRef.current = "";
+      }
+
+      quill.on("text-change", () => {
+        const html = quill.root.innerHTML;
+
+        // منع spam updates (يقلل اللخبطة)
+        if (html !== lastHtmlRef.current) {
+          lastHtmlRef.current = html;
+          onChange?.(html);
+        }
+      });
+
+      if (!mounted) {
+        quill.off("text-change");
+      }
+
+      quillRef.current = quill;
+    }
+
+    init();
+
+    return () => {
+      mounted = false;
+      // Quill ما يحتاج destroy رسميًا
+      quillRef.current = null;
+    };
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-    if (files && files.length > 0) {
-      setForm((prev) => ({ ...prev, [name]: files[0] }));
+  // keep editor in sync when value changes externally (load/edit)
+  useEffect(() => {
+    const quill = quillRef.current;
+    const next = value || "";
+
+    if (!quill) {
+      lastHtmlRef.current = next;
       return;
     }
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
 
-  const handleSave = async () => {
-    if (!form.name_ar.trim())
-      return toast.error(t("cms.team.errors.name_required"));
-
-    const fd = new FormData();
-    Object.keys(form).forEach((key) => {
-      if (form[key] !== null) fd.append(key, form[key]);
-    });
-
-    let result;
-    if (editing) {
-      result = await updateMember(editing.id, fd);
-    } else {
-      result = await createMember(fd);
+    const current = quill.root.innerHTML;
+    if (next !== current) {
+      const sel = quill.getSelection();
+      quill.clipboard.dangerouslyPasteHTML(next);
+      lastHtmlRef.current = next;
+      if (sel) quill.setSelection(sel);
     }
-
-    if (result.success) {
-      toast.success(
-        editing
-          ? t("cms.team.success.member_updated")
-          : t("cms.team.success.member_created")
-      );
-      setEditing(null);
-      setForm({
-        name_ar: "",
-        name_en: "",
-        job_title_ar: "",
-        job_title_en: "",
-        role: "lawyer",
-        bio_ar: "",
-        bio_en: "",
-        experience_ar: "",
-        experience_en: "",
-        linkedin_url: "",
-        order: 0,
-        is_active: true,
-        profile_image: null,
-      });
-    } else {
-      toast.error(t("cms.team.errors.save_failed"));
-    }
-  };
-
-  const handleEdit = (m) => {
-    setEditing(m);
-    setForm({
-      name_ar: m.name_ar,
-      name_en: m.name_en,
-      job_title_ar: m.job_title_ar,
-      job_title_en: m.job_title_en,
-      role: m.role,
-      bio_ar: m.bio_ar,
-      bio_en: m.bio_en,
-      experience_ar: m.experience_ar,
-      experience_en: m.experience_en,
-      linkedin_url: m.linkedin_url,
-      order: m.order,
-      is_active: m.is_active,
-      profile_image: null,
-    });
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm(t("cms.team.confirm_delete"))) return;
-    const r = await deleteMember(id);
-    if (r.success) toast.success(t("cms.team.success.member_deleted"));
-  };
+  }, [value]);
 
   return (
-    <div className="team-cms-container">
-      <div className="team-cms-header">
-        <h1 className="team-cms-title">{t("cms.team.title")}</h1>
-        <p className="team-cms-subtitle">{t("cms.team.subtitle")}</p>
+    <div style={{ marginTop: 10 }}>
+      {/* Quill يحتاج CSS بنفسه */}
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css"
+      />
+      <div ref={containerRef} />
+    </div>
+  );
+}
+
+export default function Team_Manage() {
+  /* ======================================================
+      STATES
+  ====================================================== */
+
+  const [tab, setTab] = useState("page");
+
+  const [page, setPage] = useState({});
+  const [members, setMembers] = useState([]);
+
+  const [editing, setEditing] = useState(null);
+
+  const [memberForm, setMemberForm] = useState({
+    name_ar: "",
+    name_en: "",
+    experience_ar: "",
+    experience_en: "",
+    profile_image: null,
+    field_ar: "",
+    field_en: "",
+    order: 0,
+    is_active: true,
+  });
+
+  /* ======================================================
+      LOAD
+  ====================================================== */
+
+  useEffect(() => {
+    loadAll();
+  }, []);
+
+  async function loadAll() {
+    const [m, p] = await Promise.all([
+      adminTeamList(),
+      adminGetTeamPage(),
+    ]);
+
+    setMembers(m.data || []);
+    setPage(p.data || {});
+  }
+
+
+  /* ======================================================
+      PAGE SAVE
+  ====================================================== */
+
+  async function savePage() {
+    const fd = new FormData();
+
+    Object.entries(page).forEach(([k, v]) => {
+      // لو القيمة null لا ترسلها
+      if (v === null || v === undefined) return;
+
+      // لو صورة وكانت string (قديمة) لا ترسلها
+      if (
+        (k === "hero_image" || k === "bottom_image") &&
+        typeof v === "string"
+      ) {
+        return;
+      }
+
+      fd.append(k, v);
+    });
+
+    await adminSaveTeamPage(fd);
+    toast.success("تم حفظ الصفحة");
+  }
+
+  /* ======================================================
+      MEMBER SAVE
+  ====================================================== */
+
+  async function saveMember() {
+    const fd = new FormData();
+
+    Object.entries(memberForm).forEach(([k, v]) => {
+      if (v !== null) fd.append(k, v);
+    });
+
+
+    if (editing) await adminUpdateMember(editing.id, fd);
+    else await adminAddMember(fd);
+
+    toast.success("تم الحفظ");
+
+    setEditing(null);
+
+    setMemberForm({
+      name_ar: "",
+      name_en: "",
+      experience_ar: "",
+      experience_en: "",
+      profile_image: null,
+      order: 0,
+      is_active: true,
+    });
+
+    loadAll();
+  }
+
+  /* ======================================================
+      UI
+  ====================================================== */
+
+  return (
+    <div style={{ padding: 30, maxWidth: 1200, margin: "auto" }}>
+      <h1>👥 Team CMS</h1>
+
+      {/* =========================================
+          TABS
+      ========================================= */}
+      <div style={{ marginBottom: 30 }}>
+        <button onClick={() => setTab("page")}>📄 Page</button>
+        <button onClick={() => setTab("members")}>👤 Members</button>
       </div>
 
-      {/* FORM */}
-      <div className="team-form-card">
-        <div className="team-form-header">
-          <h2>
-            {editing
-              ? t("cms.team.edit_member")
-              : t("cms.team.create_member")}
-          </h2>
-        </div>
+      {/* =========================================
+          1️⃣ PAGE SETTINGS
+      ========================================= */}
+      {tab === "page" && (
+        <>
+          <h2>Page Settings</h2>
 
-        <div className="team-form-section">
-          <h3 className="team-section-title">
-            {t("cms.team.sections.basic_info")}
-          </h3>
-          <div className="team-form-grid">
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.name_ar")}
-              </label>
-              <input
-                className="team-input"
-                name="name_ar"
-                value={form.name_ar}
-                onChange={handleChange}
-                placeholder={t("cms.team.placeholders.name_ar")}
-              />
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.name_en")}
-              </label>
-              <input
-                className="team-input"
-                name="name_en"
-                value={form.name_en}
-                onChange={handleChange}
-                placeholder={t("cms.team.placeholders.name_en")}
-              />
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.job_title_ar")}
-              </label>
-              <input
-                className="team-input"
-                name="job_title_ar"
-                value={form.job_title_ar}
-                onChange={handleChange}
-                placeholder={t("cms.team.placeholders.job_title_ar")}
-              />
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.job_title_en")}
-              </label>
-              <input
-                className="team-input"
-                name="job_title_en"
-                value={form.job_title_en}
-                onChange={handleChange}
-                placeholder={t("cms.team.placeholders.job_title_en")}
-              />
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">{t("cms.team.fields.role")}</label>
-              <select
-                className="team-select"
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-              >
-                <option value="lawyer">{t("cms.team.roles.lawyer")}</option>
-                <option value="partner">{t("cms.team.roles.partner")}</option>
-                <option value="consultant">
-                  {t("cms.team.roles.consultant")}
-                </option>
-                <option value="advisor">{t("cms.team.roles.advisor")}</option>
-                <option value="manager">{t("cms.team.roles.manager")}</option>
-                <option value="other">{t("cms.team.roles.other")}</option>
-              </select>
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.order")}
-              </label>
-              <input
-                className="team-input"
-                type="number"
-                name="order"
-                value={form.order}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.linkedin_url")}
-              </label>
-              <input
-                className="team-input"
-                name="linkedin_url"
-                value={form.linkedin_url}
-                onChange={handleChange}
-                placeholder={t("cms.team.placeholders.linkedin_url")}
-              />
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.profile_image")}
-              </label>
-              <input
-                className="team-input-file"
-                type="file"
-                name="profile_image"
-                accept="image/*"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </div>
+          <input
+            placeholder="Title AR"
+            value={page.title_ar || ""}
+            onChange={(e) => setPage({ ...page, title_ar: e.target.value })}
+          />
 
-        <div className="team-form-section">
-          <h3 className="team-section-title">
-            {t("cms.team.sections.biography")}
-          </h3>
-          <div className="team-form-grid">
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.bio_ar")}
-              </label>
-              <div className="team-editor-wrapper">
-                <SunEditor
-                  setContents={form.bio_ar}
-                  onChange={(content) =>
-                    setForm((prev) => ({ ...prev, bio_ar: content }))
-                  }
-                  setOptions={{
-                    height: 200,
-                    buttonList: [
-                      ["undo", "redo"],
-                      ["bold", "italic", "underline"],
-                      ["fontSize", "formatBlock"],
-                      ["align", "list"],
-                      ["link"],
-                      ["codeView"],
-                    ],
-                  }}
-                />
-              </div>
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.bio_en")}
-              </label>
-              <div className="team-editor-wrapper">
-                <SunEditor
-                  setContents={form.bio_en}
-                  onChange={(content) =>
-                    setForm((prev) => ({ ...prev, bio_en: content }))
-                  }
-                  setOptions={{
-                    height: 200,
-                    buttonList: [
-                      ["undo", "redo"],
-                      ["bold", "italic", "underline"],
-                      ["fontSize", "formatBlock"],
-                      ["align", "list"],
-                      ["link"],
-                      ["codeView"],
-                    ],
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+          <input
+            placeholder="Title EN"
+            value={page.title_en || ""}
+            onChange={(e) => setPage({ ...page, title_en: e.target.value })}
+          />
 
-        <div className="team-form-section">
-          <h3 className="team-section-title">
-            {t("cms.team.sections.experience")}
-          </h3>
-          <div className="team-form-grid">
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.experience_ar")}
-              </label>
-              <div className="team-editor-wrapper">
-                <SunEditor
-                  setContents={form.experience_ar}
-                  onChange={(content) =>
-                    setForm((prev) => ({ ...prev, experience_ar: content }))
-                  }
-                  setOptions={{
-                    height: 180,
-                    buttonList: [
-                      ["bold", "italic", "underline"],
-                      ["list"],
-                      ["link"],
-                      ["codeView"],
-                    ],
-                  }}
-                />
-              </div>
-            </div>
-            <div className="team-form-group">
-              <label className="team-label">
-                {t("cms.team.fields.experience_en")}
-              </label>
-              <div className="team-editor-wrapper">
-                <SunEditor
-                  setContents={form.experience_en}
-                  onChange={(content) =>
-                    setForm((prev) => ({ ...prev, experience_en: content }))
-                  }
-                  setOptions={{
-                    height: 180,
-                    buttonList: [
-                      ["bold", "italic", "underline"],
-                      ["list"],
-                      ["link"],
-                      ["codeView"],
-                    ],
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* بدل SunEditor: description_ar */}
+          <h3 style={{ marginTop: 16 }}>Description AR</h3>
+          <QuillEditor
+            value={page.description_ar || ""}
+            onChange={(v) => setPage((prev) => ({ ...prev, description_ar: v }))}
+            height={200}
+            placeholder="اكتب وصف الصفحة بالعربية..."
+          />
 
-        <div className="team-form-section">
-          <h3 className="team-section-title">
-            {t("cms.team.sections.settings")}
-          </h3>
-          <div className="team-checkbox-group">
-            <label className="team-checkbox-label">
-              <input
-                type="checkbox"
-                name="is_active"
-                checked={form.is_active}
-                onChange={handleChange}
-              />
-              <span className="team-checkbox-text">
-                {t("cms.team.fields.active")}
-              </span>
-            </label>
-          </div>
-        </div>
+          {/* (اختياري) لو عندك description_en بالسيرفر، خله جاهز */}
+          <h3 style={{ marginTop: 16 }}>Description EN</h3>
+          <QuillEditor
+            value={page.description_en || ""}
+            onChange={(v) => setPage((prev) => ({ ...prev, description_en: v }))}
+            height={200}
+            placeholder="Write page description in English..."
+          />
 
-        <div className="team-form-actions">
-          <button className="team-btn-primary" onClick={handleSave}>
-            {editing
-              ? t("cms.team.actions.update")
-              : t("cms.team.actions.create")}
+          <h3 style={{ marginTop: 20 }}>Hero Top</h3>
+          <input
+            type="file"
+            onChange={(e) => setPage({ ...page, hero_image: e.target.files[0] })}
+          />
+
+          {/* بدل SunEditor: hero_description_ar */}
+          <h3 style={{ marginTop: 16 }}>Hero Description AR</h3>
+          <QuillEditor
+            value={page.hero_description_ar || ""}
+            onChange={(v) =>
+              setPage((prev) => ({ ...prev, hero_description_ar: v }))
+            }
+            height={200}
+            placeholder="وصف الهيرو بالعربية..."
+          />
+
+          <h3 style={{ marginTop: 16 }}>Hero Description EN</h3>
+          <QuillEditor
+            value={page.hero_description_en || ""}
+            onChange={(v) =>
+              setPage((prev) => ({ ...prev, hero_description_en: v }))
+            }
+            height={200}
+            placeholder="Hero description in English..."
+          />
+
+          <h3 style={{ marginTop: 20 }}>Middle Content</h3>
+
+          {/* بدل SunEditor: content_ar */}
+          <h3 style={{ marginTop: 12 }}>Content AR</h3>
+          <QuillEditor
+            value={page.content_ar || ""}
+            onChange={(v) => setPage((prev) => ({ ...prev, content_ar: v }))}
+            height={250}
+            placeholder="محتوى منتصف الصفحة بالعربية..."
+          />
+
+          <h3 style={{ marginTop: 12 }}>Content EN</h3>
+          <QuillEditor
+            value={page.content_en || ""}
+            onChange={(v) => setPage((prev) => ({ ...prev, content_en: v }))}
+            height={250}
+            placeholder="Middle content in English..."
+          />
+
+          <h3 style={{ marginTop: 20 }}>Bottom Hero</h3>
+          <input
+            type="file"
+            onChange={(e) =>
+              setPage({ ...page, bottom_image: e.target.files[0] })
+            }
+          />
+
+          <h3 style={{ marginTop: 20 }}>Right Button Title AR</h3>
+          <QuillEditor
+            value={page.right_cta_title_ar || ""}
+            onChange={(v) =>
+              setPage((prev) => ({ ...prev, right_cta_title_ar: v }))
+            }
+            height={100}
+          />
+
+          <h3 style={{ marginTop: 16 }}>Right Button Title EN</h3>
+          <QuillEditor
+            value={page.right_cta_title_en || ""}
+            onChange={(v) =>
+              setPage((prev) => ({ ...prev, right_cta_title_en: v }))
+            }
+            height={100}
+          />
+
+          <hr style={{ margin: "25px 0" }} />
+
+          <h3>Left Button Title AR</h3>
+          <QuillEditor
+            value={page.left_cta_title_ar || ""}
+            onChange={(v) =>
+              setPage((prev) => ({ ...prev, left_cta_title_ar: v }))
+            }
+            height={100}
+          />
+
+          <h3 style={{ marginTop: 16 }}>Left Button Title EN</h3>
+          <QuillEditor
+            value={page.left_cta_title_en || ""}
+            onChange={(v) =>
+              setPage((prev) => ({ ...prev, left_cta_title_en: v }))
+            }
+            height={100}
+          />
+
+
+          <h3 style={{ marginTop: 20 }}>CTA Buttons</h3>
+
+          <input
+            placeholder="Left Text AR"
+            value={page.left_link_text_ar || ""}
+            onChange={(e) =>
+              setPage({ ...page, left_link_text_ar: e.target.value })
+            }
+          />
+
+          <input
+            placeholder="Left Text EN"
+            value={page.left_link_text_en || ""}
+            onChange={(e) =>
+              setPage({ ...page, left_link_text_en: e.target.value })
+            }
+          />
+
+          <input
+            placeholder="Left URL"
+            value={page.left_link_url || ""}
+            onChange={(e) => setPage({ ...page, left_link_url: e.target.value })}
+          />
+
+          <label>
+            <input
+              type="checkbox"
+              checked={!!page.left_link_visible}
+              onChange={(e) =>
+                setPage({ ...page, left_link_visible: e.target.checked })
+              }
+            />
+            Visible
+          </label>
+
+          <hr style={{ margin: "25px 0" }} />
+
+          <h3>Right Button</h3>
+
+          <input
+            placeholder="Right Text AR"
+            value={page.right_link_text_ar || ""}
+            onChange={(e) =>
+              setPage({ ...page, right_link_text_ar: e.target.value })
+            }
+          />
+
+          <input
+            placeholder="Right Text EN"
+            value={page.right_link_text_en || ""}
+            onChange={(e) =>
+              setPage({ ...page, right_link_text_en: e.target.value })
+            }
+          />
+
+          <input
+            placeholder="Right URL"
+            value={page.right_link_url || ""}
+            onChange={(e) =>
+              setPage({ ...page, right_link_url: e.target.value })
+            }
+          />
+
+          <label>
+            <input
+              type="checkbox"
+              checked={!!page.right_link_visible}
+              onChange={(e) =>
+                setPage({ ...page, right_link_visible: e.target.checked })
+              }
+            />
+            Visible
+          </label>
+
+
+          <br />
+
+          <button onClick={savePage}>💾 حفظ الصفحة</button>
+        </>
+      )}
+
+
+      {/* =========================================
+          3️⃣ MEMBERS
+      ========================================= */}
+      {tab === "members" && (
+        <>
+          <h2>Members</h2>
+
+          <input
+            placeholder="الاسم عربي"
+            value={memberForm.name_ar}
+            onChange={(e) =>
+              setMemberForm({ ...memberForm, name_ar: e.target.value })
+            }
+          />
+
+          <input
+            placeholder="Name EN"
+            value={memberForm.name_en}
+            onChange={(e) =>
+              setMemberForm({ ...memberForm, name_en: e.target.value })
+            }
+          />
+
+          <input
+            placeholder="المجال عربي"
+            value={memberForm.field_ar}
+            onChange={(e) => setMemberForm({ ...memberForm, field_ar: e.target.value })}
+          />
+
+          <input
+            placeholder="Field EN"
+            value={memberForm.field_en}
+            onChange={(e) => setMemberForm({ ...memberForm, field_en: e.target.value })}
+          />
+
+          <input
+            placeholder="القطاع عربي"
+            value={memberForm.sector_ar}
+            onChange={(e) => setMemberForm({ ...memberForm, sector_ar: e.target.value })}
+          />
+
+          <input
+            placeholder="Sector EN"
+            value={memberForm.sector_en}
+            onChange={(e) => setMemberForm({ ...memberForm, sector_en: e.target.value })}
+          />
+
+
+
+          {/* بدل SunEditor: experience_ar */}
+          <h3 style={{ marginTop: 12 }}>Experience AR</h3>
+          <QuillEditor
+            value={memberForm.experience_ar || ""}
+            onChange={(v) =>
+              setMemberForm((prev) => ({ ...prev, experience_ar: v }))
+            }
+            height={200}
+            placeholder="خبرة العضو بالعربية..."
+          />
+
+          {/* (اختياري) experience_en */}
+          <h3 style={{ marginTop: 12 }}>Experience EN</h3>
+          <QuillEditor
+            value={memberForm.experience_en || ""}
+            onChange={(v) =>
+              setMemberForm((prev) => ({ ...prev, experience_en: v }))
+            }
+            height={200}
+            placeholder="Member experience in English..."
+          />
+
+          <input
+            style={{ marginTop: 12 }}
+            type="file"
+            onChange={(e) =>
+              setMemberForm({
+                ...memberForm,
+                profile_image: e.target.files[0],
+              })
+            }
+          />
+
+          <button onClick={saveMember}>
+            {editing ? "تحديث" : "إضافة عضو"}
           </button>
-          {editing && (
-            <button
-              className="team-btn-cancel"
-              onClick={() => {
-                setEditing(null);
-                setForm({
-                  name_ar: "",
-                  name_en: "",
-                  job_title_ar: "",
-                  job_title_en: "",
-                  role: "lawyer",
-                  bio_ar: "",
-                  bio_en: "",
-                  experience_ar: "",
-                  experience_en: "",
-                  linkedin_url: "",
-                  order: 0,
-                  is_active: true,
-                  profile_image: null,
-                });
-              }}
-            >
-              {t("cms.team.actions.cancel")}
-            </button>
-          )}
-        </div>
-      </div>
 
-      {/* TABLE */}
-      <div className="team-list-card">
-        <h2 className="team-list-title">{t("cms.team.list_title")}</h2>
-        <div className="team-table-wrapper">
-          <table className="team-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>{t("cms.team.table.name")}</th>
-                <th>{t("cms.team.table.role")}</th>
-                <th>{t("cms.team.table.order")}</th>
-                <th>{t("cms.team.table.active")}</th>
-                <th>{t("cms.team.table.image")}</th>
-                <th>{t("cms.team.table.actions")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {members.map((m) => (
-                <tr key={m.id}>
-                  <td className="team-table-id">{m.id}</td>
-                  <td className="team-table-name">{m.name_ar}</td>
-                  <td className="team-table-role">{m.role}</td>
-                  <td className="team-table-order">{m.order}</td>
-                  <td>{m.is_active ? t("common.yes") : t("common.no")}</td>
-                  <td>
-                    {m.profile_image_url && (
-                      <img
-                        className="team-profile-image"
-                        src={m.profile_image_url}
-                        alt={m.name_ar}
-                      />
-                    )}
-                  </td>
-                  <td>
-                    <div className="team-table-actions">
-                      <button
-                        className="team-btn-edit"
-                        onClick={() => handleEdit(m)}
-                      >
-                        {t("cms.team.actions.edit")}
-                      </button>
-                      <button
-                        className="team-btn-delete"
-                        onClick={() => handleDelete(m.id)}
-                      >
-                        {t("cms.team.actions.delete")}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {members.length === 0 && (
-                <tr>
-                  <td colSpan="7" className="team-table-empty">
-                    {t("cms.team.empty")}
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          <hr />
+
+          {members.map((m) => (
+            <div key={m.id}>
+              {m.name_ar}
+              <button onClick={() => adminDeleteMember(m.id)}>حذف</button>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 }

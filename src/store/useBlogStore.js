@@ -1,4 +1,6 @@
 import { create } from "zustand";
+import api from "../api/axiosClient"; // 🔥 مهم جداً
+
 import {
   getCategories,
   createCategory as apiCreateCategory,
@@ -17,6 +19,27 @@ import {
 } from "../api/blogApi";
 
 export const useBlogStore = create((set, get) => ({
+
+  // ==========================
+  // BLOG PAGE SETTINGS
+  // ==========================
+  fetchBlogSettings: async () => {
+    try {
+      const res = await api.get("/blog/public/settings/");
+      return res.data;
+    } catch (err) {
+      return null;
+    }
+  },
+
+  updateBlogSettings: async (data) => {
+    try {
+      const res = await api.patch("/blog/admin/settings/", data);
+      return { success: true, data: res.data };
+    } catch (err) {
+      return { success: false, message: err.response?.data };
+    }
+  },
 
   // ==========================
   // CATEGORIES
@@ -58,7 +81,6 @@ export const useBlogStore = create((set, get) => ({
     }
   },
 
-
   // ==========================
   // TAGS
   // ==========================
@@ -99,14 +121,13 @@ export const useBlogStore = create((set, get) => ({
     }
   },
 
-
   // ==========================
   // POSTS
   // ==========================
   posts: [],
 
-  fetchPosts: async () => {
-    const res = await getPosts();
+  fetchPosts: async (type) => {
+    const res = await getPosts(type);
     set({ posts: res.data });
   },
 

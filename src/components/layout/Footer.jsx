@@ -62,69 +62,77 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   /* ================= Column Order ================= */
-  const columnOrder = [
-    "عن شهم",
-    "خدمات العملاء",
-    "الأخلاقيات والامتثال",
-    "الشروط القانونية",
-  ];
+  const normalizeKey = (key) => key?.split("_")[0];
 
-  const sitemapColumn = useMemo(
-    () => columns.find((c) => c.title_ar === "خريطة الموقع"),
-    [columns]
-  );
+  const columnOrder = ["about", "customers", "ethics", "legal"];
 
   const sortedColumns = useMemo(
     () =>
       columnOrder
-        .map((t) => columns.find((c) => c.title_ar === t))
+        .map((k) =>
+          columns.find((c) => normalizeKey(c.key) === k)
+        )
         .filter(Boolean),
     [columns]
   );
 
-const newsletterColumn = useMemo(
-  () =>
-    columns.find(
-      (c) => c.title_ar === "أرغب في تلقّي كل جديد من أخبار شهم"
-    ),
+
+
+const sitemapColumn = useMemo(
+  () => columns.find((c) => normalizeKey(c.key) === "sitemap"),
   [columns]
 );
 
 
-  /* ================= Tree Item ================= */
-function FooterTree({ item }) {
-  const hasChildren = item.children?.length > 0;
-  const label = isAr
-    ? item.label_ar
-    : item.label_en || item.label_ar;
-  
-  const isOpen = openTrees[item.id];
 
-  return (
-    <li>
-      <div
-        className="footer-tree-toggle"
-        onClick={() => hasChildren && toggleTree(item.id)}
-      >
-        {item.url ? <a href={item.url}>{label}</a> : <span>{label}</span>}
-
-        {hasChildren && (
-          <span className={`arrow ${isOpen ? "open" : ""}`}>
-            {isAr ? "▾" : "▾"}
-          </span>
-        )}
-      </div>
-
-      {hasChildren && isOpen && (
-        <ul className="footer-tree-content">
-          {item.children.map((c) => (
-            <FooterTree key={c.id} item={c} />
-          ))}
-        </ul>
-      )}
-    </li>
+  const newsletterColumn = useMemo(
+    () =>
+      columns.find(
+        (c) => c.title_ar === "أرغب في تلقّي كل جديد من أخبار شهم"
+      ),
+    [columns]
   );
-}
+
+
+  /* ================= Tree Item ================= */
+  function FooterTree({ item }) {
+    const hasChildren = item.children?.length > 0;
+    const label = isAr
+      ? item.label_ar || item.display_label
+      : item.label_en || item.label_ar || item.display_label;
+
+
+    const isOpen = openTrees[item.id];
+
+    return (
+      <li>
+        <div
+          className="footer-tree-toggle"
+          onClick={() => hasChildren && toggleTree(item.id)}
+        >
+          {item.resolved_url ? (
+            <a href={item.resolved_url}>{label}</a>
+          ) : (
+            <span>{label}</span>
+          )}
+
+          {hasChildren && (
+            <span className={`arrow ${isOpen ? "open" : ""}`}>
+              {isAr ? "▾" : "▾"}
+            </span>
+          )}
+        </div>
+
+        {hasChildren && isOpen && (
+          <ul className="footer-tree-content">
+            {item.children.map((c) => (
+              <FooterTree key={c.id} item={c} />
+            ))}
+          </ul>
+        )}
+      </li>
+    );
+  }
 
   /* ================= Render ================= */
   return (
@@ -185,20 +193,18 @@ function FooterTree({ item }) {
                       id: "legal-sitemap",
                       label_ar: "خريطة الموقع",
                       label_en: "Sitemap",
-                      url: "",
+                      resolved_url: "",
                       children: sitemapColumn.links || [],
-                    },
+                    }
+                    ,
                   ]
                   : col.links;
 
               return (
                 <div className="footer-column" key={col.id}>
                   <h3 className="footer-title">
-                    {isAr
-                      ? col.title_ar
-                      : col.title_en || col.title_ar}
+                    {isAr ? col.title_ar : col.title_en || col.title_ar}
                   </h3>
-
                   <ul className="footer-links">
                     {mergedLinks?.map((l) => (
                       <FooterTree key={`${col.id}-${l.id}`} item={l} />
@@ -282,10 +288,7 @@ function FooterTree({ item }) {
           </div>
         </div>
 
-        {/* ================= COPYRIGHT ================= */}
-        <div className="footer-copy">
-          {t("footer.copyright", { year })}
-        </div>
+
       </div>
     </footer>
   );

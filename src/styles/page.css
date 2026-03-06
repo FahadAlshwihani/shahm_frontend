@@ -4,7 +4,7 @@
   padding: 0 20px;
   color: var(--color-primary);
 }
-
+ 
 /* ===== Title ===== */
 
 .page-title {
@@ -62,7 +62,6 @@
 }
 
 .page-content a {
-  color: var(--color-secondary);
   text-decoration: underline;
 }
 

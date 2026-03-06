@@ -53,3 +53,14 @@ export const adminEditPage = (id, data) =>
   api.patch(`cms/admin/pages/${id}/`, data);
 export const adminDeletePage = (id) =>
   api.delete(`cms/admin/pages/${id}/`);
+
+// ===============================
+// ADMIN: FAQ
+// ===============================
+export const adminFaq = () => api.get("cms/admin/faq/");
+export const adminCreateFaq = (data) =>
+  api.post("cms/admin/faq/", data);
+export const adminEditFaq = (id, data) =>
+  api.patch(`cms/admin/faq/${id}/`, data);
+export const adminDeleteFaq = (id) =>
+  api.delete(`cms/admin/faq/${id}/`);

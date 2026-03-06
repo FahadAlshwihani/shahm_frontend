@@ -1,0 +1,585 @@
+/* ===== TEAM PAGE STYLES ===== */
+
+:root {
+  --font-ar-heading: "HT Sonata", serif;
+  --font-en-heading: "Ciclo Display", sans-serif;
+  --font-content: "Noto Kufi Arabic", sans-serif;
+
+  --color-primary: #33383c;
+  --color-secondary: #7b8487;
+  --color-border: #e5e5e5;
+  --color-search-bg: #fdfdfd;
+  --color-icon-gray: #969696;
+}
+
+/* ===== MAIN CONTAINER ===== */
+.team-page {
+  max-width: 1354px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== ROW 1: TITLE & DESCRIPTION ===== */
+.team-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-top: 40px;
+}
+
+.team-title-center {
+  font-family: var(--font-ar-heading);
+  font-size: 40px;
+  line-height: 52px;
+  font-weight: 400;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.team-description-center {
+  font-family: var(--font-content);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.team-description-center p {
+  margin: 0;
+  font-family: var(--font-content);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-secondary);
+}
+
+/* Header Divider */
+.team-header-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border);
+  margin-bottom: 50px;
+}
+
+/* ===== ROW 2: HERO IMAGE & DESCRIPTION ===== */
+.team-hero-section {
+  margin-bottom: 60px;
+}
+
+.team-hero-image-wrapper {
+  width: 100%;
+  max-width: 1311px;
+  margin: 0 auto 24px;
+}
+
+.team-hero-image {
+  width: 100%;
+  height: auto;
+  max-height: 596px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.team-hero-description {
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--color-primary);
+  max-width: 1311px;
+}
+
+.team-page[dir="rtl"] .team-hero-description {
+  text-align: right;
+}
+
+.team-page[dir="ltr"] .team-hero-description {
+  text-align: left;
+}
+
+.team-hero-description p {
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 16px;
+}
+
+/* ===== ROW 3: SEARCH & FILTERS ===== */
+.team-filters-section {
+  margin-bottom: 50px;
+}
+
+/* Search Row */
+.team-search-row {
+  position: relative;
+  width: 100%;
+  max-width: 1337px;
+  height: 65px;
+  margin: 0 auto 4px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* RTL - Icon on Right */
+.team-page[dir="rtl"] .team-search-icon {
+  order: 2;
+  color: var(--color-icon-gray);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* LTR - Icon on Left */
+.team-page[dir="ltr"] .team-search-icon {
+  order: 1;
+  color: var(--color-icon-gray);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.team-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-content);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-primary);
+  padding: 0;
+}
+
+.team-page[dir="rtl"] .team-search-input {
+  text-align: right;
+  order: 1;
+}
+
+.team-page[dir="ltr"] .team-search-input {
+  text-align: left;
+  order: 2;
+}
+
+.team-search-input::placeholder {
+  color: var(--color-icon-gray);
+  font-family: var(--font-content);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Filters Row */
+.team-filters-row {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  max-width: 1337px;
+  margin: 0 auto;
+}
+
+.team-filter-wrapper {
+  flex: 1;
+  height: 65px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+}
+
+.team-filter-select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-content);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-primary);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%237b8487' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  padding-left: 0;
+  padding-right: 24px;
+}
+
+.team-page[dir="rtl"] .team-filter-select {
+  text-align: right;
+  background-position: left center;
+  padding-left: 24px;
+  padding-right: 0;
+}
+
+.team-page[dir="ltr"] .team-filter-select {
+  text-align: left;
+  background-position: right center;
+  padding-left: 0;
+  padding-right: 24px;
+}
+
+.team-filter-select option {
+  font-family: var(--font-content);
+  font-size: 14px;
+  color: var(--color-primary);
+}
+
+/* ===== TEAM CARDS SECTION ===== */
+.team-cards-section {
+  margin-bottom: 80px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1337px;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.team-page[dir="rtl"] .team-card {
+  align-items: flex-end;
+}
+
+.team-page[dir="ltr"] .team-card {
+  align-items: flex-start;
+}
+
+.team-card-image-wrapper {
+  width: 100%;
+  max-width: 314px;
+  height: 460px;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.team-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-card-image {
+  transform: scale(1.05);
+}
+
+.team-card-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.team-card-name {
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.team-page[dir="rtl"] .team-card-name {
+  text-align: right;
+}
+
+.team-page[dir="ltr"] .team-card-name {
+  text-align: left;
+}
+
+.team-card-experience {
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: var(--color-secondary);
+}
+
+.team-page[dir="rtl"] .team-card-experience {
+  text-align: right;
+}
+
+.team-page[dir="ltr"] .team-card-experience {
+  text-align: left;
+}
+
+.team-card-experience p {
+  margin: 0;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+/* No Results */
+.team-no-results {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 1337px;
+  margin: 0 auto;
+}
+
+.team-no-results p {
+  font-family: var(--font-content);
+  font-size: 16px;
+  color: var(--color-secondary);
+  margin: 0;
+}
+
+/* ===== ROW 4: MIDDLE CONTENT (CENTERED TEXT) ===== */
+.team-middle-content {
+  max-width: 563px;
+  margin: 0 auto 80px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.team-content-text {
+  font-family: var(--font-content);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--color-primary);
+}
+
+.team-content-text p {
+  margin: 0 0 16px 0;
+  font-family: var(--font-content);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.team-content-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== ROW 5: BOTTOM IMAGE ===== */
+.team-bottom-section {
+  margin-bottom: 30px;
+}
+
+.team-bottom-image-wrapper {
+  width: 100%;
+  max-width: 1337px;
+  margin: 0 auto;
+}
+
+.team-bottom-image {
+  width: 100%;
+  height: auto;
+  max-height: 596px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+/* ===== ROW 6 & 7: CTA BUTTONS ===== */
+.team-cta-section {
+  margin-bottom: 60px;
+}
+
+.team-cta-wrapper {
+  max-width: 1337px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.team-cta-link {
+  font-family: var(--font-content);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-primary);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.team-cta-link:hover {
+  color: var(--color-secondary);
+}
+
+/* RTL: Right link at start, Left link at end */
+.team-page[dir="rtl"] .team-cta-right {
+  order: 1;
+}
+
+.team-page[dir="rtl"] .team-cta-left {
+  order: 2;
+}
+
+/* LTR: Left link at start, Right link at end */
+.team-page[dir="ltr"] .team-cta-left {
+  order: 1;
+}
+
+.team-page[dir="ltr"] .team-cta-right {
+  order: 2;
+}
+
+.team-cta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.team-cta-title {
+  font-family: var(--font-content);
+  font-size: 18px;
+  color: var(--color-primary);
+}
+
+.team-cta-title p {
+  margin: 0;
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1400px) {
+  .team-page {
+    padding: 0 40px;
+  }
+
+  .team-hero-image-wrapper,
+  .team-hero-description,
+  .team-search-row,
+  .team-filters-row,
+  .team-grid,
+  .team-bottom-image-wrapper,
+  .team-cta-wrapper {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 968px) {
+  .team-page {
+    padding: 0 20px;
+  }
+
+  .team-title-center {
+    font-size: 32px;
+    line-height: 42px;
+  }
+
+  .team-hero-image {
+    max-height: 400px;
+  }
+
+  .team-search-row,
+  .team-filter-wrapper {
+    height: 55px;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .team-card-image-wrapper {
+    max-width: 100%;
+  }
+
+  .team-middle-content {
+    max-width: 100%;
+  }
+
+  .team-bottom-image {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-filters-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .team-filter-wrapper {
+    width: 100%;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .team-cta-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .team-page[dir="rtl"] .team-cta-wrapper {
+    align-items: flex-end;
+  }
+
+  .team-page[dir="ltr"] .team-cta-wrapper {
+    align-items: flex-start;
+  }
+
+  .team-cta-right,
+  .team-cta-left {
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .team-page {
+    padding: 0 15px;
+  }
+
+  .team-title-center {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .team-hero-image {
+    max-height: 300px;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-card-image-wrapper {
+    max-width: 100%;
+    height: 400px;
+  }
+
+  .team-bottom-image {
+    max-height: 300px;
+  }
+}
+
+/* RTL/LTR Typography Adjustments */
+.team-page[dir="ltr"] .team-title-center {
+  font-family: var(--font-en-heading);
+}
+
+.team-page[dir="ltr"] .team-description-center,
+.team-page[dir="ltr"] .team-hero-description,
+.team-page[dir="ltr"] .team-card-name,
+.team-page[dir="ltr"] .team-card-experience,
+.team-page[dir="ltr"] .team-content-text {
+  text-align: left;
+}

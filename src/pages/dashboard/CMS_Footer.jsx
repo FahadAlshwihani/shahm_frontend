@@ -6,16 +6,14 @@ import { useTranslation } from "react-i18next";
 import "../../styles/CMS_FOOTER.css";
 
 export default function CMS_Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [columns, setColumns] = useState([]);
   const [pages, setPages] = useState([]);
   const [settings, setSettings] = useState(null);
 
-const PROTECTED_COLUMNS = [
-  "أرغب في تلقّي كل جديد من أخبار شهم",
-  "تابعنا"
-];
+  const PROTECTED_COLUMNS = ["newsletter", "follow"];
+
 
   /* ================= Column Form ================= */
   const [colForm, setColForm] = useState({
@@ -109,7 +107,7 @@ const PROTECTED_COLUMNS = [
       return toast.error(t("cms.footer.parent_required"));
     }
 
-    if (PROTECTED_COLUMNS.includes(columnObj.title_ar)) {
+    if (PROTECTED_COLUMNS.includes(columnObj.key)) {
       return toast.error(t("cms.footer.protected_column"));
     }
 
@@ -117,24 +115,43 @@ const PROTECTED_COLUMNS = [
       return toast.error(t("cms.footer.link_conflict"));
     }
 
+    // ✅ الحل: نستخدم FormData دائمًا
+    const fd = new FormData();
+
+    Object.entries({
+      ...linkForm,
+      parent: linkForm.parent || "",
+    }).forEach(([key, value]) => {
+      if (value !== null && value !== "") {
+        fd.append(key, value);
+      }
+    });
+
     try {
       if (editLinkId) {
-        await api.patch(`cms/admin/footer-links/${editLinkId}/`, linkForm);
+        await api.patch(
+          `cms/admin/footer-links/${editLinkId}/`,
+          fd,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
         toast.success(t("cms.footer.link_updated"));
       } else {
-        await api.post("cms/admin/footer-links/", {
-          ...linkForm,
-          parent: linkForm.parent || null,
-        });
+        await api.post(
+          "cms/admin/footer-links/",
+          fd,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
         toast.success(t("cms.footer.link_created"));
       }
 
       resetLinkForm();
       loadData();
-    } catch {
+    } catch (err) {
+      console.error(err);
       toast.error(t("cms.footer.link_save_failed"));
     }
   };
+
 
   const resetLinkForm = () => {
     setLinkForm({
@@ -290,7 +307,7 @@ const PROTECTED_COLUMNS = [
                 }}
               />
 
-              {!PROTECTED_COLUMNS.includes(col.title_ar) && (
+              {!PROTECTED_COLUMNS.includes(col.key) && (
                 <>
                   <button
                     className="footer-btn-edit"
@@ -327,39 +344,107 @@ const PROTECTED_COLUMNS = [
 
           {/* ================= Column Links ================= */}
           {col.title_ar === "تابعنا" ? (
-            <ul className="footer-links-list">
-              {settings?.linkedin_url && (
-                <li className="footer-link-item">
-                  <span className="footer-link-icon">🔗</span>
-                  <span className="footer-link-label">LinkedIn</span>
-                  <span className="footer-link-auto">
-                    {t("cms.footer.auto_from_settings")}
-                  </span>
-                </li>
-              )}
-              {settings?.x_url && (
-                <li className="footer-link-item">
-                  <span className="footer-link-icon">🔗</span>
-                  <span className="footer-link-label">X</span>
-                  <span className="footer-link-auto">
-                    {t("cms.footer.auto_from_settings")}
-                  </span>
-                </li>
-              )}
-              {settings?.instagram_url && (
-                <li className="footer-link-item">
-                  <span className="footer-link-icon">🔗</span>
-                  <span className="footer-link-label">Instagram</span>
-                  <span className="footer-link-auto">
-                    {t("cms.footer.auto_from_settings")}
-                  </span>
-                </li>
-              )}
+            <>
+              {/* قسم رفع الشعار */}
+              <div className="footer-logo-upload-section">
+                <h4 className="footer-add-link-title">
+                  {t("cms.footer.footer_logo")}
+                </h4>
 
-              <div className="footer-info-box protected">
-                ⚙️ {t("cms.footer.edit_in_settings")}
+                {col.links?.find((l) => l.media_type === "footer_logo") ? (
+                  <div className="footer-logo-preview">
+                    <img
+                      src={col.links.find((l) => l.media_type === "footer_logo").file_url}
+                      alt="Footer Logo"
+                    />
+                    <button
+                      className="footer-btn-delete"
+                      onClick={async () => {
+                        const logoLink = col.links.find((l) => l.media_type === "footer_logo");
+                        if (!window.confirm(t("cms.footer.confirm_delete_logo"))) return;
+                        await api.delete(`cms/admin/footer-links/${logoLink.id}/`);
+                        toast.success(t("cms.footer.logo_deleted"));
+                        loadData();
+                      }}
+                    >
+                      🗑 {t("cms.footer.delete")}
+                    </button>
+                  </div>
+                ) : (
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      const fileInput = e.target.querySelector('input[type="file"]');
+                      if (!fileInput.files[0]) return;
+
+                      const fd = new FormData();
+                      fd.append("column", col.id);
+                      fd.append("media_type", "footer_logo");
+                      fd.append("file", fileInput.files[0]);
+                      fd.append("label_ar", "شعار الفوتر");
+                      fd.append("label_en", "Footer Logo");
+                      fd.append("order", 0);
+                      fd.append("is_active", true);
+
+                      try {
+                        await api.post("cms/admin/footer-links/", fd, {
+                          headers: { "Content-Type": "multipart/form-data" },
+                        });
+                        toast.success(t("cms.footer.logo_uploaded"));
+                        loadData();
+                      } catch {
+                        toast.error(t("cms.footer.logo_upload_failed"));
+                      }
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="footer-input-file"
+                      required
+                    />
+                    <button type="submit" className="footer-btn-primary">
+                      {t("cms.footer.upload_logo")}
+                    </button>
+                  </form>
+                )}
               </div>
-            </ul>
+
+              {/* روابط التواصل الاجتماعي */}
+              <ul className="footer-links-list">
+                {settings?.linkedin_url && (
+                  <li className="footer-link-item">
+                    <span className="footer-link-icon">🔗</span>
+                    <span className="footer-link-label">LinkedIn</span>
+                    <span className="footer-link-auto">
+                      {t("cms.footer.auto_from_settings")}
+                    </span>
+                  </li>
+                )}
+                {settings?.x_url && (
+                  <li className="footer-link-item">
+                    <span className="footer-link-icon">🔗</span>
+                    <span className="footer-link-label">X</span>
+                    <span className="footer-link-auto">
+                      {t("cms.footer.auto_from_settings")}
+                    </span>
+                  </li>
+                )}
+                {settings?.instagram_url && (
+                  <li className="footer-link-item">
+                    <span className="footer-link-icon">🔗</span>
+                    <span className="footer-link-label">Instagram</span>
+                    <span className="footer-link-auto">
+                      {t("cms.footer.auto_from_settings")}
+                    </span>
+                  </li>
+                )}
+
+                <div className="footer-info-box protected">
+                  ⚙️ {t("cms.footer.edit_in_settings")}
+                </div>
+              </ul>
+            </>
           ) : col.title_ar === "خريطة الموقع" ? (
             <ul className="footer-links-list">
               {pages
@@ -372,10 +457,13 @@ const PROTECTED_COLUMNS = [
                 .map((p) => (
                   <li key={p.id} className="footer-link-item">
                     <span className="footer-link-icon">📄</span>
-                    <span className="footer-link-label">{p.title_ar}</span>
+                    <span className="footer-link-label">
+                      {i18n.language === "en" ? p.title_en || p.title_ar : p.title_ar}
+                    </span>
                     <span className="footer-link-auto">
                       {t("cms.footer.automatic")}
                     </span>
+
                     <a
                       href={`/page/${p.slug}`}
                       target="_blank"
@@ -386,6 +474,7 @@ const PROTECTED_COLUMNS = [
                     </a>
                   </li>
                 ))}
+
             </ul>
           ) : (
             <ul className="footer-links-list">
@@ -396,7 +485,7 @@ const PROTECTED_COLUMNS = [
           )}
 
           {/* ================= Add Link ================= */}
-          {!PROTECTED_COLUMNS.includes(col.title_ar) && (
+          {!PROTECTED_COLUMNS.includes(col.key) && (
             <div className="footer-add-link-section">
               <h4 className="footer-add-link-title">
                 {t("cms.footer.add_link")}

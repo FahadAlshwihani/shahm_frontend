@@ -23,7 +23,8 @@ export const deleteTag = (id) => api.delete(`blog/admin/tags/${id}/`);
 // ================================
 // Blog Posts
 // ================================
-export const getPosts = () => api.get("blog/admin/posts/");
+export const getPosts = (type) =>
+  api.get(`blog/admin/posts/?type=${type}`);
 
 export const createPost = (formData) =>
   api.post("blog/admin/posts/", formData, {

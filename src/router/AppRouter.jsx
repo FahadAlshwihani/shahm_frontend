@@ -6,12 +6,22 @@ import MainLayout from "../components/layout/MainLayout";
 // Public pages
 import Home from "../pages/public/Home";
 import Services from "../pages/public/Services";
-import AreaDetails from "../pages/public/AreaDetails";   // ✅ NEW
+import ServiceDetails from "../pages/public/ServiceDetail";
 import Team from "../pages/public/Team";
 import Blog from "../pages/public/Blog";
 import BlogDetails from "../pages/public/BlogDetails";
 import LegalPage from "../pages/public/LegalPage";
 import Page from "../pages/public/Page";
+import FAQ from "../pages/public/FAQ";
+import Contact from "../pages/public/Contact";
+import ServiceAdvisory from "../pages/public/ServiceAdvisory";
+import Payment from "../pages/public/Payment";
+import AppointmentBooking from "../pages/public/AppointmentBooking";
+import Careers from "../pages/public/Careers";
+import CareersCMS from "../pages/dashboard/CareersCMS";
+import CareerApplicationsCMS from "../pages/dashboard/CareerApplicationsCMS";
+
+
 
 // Auth
 import Login from "../pages/auth/Login";
@@ -36,6 +46,10 @@ import EmailTemplates from "../pages/dashboard/EmailTemplates";
 
 import CMS_Header from "../pages/dashboard/CMS_Header";
 import CMS_Footer from "../pages/dashboard/CMS_Footer";
+import CMS_FAQ from "../pages/dashboard/CMS_FAQ";
+import CMS_Contact from "../pages/dashboard/contact/CMS_Contact";
+import AppointmentsCMS from "../pages/dashboard/AppointmentsCMS";
+
 
 export default function AppRouter() {
   return (
@@ -60,7 +74,49 @@ export default function AppRouter() {
         path="/services/:slug"
         element={
           <MainLayout>
-            <AreaDetails />
+            <ServiceDetails />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/service-advisory"
+        element={
+          <MainLayout>
+            <ServiceAdvisory />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/page/service-advisory"
+        element={<Navigate to="/service-advisory" replace />}
+      />
+
+      <Route
+        path="/appointments"
+        element={
+          <MainLayout>
+            <AppointmentBooking />
+          </MainLayout>
+        }
+      />
+
+
+
+
+      <Route
+        path="/payment"
+        element={
+          <MainLayout>
+            <Payment />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/careers"
+        element={
+          <MainLayout>
+            <Careers />
           </MainLayout>
         }
       />
@@ -101,10 +157,26 @@ export default function AppRouter() {
         }
       />
 
+      <Route
+        path="/contact"
+        element={
+          <MainLayout>
+            <Contact />
+          </MainLayout>
+        }
+      />
+
+
+
+
       {/* Redirect CMS blog page to real blog */}
       <Route
         path="/page/blog"
         element={<Navigate to="/blog" replace />}
+      />
+      <Route
+        path="/page/contact-methods"
+        element={<Navigate to="/contact" replace />}
       />
 
       <Route
@@ -115,6 +187,16 @@ export default function AppRouter() {
           </MainLayout>
         }
       />
+
+      <Route
+        path="/faq"
+        element={
+          <MainLayout>
+            <FAQ />
+          </MainLayout>
+        }
+      />
+
 
       {/* ---------------- Auth ---------------- */}
       <Route path="/login" element={<Login />} />
@@ -176,6 +258,17 @@ export default function AppRouter() {
         }
       />
 
+      {/* CMS FAQ */}
+      <Route
+        path="/dashboard/cms/faq"
+        element={
+          <ProtectedRoute>
+            <CMS_FAQ />
+          </ProtectedRoute>
+        }
+      />
+
+
       {/* Services */}
       <Route
         path="/dashboard/services"
@@ -185,6 +278,36 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/dashboard/appointments"
+        element={
+          <ProtectedRoute>
+            <AppointmentsCMS />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Careers */}
+      <Route
+        path="/dashboard/careers"
+        element={
+          <ProtectedRoute>
+            <CareersCMS />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/dashboard/careers/applications"
+        element={
+          <ProtectedRoute>
+            <CareerApplicationsCMS />
+          </ProtectedRoute>
+        }
+      />
+
+
 
       {/* SEO */}
       <Route
@@ -283,6 +406,17 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+
+      {/*Contact CMS*/}
+      <Route
+        path="/dashboard/cms/contact"
+        element={
+          <ProtectedRoute>
+            <CMS_Contact />
+          </ProtectedRoute>
+        }
+      />
+
 
     </Routes>
   );

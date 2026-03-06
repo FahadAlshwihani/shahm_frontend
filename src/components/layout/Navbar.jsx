@@ -71,7 +71,7 @@ export default function Navbar() {
   return (
     <>
       {/* ================= Top Fixed Navbar ================= */}
-      <header className={`top-navbar ${isAr ? "rtl" : "ltr"}`}>
+      <header className={`top-navbar ${isAr ? "rtl" : "ltr"}` }>
         {isAr ? (
           <>
             {/* Menu Toggle (Right for Arabic) */}

@@ -33,7 +33,7 @@
   grid-template-columns: 400px 1fr;
   gap: 60px;
   padding-bottom: 50px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px transparent;
 }
 
 /* Newsletter Section */
@@ -660,6 +660,10 @@ letter-spacing: 0%;
   .footer-main-row {
     padding-bottom: 30px;
     gap: 30px;
+  gap: 60px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #e5e5e5;
+
   }
 
   .footer-title {

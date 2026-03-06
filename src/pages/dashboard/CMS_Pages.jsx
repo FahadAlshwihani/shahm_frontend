@@ -174,54 +174,64 @@ export default function CMS_Pages() {
               </label>
             </div>
           </div>
+{/* Content Arabic */}
+<div className="page-form-section">
+  <h3 className="page-section-title">{t("cms.pages.content_ar")}</h3>
+  <div className="page-editor-wrapper">
+    <SunEditor
+      setContents={form.content_ar}
+      onChange={(content) =>
+        setForm((prev) => ({ ...prev, content_ar: content }))
+      }
+      setOptions={{
+        height: 400,
+        codeViewFilter: false,
+        fullPage: false,
+        addAttributes: { all: "class|id|data-*" },
+        pasteTagsWhitelist: ".*",
+        pasteAttributesWhitelist: ".*",
+        buttonList: [
+          ["undo", "redo"],
+          ["bold", "italic", "underline"],
+          ["fontSize", "formatBlock"],
+          ["align", "list"],
+          ["link"],
+          ["codeView"],
+        ],
+      }}
+    />
+  </div>
+</div>
 
-          {/* Content Arabic */}
-          <div className="page-form-section">
-            <h3 className="page-section-title">{t("cms.pages.content_ar")}</h3>
-            <div className="page-editor-wrapper">
-              <SunEditor
-                setContents={form.content_ar}
-                onChange={(content) =>
-                  setForm((prev) => ({ ...prev, content_ar: content }))
-                }
-                setOptions={{
-                  height: 300,
-                  buttonList: [
-                    ["undo", "redo"],
-                    ["bold", "italic", "underline"],
-                    ["fontSize", "formatBlock"],
-                    ["align", "list"],
-                    ["link"],
-                    ["codeView"],
-                  ],
-                }}
-              />
-            </div>
-          </div>
+{/* Content English */}
+<div className="page-form-section">
+  <h3 className="page-section-title">{t("cms.pages.content_en")}</h3>
+  <div className="page-editor-wrapper">
+    <SunEditor
+      setContents={form.content_en}
+      onChange={(content) =>
+        setForm((prev) => ({ ...prev, content_en: content }))
+      }
+      setOptions={{
+        height: 400,
+        codeViewFilter: false,
+        fullPage: false,
+        addAttributes: { all: "class|id|data-*" },
+        pasteTagsWhitelist: ".*",
+        pasteAttributesWhitelist: ".*",
+        buttonList: [
+          ["undo", "redo"],
+          ["bold", "italic", "underline"],
+          ["fontSize", "formatBlock"],
+          ["align", "list"],
+          ["link"],
+          ["codeView"],
+        ],
+      }}
+    />
+  </div>
+</div>
 
-          {/* Content English */}
-          <div className="page-form-section">
-            <h3 className="page-section-title">{t("cms.pages.content_en")}</h3>
-            <div className="page-editor-wrapper">
-              <SunEditor
-                setContents={form.content_en}
-                onChange={(content) =>
-                  setForm((prev) => ({ ...prev, content_en: content }))
-                }
-                setOptions={{
-                  height: 300,
-                  buttonList: [
-                    ["undo", "redo"],
-                    ["bold", "italic", "underline"],
-                    ["fontSize", "formatBlock"],
-                    ["align", "list"],
-                    ["link"],
-                    ["codeView"],
-                  ],
-                }}
-              />
-            </div>
-          </div>
 
           <div className="page-form-actions">
             <button type="submit" className="page-btn-primary" disabled={loadingPages}>

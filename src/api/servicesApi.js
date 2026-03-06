@@ -13,3 +13,5 @@ export const getServices = () => api.get("services/admin/items/");
 export const createService = (data) => api.post("services/admin/items/", data);
 export const updateService = (id, data) => api.patch(`services/admin/items/${id}/`, data);
 export const deleteService = (id) => api.delete(`services/admin/items/${id}/`);
+
+

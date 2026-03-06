@@ -16,18 +16,35 @@ export default function DashboardLayout({ children }) {
   };
 
   return (
-    <div className="sh-dashboard-root">
+    <div className="dashboard-layout-root">
       {/* Overlay for mobile */}
       <div
-        className={`sh-dashboard-overlay ${sidebarOpen ? "active" : ""}`}
+        className={`dashboard-layout-overlay ${sidebarOpen ? "dashboard-layout-overlay-active" : ""}`}
         onClick={closeSidebar}
+        aria-hidden="true"
       />
 
       <DashboardSidebar isOpen={sidebarOpen} onClose={closeSidebar} />
 
-      <div className="sh-dashboard-main">
+      <div className="dashboard-layout-main">
         <DashboardNavbar onToggleSidebar={toggleSidebar} />
-        <div className="sh-dashboard-content">{children}</div>
+        <main className="dashboard-layout-content">{children}</main>
+        
+        {/* Footer */}
+        <footer className="dashboard-layout-footer">
+          <div className="dashboard-layout-footer-content">
+            <p className="dashboard-layout-footer-text">
+              © {new Date().getFullYear()} Shahm. All rights reserved.
+            </p>
+            <div className="dashboard-layout-footer-links">
+              <a href="/privacy" className="dashboard-layout-footer-link">Privacy</a>
+              <span className="dashboard-layout-footer-divider">•</span>
+              <a href="/terms" className="dashboard-layout-footer-link">Terms</a>
+              <span className="dashboard-layout-footer-divider">•</span>
+              <a href="/support" className="dashboard-layout-footer-link">Support</a>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );

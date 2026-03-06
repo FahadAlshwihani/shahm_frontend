@@ -23,14 +23,38 @@ export const getPublicTeam = () => api.get("public/team/");
 // ================================
 // BLOG
 // ================================
-export const getPublicBlog = () => api.get("public/blog/");
-export const getPublicBlogPost = (slug) => api.get(`public/blog/${slug}/`);
+export const getPublicBlog = (type = null) =>
+  type
+    ? api.get(`blog/?type=${type}`)
+    : api.get("blog/");
+
+export const getPublicBlogPost = (slug) =>
+  api.get(`blog/${slug}/`);
+
+export const getPublicBlogSettings = () =>
+  api.get("blog/settings/");
+
 
 // ================================
-// SERVICES  ✅ FIXED
+// SERVICES
 // ================================
-export const getPublicServices = () => api.get("services/public/");
-export const getPublicServiceArea = (slug) => api.get(`services/public/${slug}/`);
+
+// جميع المجالات
+export const getPublicAreas = () =>
+  api.get("services/public/");
+
+// جميع الخدمات
+export const getPublicServices = () =>
+  api.get("services/public/services/");
+
+// تفاصيل خدمة
+export const getPublicServiceDetail = (slug) =>
+  api.get(`services/public/service/${slug}/`);
+
+// تفاصيل مجال مع خدماته
+export const getPublicServiceArea = (slug) =>
+  api.get(`services/public/${slug}/`);
+
 
 // ================================
 // SEO
@@ -50,3 +74,8 @@ export const searchPublic = (q, lang) =>
   api.get("/cms/public/search/", {
     params: { q, lang },
   });
+
+// ================================
+// FAQ
+// ================================
+export const getPublicFAQ = () => api.get("cms/public/faq/");

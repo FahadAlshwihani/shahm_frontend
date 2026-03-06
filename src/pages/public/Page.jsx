@@ -5,26 +5,34 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import Team from "./Team";
-import "../../styles/page.css"; // ✅ أضف هذا
+import FAQ from "./FAQ";
+
+import "../../styles/page.css"; // base page style
 
 export default function Page() {
   const { slug } = useParams();
   const { i18n, t } = useTranslation();
   const [page, setPage] = useState(null);
 
+  // ===============================
+  // Load CMS Page
+  // ===============================
   useEffect(() => {
+    const loadPage = async () => {
+      try {
+        const res = await getPublicPage(slug);
+        setPage(res.data.page || null);
+      } catch (err) {
+        setPage(null);
+      }
+    };
+
     loadPage();
   }, [slug]);
 
-  const loadPage = async () => {
-    try {
-      const res = await getPublicPage(slug);
-      setPage(res.data.page || null);
-    } catch (err) {
-      setPage(null);
-    }
-  };
-
+  // ===============================
+  // Special Pages
+  // ===============================
   if (page?.slug === "team" && page?.is_published) {
     return <Team />;
   }
@@ -33,6 +41,13 @@ export default function Page() {
     return <p className="page-loading">{t("pages_public.loading")}</p>;
   }
 
+  if (page?.slug === "faq" && page?.is_published) {
+  return <FAQ />;
+}
+
+  // ===============================
+  // Language
+  // ===============================
   const isEnglish = i18n.language === "en";
 
   const title =
@@ -41,6 +56,9 @@ export default function Page() {
   const content =
     isEnglish && page.content_en ? page.content_en : page.content_ar;
 
+  // ===============================
+  // Render
+  // ===============================
   return (
     <div className="classic-page">
       <Helmet>

@@ -6,13 +6,12 @@
   right: 0;
   width: 100%;
   height: 65px;
-  background: #f8f8f8;
   display: flex;
   justify-content: space-between;
+  background-color: #f8f8f8;
   align-items: center;
   padding: 0 32px;
   z-index: 900;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* RTL/LTR Direction Class */
@@ -842,4 +841,72 @@ font-family: var(--font-content);
     width: 96%;
     padding: 14px;
   }
+}
+
+/* ===== NAVBAR STYLE WHEN BLOG PAGE ===== */
+
+body.blog-page-active .top-navbar {
+  background-color: var(--color-hero-bg);
+}
+
+body.blog-page-active .top-navbar-search svg {
+  color: #ffffff;
+}
+
+body.blog-page-active .top-navbar-logo img {
+  filter: brightness(0) invert(1);
+}
+
+
+body.blog-page-active .navbar-toggle span {
+  background: #ffffff;
+}
+
+body.blog-page-active .top-navbar-logo svg {
+  fill: #ffffff;
+}
+
+body.blog-page-active .page-content {
+  margin-top: 0;
+}
+
+.blog-hero-section {
+  padding: 120px 0 80px;
+  margin-top: 0;
+}
+
+
+/* ================= SERVICE NAVBAR BEHAVIOR ================= */
+
+/* Default navbar */
+body.service-navbar-light .top-navbar {
+  background: transparent;
+}
+
+/* ✅ الأبيض فقط للعناصر اللي فوق الصورة (تجيها class nav-over-hero) */
+.nav-over-hero {
+  color: #fff !important;
+  fill: #fff !important;
+  stroke: #fff !important;
+}
+
+/* تطبيق الأبيض على العناصر المحددة */
+body .top-navbar-search svg.nav-over-hero {
+  color: #fff !important;
+}
+
+body .navbar-toggle span.nav-over-hero {
+  background: #fff !important;
+}
+
+body .top-navbar-logo img.nav-over-hero {
+  filter: brightness(0) invert(1);
+}
+
+body .top-navbar-logo svg.nav-over-hero {
+  fill: #fff !important;
+}
+
+.top-navbar svg {
+  fill: none !important;
 }
