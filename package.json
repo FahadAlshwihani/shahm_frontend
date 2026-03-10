@@ -24,6 +24,7 @@
     "react-scripts": "5.0.1",
     "suneditor": "^2.47.8",
     "suneditor-react": "^3.6.1",
+    "sweetalert2": "^11.26.22",
     "web-vitals": "^2.1.4",
     "zustand": "^5.0.9"
   },

@@ -44,7 +44,13 @@ export default function ServiceAdvisoryRequests() {
                 <td>{r.first_name} {r.last_name}</td>
                 <td>{r.email}</td>
                 <td>{r.phone}</td>
-                <td>{r.service?.title_ar || "—"}</td>
+                <td>
+                  {r.items?.length
+                    ? r.items
+                      .map((i) => i.service?.title_ar || i.service?.title_en)
+                      .join(", ")
+                    : "—"}
+                </td>
                 <td>{new Date(r.created_at).toLocaleDateString()}</td>
                 <td>
                   <button
@@ -79,6 +85,14 @@ export default function ServiceAdvisoryRequests() {
             <p><b>Email:</b> {selected.email}</p>
             <p><b>Phone:</b> {selected.phone}</p>
             <p><b>Message:</b> {selected.message || "—"}</p>
+            {selected.voice_note && (
+              <div style={{ marginTop: "10px" }}>
+                <b>Voice Note:</b>
+                <audio controls style={{ width: "100%", marginTop: "5px" }}>
+                  <source src={selected.voice_note} />
+                </audio>
+              </div>
+            )}
 
             {selected.attachment && (
               <button

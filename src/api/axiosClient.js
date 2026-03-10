@@ -1,21 +1,19 @@
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { useAuthStore } from "../store/useAuthStore";
 
-const BASE_URL = "http://127.0.0.1:8000/api"; // غيره إذا رفعته على السيرفر
-
 const axiosClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: "http://127.0.0.1:8000/api",
   headers: {
-    "Content-Type": "application/json",
-  },
+    "Content-Type": "application/json"
+  }
 });
 
-// -----------------------------
-// إضافة التوكن قبل كل طلب
-// -----------------------------
+
+// attach token
 axiosClient.interceptors.request.use(
+
   (config) => {
+
     const token = useAuthStore.getState().accessToken;
 
     if (token) {
@@ -23,51 +21,70 @@ axiosClient.interceptors.request.use(
     }
 
     return config;
+
   },
+
   (error) => Promise.reject(error)
+
 );
 
-// -----------------------------
-// التعامل مع انتهاء التوكن وتجديده
-// -----------------------------
+
+// refresh interceptor
 axiosClient.interceptors.response.use(
+
   (response) => response,
+
   async (error) => {
+
     const originalRequest = error.config;
 
-    // إذا التوكن منتهي و نقدر نعمل refresh
     if (error.response?.status === 401 && !originalRequest._retry) {
+
       originalRequest._retry = true;
 
+      const auth = useAuthStore.getState();
+      const refreshToken = auth.refreshToken;
+
+      if (!refreshToken) {
+        auth.logout();
+        return Promise.reject(error);
+      }
+
       try {
-        const refreshToken = useAuthStore.getState().refreshToken;
 
-        if (!refreshToken) {
-          useAuthStore.getState().logout();
-          return Promise.reject(error);
-        }
+        const res = await axios.post(
 
-        const res = await axios.post(`${BASE_URL}/accounts/refresh/`, {
-          refresh: refreshToken,
-        });
+          `${axiosClient.defaults.baseURL}/accounts/refresh/`,
+          { refresh: refreshToken }
 
+        );
 
         const newAccess = res.data.access;
 
-        // حفظ التوكن الجديد في Zustand
-        useAuthStore.setState({ accessToken: newAccess });
+        localStorage.setItem("access_token", newAccess);
 
-        // تحديث الهيدر وإعادة المحاولة
+        useAuthStore.setState({
+          accessToken: newAccess,
+          isAuthenticated: true
+        });
+
         originalRequest.headers.Authorization = `Bearer ${newAccess}`;
+
         return axiosClient(originalRequest);
+
       } catch (refreshError) {
-        useAuthStore.getState().logout();
+
+        auth.logout();
         return Promise.reject(refreshError);
+
       }
+
     }
 
     return Promise.reject(error);
+
   }
+
 );
 
 export default axiosClient;

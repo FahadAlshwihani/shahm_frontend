@@ -287,14 +287,20 @@
     "preview": "Preview",
     "pages": {
       "title": "Website Pages Management",
+      "subtitle": "Manage website pages and content",
       "form_title_create": "Create New Page",
       "form_title_edit": "Edit Page",
+      "basic_info": "Basic Information",
+      "list_title": "Pages List",
       "title_ar": "Title (Arabic)",
       "title_en": "Title (English)",
       "slug": "Slug",
       "content_ar": "Content (Arabic)",
       "content_en": "Content (English)",
       "page_status": "Page Status",
+      "title_ar_placeholder": "Title in Arabic",
+      "title_en_placeholder": "Title in English",
+      "slug_placeholder": "page-slug",
       "active": "Active",
       "coming_soon": "Coming Soon",
       "published": "Published",
@@ -309,7 +315,17 @@
       "saving": "Saving...",
       "saved": "Saved successfully",
       "save_failed": "Save failed",
-      "confirm_delete": "Are you sure you want to delete this page?"
+      "confirm_delete": "Are you sure you want to delete this page?",
+      "confirm_delete_title": "Confirm Deletion",
+      "confirm_delete_text": "You won't be able to revert this!",
+      "delete_button": "Yes, delete it",
+      "cancel_button": "Cancel",
+      "deleted": "Deleted!",
+      "delete_success": "Page has been deleted successfully",
+      "table": {
+        "id": "ID",
+        "title": "Title"
+      }
     },
     "header": {
       "title": "Header Management",
@@ -895,6 +911,9 @@
       "form_title_create": "Add New Question",
       "form_title_edit": "Edit Question",
       "list_title": "Frequently Asked Questions",
+      "section_questions": "Questions",
+      "section_answers": "Answers",
+      "section_settings": "Settings",
       "fields": {
         "question_ar": "Question (Arabic)",
         "question_en": "Question (English)",
@@ -929,6 +948,11 @@
         "deleted": "Deleted successfully"
       },
       "confirm_delete": "Are you sure you want to delete this question?",
+      "confirm_delete_title": "Confirm Deletion",
+      "confirm_delete_text": "You won't be able to revert this!",
+      "delete_button": "Yes, delete it",
+      "cancel_button": "Cancel",
+      "deleted_title": "Deleted!",
       "empty": "No FAQs yet. Add your first question!"
     }
   },
@@ -1355,8 +1379,11 @@
     "legal_request_title": "Your Legal Request",
     "required_fields": "*Required fields",
     "service_type": "*Service Type",
+    "select_category": "Select Category",
     "main_category": "*Main Category",
     "service_overview": "Service Overview",
+    "see_more": "See more",
+    "see_less": "See less",
     "reference_id": "Reference ID",
     "gregorian_date": "Gregorian Date",
     "hijri_date": "Hijri Date",
@@ -1382,6 +1409,10 @@
     "submit": "Submit",
     "fill_required": "Please fill required fields",
     "submission_failed": "Submission failed",
+    "first_name_required": "The First Name field is required",
+    "last_name_required": "The Last Name field is required",
+    "invalid_email": "Invalid email format",
+    "invalid_phone": "Phone number must be 9-15 digits",
     "thank_you_title": "Thank You!",
     "thank_you_message": "Your submission has been received and is currently under review. We will contact you within 12 hours via your registered contact details to confirm any requirements and provide a fee quote before proceeding.",
     "home_button": "Home"

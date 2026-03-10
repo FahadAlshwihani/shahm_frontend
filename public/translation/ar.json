@@ -291,14 +291,20 @@
     "preview": "المعاينة",
     "pages": {
       "title": "إدارة صفحات الموقع",
+      "subtitle": "إدارة صفحات الموقع والمحتوى",
       "form_title_create": "إضافة صفحة جديدة",
       "form_title_edit": "تعديل الصفحة",
+      "basic_info": "المعلومات الأساسية",
+      "list_title": "قائمة الصفحات",
       "title_ar": "العنوان (عربي)",
       "title_en": "العنوان (إنجليزي)",
       "slug": "المعرّف",
       "content_ar": "المحتوى (عربي)",
       "content_en": "المحتوى (إنجليزي)",
       "page_status": "حالة الصفحة",
+      "title_ar_placeholder": "العنوان بالعربية",
+      "title_en_placeholder": "العنوان بالإنجليزية",
+      "slug_placeholder": "page-slug",
       "active": "نشطة",
       "coming_soon": "قيد التطوير",
       "published": "منشورة",
@@ -313,7 +319,17 @@
       "saving": "جارٍ الحفظ...",
       "saved": "تم الحفظ بنجاح",
       "save_failed": "فشل الحفظ",
-      "confirm_delete": "هل أنت متأكد من حذف هذه الصفحة؟"
+      "confirm_delete": "هل أنت متأكد من حذف هذه الصفحة؟",
+      "confirm_delete_title": "تأكيد الحذف",
+      "confirm_delete_text": "لن تتمكن من التراجع عن هذا الإجراء!",
+      "delete_button": "نعم، احذف",
+      "cancel_button": "إلغاء",
+      "deleted": "تم الحذف!",
+      "delete_success": "تم حذف الصفحة بنجاح",
+      "table": {
+        "id": "المعرّف",
+        "title": "العنوان"
+      }
     },
     "header": {
       "title": "إدارة الهيدر",
@@ -899,6 +915,9 @@
       "form_title_create": "إضافة سؤال جديد",
       "form_title_edit": "تعديل السؤال",
       "list_title": "الأسئلة الشائعة",
+      "section_questions": "الأسئلة",
+      "section_answers": "الأجوبة",
+      "section_settings": "الإعدادات",
       "fields": {
         "question_ar": "السؤال (عربي)",
         "question_en": "السؤال (إنجليزي)",
@@ -933,6 +952,11 @@
         "deleted": "تم الحذف بنجاح"
       },
       "confirm_delete": "هل أنت متأكد من حذف هذا السؤال؟",
+      "confirm_delete_title": "تأكيد الحذف",
+      "confirm_delete_text": "لن تتمكن من التراجع عن هذا الإجراء!",
+      "delete_button": "نعم، احذف",
+      "cancel_button": "إلغاء",
+      "deleted_title": "تم الحذف!",
       "empty": "لا توجد أسئلة شائعة حتى الآن. قم بإضافة أول سؤال!"
     }
   },
@@ -1357,8 +1381,11 @@
     "legal_request_title": "طلبك القانوني",
     "required_fields": "*الحقول المطلوبة",
     "service_type": "*نوع الخدمة",
+    "select_category": "اختر الفئة",
     "main_category": "*الفئة الرئيسية",
     "service_overview": "نظرة عامة على الخدمة",
+    "see_more": "عرض المزيد",
+    "see_less": "عرض أقل",
     "reference_id": "الرقم المرجعي",
     "gregorian_date": "التاريخ الميلادي",
     "hijri_date": "التاريخ الهجري",
@@ -1384,6 +1411,10 @@
     "submit": "إرسال",
     "fill_required": "يرجى ملء الحقول المطلوبة",
     "submission_failed": "فشل إرسال الطلب",
+    "first_name_required": "حقل الاسم الأول مطلوب",
+    "last_name_required": "حقل الاسم الأخير مطلوب",
+    "invalid_email": "البريد الإلكتروني غير صحيح",
+    "invalid_phone": "رقم الهاتف يجب أن يكون بين 9-15 رقمًا",
     "thank_you_title": "شكرًا لك!",
     "thank_you_message": "تم استلام طلبك وهو قيد المراجعة حاليًا. سنتواصل معك خلال 12 ساعة عبر تفاصيل الاتصال المسجلة لتأكيد أي متطلبات وتقديم عرض أسعار قبل المتابعة.",
     "home_button": "الصفحة الرئيسية"

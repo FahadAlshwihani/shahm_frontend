@@ -51,6 +51,7 @@ export default function Login() {
     }
 
     const ok = await login({ email, password });
+
     if (!ok) {
       toast.error(t("login.invalid"));
       triggerShake();
