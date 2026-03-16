@@ -2,39 +2,41 @@ const IDLE_LIMIT = 10 * 60 * 1000;
 
 let idleTimer = null;
 let listenersAttached = false;
+let timerStarted = false;
+let activityHandler = null;
 
 const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
 
-let resetTimer = null;
+function resetTimer(onTimeout) {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(onTimeout, IDLE_LIMIT);
+}
 
 export function startIdleTimer(onTimeout) {
+  if (timerStarted) return;
 
-  resetTimer = () => {
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(onTimeout, IDLE_LIMIT);
-  };
+  activityHandler = () => resetTimer(onTimeout);
 
-  if (!listenersAttached) {
-    events.forEach((event) => {
-      window.addEventListener(event, resetTimer);
-    });
+  events.forEach((event) => {
+    window.addEventListener(event, activityHandler);
+  });
 
-    listenersAttached = true;
-  }
+  listenersAttached = true;
+  timerStarted = true;
 
-  resetTimer();
+  resetTimer(onTimeout);
 }
 
 export function stopIdleTimer() {
-
   clearTimeout(idleTimer);
 
-  if (listenersAttached && resetTimer) {
-
+  if (listenersAttached && activityHandler) {
     events.forEach((event) => {
-      window.removeEventListener(event, resetTimer);
+      window.removeEventListener(event, activityHandler);
     });
-
-    listenersAttached = false;
   }
+
+  listenersAttached = false;
+  timerStarted = false;
+  activityHandler = null;
 }

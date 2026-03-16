@@ -467,3 +467,23 @@
     margin: 25px 0 35px;
   }
 }
+
+.contact-card-note{
+font-family: "Noto Kufi Arabic", sans-serif;
+font-weight: 500;
+font-size: 12px;
+line-height: 22px;
+text-align: right;
+color:#6f7578;
+margin-bottom:16px;
+}
+
+.contact-card-note a{
+font-family: "Noto Kufi Arabic", sans-serif;
+font-weight: 500;
+font-size: 12px;
+line-height: 22px;
+text-decoration: underline;
+color:#6f7578;
+cursor:pointer;
+}

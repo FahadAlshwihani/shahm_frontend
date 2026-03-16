@@ -1,337 +1,69 @@
-import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+// src/pages/dashboard/AppointmentsCMS.jsx
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import {
-  getAdminAppointmentPage,
-  updateAdminAppointmentPage,
-  getAdminAppointmentSettings,
-  updateAdminAppointmentSettings,
-  getAdminSlots,
-  createSlot,
-  updateSlot,
-  deleteSlot,
-  getAdminBookings,
-} from "../../api/appointmentsApi";
+import AppointmentContent from "./AppointmentContent";
+import AppointmentSlots from "./AppointmentSlots";
+import AppointmentBookings from "./AppointmentBookings";
 
+import "../../styles/CMS_Appointments.css";
 
 export default function AppointmentsCMS() {
-  const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState("content");
 
-  /* ================= PAGE ================= */
-  const [page, setPage] = useState({});
+  const tabs = [
+    { id: "content", label: t("cms.appointments.tabs.content"), icon: "📝" },
+    { id: "slots", label: t("cms.appointments.tabs.slots"), icon: "📅" },
+    { id: "bookings", label: t("cms.appointments.tabs.bookings"), icon: "📋" },
+  ];
 
-  /* ================= SETTINGS ================= */
-  const [settings, setSettings] = useState({
-    price: "",
-    slot_duration: "",
-  });
-
-  /* ================= SLOTS ================= */
-  const [slots, setSlots] = useState([]);
-  const [newSlot, setNewSlot] = useState({
-    date: "",
-    start_time: "",
-    end_time: "",
-  });
-
-  /* ================= BOOKINGS ================= */
-  const [bookings, setBookings] = useState([]);
-
-  /* ================= LOAD ALL ================= */
-  useEffect(() => {
-    async function load() {
-      try {
-        const [
-          pageRes,
-          settingsRes,
-          slotsRes,
-          bookingsRes,
-        ] = await Promise.all([
-          getAdminAppointmentPage(),
-          getAdminAppointmentSettings(),
-          getAdminSlots(),
-          getAdminBookings(),
-        ]);
-
-        setPage(pageRes.data || {});
-        setSettings(settingsRes.data || {});
-        setSlots(slotsRes.data || []);
-        setBookings(bookingsRes.data || []);
-      } catch (err) {
-        console.error(err);
-        toast.error("Failed to load Appointments CMS");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    load();
-  }, []);
-
-  if (loading) return null;
-
-  /* ================= PAGE SAVE ================= */
-  const savePage = async () => {
-    try {
-      await updateAdminAppointmentPage(page);
-      toast.success("Page content saved");
-    } catch {
-      toast.error("Failed to save page content");
-    }
-  };
-
-  /* ================= SETTINGS SAVE ================= */
-  const saveSettings = async () => {
-    try {
-      await updateAdminAppointmentSettings(settings);
-      toast.success("Settings saved");
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to save settings");
-    }
-  };
-
-  /* ================= SLOT ACTIONS ================= */
-  const addSlot = async () => {
-    if (!newSlot.date || !newSlot.start_time || !newSlot.end_time) {
-      toast.error("Please fill all slot fields");
-      return;
-    }
-
-    try {
-      const res = await createSlot(newSlot);
-      setSlots([...slots, res.data]);
-      setNewSlot({ date: "", start_time: "", end_time: "" });
-      toast.success("Slot added");
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to add slot");
-    }
-  };
-
-  const toggleSlot = async (slot) => {
-    try {
-      const res = await updateSlot(slot.id, {
-        is_available: !slot.is_available,
-      });
-
-      setSlots(
-        slots.map((s) => (s.id === slot.id ? res.data : s))
-      );
-    } catch {
-      toast.error("Failed to update slot");
-    }
-  };
-
-  const removeSlot = async (id) => {
-    if (!window.confirm("Delete this slot?")) return;
-
-    try {
-      await deleteSlot(id);
-      setSlots(slots.filter((s) => s.id !== id));
-      toast.success("Slot deleted");
-    } catch {
-      toast.error("Failed to delete slot");
-    }
-  };
-
-  /* ================= UI ================= */
   return (
-    <div className="dashboard-page">
-      <h1>Appointments CMS</h1>
-
-      {/* =====================================================
-          PAGE CONTENT
-      ===================================================== */}
-      <section className="dashboard-card">
-        <h3>Page Content</h3>
-
-        <input
-          placeholder="Title (AR)"
-          value={page.title_ar || ""}
-          onChange={(e) =>
-            setPage({ ...page, title_ar: e.target.value })
-          }
-        />
-
-        <input
-          placeholder="Title (EN)"
-          value={page.title_en || ""}
-          onChange={(e) =>
-            setPage({ ...page, title_en: e.target.value })
-          }
-        />
-
-        <textarea
-          placeholder="Description (AR)"
-          value={page.description_ar || ""}
-          onChange={(e) =>
-            setPage({ ...page, description_ar: e.target.value })
-          }
-        />
-
-        <textarea
-          placeholder="Description (EN)"
-          value={page.description_en || ""}
-          onChange={(e) =>
-            setPage({ ...page, description_en: e.target.value })
-          }
-        />
-
-        <button onClick={savePage}>Save Page</button>
-      </section>
-
-      {/* =====================================================
-          SETTINGS
-      ===================================================== */}
-      <section className="dashboard-card">
-        <h3>Settings</h3>
-
-        <input
-          type="number"
-          placeholder="Appointment Price"
-          value={settings.price ?? ""}
-          onChange={(e) =>
-            setSettings({ ...settings, price: e.target.value })
-          }
-        />
-
-        <input
-          type="number"
-          placeholder="Slot Duration (minutes)"
-          value={settings.slot_duration ?? ""}
-          onChange={(e) =>
-            setSettings({
-              ...settings,
-              slot_duration: e.target.value,
-            })
-          }
-        />
-
-        <button onClick={saveSettings}>Save Settings</button>
-      </section>
-
-      {/* =====================================================
-          SLOTS MANAGER
-      ===================================================== */}
-      <section className="dashboard-card">
-        <h3>Slots Manager</h3>
-
-        <div className="slot-form">
-          <input
-            type="date"
-            value={newSlot.date}
-            onChange={(e) =>
-              setNewSlot({ ...newSlot, date: e.target.value })
-            }
-          />
-
-          <input
-            type="time"
-            value={newSlot.start_time}
-            onChange={(e) =>
-              setNewSlot({
-                ...newSlot,
-                start_time: e.target.value,
-              })
-            }
-          />
-
-          <input
-            type="time"
-            value={newSlot.end_time}
-            onChange={(e) =>
-              setNewSlot({
-                ...newSlot,
-                end_time: e.target.value,
-              })
-            }
-          />
-
-          <button onClick={addSlot}>Add Slot</button>
+    <div className="dashboard-appointments-container">
+      {/* ===== PAGE HEADER ===== */}
+      <div className="dashboard-appointments-header">
+        <div className="dashboard-appointments-header-content">
+          <h1 className="dashboard-appointments-title">
+            {t("cms.appointments.title")}
+          </h1>
+          <p className="dashboard-appointments-subtitle">
+            {t("cms.appointments.subtitle")}
+          </p>
         </div>
+      </div>
 
-        <table className="dashboard-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Start</th>
-              <th>End</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slots.map((slot) => (
-              <tr key={slot.id}>
-                <td>{slot.date}</td>
-                <td>{slot.start_time}</td>
-                <td>{slot.end_time}</td>
-                <td>
-                  {slot.is_available ? "Available" : "Disabled"}
-                </td>
-                <td>
-                  <button onClick={() => toggleSlot(slot)}>
-                    {slot.is_available ? "Disable" : "Enable"}
-                  </button>
-                  <button
-                    className="danger"
-                    onClick={() => removeSlot(slot.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      {/* ===== TABS ===== */}
+      <div className="dashboard-appointments-tabs">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            className={`dashboard-appointments-tab ${
+              activeTab === tab.id ? "dashboard-appointments-tab-active" : ""
+            }`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              {tab.id === "content" && (
+                <path d="M3 3H17V7H3V3ZM3 9H17V13H3V9ZM3 15H12V17H3V15Z" fill="currentColor"/>
+              )}
+              {tab.id === "slots" && (
+                <path d="M5 3C3.9 3 3 3.9 3 5V17C3 18.1 3.9 19 5 19H17C18.1 19 19 18.1 19 17V5C19 3.9 18.1 3 17 3H5ZM5 7H17V17H5V7Z" fill="currentColor"/>
+              )}
+              {tab.id === "bookings" && (
+                <path d="M14 2H6C4.9 2 4 2.9 4 4V16C4 17.1 4.9 18 6 18H14C15.1 18 16 17.1 16 16V4C16 2.9 15.1 2 14 2ZM9 16H7V14H9V16ZM9 13H7V11H9V13ZM9 10H7V8H9V10ZM13 16H11V14H13V16ZM13 13H11V11H13V13ZM13 10H11V8H13V10Z" fill="currentColor"/>
+              )}
+            </svg>
+            <span>{tab.label}</span>
+          </button>
+        ))}
+      </div>
 
-      {/* =====================================================
-          BOOKINGS
-      ===================================================== */}
-      <section className="dashboard-card">
-        <h3>Bookings</h3>
-
-        <table className="dashboard-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Email</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.map((b) => (
-              <tr key={b.id}>
-                <td>
-                  {b.first_name} {b.last_name}
-                </td>
-                <td>{b.slot?.date}</td>
-                <td>
-                  {b.slot?.start_time} – {b.slot?.end_time}
-                </td>
-                <td>{b.email}</td>
-                <td>
-                  <span
-                    className={`status ${
-                      b.status === "paid"
-                        ? "paid"
-                        : b.status === "pending"
-                        ? "pending"
-                        : "cancelled"
-                    }`}
-                  >
-                    {b.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      {/* ===== TAB CONTENT ===== */}
+      <div className="dashboard-appointments-tab-content">
+        {activeTab === "content" && <AppointmentContent />}
+        {activeTab === "slots" && <AppointmentSlots />}
+        {activeTab === "bookings" && <AppointmentBookings />}
+      </div>
     </div>
   );
 }

@@ -11,8 +11,8 @@ export const getAppointmentSettings = () =>
   api.get("/services/public/appointments/settings/");
 
 // المواعيد المتاحة
-export const getAvailableSlots = () =>
-  api.get("/services/public/appointments/slots/");
+export const getAvailableSlots = (params = {}) =>
+  api.get("/services/public/appointments/slots/", { params });
 
 // إنشاء حجز (قبل الدفع)
 export const bookAppointment = (data) =>
@@ -51,3 +51,9 @@ export const deleteSlot = (id) =>
 // Bookings
 export const getAdminBookings = () =>
   api.get("/services/admin/appointments/bookings/");
+
+export const generateSlots = (data) =>
+  api.post("/services/admin/appointments/slots/generate/", data);
+
+export const updateBookingStatus = (id, data) =>
+  api.patch(`/services/admin/appointments/bookings/${id}/status/`, data);

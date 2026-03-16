@@ -11,7 +11,8 @@ import { getPublicSettings } from "../../api/publicApi";
 export default function ServiceRequestModal({
   isOpen,
   onClose,
-  preSelectedService = null
+  preSelectedService = null,
+  openAppointmentModal
 }) {
   const { i18n, t } = useTranslation();
   const isEn = i18n.language === "en";
@@ -63,7 +64,9 @@ export default function ServiceRequestModal({
           }
         });
 
+
         setAreas(Array.from(areaMap.values()));
+
 
         // Add pre-selected service if provided
         if (preSelectedService) {
@@ -190,6 +193,22 @@ export default function ServiceRequestModal({
   const closeAllDropdowns = () => {
     setOpenDropdowns({});
   };
+
+  useEffect(() => {
+    async function loadSettings() {
+      try {
+        const res = await getPublicSettings();
+        setSettings(res.data);
+      } catch (err) {
+        console.error("Failed to load settings", err);
+      }
+    }
+
+    if (isOpen) {
+      loadSettings();
+    }
+  }, [isOpen]);
+
 
   const handleAddService = () => {
     const today = new Date();
@@ -480,7 +499,18 @@ export default function ServiceRequestModal({
               {t("serviceRequest.whatsapp")}
             </a>{" "}
             {t("serviceRequest.terms_description_part2")}{" "}
-            <span className="srm-terms-link">{t("serviceRequest.book_appointment")}</span>{" "}
+            <span
+              className="srm-terms-link"
+              onClick={() => {
+                onClose();
+                if (typeof openAppointmentModal === "function") {
+                  setTimeout(() => openAppointmentModal(), 150);
+                }
+              }}
+            >
+              {t("serviceRequest.book_appointment")}
+            </span>
+            {" "}
             {t("serviceRequest.terms_description_part3")}
           </p>
         </div>

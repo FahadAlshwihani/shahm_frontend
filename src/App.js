@@ -7,25 +7,24 @@ import { useAuthStore } from "./store/useAuthStore";
 import { startIdleTimer, stopIdleTimer } from "./utils/idleSessionManager";
 
 function App() {
-
   const { i18n } = useTranslation();
 
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const logout = useAuthStore((s) => s.logout);
 
-useEffect(() => {
+  useEffect(() => {
+    if (isAuthenticated) {
+      startIdleTimer(() => {
+        logout();
+      });
+    } else {
+      stopIdleTimer();
+    }
 
-  if (isAuthenticated) {
-
-    startIdleTimer(() => logout());
-
-  } else {
-
-    stopIdleTimer();
-
-  }
-
-}, [isAuthenticated]);
+    return () => {
+      stopIdleTimer();
+    };
+  }, [isAuthenticated, logout]);
 
   return (
     <div dir={i18n.language === "ar" ? "rtl" : "ltr"}>
