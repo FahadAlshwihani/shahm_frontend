@@ -7,7 +7,7 @@ import ServiceAdvisoryRequests from "./ServiceAdvisoryRequests";
 import ServiceAdvisoryServices from "./ServiceAdvisoryServices";
 import ServicePracticeAreas from "./ServicePracticeAreas";
 
-import "../../styles/CMS_SERVICE_ADVISORY.css";
+import "../../../styles/CMS_SERVICE_ADVISORY.css";
 
 export default function Services_Manage() {
   const { t } = useTranslation();

@@ -790,55 +790,102 @@
     },
     "team": {
       "title": "إدارة الفريق",
-      "subtitle": "إدارة أعضاء الفريق",
+      "subtitle": "إدارة أعضاء الفريق وإعدادات الصفحة",
       "edit_member": "تعديل عضو الفريق",
       "create_member": "إضافة عضو جديد",
       "list_title": "أعضاء الفريق",
+      "confirm_delete_title": "تأكيد حذف العضو",
       "confirm_delete": "هل أنت متأكد من حذف هذا العضو؟",
+      "deleted_title": "تم الحذف!",
       "empty": "لا توجد أعضاء في الفريق. قم بإضافة أول عضو!",
+      "tabs": {
+        "page": "صفحة الفريق",
+        "members": "الأعضاء"
+      },
+      "page": {
+        "title": "إعدادات صفحة الفريق",
+        "subtitle": "إدارة محتوى وإعدادات صفحة الفريق",
+        "section_basic": "المعلومات الأساسية",
+        "section_hero": "صورة البانر العلوية",
+        "section_content": "المحتوى الأوسط",
+        "section_bottom": "البانر السفلي والأزرار",
+        "fields": {
+          "title_ar": "عنوان الصفحة (عربي)",
+          "title_en": "عنوان الصفحة (إنجليزي)",
+          "description_ar": "وصف الصفحة (عربي)",
+          "description_en": "وصف الصفحة (إنجليزي)",
+          "hero_image": "صورة البانر العلوية",
+          "hero_description_ar": "وصف البانر (عربي)",
+          "hero_description_en": "وصف البانر (إنجليزي)",
+          "content_ar": "المحتوى (عربي)",
+          "content_en": "المحتوى (إنجليزي)",
+          "bottom_image": "صورة البانر السفلية",
+          "right_cta_title_ar": "عنوان الزر الأيمن (عربي)",
+          "right_cta_title_en": "عنوان الزر الأيمن (إنجليزي)",
+          "left_cta_title_ar": "عنوان الزر الأيسر (عربي)",
+          "left_cta_title_en": "عنوان الزر الأيسر (إنجليزي)",
+          "left_link_text_ar": "نص الزر الأيسر (عربي)",
+          "left_link_text_en": "نص الزر الأيسر (إنجليزي)",
+          "left_link_url": "رابط الزر الأيسر",
+          "left_link_visible": "إظهار الزر الأيسر",
+          "right_link_text_ar": "نص الزر الأيمن (عربي)",
+          "right_link_text_en": "نص الزر الأيمن (إنجليزي)",
+          "right_link_url": "رابط الزر الأيمن",
+          "right_link_visible": "إظهار الزر الأيمن"
+        },
+        "placeholders": {
+          "description_ar": "اكتب وصف الصفحة بالعربية...",
+          "description_en": "اكتب وصف الصفحة بالإنجليزية..."
+        },
+        "actions": {
+          "save": "حفظ الصفحة"
+        },
+        "success": {
+          "saved": "تم حفظ إعدادات الصفحة بنجاح"
+        }
+      },
+      "members": {
+        "subtitle": "إضافة وتعديل أعضاء الفريق"
+      },
       "sections": {
         "basic_info": "المعلومات الأساسية",
-        "biography": "السيرة الذاتية",
         "experience": "الخبرات",
         "settings": "الإعدادات"
       },
       "fields": {
         "name_ar": "الاسم (عربي)",
         "name_en": "الاسم (إنجليزي)",
-        "job_title_ar": "المسمى الوظيفي (عربي)",
-        "job_title_en": "المسمى الوظيفي (إنجليزي)",
-        "role": "الدور",
-        "order": "ترتيب العرض",
-        "linkedin_url": "رابط لينكد إن",
-        "profile_image": "صورة الملف الشخصي",
-        "bio_ar": "السيرة الذاتية (عربي)",
-        "bio_en": "السيرة الذاتية (إنجليزي)",
+        "field_ar": "المجال (عربي)",
+        "field_en": "المجال (إنجليزي)",
+        "sector_ar": "القطاع (عربي)",
+        "sector_en": "القطاع (إنجليزي)",
         "experience_ar": "الخبرات (عربي)",
         "experience_en": "الخبرات (إنجليزي)",
+        "profile_image": "صورة الملف الشخصي",
+        "order": "ترتيب العرض",
         "active": "عضو نشط"
       },
       "placeholders": {
         "name_ar": "أدخل الاسم بالعربية",
         "name_en": "أدخل الاسم بالإنجليزية",
-        "job_title_ar": "أدخل المسمى الوظيفي بالعربية",
-        "job_title_en": "أدخل المسمى الوظيفي بالإنجليزية",
-        "linkedin_url": "https://linkedin.com/in/username"
-      },
-      "roles": {
-        "lawyer": "محامي",
-        "partner": "شريك",
-        "consultant": "مستشار",
-        "advisor": "مستشار قانوني",
-        "manager": "مدير",
-        "other": "أخرى"
+        "field_ar": "أدخل المجال بالعربية",
+        "field_en": "أدخل المجال بالإنجليزية",
+        "sector_ar": "أدخل القطاع بالعربية",
+        "sector_en": "أدخل القطاع بالإنجليزية",
+        "experience_ar": "اكتب خبرة العضو بالعربية...",
+        "experience_en": "اكتب خبرة العضو بالإنجليزية..."
       },
       "table": {
         "name": "الاسم",
-        "role": "الدور",
+        "field": "المجال",
         "order": "الترتيب",
-        "active": "نشط",
+        "active": "الحالة",
         "image": "الصورة",
         "actions": "الإجراءات"
+      },
+      "status": {
+        "active": "نشط",
+        "inactive": "غير نشط"
       },
       "actions": {
         "create": "إضافة عضو",
@@ -857,9 +904,79 @@
         "save_failed": "فشل في حفظ العضو. يرجى المحاولة مرة أخرى."
       }
     },
+    "careers": {
+      "title": "إدارة الوظائف",
+      "subtitle": "إضافة وإدارة الوظائف المتاحة",
+      "create_job": "إضافة وظيفة جديدة",
+      "jobs_list": "قائمة الوظائف",
+      "confirm_delete_title": "تأكيد حذف الوظيفة",
+      "confirm_delete": "هل أنت متأكد من حذف هذه الوظيفة؟",
+      "deleted_title": "تم الحذف!",
+      "empty": "لا توجد وظائف حتى الآن. قم بإضافة أول وظيفة!",
+      "fields": {
+        "title_ar": "اسم الوظيفة (عربي)",
+        "title_en": "اسم الوظيفة (إنجليزي)"
+      },
+      "placeholders": {
+        "title_ar": "أدخل اسم الوظيفة بالعربية",
+        "title_en": "أدخل اسم الوظيفة بالإنجليزية"
+      },
+      "table": {
+        "title_ar": "الاسم (عربي)",
+        "title_en": "الاسم (إنجليزي)",
+        "actions": "الإجراءات"
+      },
+      "actions": {
+        "create": "إضافة وظيفة",
+        "delete": "حذف",
+        "cancel": "إلغاء"
+      },
+      "success": {
+        "job_created": "تم إضافة الوظيفة بنجاح!",
+        "job_deleted": "تم حذف الوظيفة بنجاح!"
+      },
+      "errors": {
+        "title_required": "اسم الوظيفة (عربي وإنجليزي) مطلوب",
+        "save_failed": "فشل في حفظ الوظيفة. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "applications": {
+      "title": "طلبات التوظيف",
+      "subtitle": "عرض وإدارة طلبات التوظيف المستلمة",
+      "applications_list": "قائمة الطلبات",
+      "empty": "لا توجد طلبات توظيف حتى الآن.",
+      "table": {
+        "name_en": "الاسم (EN)",
+        "name_ar": "الاسم (AR)",
+        "phone": "الجوال",
+        "email": "البريد الإلكتروني",
+        "nationality": "الجنسية",
+        "gender": "الجنس",
+        "location": "الموقع",
+        "source": "المصدر",
+        "job": "الوظيفة",
+        "id_number": "رقم الهوية",
+        "linkedin": "LinkedIn",
+        "certifications": "الشهادات",
+        "notes": "الرسالة",
+        "cv": "السيرة الذاتية",
+        "cover_letter": "خطاب التقديم",
+        "date": "التاريخ"
+      },
+      "actions": {
+        "open": "فتح",
+        "download": "تحميل"
+      }
+    },
     "users": {
       "title": "إدارة المستخدمين",
       "subtitle": "إدارة مستخدمي لوحة التحكم والصلاحيات",
+      "users_list": "قائمة المستخدمين",
+      "confirm_delete_title": "تأكيد حذف المستخدم",
+      "confirm_delete": "هل أنت متأكد من حذف هذا المستخدم؟",
+      "deleted_title": "تم الحذف!",
+      "loading": "جارٍ تحميل المستخدمين...",
+      "empty": "لا يوجد مستخدمون حالياً. قم بإضافة أول مستخدم!",
       "fields": {
         "email": "البريد الإلكتروني",
         "email_placeholder": "user@example.com",
@@ -868,7 +985,7 @@
         "password": "كلمة المرور",
         "password_placeholder": "أدخل كلمة المرور",
         "new_password": "كلمة مرور جديدة",
-        "new_password_placeholder": "أدخل كلمة المرور",
+        "new_password_placeholder": "اتركه فارغاً للإبقاء على كلمة المرور الحالية",
         "role": "الدور"
       },
       "roles": {
@@ -894,9 +1011,16 @@
         "active": "الحالة",
         "actions": "الإجراءات"
       },
-      "loading": "جارٍ تحميل المستخدمين...",
-      "empty": "لا يوجد مستخدمون حالياً",
-      "confirm_delete": "هل أنت متأكد من حذف هذا المستخدم؟"
+      "success": {
+        "user_created": "تم إضافة المستخدم بنجاح!",
+        "user_updated": "تم تحديث المستخدم بنجاح!",
+        "user_deleted": "تم حذف المستخدم بنجاح!"
+      },
+      "errors": {
+        "create_failed": "فشل في إضافة المستخدم. يرجى المحاولة مرة أخرى.",
+        "update_failed": "فشل في تحديث المستخدم. يرجى المحاولة مرة أخرى.",
+        "delete_failed": "فشل في حذف المستخدم. يرجى المحاولة مرة أخرى."
+      }
     },
     "seo": {
       "title": "إعدادات تحسين محركات البحث",

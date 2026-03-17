@@ -1,7 +1,7 @@
 // src/pages/dashboard/ServiceAdvisoryCMS.jsx
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import api from "../../api/axiosClient";
+import api from "../../../api/axiosClient";
 import toast from "react-hot-toast";
 
 export default function ServiceAdvisoryCMS() {

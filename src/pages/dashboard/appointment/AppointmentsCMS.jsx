@@ -6,7 +6,7 @@ import AppointmentContent from "./AppointmentContent";
 import AppointmentSlots from "./AppointmentSlots";
 import AppointmentBookings from "./AppointmentBookings";
 
-import "../../styles/CMS_Appointments.css";
+import "../../../styles/CMS_Appointments.css";
 
 export default function AppointmentsCMS() {
   const { t } = useTranslation();

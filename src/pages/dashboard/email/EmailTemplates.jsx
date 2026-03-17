@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 
-import { getEmailTemplates, updateEmailTemplate } from "../../api/emailApi";
+import { getEmailTemplates, updateEmailTemplate } from "../../../api/emailApi";
 
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import "../../styles/CMS_EMAILTEMPLATES.css";
+import "../../../styles/CMS_EMAILTEMPLATES.css";
 
 export default function EmailTemplates() {
   const { t } = useTranslation();

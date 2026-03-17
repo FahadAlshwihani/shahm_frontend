@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useEmailSettingsStore } from "../../store/useEmailSettingsStore";
+import { useEmailSettingsStore } from "../../../store/useEmailSettingsStore";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import "../../styles/CMS_EMAILSETTINGS.css";
+import "../../../styles/CMS_EMAILSETTINGS.css";
 
 export default function Email_Settings() {
   const { t } = useTranslation();

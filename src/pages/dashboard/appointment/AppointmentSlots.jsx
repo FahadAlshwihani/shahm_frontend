@@ -9,7 +9,7 @@ import {
   updateSlot,
   deleteSlot,
   getAdminAppointmentSettings,
-} from "../../api/appointmentsApi";
+} from "../../../api/appointmentsApi";
 
 export default function AppointmentSlots() {
   const { t, i18n } = useTranslation();

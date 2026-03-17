@@ -1,7 +1,7 @@
 // src/pages/public/AreaDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import api from "../../api/axiosClient";
+import api from "../../../api/axiosClient";
 import { useTranslation } from "react-i18next";
 
 export default function AreaDetails() {

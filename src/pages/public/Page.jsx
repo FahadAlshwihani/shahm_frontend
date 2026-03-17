@@ -4,7 +4,7 @@ import { getPublicPage } from "../../api/publicApi";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
-import Team from "./Team";
+import Team from "./Team/Team";
 import FAQ from "./FAQ";
 
 import "../../styles/page.css"; // base page style

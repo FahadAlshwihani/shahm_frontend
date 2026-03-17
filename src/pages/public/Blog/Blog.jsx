@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getPublicBlog } from "../../api/publicApi";
+import { getPublicBlog } from "../../../api/publicApi";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "../../styles/pages/blog.css";
-import { getPublicBlogSettings } from "../../api/publicApi";
+import "../../../styles/pages/blog.css";
+import { getPublicBlogSettings } from "../../../api/publicApi";
 
 
 export default function Blog() {

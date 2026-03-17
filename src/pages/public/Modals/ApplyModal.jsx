@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { submitCareerApplication } from "../../api/careersApi";
+import { submitCareerApplication } from "../../../api/careersApi";
 import toast from "react-hot-toast";
 import {
   NATIONALITIES,
   SAUDI_LOCATIONS,
   SOURCES
-} from "../../constants/careerOptions";
+} from "../../../constants/careerOptions";
 
 export default function ApplyModal({ onClose, isEn, jobs }) {
   const { t } = useTranslation();

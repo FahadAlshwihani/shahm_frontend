@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
-import "../../styles/pages/careers.css";
-import axiosClient from "../../api/axiosClient";
-import ApplyModal from "./ApplyModal";
+import "../../../styles/pages/careers.css";
+import axiosClient from "../../../api/axiosClient";
+import ApplyModal from "../Modals/ApplyModal";
 
 // Import or define your images here (replace with actual paths)
 const careerHeroImage = "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80";

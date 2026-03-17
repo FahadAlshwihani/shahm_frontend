@@ -786,55 +786,102 @@
     },
     "team": {
       "title": "Team Management",
-      "subtitle": "Manage your team members",
+      "subtitle": "Manage team members and page settings",
       "edit_member": "Edit Team Member",
       "create_member": "Create Team Member",
       "list_title": "Team Members",
+      "confirm_delete_title": "Confirm Member Deletion",
       "confirm_delete": "Are you sure you want to delete this team member?",
+      "deleted_title": "Deleted!",
       "empty": "No team members found. Create your first team member!",
+      "tabs": {
+        "page": "Team Page",
+        "members": "Members"
+      },
+      "page": {
+        "title": "Team Page Settings",
+        "subtitle": "Manage team page content and settings",
+        "section_basic": "Basic Information",
+        "section_hero": "Hero Banner",
+        "section_content": "Middle Content",
+        "section_bottom": "Bottom Banner & Buttons",
+        "fields": {
+          "title_ar": "Page Title (Arabic)",
+          "title_en": "Page Title (English)",
+          "description_ar": "Page Description (Arabic)",
+          "description_en": "Page Description (English)",
+          "hero_image": "Hero Banner Image",
+          "hero_description_ar": "Hero Description (Arabic)",
+          "hero_description_en": "Hero Description (English)",
+          "content_ar": "Content (Arabic)",
+          "content_en": "Content (English)",
+          "bottom_image": "Bottom Banner Image",
+          "right_cta_title_ar": "Right Button Title (Arabic)",
+          "right_cta_title_en": "Right Button Title (English)",
+          "left_cta_title_ar": "Left Button Title (Arabic)",
+          "left_cta_title_en": "Left Button Title (English)",
+          "left_link_text_ar": "Left Button Text (Arabic)",
+          "left_link_text_en": "Left Button Text (English)",
+          "left_link_url": "Left Button URL",
+          "left_link_visible": "Show Left Button",
+          "right_link_text_ar": "Right Button Text (Arabic)",
+          "right_link_text_en": "Right Button Text (English)",
+          "right_link_url": "Right Button URL",
+          "right_link_visible": "Show Right Button"
+        },
+        "placeholders": {
+          "description_ar": "Write page description in Arabic...",
+          "description_en": "Write page description in English..."
+        },
+        "actions": {
+          "save": "Save Page"
+        },
+        "success": {
+          "saved": "Page settings saved successfully"
+        }
+      },
+      "members": {
+        "subtitle": "Create and edit team members"
+      },
       "sections": {
         "basic_info": "Basic Information",
-        "biography": "Biography",
         "experience": "Experience",
         "settings": "Settings"
       },
       "fields": {
         "name_ar": "Name (Arabic)",
         "name_en": "Name (English)",
-        "job_title_ar": "Job Title (Arabic)",
-        "job_title_en": "Job Title (English)",
-        "role": "Role",
-        "order": "Display Order",
-        "linkedin_url": "LinkedIn URL",
-        "profile_image": "Profile Image",
-        "bio_ar": "Biography (Arabic)",
-        "bio_en": "Biography (English)",
+        "field_ar": "Field (Arabic)",
+        "field_en": "Field (English)",
+        "sector_ar": "Sector (Arabic)",
+        "sector_en": "Sector (English)",
         "experience_ar": "Experience (Arabic)",
         "experience_en": "Experience (English)",
+        "profile_image": "Profile Image",
+        "order": "Display Order",
         "active": "Active Member"
       },
       "placeholders": {
         "name_ar": "Enter name in Arabic",
         "name_en": "Enter name in English",
-        "job_title_ar": "Enter job title in Arabic",
-        "job_title_en": "Enter job title in English",
-        "linkedin_url": "https://linkedin.com/in/username"
-      },
-      "roles": {
-        "lawyer": "Lawyer",
-        "partner": "Partner",
-        "consultant": "Consultant",
-        "advisor": "Advisor",
-        "manager": "Manager",
-        "other": "Other"
+        "field_ar": "Enter field in Arabic",
+        "field_en": "Enter field in English",
+        "sector_ar": "Enter sector in Arabic",
+        "sector_en": "Enter sector in English",
+        "experience_ar": "Write member experience in Arabic...",
+        "experience_en": "Write member experience in English..."
       },
       "table": {
         "name": "Name",
-        "role": "Role",
+        "field": "Field",
         "order": "Order",
-        "active": "Active",
+        "active": "Status",
         "image": "Image",
         "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
       },
       "actions": {
         "create": "Create Member",
@@ -853,9 +900,79 @@
         "save_failed": "Failed to save team member. Please try again."
       }
     },
+    "careers": {
+      "title": "Careers Management",
+      "subtitle": "Add and manage available job positions",
+      "create_job": "Create New Job",
+      "jobs_list": "Jobs List",
+      "confirm_delete_title": "Confirm Job Deletion",
+      "confirm_delete": "Are you sure you want to delete this job?",
+      "deleted_title": "Deleted!",
+      "empty": "No jobs yet. Create your first job!",
+      "fields": {
+        "title_ar": "Job Title (Arabic)",
+        "title_en": "Job Title (English)"
+      },
+      "placeholders": {
+        "title_ar": "Enter job title in Arabic",
+        "title_en": "Enter job title in English"
+      },
+      "table": {
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "actions": "Actions"
+      },
+      "actions": {
+        "create": "Create Job",
+        "delete": "Delete",
+        "cancel": "Cancel"
+      },
+      "success": {
+        "job_created": "Job created successfully!",
+        "job_deleted": "Job deleted successfully!"
+      },
+      "errors": {
+        "title_required": "Job title (Arabic and English) is required",
+        "save_failed": "Failed to save job. Please try again."
+      }
+    },
+    "applications": {
+      "title": "Job Applications",
+      "subtitle": "View and manage received job applications",
+      "applications_list": "Applications List",
+      "empty": "No job applications yet.",
+      "table": {
+        "name_en": "Name (EN)",
+        "name_ar": "Name (AR)",
+        "phone": "Phone",
+        "email": "Email",
+        "nationality": "Nationality",
+        "gender": "Gender",
+        "location": "Location",
+        "source": "Source",
+        "job": "Job",
+        "id_number": "ID Number",
+        "linkedin": "LinkedIn",
+        "certifications": "Certifications",
+        "notes": "Message",
+        "cv": "CV",
+        "cover_letter": "Cover Letter",
+        "date": "Date"
+      },
+      "actions": {
+        "open": "Open",
+        "download": "Download"
+      }
+    },
     "users": {
       "title": "Users Management",
       "subtitle": "Manage dashboard users and permissions",
+      "users_list": "Users List",
+      "confirm_delete_title": "Confirm User Deletion",
+      "confirm_delete": "Are you sure you want to delete this user?",
+      "deleted_title": "Deleted!",
+      "loading": "Loading users...",
+      "empty": "No users found. Create your first user!",
       "fields": {
         "email": "Email",
         "email_placeholder": "user@example.com",
@@ -890,9 +1007,16 @@
         "active": "Active",
         "actions": "Actions"
       },
-      "loading": "Loading users...",
-      "empty": "No users found",
-      "confirm_delete": "Are you sure you want to delete this user?"
+      "success": {
+        "user_created": "User created successfully!",
+        "user_updated": "User updated successfully!",
+        "user_deleted": "User deleted successfully!"
+      },
+      "errors": {
+        "create_failed": "Failed to create user. Please try again.",
+        "update_failed": "Failed to update user. Please try again.",
+        "delete_failed": "Failed to delete user. Please try again."
+      }
     },
     "seo": {
       "title": "SEO Settings",

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { submitServiceAdvisory } from "../../api/serviceAdvisoryApi";
-import { getPublicServices } from "../../api/publicApi";
+import { submitServiceAdvisory } from "../../../api/serviceAdvisoryApi";
+import { getPublicServices } from "../../../api/publicApi";
 import toast from "react-hot-toast";
-import LogoImage from "../../assets/images/logo.png"; // Adjust path as needed
-import "../../styles/pages/ServiceRequestModal.css";
-import { getPublicSettings } from "../../api/publicApi";
+import LogoImage from "../../../assets/images/logo.png"; // Adjust path as needed
+import "../../../styles/pages/ServiceRequestModal.css";
+import { getPublicSettings } from "../../../api/publicApi";
 
 export default function ServiceRequestModal({
   isOpen,

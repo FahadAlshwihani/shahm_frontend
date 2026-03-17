@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import "../../styles/Login.css";
-import ShahmLogo from "../../images/hover=Default.png";
+import ShahmLogo from "../../images/Logo.png";
 
 export default function Login() {
   const { t, i18n } = useTranslation();

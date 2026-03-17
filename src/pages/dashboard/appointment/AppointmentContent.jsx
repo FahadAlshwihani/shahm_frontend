@@ -7,7 +7,7 @@ import {
   updateAdminAppointmentPage,
   getAdminAppointmentSettings,
   updateAdminAppointmentSettings,
-} from "../../api/appointmentsApi";
+} from "../../../api/appointmentsApi";
 
 export default function AppointmentContent() {
   const { t } = useTranslation();

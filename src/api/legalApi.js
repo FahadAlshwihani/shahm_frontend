@@ -1,11 +1,24 @@
 import api from "./axiosClient";
 
-export const getLegalPage = (slug) => api.get(`legal/public/${slug}/`);
+/*
+PUBLIC
+*/
 
-// Dashboard
-export const adminLegalList = () => api.get("legal/admin/");
-export const adminLegalCreate = (data) => api.post("legal/admin/", data);
+export const getPublicLegal = (slug) =>
+  api.get(`legal/page/${slug}/`);
+
+/*
+DASHBOARD
+*/
+
+export const adminLegalList = () =>
+  api.get("legal/admin/pages/");
+
+export const adminLegalCreate = (data) =>
+  api.post("legal/admin/pages/", data);
+
 export const adminLegalEdit = (id, data) =>
-  api.patch(`legal/admin/${id}/`, data);
+  api.patch(`legal/admin/pages/${id}/`, data);
+
 export const adminLegalDelete = (id) =>
-  api.delete(`legal/admin/${id}/`);
+  api.delete(`legal/admin/pages/${id}/`);

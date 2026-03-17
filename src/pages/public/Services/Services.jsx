@@ -4,13 +4,13 @@ import {
   getPublicServices,
   getPublicServiceArea,
   getPublicAreas
-} from "../../api/publicApi";
+} from "../../../api/publicApi";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "../../styles/pages/services.css";
-import ServiceIcon from "../../components/ServiceIcon";
-import AwardStar from "../../assets/images/icons/award_star.svg";
-import AwardStarHover from "../../assets/images/icons/award_star (1).svg";
+import "../../../styles/pages/services.css";
+import ServiceIcon from "../../../components/icons/ServiceIcon";
+import AwardStar from "../../../assets/images/icons/award_star.svg";
+import AwardStarHover from "../../../assets/images/icons/award_star (1).svg";
 
 export default function Services() {
   const { i18n, t } = useTranslation();

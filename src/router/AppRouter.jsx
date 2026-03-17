@@ -5,21 +5,21 @@ import MainLayout from "../components/layout/MainLayout";
 
 // Public pages
 import Home from "../pages/public/Home";
-import Services from "../pages/public/Services";
-import ServiceDetails from "../pages/public/ServiceDetail";
-import Team from "../pages/public/Team";
-import Blog from "../pages/public/Blog";
-import BlogDetails from "../pages/public/BlogDetails";
+import Services from "../pages/public/Services/Services";
+import ServiceDetails from "../pages/public/Services/ServiceDetail";
+import Team from "../pages/public/Team/Team";
+import Blog from "../pages/public/Blog/Blog";
+import BlogDetails from "../pages/public/Blog/BlogDetails";
 import LegalPage from "../pages/public/LegalPage";
 import Page from "../pages/public/Page";
 import FAQ from "../pages/public/FAQ";
 import Contact from "../pages/public/Contact";
-import ServiceAdvisory from "../pages/public/ServiceAdvisory";
+import ServiceAdvisory from "../pages/public/Services/ServiceAdvisory";
 import Payment from "../pages/public/Payment";
 import AppointmentBooking from "../pages/public/AppointmentBooking";
-import Careers from "../pages/public/Careers";
-import CareersCMS from "../pages/dashboard/CareersCMS";
-import CareerApplicationsCMS from "../pages/dashboard/CareerApplicationsCMS";
+import Careers from "../pages/public/Team/Careers";
+import CareersCMS from "../pages/dashboard/jobs/CareersCMS";
+import CareerApplicationsCMS from "../pages/dashboard/jobs/CareerApplicationsCMS";
 
 
 
@@ -32,23 +32,24 @@ import Users from "../pages/dashboard/Users";
 import UserForm from "../pages/dashboard/UserForm";
 import CMS_Heroes from "../pages/dashboard/CMS_Heroes";
 import CMS_Pages from "../pages/dashboard/CMS_Pages";
-import Services_Manage from "../pages/dashboard/Services_Manage";
+import Services_Manage from "../pages/dashboard/services/Services_Manage";
 import SEO_Settings from "../pages/dashboard/SEO_Settings";
 
 import Messages_Dashboard from "../pages/dashboard/messages/Messages_Dashboard";
 import Message_View from "../pages/dashboard/messages/Message_View";
 
 import Blog_Manage from "../pages/dashboard/Blog_Manage";
-import Team_Manage from "../pages/dashboard/Team_Manage";
+import Team_Manage from "../pages/dashboard/jobs/Team_Manage";
 import Settings from "../pages/dashboard/Settings_Manage";
-import EmailSettings from "../pages/dashboard/EmailSettings";
-import EmailTemplates from "../pages/dashboard/EmailTemplates";
+import EmailSettings from "../pages/dashboard/email/EmailSettings";
+import EmailTemplates from "../pages/dashboard/email/EmailTemplates";
 
 import CMS_Header from "../pages/dashboard/CMS_Header";
 import CMS_Footer from "../pages/dashboard/CMS_Footer";
 import CMS_FAQ from "../pages/dashboard/CMS_FAQ";
 import CMS_Contact from "../pages/dashboard/contact/CMS_Contact";
-import AppointmentsCMS from "../pages/dashboard/AppointmentsCMS";
+import CMS_Legal from "../pages/dashboard/CMS_Legal";
+import AppointmentsCMS from "../pages/dashboard/appointment/AppointmentsCMS";
 
 
 export default function AppRouter() {
@@ -254,6 +255,15 @@ export default function AppRouter() {
         element={
           <ProtectedRoute>
             <CMS_Pages />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/dashboard/cms/legal"
+        element={
+          <ProtectedRoute>
+            <CMS_Legal />
           </ProtectedRoute>
         }
       />

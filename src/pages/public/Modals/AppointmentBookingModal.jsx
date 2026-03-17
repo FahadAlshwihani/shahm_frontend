@@ -7,13 +7,13 @@ import {
     getAvailableSlots,
     bookAppointment,
     getAppointmentSettings
-} from "../../api/appointmentsApi";
+} from "../../../api/appointmentsApi";
 
-import { getPublicSettings } from "../../api/publicApi";
+import { getPublicSettings } from "../../../api/publicApi";
 
 
-import LogoImage from "../../assets/images/logo.png";
-import "../../styles/pages/ServiceRequestModal.css";
+import LogoImage from "../../../assets/images/logo.png";
+import "../../../styles/pages/ServiceRequestModal.css";
 
 export default function AppointmentBookingModal({
     isOpen,

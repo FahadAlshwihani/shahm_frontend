@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { getPublicSettings } from "../../api/publicApi";
 import "../../styles/pages/contact.css";
-import ServiceRequestModal from "./ServiceAdvisoryAbout";
-import AppointmentBookingModal from "./AppointmentBookingModal";
+import ServiceRequestModal from "./Modals/ServiceAdvisoryAbout";
+import AppointmentBookingModal from "./Modals/AppointmentBookingModal";
 
 export default function Contact() {
 

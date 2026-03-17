@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
-import { getAdminBookings, updateBookingStatus } from "../../api/appointmentsApi";
+import { getAdminBookings, updateBookingStatus } from "../../../api/appointmentsApi";
 
 export default function AppointmentBookings() {
   const { t, i18n } = useTranslation();

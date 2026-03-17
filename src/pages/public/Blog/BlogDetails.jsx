@@ -1,9 +1,9 @@
 // src/pages/public/BlogDetails.jsx
 import React, { useEffect, useState } from "react";
-import { getPublicBlogPost, getPublicBlog } from "../../api/publicApi";
+import { getPublicBlogPost, getPublicBlog } from "../../../api/publicApi";
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "../../styles/pages/blogdetails.css";
+import "../../../styles/pages/blogdetails.css";
 
 export default function BlogDetails() {
   const { slug } = useParams();

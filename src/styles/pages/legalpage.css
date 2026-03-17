@@ -1,0 +1,166 @@
+/* ===== LEGAL PAGE ===== */
+
+.legalpage-wrapper{
+max-width:1616px;
+margin:0 auto;
+padding:60px 56px;
+font-family:"Noto Kufi Arabic",sans-serif;
+}
+
+/* ===== TITLE ===== */
+
+.legalpage-title{
+width:460px;
+margin:0 auto 30px;
+text-align:center;
+font-family:"HT Sonata",serif;
+font-size:40px;
+line-height:55px;
+color:#32383C;
+}
+
+/* ===== DIVIDER ===== */
+
+.legalpage-divider{
+width:100%;
+height:1.5px;
+background:#E5E5E5;
+margin-bottom:60px;
+}
+
+/* ===== BANNER ===== */
+
+.legalpage-banner{
+width:100%;
+height:329px;
+background:#647272;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:60px;
+}
+
+.legalpage-banner-logo{
+width:92px;
+height:125px;
+object-fit:contain;
+}
+
+/* ===== HEADER ROW ===== */
+
+.legalpage-header-row{
+display:grid;
+grid-template-columns:516px 1fr;
+gap:60px;
+margin-bottom:30px;
+}
+
+.legalpage-header-title{
+font-size:18px;
+font-weight:700;
+color:#33383C;
+margin-bottom:10px;
+}
+
+.legalpage-header-divider{
+height:1.5px;
+background:#ccc;
+}
+
+/* ===== GRID ===== */
+
+.legalpage-grid{
+display:grid;
+grid-template-columns:516px 1fr;
+gap:60px;
+}
+
+/* ===== SIDEBAR ===== */
+
+.legalpage-sidebar{
+position:sticky;
+top:120px;
+height:fit-content;
+}
+
+.legalpage-clause-item{
+border-bottom:1px solid #E5E5E5;
+}
+
+.legalpage-clause-button{
+width:100%;
+background:none;
+border:none;
+padding:18px 0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+}
+
+.legalpage-clause-title{
+display:flex;
+gap:8px;
+font-size:14px;
+color:#33383C;
+}
+
+.legalpage-clause-number{
+font-weight:600;
+}
+
+.legalpage-clause-arrow{
+transition:transform .3s ease;
+}
+
+.legalpage-clause-arrow.open{
+transform:rotate(180deg);
+}
+
+.legalpage-clause-content{
+padding-bottom:20px;
+font-size:14px;
+line-height:28px;
+color:#7B8487;
+}
+
+/* ===== CONTENT ===== */
+
+.legalpage-section{
+margin-bottom:40px;
+}
+
+.legalpage-section-title{
+font-size:18px;
+margin-bottom:10px;
+color:#33383C;
+}
+
+.legalpage-section-content{
+font-size:14px;
+line-height:28px;
+color:#33383C;
+}
+
+.legalpage-section-content p{
+margin-bottom:16px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:1024px){
+
+.legalpage-grid{
+grid-template-columns:1fr;
+}
+
+.legalpage-header-row{
+grid-template-columns:1fr;
+}
+
+.legalpage-sidebar{
+position:static;
+}
+
+}

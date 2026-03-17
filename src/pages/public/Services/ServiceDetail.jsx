@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getPublicServiceDetail, getPublicServices } from "../../api/publicApi";
+import { getPublicServiceDetail, getPublicServices } from "../../../api/publicApi";
 import { useTranslation } from "react-i18next";
-import ServiceIcon from "../../components/ServiceIcon";
-import AwardStar from "../../assets/images/icons/award_star.svg";
-import AwardStarHover from "../../assets/images/icons/award_star (1).svg";
-import "../../styles/pages/serviceDetails.css";
-import ServiceRequestModal from "./ServiceAdvisoryAbout";
+import ServiceIcon from "../../../components/icons/ServiceIcon";
+import AwardStar from "../../../assets/images/icons/award_star.svg";
+import AwardStarHover from "../../../assets/images/icons/award_star (1).svg";
+import "../../../styles/pages/serviceDetails.css";
+import ServiceRequestModal from "../Modals/ServiceAdvisoryAbout";
 
 export default function ServiceDetails() {
   const { slug } = useParams();

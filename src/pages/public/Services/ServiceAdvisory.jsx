@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getServiceAdvisoryPage, submitServiceAdvisory } from "../../api/serviceAdvisoryApi";
-import { getPublicServices } from "../../api/publicApi";
+import { getServiceAdvisoryPage, submitServiceAdvisory } from "../../../api/serviceAdvisoryApi";
+import { getPublicServices } from "../../../api/publicApi";
 import toast from "react-hot-toast";
-import "../../styles/pages/service-advisory.css";
+import "../../../styles/pages/service-advisory.css";
 
 export default function ServiceAdvisory() {
   const { i18n } = useTranslation();

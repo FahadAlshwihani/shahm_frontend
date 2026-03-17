@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { getPublicTeam, getTeamPage } from "../../api/teamApi";
+import { getPublicTeam, getTeamPage } from "../../../api/teamApi";
 import { useTranslation } from "react-i18next";
-import "../../styles/pages/team.css";
+import "../../../styles/pages/team.css";
 
 /* ===============================
    CONFIG
