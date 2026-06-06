@@ -24,12 +24,19 @@ body {
   line-height: 1.8;
 
   color: #33383C;
-  background-color: #F8F8F8;
+  background-color: #ffffff;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+body.rtl{
+direction:rtl;
+}
+
+body.ltr{
+direction:ltr;
+}
 /* ===============================
    CODE (Dev only)
 ================================ */

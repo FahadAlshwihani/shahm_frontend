@@ -1,7 +1,5 @@
 {
   "login": {
-    "brand": "Shahm Dashboard",
-    "subtitle": "A modern dashboard to manage content and data efficiently.",
     "title": "Sign in",
     "desc": "Enter your credentials to access the dashboard.",
     "email": "Email address",
@@ -13,13 +11,7 @@
     "required": "Please enter your email and password",
     "invalid": "Invalid email or password",
     "showPassword": "Show password",
-    "hidePassword": "Hide password",
-    "footer_text": "© 2024 Shahm Law Firm. All rights reserved.",
-    "stats": {
-      "cases": "Cases Handled",
-      "success": "Success Rate",
-      "years": "Years Experience"
-    }
+    "hidePassword": "Hide password"
   },
   "sidebar": {
     "general": "General",
@@ -47,12 +39,66 @@
     "email_templates": "Email Templates",
     "logout": "Logout",
     "dashboard": "Dashboard",
-    "change_language": "Change Language"
+    "change_language": "Change Language",
+    "cms_about": "About",
+    "forms": "Forms",
+    "cms_legal": "Legal Pages",
+    "close_sidebar": "Close Sidebar",
+    "open_sidebar": "Open Sidebar",
+    "user": "User",
+    "welcome": "Welcome",
+    "page_dashboard": "Dashboard",
+    "page_messages": "Messages",
+    "page_heroes": "Hero Sections",
+    "page_about": "About",
+    "page_forms": "Forms",
+    "page_pages": "Pages",
+    "page_legal": "Legal Pages",
+    "page_faq": "FAQ",
+    "page_contact": "Contact",
+    "page_header": "Header",
+    "page_footer": "Footer",
+    "page_services": "Services",
+    "page_appointments": "Appointments",
+    "page_blog": "Blog",
+    "page_team": "Team",
+    "page_careers": "Careers",
+    "page_applications": "Applications",
+    "page_users": "Users",
+    "page_seo": "SEO",
+    "page_settings": "System Settings",
+    "page_email_settings": "Email Settings",
+    "page_email_templates": "Email Templates",
+    "footer_rights": "All rights reserved.",
+    "footer_quick_links": "Quick Links",
+    "footer_link_home": "Home",
+    "footer_link_services": "Services",
+    "footer_link_about": "About",
+    "footer_link_blog": "Blog",
+    "footer_link_careers": "Careers",
+    "footer_link_contact": "Contact",
+    "footer_link_faq": "FAQ",
+    "footer_link_appointments": "Appointments"
   },
   "navbar": {
     "toggle_menu": "Toggle Menu",
     "notifications": "Notifications",
-    "user": "User"
+    "user": "User",
+    "menu": {
+      "back": "Back",
+      "search": "Search",
+      "open": "Open Menu",
+      "close": "Close",
+      "individuals": "Individuals",
+      "business_sector": "Business Sector"
+    },
+    "client_privileges": {
+      "title": "Client Privileges",
+      "description": "Discover the tailored privileges & added benefits available for both business & individual clients."
+    },
+    "quick_access": {
+      "title": "Quick Access"
+    }
   },
   "dashboard": {
     "title": "Dashboard",
@@ -71,7 +117,7 @@
       "total_messages": "Total Messages",
       "subscribers": "Subscribers"
     },
-    "latest_messages": "Latest Messages",
+    "latest_messages": "Contact Requests",
     "latest_subscribers": "Newest Subscribers",
     "top_pages": "Most Visited Pages"
   },
@@ -131,12 +177,20 @@
     "pagination": {
       "page": "Page",
       "of": "of"
-    }
+    },
+    "contact_requests": "Contact Requests",
+    "cancel": "Cancel",
+    "delete_confirm_title": "Delete Subscriber",
+    "delete_confirm_text": "Are you sure you want to delete this subscriber? This action cannot be undone.",
+    "save_confirm_title": "Save Changes",
+    "save_confirm_text": "Are you sure you want to update the status of this request?",
+    "edit": "Edit"
   },
   "common": {
     "yes": "Yes",
     "no": "No",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "back_en": "Back"
   },
   "services": {
     "page_title": "Our Services",
@@ -169,6 +223,20 @@
       "table": {
         "id": "ID",
         "status": "Status"
+      },
+      "form_title_create": "Create Hero Section",
+      "form_title_edit": "Edit Hero Section",
+      "show_header": "Show Header",
+      "add_media_label": "Upload New Media",
+      "no_media": "No media uploaded yet for this hero.",
+      "empty": "No hero sections yet.",
+      "confirm_delete_title": "Delete Hero Section",
+      "confirm_delete_media_title": "Delete Media",
+      "delete_button": "Yes, Delete",
+      "cancel_button": "Cancel",
+      "success": {
+        "deleted": "Hero section deleted",
+        "media_deleted": "Media deleted"
       },
       "status": {
         "active": "Active",
@@ -248,6 +316,142 @@
         "user_info": "User Information",
         "request_info": "Request Information"
       }
+    },
+    "requestservices": {
+      "title": "Service Requests",
+      "subtitle": "Manage and track all incoming service advisory requests",
+      "total": "Total",
+      "list_title": "All Requests",
+      "table": {
+        "ref": "Ref",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "services": "Services",
+        "date": "Date",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "search_placeholder": "Search by name or email…",
+      "filter_all": "All Statuses",
+      "refresh": "Refresh",
+      "retry": "Retry",
+      "loading": "Loading…",
+      "empty_title": "No requests found",
+      "empty_default": "No service requests have been submitted yet.",
+      "empty_filtered": "No requests match your current filters.",
+      "error": {
+        "load_failed": "Failed to load requests.",
+        "delete_failed": "Failed to delete request."
+      },
+      "success": {
+        "deleted": "Request deleted successfully."
+      },
+      "actions": {
+        "view": "View",
+        "delete": "Delete"
+      },
+      "confirm_delete_title": "Delete Request",
+      "confirm_delete_text": "Are you sure you want to permanently delete this request?",
+      "delete_btn": "Delete",
+      "cancel": "Cancel",
+      "close": "Close",
+      "status": {
+        "new": "New",
+        "reviewing": "Reviewing",
+        "awaiting_client": "Awaiting Client",
+        "client_updated": "Client Updated",
+        "contracting": "Contracting",
+        "closed": "Closed",
+        "cancelled": "Cancelled"
+      },
+      "status_updated": "Status updated",
+      "status_update_failed": "Status update failed",
+      "saving": "Saving…",
+      "modal": {
+        "tab_details": "Details",
+        "tab_status": "Status",
+        "tab_access": "Access Links",
+        "tab_logs": "Activity Logs",
+        "tab_history": "Edit History",
+        "personal_info": "Personal Information",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "submitted": "Submitted",
+        "title": "Title",
+        "services": "Requested Services",
+        "message": "Message",
+        "files": "Files",
+        "voice_note": "Voice Note",
+        "audio_unsupported": "Audio not supported",
+        "form_metadata": "Form Information",
+        "form_id": "Form ID",
+        "submission_id": "Submission ID",
+        "form_title": "Form Title",
+        "snapshot": "Form Snapshot",
+        "change_status": "Change Status",
+        "edit_submission": "Edit submission",
+        "save_changes": "Save changes",
+        "edit_saved": "Submission updated.",
+        "edit_failed": "Failed to save changes.",
+        "editable": "editable",
+        "readonly": "readonly"
+      },
+      "access": {
+        "title": "Client Access Links",
+        "new_link": "New Link",
+        "create_btn": "Create Link",
+        "form": "Access Form",
+        "select_form": "Select form",
+        "expires_hours": "Expires in (hours)",
+        "max_edits": "Max Edits",
+        "form_required": "Please select an access form.",
+        "created": "Access link created",
+        "create_failed": "Failed to create link",
+        "no_submission": "This request is not linked to a form submission.",
+        "no_submission_hint": "Access links can only be created for requests submitted via a form.",
+        "no_links": "No access links created yet.",
+        "copy_url": "Copy access URL",
+        "copy": "Copy",
+        "copied": "Copied to clipboard",
+        "copy_failed": "Copy failed",
+        "regenerate": "Regenerate",
+        "revoke": "Revoke",
+        "revoke_title": "Revoke this link?",
+        "revoke_text": "The client will no longer be able to use this link.",
+        "revoke_btn": "Revoke",
+        "revoked": "Link revoked",
+        "revoke_failed": "Revoke failed",
+        "regen_title": "Regenerate link?",
+        "regen_text": "Old link will be revoked and a new one created.",
+        "regen_btn": "Regenerate",
+        "regenerated": "Link regenerated",
+        "regen_failed": "Regeneration failed",
+        "edits": "Edits",
+        "created_at": "Created",
+        "expires_at": "Expires",
+        "verified_at": "Verified",
+        "last_accessed": "Last Accessed",
+        "status": {
+          "active": "Active",
+          "revoked": "Revoked",
+          "expired": "Expired"
+        }
+      },
+      "logs": {
+        "empty": "No activity logs found.",
+        "load_failed": "Failed to load logs."
+      },
+      "edit_history": {
+        "empty": "No edit history found.",
+        "old_value": "Old Value",
+        "new_value": "New Value",
+        "edited_by_admin": "Edited by admin",
+        "edited_by_client": "Edited by client",
+        "unknown_editor": "Unknown editor"
+      },
+      "creating": "Creating…"
     },
     "actions": {
       "actions": "Actions",
@@ -331,63 +535,94 @@
       }
     },
     "header": {
-      "title": "Header Management",
-      "subtitle": "Manage header logo and navigation menu",
-      "form_create": "Add New Item",
-      "form_edit": "Edit Item",
-      "section_basic": "Basic Information",
-      "section_hierarchy": "Hierarchy & Order",
+      "title": "Header CMS",
+      "subtitle": "Manage navigation, logos, quick access and page content",
+      "tabs": {
+        "menu": "Menu Structure",
+        "logos": "Logos",
+        "menu_images": "Menu Images",
+        "quick_access": "Quick Access",
+        "page_content": "Page Content"
+      },
       "label_ar": "Label (Arabic)",
       "label_en": "Label (English)",
-      "placeholder_label_ar": "Text in Arabic",
-      "placeholder_label_en": "Text in English",
+      "placeholder_label_ar": "العنوان بالعربية",
+      "placeholder_label_en": "Label in English",
       "custom_url": "Custom URL",
-      "placeholder_url": "/custom-url",
-      "select_page": "Select CMS Page",
-      "parent": "Parent Item",
-      "root_item": "— Root Item —",
+      "placeholder_url": "https://…",
+      "select_page": "Select Page",
+      "root_item": "Root (no parent)",
       "order": "Order",
-      "active": "Active",
       "inactive": "Inactive",
-      "cms_page": "CMS Page",
-      "create": "Create",
+      "empty": "No items yet.",
       "edit": "Edit",
-      "update": "Update",
       "delete": "Delete",
       "cancel": "Cancel",
-      "current_menu": "Current Menu",
-      "empty": "No menu items yet. Add your first item!",
-      "confirm_delete": "Are you sure you want to delete this item?",
-      "confirm_delete_title": "Confirm Deletion",
-      "confirm_delete_text": "You won't be able to revert this!",
-      "delete_button": "Yes, delete it",
+      "create": "Create",
+      "update": "Update",
+      "confirm_delete_title": "Delete Item",
+      "confirm_delete_text": "Are you sure you want to delete this item?",
+      "delete_button": "Delete",
       "cancel_button": "Cancel",
-      "deleted_title": "Deleted!",
-      "delete_failed": "Failed to delete item",
-      "save_failed": "Failed to save data",
-      "url_page_conflict": "You cannot use a custom URL with a CMS page",
-      "page_url_conflict": "You cannot select a CMS page while using a custom URL",
-      "self_parent_error": "An item cannot be its own parent",
+      "section_basic": "Basic Info",
+      "section_hierarchy": "Hierarchy & Settings",
+      "fields": {
+        "description_ar": "Description (Arabic)",
+        "description_en": "Description (English)",
+        "slug": "Slug / Path",
+        "parent": "Parent Item",
+        "order": "Display Order",
+        "is_active": "Active",
+        "image": "Image"
+      },
+      "url_page_conflict": "Clear the URL field before selecting a page.",
+      "page_url_conflict": "Clear the page field before entering a URL.",
+      "form_create": "New Menu Item",
+      "form_edit": "Edit Menu Item",
+      "current_menu": "Menu Structure",
+      "save_failed": "Failed to save changes.",
+      "delete_failed": "Failed to delete item.",
       "success": {
-        "created": "Item created successfully",
-        "updated": "Item updated successfully",
-        "deleted": "Item deleted successfully",
-        "order_updated": "Order updated"
+        "created": "Item created successfully.",
+        "updated": "Item updated successfully.",
+        "deleted": "Item deleted successfully.",
+        "order_updated": "Order updated."
       },
       "logo": {
-        "title": "Header Logo",
-        "upload": "Upload Logo",
+        "full_ar": "Full Logo (Arabic)",
+        "scroll_ar": "Scroll Logo (Arabic)",
+        "full_en": "Full Logo (English)",
+        "scroll_en": "Scroll Logo (English)",
+        "upload": "Upload",
         "delete": "Delete Logo",
-        "file_required": "Please select a logo file",
-        "confirm_delete_title": "Confirm Logo Deletion",
-        "confirm_delete_text": "Are you sure you want to delete the header logo?",
-        "delete_button": "Yes, delete logo",
+        "file_required": "Please select an image file.",
+        "confirm_delete_title": "Delete Logo",
+        "confirm_delete_text": "Are you sure you want to delete this logo?",
+        "delete_button": "Delete",
         "cancel_button": "Cancel",
-        "deleted_title": "Deleted!",
         "success": {
-          "uploaded": "Logo uploaded successfully",
-          "deleted": "Logo deleted successfully"
+          "uploaded": "Logo uploaded successfully.",
+          "deleted": "Logo deleted."
         }
+      },
+      "menu_images": {
+        "form_title": "New Menu Image",
+        "list_title": "Menu Images",
+        "keep_existing": "No new file selected — existing image will be kept."
+      },
+      "quick_access": {
+        "title": "Quick Access Links",
+        "form_title": "New Quick Access Link",
+        "limit_hint": "{{count}} / 8 links configured. Maximum 8 quick-access links."
+      },
+      "page_content": {
+        "title": "Page Content",
+        "hint": "Enter a page slug to load and edit its content.",
+        "load_btn": "Load",
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "content_ar": "Content (Arabic)",
+        "content_en": "Content (English)"
       }
     },
     "footer": {
@@ -452,210 +687,245 @@
       "confirm_delete_logo": "Are you sure you want to delete the logo?",
       "confirm_delete_logo_title": "Confirm Logo Deletion",
       "confirm_delete_logo_text": "Do you really want to delete the footer logo?",
-      "logo_delete_button": "Yes, delete logo"
+      "logo_delete_button": "Yes, delete logo",
+      "tab_columns": "Columns & Links",
+      "tab_cta": "CTA Buttons",
+      "tab_settings": "Footer Settings",
+      "url_hint": "(e.g. /about-us)",
+      "cta_url_hint": "(e.g. /contact)",
+      "system_badge": "System",
+      "link_disabled": "disabled",
+      "disable": "Disable",
+      "enable": "Enable",
+      "no_links_yet": "No links yet",
+      "add_cta": "Add CTA Button",
+      "edit_cta": "Edit CTA Button",
+      "desc_ar": "Description (Arabic)",
+      "desc_en": "Description (English)",
+      "desc_ar_placeholder": "وصف قصير...",
+      "desc_en_placeholder": "Short description...",
+      "no_cta_yet": "No CTA buttons yet. You can add up to 3.",
+      "cta_max_reached": "Maximum 3 CTA buttons allowed",
+      "cta_max_notice": "Maximum 3 buttons reached. Delete one to add a new one.",
+      "section_newsletter_title": "Newsletter Title",
+      "section_copyright": "Copyright Text",
+      "section_logos": "Logos",
+      "newsletter_title_ar_placeholder": "أرغب في تلقّي كل جديد...",
+      "newsletter_title_en_placeholder": "I want to receive updates...",
+      "copyright_ar_placeholder": "© 2025. جميع الحقوق محفوظة.",
+      "copyright_en_placeholder": "© 2025. All rights reserved.",
+      "logo_ar_label": "Logo (Arabic)",
+      "logo_en_label": "Logo (English)",
+      "vat_logo_label": "VAT Logo",
+      "settings_saved": "Settings saved successfully",
+      "newsletter_info": "Newsletter title is managed from Footer Settings tab. The subscription form UI is fixed."
     },
     "services": {
       "title": "Services Management",
-      "subtitle": "Manage content, practice areas, services and requests",
+      "subtitle": "Manage main services, sub-services, sections, CMS content and advisory requests",
+      "loading": "Loading...",
       "tabs": {
-        "content": "Page Content",
-        "areas": "Practice Areas",
+        "cms": "Page CMS",
+        "mainServices": "Main Services",
         "services": "Services",
-        "requests": "Requests"
-      },
-      "actions": {
-        "save": "Save",
-        "create": "Create",
-        "update": "Update",
-        "edit": "Edit",
-        "delete": "Delete",
-        "cancel": "Cancel",
-        "close": "Close",
-        "view": "View",
-        "activate": "Activate",
-        "deactivate": "Deactivate"
+        "sections": "Sections",
+        "requests": "Requests",
+        "import": "Import"
       },
       "status": {
         "active": "Active",
         "inactive": "Inactive"
       },
+      "filter_all_status": "All Status",
       "table": {
         "id": "ID",
-        "name": "Name",
         "title": "Title",
-        "area": "Area",
         "icon": "Icon",
         "order": "Order",
         "status": "Status",
-        "actions": "Actions",
-        "email": "Email",
-        "phone": "Phone",
-        "service": "Service",
-        "date": "Date"
+        "actions": "Actions"
       },
-      "content": {
-        "title": "Page Content",
-        "subtitle": "Manage advisory services page content",
-        "section_top": "Top Section",
-        "section_bottom": "Bottom Section",
-        "title_top_ar": "Top Title (Arabic)",
-        "title_top_en": "Top Title (English)",
-        "description_top_ar": "Top Description (Arabic)",
-        "description_top_en": "Top Description (English)",
-        "title_bottom_ar": "Bottom Title (Arabic)",
-        "title_bottom_en": "Bottom Title (English)",
-        "description_bottom_ar": "Bottom Description (Arabic)",
-        "description_bottom_en": "Bottom Description (English)",
-        "placeholder_title_top_ar": "Enter title in Arabic",
-        "placeholder_title_top_en": "Enter title in English",
-        "placeholder_description_top_ar": "Enter description in Arabic",
-        "placeholder_description_top_en": "Enter description in English",
-        "placeholder_title_bottom_ar": "Enter title in Arabic",
-        "placeholder_title_bottom_en": "Enter title in English",
-        "placeholder_description_bottom_ar": "Enter description in Arabic",
-        "placeholder_description_bottom_en": "Enter description in English"
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "create": "Create",
+        "update": "Update",
+        "saving": "Saving...",
+        "search": "Search",
+        "activate": "Activate",
+        "deactivate": "Deactivate"
       },
-      "areas": {
-        "title": "Practice Areas",
-        "subtitle": "Manage legal practice areas",
-        "form_create": "Add Practice Area",
-        "form_edit": "Edit Practice Area",
-        "list_title": "Practice Areas List",
-        "name_ar": "Name (Arabic)",
-        "name_en": "Name (English)",
-        "placeholder_name_ar": "Enter area name in Arabic",
-        "placeholder_name_en": "Enter area name in English",
-        "icon": "Icon",
-        "select_icon": "Select an icon",
-        "order": "Order",
+      "confirm_delete_title": "Delete Item",
+      "confirm_delete_text": "This action cannot be undone.",
+      "delete_button": "Yes, Delete",
+      "cancel_button": "Cancel",
+      "error": {
+        "load_failed": "Failed to load data",
+        "save_failed": "Failed to save",
+        "delete_failed": "Failed to delete",
+        "toggle_failed": "Failed to update status"
+      },
+      "cms": {
+        "title": "Services Page CMS",
+        "subtitle": "Configure the hero section, titles, search and submit button for the services page",
+        "section_hero": "Hero Media",
+        "section_content": "Page Content",
+        "section_titles": "Titles & Descriptions",
+        "section_search": "Search Placeholder",
+        "section_button": "Submit Request Button",
+        "hero_media_type": "Hero Media Type",
+        "hero_logo": "Hero Logo",
+        "hero_image": "Hero Image",
+        "hero_video": "Hero Video",
+        "choose_file": "Choose File",
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "description_ar": "Description (Arabic)",
+        "description_en": "Description (English)",
+        "search_placeholder_ar": "Search Placeholder (Arabic)",
+        "search_placeholder_en": "Search Placeholder (English)",
+        "placeholder_title_ar": "Enter page title in Arabic",
+        "placeholder_title_en": "Enter page title in English",
+        "placeholder_description_ar": "Enter page description in Arabic",
+        "placeholder_description_en": "Enter page description in English",
+        "placeholder_search_ar": "Search placeholder text in Arabic",
+        "placeholder_search_en": "Search placeholder text in English",
         "active": "Active",
-        "empty": "No practice areas yet. Add your first one!",
+        "button_labels": "Button Labels",
+        "button_action": "Button Action",
+        "button_label_ar": "Button Label (Arabic)",
+        "button_label_en": "Button Label (English)",
+        "action_type": "Action Type",
+        "action_none": "None",
+        "action_url": "URL",
+        "action_form_modal": "Form Modal",
+        "action_url_label": "URL",
+        "action_form_label": "Form",
+        "select_form": "— Select Form —",
         "success": {
-          "created": "Practice area created successfully",
-          "updated": "Practice area updated successfully",
-          "deleted": "Practice area deleted successfully",
-          "toggled": "Practice area status updated"
-        },
-        "error": {
-          "save_failed": "Failed to save practice area",
-          "delete_failed": "Failed to delete practice area",
-          "toggle_failed": "Failed to update status"
-        },
-        "confirm_delete_title": "Confirm Area Deletion",
-        "confirm_delete_text": "All services linked to this area will be deleted!",
-        "delete_button": "Yes, delete area",
-        "cancel_button": "Cancel",
-        "deleted_title": "Deleted!"
+          "created": "CMS created successfully",
+          "updated": "CMS updated successfully"
+        }
+      },
+      "mainServices": {
+        "title": "Main Services",
+        "subtitle": "Top-level service categories with code, icon and ordering",
+        "form_create": "Create Main Service",
+        "form_edit": "Edit Main Service",
+        "list_title": "Main Services List",
+        "section_basic": "Basic Information",
+        "section_icon": "Icon",
+        "code": "Code",
+        "order": "Order",
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "placeholder_title_ar": "Category name in Arabic",
+        "placeholder_title_en": "Category name in English",
+        "icon": "Icon Image",
+        "choose_icon": "Choose Icon",
+        "active": "Active",
+        "services_count": "Services",
+        "empty": "No main services found.",
+        "success": {
+          "created": "Main service created",
+          "updated": "Main service updated",
+          "deleted": "Main service deleted",
+          "toggled": "Status updated"
+        }
       },
       "services": {
         "title": "Services",
-        "subtitle": "Manage advisory services",
-        "form_create": "Add New Service",
+        "subtitle": "Manage services belonging to main service categories",
+        "form_create": "Create Service",
         "form_edit": "Edit Service",
         "list_title": "Services List",
-        "section_basic": "Basic Information",
-        "section_details": "Full Details",
-        "practice_area": "Practice Area",
-        "select_area": "Select practice area",
-        "title_ar": "Service Title (Arabic)",
-        "title_en": "Service Title (English)",
-        "placeholder_title_ar": "Enter service title in Arabic",
-        "placeholder_title_en": "Enter service title in English",
-        "description_ar": "Short Description (Arabic)",
-        "description_en": "Short Description (English)",
-        "placeholder_description_ar": "Enter short description in Arabic",
-        "placeholder_description_en": "Enter short description in English",
-        "serial_number": "Serial Number",
-        "placeholder_serial": "Example: SRV-001",
-        "icon": "Icon",
-        "select_icon": "Select an icon",
-        "cover_image": "Cover Image",
-        "featured": "Featured Service",
-        "most_requested": "Most Requested",
-        "overview_ar": "Overview (Arabic)",
-        "overview_en": "Overview (English)",
-        "placeholder_overview_ar": "Enter service overview in Arabic",
-        "placeholder_overview_en": "Enter service overview in English",
-        "who_for_ar": "Who is this for? (Arabic)",
-        "who_for_en": "Who is this for? (English)",
-        "placeholder_who_for_ar": "Describe target audience in Arabic",
-        "placeholder_who_for_en": "Describe target audience in English",
-        "scope_ar": "Service Scope (Arabic)",
-        "scope_en": "Service Scope (English)",
-        "placeholder_scope_ar": "Define service scope in Arabic",
-        "placeholder_scope_en": "Define service scope in English",
-        "deliverables_ar": "Deliverables (Arabic)",
-        "deliverables_en": "Deliverables (English)",
-        "placeholder_deliverables_ar": "Define deliverables in Arabic",
-        "placeholder_deliverables_en": "Define deliverables in English",
-        "how_it_works_ar": "How It Works (Arabic)",
-        "how_it_works_en": "How It Works (English)",
-        "placeholder_how_it_works_ar": "Explain process in Arabic",
-        "placeholder_how_it_works_en": "Explain process in English",
-        "faqs": "FAQs",
-        "faqs_help": "Hold Ctrl (or Cmd) to select multiple questions",
-        "empty": "No services yet. Add your first one!",
+        "section_main": "Category",
+        "section_titles": "Titles & Descriptions",
+        "section_settings": "Settings",
+        "main_service": "Main Service",
+        "select_main_service": "— Select Main Service —",
+        "filter_all_main": "All Main Services",
+        "serial_number": "Serial #",
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "placeholder_title_ar": "Service name in Arabic",
+        "placeholder_title_en": "Service name in English",
+        "short_description_ar": "Short Description (Arabic)",
+        "short_description_en": "Short Description (English)",
+        "placeholder_short_description_ar": "Brief description in Arabic",
+        "placeholder_short_description_en": "Brief description in English",
+        "order": "Order",
+        "featured": "Featured",
+        "active": "Active",
+        "empty": "No services found.",
         "success": {
-          "created": "Service created successfully",
-          "updated": "Service updated successfully",
-          "deleted": "Service deleted successfully",
-          "toggled": "Service status updated"
-        },
-        "error": {
-          "save_failed": "Failed to save service",
-          "delete_failed": "Failed to delete service",
-          "toggle_failed": "Failed to update status"
-        },
-        "confirm_delete_title": "Confirm Service Deletion",
-        "confirm_delete_text": "You won't be able to revert this!",
-        "delete_button": "Yes, delete service",
-        "cancel_button": "Cancel",
-        "deleted_title": "Deleted!"
+          "created": "Service created",
+          "updated": "Service updated",
+          "deleted": "Service deleted",
+          "toggled": "Status updated"
+        }
       },
-      "requests": {
-        "title": "Service Requests",
-        "subtitle": "Manage incoming advisory service requests",
-        "list_title": "Requests List",
-        "table": {
-          "id": "#",
-          "name": "Name",
-          "email": "Email",
-          "phone": "Phone",
-          "service": "Services",
-          "date": "Date",
-          "actions": "Actions"
-        },
-        "modal": {
-          "title": "Request Details",
-          "personal_info": "Personal Information",
-          "name": "Name",
-          "email": "Email",
-          "phone": "Phone",
-          "date": "Request Date",
-          "services": "Requested Services",
-          "message": "Message",
-          "voice_note": "Voice Note",
-          "audio_not_supported": "Browser does not support audio playback",
-          "attachment": "Attachment",
-          "download_attachment": "Download Attachment",
-          "status": "Request Status"
-        },
-        "status": {
-          "new": "New",
-          "replied": "Replied",
-          "closed": "Closed"
-        },
-        "empty": "No requests yet",
-        "download_success": "File downloaded successfully",
-        "download_failed": "Failed to download file",
-        "status_updated": "Request status updated",
-        "status_update_failed": "Failed to update status"
+      "sections": {
+        "title": "Service Sections",
+        "subtitle": "Manage content sections for each service",
+        "form_create": "Create Section",
+        "form_edit": "Edit Section",
+        "list_title": "Sections List",
+        "section_meta": "Section & Order",
+        "section_titles": "Titles & Subtitles",
+        "section_content": "Content",
+        "service": "Service",
+        "select_service": "— Select Service —",
+        "filter_all_services": "All Services",
+        "order": "Order",
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "placeholder_title_ar": "Section title in Arabic",
+        "placeholder_title_en": "Section title in English",
+        "subtitle_ar": "Subtitle (Arabic)",
+        "subtitle_en": "Subtitle (English)",
+        "placeholder_subtitle_ar": "Subtitle in Arabic",
+        "placeholder_subtitle_en": "Subtitle in English",
+        "content_ar": "Content (Arabic)",
+        "content_en": "Content (English)",
+        "placeholder_content_ar": "Section content in Arabic",
+        "placeholder_content_en": "Section content in English",
+        "active": "Active",
+        "empty": "No sections found.",
+        "success": {
+          "created": "Section created",
+          "updated": "Section updated",
+          "deleted": "Section deleted",
+          "toggled": "Status updated"
+        }
       },
-      "success": {
-        "content_saved": "Content saved successfully"
-      },
-      "error": {
-        "save_failed": "Failed to save changes"
+      "import": {
+        "title": "Import Services from Excel",
+        "subtitle": "Bulk-import main services, services and sections from an Excel workbook",
+        "upload_section": "Upload Excel File",
+        "drop_hint": "Drag & drop your Excel file here, or click to browse",
+        "accepts": "Accepts .xlsx and .xls files",
+        "run_import": "Run Import",
+        "importing": "Importing...",
+        "reset": "Reset",
+        "invalid_file": "Please upload a valid Excel file (.xlsx or .xls)",
+        "no_file": "Please select a file first",
+        "success": "Import completed successfully",
+        "error": "Import failed",
+        "success_title": "Import Successful",
+        "error_title": "Import Failed",
+        "main_services_created": "Main Services Created",
+        "services_created": "Services Created",
+        "sections_created": "Sections Created",
+        "schema_title": "Required Excel Structure",
+        "schema_description": "Your workbook must contain exactly these sheet names with the following column headers:",
+        "tips_title": "Tips",
+        "tip1": "Import main_services sheet first — services depend on main service codes.",
+        "tip2": "Import services second — sections depend on service slugs.",
+        "tip3": "Existing records with matching keys will be updated, not duplicated.",
+        "tip4": "Service slugs are auto-generated from title_en using slugify."
       }
     },
     "blog": {
@@ -731,7 +1001,31 @@
         "person_name_en": "Name (English)",
         "person_desc_ar": "Description (Arabic)",
         "person_desc_en": "Description (English)",
-        "order": "Order"
+        "order": "Order",
+        "intro_ar": "Intro (Arabic)",
+        "intro_en": "Intro (English)",
+        "intro_ar_placeholder": "Write post intro in Arabic...",
+        "intro_en_placeholder": "Write post intro in English...",
+        "status": "Status",
+        "status_draft": "Draft",
+        "status_published": "Published",
+        "status_scheduled": "Scheduled",
+        "color": "Color",
+        "icon": "Icon"
+      },
+      "sections": {
+        "title": "Post Sections",
+        "item_label": "Section",
+        "add": "Add Section",
+        "remove": "Remove",
+        "title_ar": "Section Title (Arabic)",
+        "title_en": "Section Title (English)",
+        "title_ar_placeholder": "Section title in Arabic",
+        "title_en_placeholder": "Section title in English",
+        "content_ar": "Section Content (Arabic)",
+        "content_en": "Section Content (English)",
+        "content_ar_placeholder": "Write section content in Arabic...",
+        "content_en_placeholder": "Write section content in English..."
       },
       "actions": {
         "save": "Save",
@@ -752,7 +1046,8 @@
         "title_ar": "Title",
         "category": "Category",
         "cover": "Cover",
-        "actions": "Actions"
+        "actions": "Actions",
+        "id": "ID"
       },
       "success": {
         "settings_saved": "Settings saved successfully",
@@ -770,7 +1065,8 @@
         "category_failed": "Failed to save category",
         "tag_required": "Arabic tag name is required",
         "tag_failed": "Failed to save tag",
-        "post_failed": "Failed to save post"
+        "post_failed": "Failed to save post",
+        "invalid_color": "Invalid color format"
       },
       "confirm_delete_category_title": "Confirm Category Deletion",
       "confirm_delete_category": "Are you sure you want to delete this category?",
@@ -909,9 +1205,11 @@
       "confirm_delete": "Are you sure you want to delete this job?",
       "deleted_title": "Deleted!",
       "empty": "No jobs yet. Create your first job!",
+      "edit_job": "Edit Job",
       "fields": {
         "title_ar": "Job Title (Arabic)",
-        "title_en": "Job Title (English)"
+        "title_en": "Job Title (English)",
+        "edit_job": "Edit Job"
       },
       "placeholders": {
         "title_ar": "Enter job title in Arabic",
@@ -920,20 +1218,26 @@
       "table": {
         "title_ar": "Title (Arabic)",
         "title_en": "Title (English)",
-        "actions": "Actions"
+        "actions": "Actions",
+        "id": "ID"
       },
       "actions": {
         "create": "Create Job",
         "delete": "Delete",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving…"
       },
       "success": {
         "job_created": "Job created successfully!",
-        "job_deleted": "Job deleted successfully!"
+        "job_deleted": "Job deleted successfully!",
+        "job_updated": "Job updated successfully"
       },
       "errors": {
         "title_required": "Job title (Arabic and English) is required",
-        "save_failed": "Failed to save job. Please try again."
+        "save_failed": "Failed to save job. Please try again.",
+        "load_failed": "Failed to load jobs",
+        "delete_failed": "Failed to delete job"
       }
     },
     "applications": {
@@ -1128,6 +1432,7 @@
       "subtitle": "Configure SMTP server and notification emails",
       "sections": {
         "smtp": "SMTP Configuration",
+        "security": "Security",
         "sender": "Sender Emails",
         "smtp_config": "Server Configuration",
         "sender_config": "Sender Configuration"
@@ -1147,7 +1452,9 @@
         "reset": "Reset to Defaults",
         "save": "Save Settings",
         "testing": "Testing...",
-        "saving": "Saving..."
+        "saving": "Saving...",
+        "reset_confirm": "Yes, Reset",
+        "cancel": "Cancel"
       },
       "success": {
         "saved": "Settings saved successfully",
@@ -1166,7 +1473,8 @@
         "contact_email": "admin@example.com",
         "auto_reply_email": "noreply@example.com"
       },
-      "confirm_reset": "Are you sure you want to reset settings to defaults?"
+      "confirm_reset": "Are you sure you want to reset settings to defaults?",
+      "confirm_reset_title": "Reset to Defaults"
     },
     "email_templates": {
       "title": "Email Templates",
@@ -1187,27 +1495,46 @@
         "site_name": "Website Name"
       },
       "actions": {
-        "save": "Save Template"
+        "save": "Save Template",
+        "saving": "Saving..."
       },
       "success": {
         "saved": "Template saved successfully"
       },
       "errors": {
         "load_failed": "Failed to load templates",
-        "save_failed": "Failed to save template"
+        "save_failed": "Failed to save template",
+        "empty_content": "Template content cannot be empty"
+      },
+      "fields": {
+        "subject": "Email Subject",
+        "content": "Email Content (HTML)"
+      },
+      "placeholders": {
+        "subject": "Enter email subject line..."
       }
     },
     "contact": {
-      "title": "Contact Page Management",
-      "subtitle": "Manage contact page header, cards, and FAQ preview",
+      "title": "Contact CMS",
+      "subtitle": "Manage contact page content, cards and FAQ preview",
       "tabs": {
         "page_header": "Page Header",
         "contact_cards": "Contact Cards",
         "faq_preview": "FAQ Preview"
       },
+      "actions": {
+        "save": "Save",
+        "saving": "Saving…",
+        "cancel": "Cancel"
+      },
+      "error": {
+        "load_failed": "Failed to load data.",
+        "save_failed": "Failed to save changes."
+      },
       "page_header": {
-        "title": "Contact Page Header",
-        "section_title": "Header Content",
+        "title": "Page Header",
+        "subtitle": "Manage the contact page title and description",
+        "section_title": "Page Content",
         "fields": {
           "title_ar": "Title (Arabic)",
           "title_en": "Title (English)",
@@ -1215,78 +1542,94 @@
           "description_en": "Description (English)"
         },
         "placeholders": {
-          "title_ar": "Enter title in Arabic",
-          "title_en": "Enter title in English",
-          "description_ar": "Enter description in Arabic",
-          "description_en": "Enter description in English"
+          "title_ar": "عنوان الصفحة بالعربية",
+          "title_en": "Page title in English",
+          "description_ar": "وصف الصفحة بالعربية",
+          "description_en": "Page description in English"
         },
         "actions": {
-          "save": "Save Header"
+          "save": "Save"
         },
         "success": {
-          "saved": "Page header saved successfully"
+          "saved": "Page header saved successfully."
         }
       },
       "cards": {
-        "form_title": "Create Contact Card",
-        "list_title": "Contact Cards",
+        "section_heading": "Contact Cards",
+        "section_subtitle": "Create and manage contact cards shown on the contact page",
+        "form_title": "New Card",
+        "form_edit": "Edit Card",
+        "list_title": "All Cards",
+        "empty": "No cards yet. Create your first card above.",
         "section_card_settings": "Card Settings",
+        "section_primary_btn": "Primary Button",
+        "section_secondary_btn": "Secondary Button",
         "fields": {
           "type": "Card Type",
+          "order": "Display Order",
           "title_ar": "Title (Arabic)",
           "title_en": "Title (English)",
+          "subtitle_ar": "Subtitle (Arabic)",
+          "subtitle_en": "Subtitle (English)",
           "description_ar": "Description (Arabic)",
           "description_en": "Description (English)",
-          "button_label_ar": "Button Text (Arabic)",
-          "button_label_en": "Button Text (English)",
+          "btn_label_ar": "Button Label (Arabic)",
+          "btn_label_en": "Button Label (English)",
+          "action_type": "Action Type",
           "url": "URL",
-          "order": "Display Order",
+          "form": "Form",
+          "info_modal": "Info Modal",
           "active": "Active"
         },
         "placeholders": {
-          "title_ar": "Enter title in Arabic",
-          "title_en": "Enter title in English",
-          "description_ar": "Enter description in Arabic",
-          "description_en": "Enter description in English",
-          "button_label_ar": "Enter button text in Arabic",
-          "button_label_en": "Enter button text in English",
-          "url": "https://example.com"
+          "title_ar": "عنوان البطاقة",
+          "title_en": "Card title",
+          "subtitle_ar": "العنوان الفرعي",
+          "subtitle_en": "Subtitle",
+          "description_ar": "وصف قصير",
+          "description_en": "Short description",
+          "btn_label_ar": "نص الزر",
+          "btn_label_en": "Button text"
         },
-        "types": {
-          "info": "Info",
-          "button": "Button",
-          "form": "Form",
-          "faq": "FAQ Preview"
+        "options": {
+          "type_default": "Default",
+          "type_faq": "FAQ Preview",
+          "action_none": "None",
+          "action_url": "URL",
+          "action_form_modal": "Form Modal",
+          "action_contact_request": "Contact Request",
+          "action_info_modal": "Info Modal",
+          "select_form": "Select Form",
+          "select_info_modal": "Select Info Modal"
         },
         "actions": {
           "save": "Save Card",
+          "update": "Update Card",
+          "edit": "Edit",
+          "delete": "Delete",
           "activate": "Activate",
-          "deactivate": "Deactivate",
-          "delete": "Delete"
+          "deactivate": "Deactivate"
+        },
+        "confirm_delete_title": "Delete Card",
+        "confirm_delete_text": "Are you sure you want to delete this card?",
+        "errors": {
+          "type_required": "Please select a card type."
         },
         "success": {
-          "card_created": "Card created successfully",
-          "card_deleted": "Card deleted successfully",
-          "status_updated": "Status updated successfully"
-        },
-        "errors": {
-          "type_required": "Please select a card type"
-        },
-        "confirm_delete": "Are you sure you want to delete this card?",
-        "confirm_delete_title": "Confirm Deletion",
-        "confirm_delete_text": "You won't be able to revert this!",
-        "delete_button": "Yes, delete it",
-        "cancel_button": "Cancel",
-        "deleted_title": "Deleted!",
-        "empty": "No contact cards yet. Create your first one!"
+          "card_created": "Card created successfully.",
+          "card_updated": "Card updated successfully.",
+          "card_deleted": "Card deleted successfully.",
+          "status_updated": "Card status updated."
+        }
       },
       "faq": {
-        "title": "FAQ Preview on Contact Page",
-        "description": "Select which FAQs to display on the contact page",
+        "title": "FAQ Preview",
+        "description": "Select which FAQs to display on the contact page.",
+        "select_title": "Select FAQs",
+        "empty": "No FAQs found.",
         "success": {
-          "updated": "FAQ selection updated"
-        },
-        "empty": "No FAQs available. Create FAQs first."
+          "updated": "FAQ selection updated."
+        }
       }
     },
     "faq": {
@@ -1298,20 +1641,37 @@
       "section_questions": "Questions",
       "section_answers": "Answers",
       "section_settings": "Settings",
+      "tabs": {
+        "overview": "Overview",
+        "categories": "Categories",
+        "questions": "Questions"
+      },
+      "overview": {
+        "total_categories": "Total Categories",
+        "total_questions": "Total Questions",
+        "active_questions": "Active Questions",
+        "inactive_questions": "Inactive Questions",
+        "recent_categories": "Recent Categories",
+        "recent_questions": "Recent Questions",
+        "view_all": "View All",
+        "questions_count": "questions"
+      },
       "fields": {
         "question_ar": "Question (Arabic)",
         "question_en": "Question (English)",
         "answer_ar": "Answer (Arabic)",
         "answer_en": "Answer (English)",
         "order": "Order",
-        "active": "Active"
+        "active": "Status",
+        "category": "Category"
       },
       "placeholders": {
         "question_ar": "Enter question in Arabic",
         "question_en": "Enter question in English",
         "answer_ar": "Enter answer in Arabic",
         "answer_en": "Enter answer in English",
-        "order": "0"
+        "order": "0",
+        "category": "Select a category"
       },
       "actions": {
         "create": "Create",
@@ -1331,25 +1691,64 @@
         "saved": "Saved successfully",
         "deleted": "Deleted successfully"
       },
+      "error": {
+        "save_failed": "Failed to save. Please try again."
+      },
       "confirm_delete": "Are you sure you want to delete this question?",
       "confirm_delete_title": "Confirm Deletion",
-      "confirm_delete_text": "You won't be able to revert this!",
-      "delete_button": "Yes, delete it",
+      "confirm_delete_text": "You won't be able to revert this action!",
+      "delete_button": "Yes, Delete",
       "cancel_button": "Cancel",
       "deleted_title": "Deleted!",
-      "empty": "No FAQs yet. Add your first question!"
+      "empty": "No FAQs yet. Add your first question!",
+      "category": {
+        "form_title_create": "Add New Category",
+        "form_title_edit": "Edit Category",
+        "list_title": "FAQ Categories",
+        "section_titles": "Titles",
+        "section_settings": "Settings",
+        "section_media": "Icon & Status",
+        "slug_hint": "(auto-generated if left empty)",
+        "choose_icon": "Choose Icon",
+        "empty": "No categories yet. Create your first one!",
+        "confirm_delete_title": "Delete Category",
+        "confirm_delete_text": "All FAQs in this category will be affected!",
+        "fields": {
+          "title_ar": "Title (Arabic)",
+          "title_en": "Title (English)",
+          "slug": "Slug",
+          "order": "Order",
+          "icon": "Category Icon",
+          "is_active": "Active"
+        },
+        "placeholders": {
+          "title_ar": "Enter category name in Arabic",
+          "title_en": "Enter category name in English",
+          "slug": "auto-generated-slug"
+        },
+        "table": {
+          "icon": "Icon",
+          "title_ar": "Name (AR)",
+          "title_en": "Name (EN)",
+          "slug": "Slug",
+          "order": "Order",
+          "status": "Status",
+          "actions": "Actions"
+        }
+      }
     },
     "appointments": {
-      "title": "Appointments Management",
-      "subtitle": "Manage content, available time slots and bookings",
+      "title": "Appointments",
+      "subtitle": "Manage appointment slots, bookings and page content",
+      "loading": "Loading…",
       "tabs": {
-        "content": "Content & Settings",
-        "slots": "Time Slots",
+        "content": "Page Content",
+        "slots": "Slots",
         "bookings": "Bookings"
       },
       "view": {
-        "calendar": "Calendar View",
-        "list": "List View"
+        "calendar": "Calendar",
+        "list": "List"
       },
       "calendar": {
         "sun": "Sun",
@@ -1363,139 +1762,809 @@
       "actions": {
         "save": "Save",
         "save_settings": "Save Settings",
+        "saving": "Saving…",
+        "delete": "Delete",
         "enable": "Enable",
         "disable": "Disable",
-        "delete": "Delete",
         "view": "View",
         "view_details": "View Details",
         "close": "Close"
       },
+      "error": {
+        "load_failed": "Failed to load data.",
+        "save_failed": "Failed to save changes.",
+        "update_failed": "Failed to update."
+      },
       "content": {
         "title": "Page Content",
-        "subtitle": "Manage appointments page content",
-        "section_page": "Page Content",
+        "subtitle": "Manage the appointments page title and description",
+        "section_page": "Page Information",
         "section_settings": "Settings",
         "title_ar": "Title (Arabic)",
         "title_en": "Title (English)",
-        "placeholder_title_ar": "Enter title in Arabic",
-        "placeholder_title_en": "Enter title in English",
         "description_ar": "Description (Arabic)",
         "description_en": "Description (English)",
-        "placeholder_description_ar": "Enter description in Arabic",
-        "placeholder_description_en": "Enter description in English",
-        "price_in_person": "In-Person Price",
-        "price_online": "Online Price",
-        "placeholder_price": "Enter price",
-        "slot_duration": "Appointment Duration",
-        "minutes": "minutes",
+        "default_price": "Default Price",
+        "slot_duration": "Slot Duration",
+        "minutes": "min",
+        "placeholder_title_ar": "عنوان الصفحة بالعربية",
+        "placeholder_title_en": "Page title in English",
+        "placeholder_description_ar": "وصف الصفحة بالعربية",
+        "placeholder_description_en": "Page description in English",
+        "placeholder_price": "e.g. 200",
         "success": {
-          "page_saved": "Page content saved successfully",
-          "settings_saved": "Settings saved successfully"
+          "page_saved": "Page content saved successfully.",
+          "settings_saved": "Settings saved successfully."
         }
       },
       "slots": {
-        "title": "Time Slots Management",
-        "subtitle": "Create and manage available appointment slots",
-        "generator_title": "Auto Slot Generator",
-        "select_date": "Select Date",
+        "title": "Appointment Slots",
+        "subtitle": "Generate and manage available appointment slots",
+        "list_title": "All Slots",
+        "generator_title": "Slot Generator",
+        "filters_title": "Filters",
+        "select_date": "Date",
         "morning_shift": "Morning Shift",
         "evening_shift": "Evening Shift",
         "start_time": "Start Time",
         "end_time": "End Time",
         "generate_button": "Generate Slots",
-        "filters_title": "Filters",
-        "filter_date_from": "From Date",
-        "filter_date_to": "To Date",
+        "generating": "Generating…",
+        "slots": "slots",
+        "slots_for": "Slots for",
+        "no_slots_day": "No slots for this day.",
+        "filter_date_from": "From",
+        "filter_date_to": "To",
         "filter_shift": "Shift",
         "filter_status": "Status",
-        "shift_all": "All",
+        "shift_all": "All Shifts",
         "shift_morning": "Morning",
         "shift_evening": "Evening",
         "status_all": "All",
         "status_available": "Available",
         "status_disabled": "Disabled",
-        "list_title": "Available Slots List",
-        "slots": "slots",
-        "slots_for": "Available slots for",
-        "empty": "No time slots yet. Create your first one!",
+        "empty": "No slots found.",
+        "confirm_delete_title": "Delete Slot",
+        "confirm_delete_text": "Are you sure you want to delete this slot?",
+        "delete_button": "Delete",
+        "cancel_button": "Cancel",
         "success": {
-          "generated": "Slots generated successfully",
-          "toggled": "Slot status updated",
-          "deleted": "Slot deleted successfully"
+          "generated": "Slots generated successfully.",
+          "toggled": "Slot status updated.",
+          "deleted": "Slot deleted."
         },
         "error": {
-          "select_date": "Please select a date",
-          "generation_failed": "Slot generation failed",
-          "delete_failed": "Failed to delete slot"
-        },
-        "confirm_delete_title": "Confirm Slot Deletion",
-        "confirm_delete_text": "Are you sure you want to delete this slot?",
-        "delete_button": "Yes, delete slot",
-        "cancel_button": "Cancel",
-        "deleted_title": "Deleted!"
+          "select_date": "Please select a date.",
+          "generation_failed": "Failed to generate slots.",
+          "delete_failed": "Failed to delete slot."
+        }
       },
       "bookings": {
-        "title": "Bookings Management",
-        "subtitle": "View and manage appointment bookings",
-        "filters_title": "Filters & Search",
+        "title": "Bookings",
+        "subtitle": "View and manage all appointment bookings",
+        "list_title": "All Bookings",
+        "filters_title": "Filters",
+        "bookings": "bookings",
+        "bookings_for": "Bookings for",
+        "no_bookings_day": "No bookings for this day.",
+        "empty": "No bookings found.",
         "filter_search": "Search",
-        "placeholder_search": "Search by name or email",
-        "filter_date_from": "From Date",
-        "filter_date_to": "To Date",
-        "filter_type": "Appointment Type",
+        "filter_date_from": "From",
+        "filter_date_to": "To",
         "filter_status": "Status",
-        "type_all": "All",
-        "type_in_person": "In-Person",
-        "type_online": "Online",
+        "placeholder_search": "Search by name or email…",
         "status_all": "All",
         "status_pending": "Pending",
         "status_confirmed": "Confirmed",
         "status_cancelled": "Cancelled",
-        "list_title": "Bookings List",
-        "bookings": "bookings",
-        "bookings_for": "Bookings for",
-        "empty": "No bookings yet",
+        "success": {
+          "status_updated": "Booking status updated."
+        },
         "modal": {
-          "title": "Booking Details",
-          "personal_info": "Personal Information",
-          "name": "Name",
-          "email": "Email",
-          "phone": "Phone",
-          "visitors": "Number of Visitors",
+          "title": "Booking",
+          "details": "Client Information",
           "appointment_details": "Appointment Details",
-          "type": "Appointment Type",
           "date": "Date",
           "time": "Time",
           "status": "Status",
-          "message": "Message",
-          "attachments": "Attachments",
-          "voice_note": "Voice Note",
-          "audio_not_supported": "Browser does not support audio playback",
-          "download_attachment": "Download Attachment"
-        },
-        "success": {
-          "status_updated": "Booking status updated"
-        },
-        "download_success": "File downloaded successfully",
-        "download_failed": "Failed to download file"
+          "open_file": "Open File"
+        }
       },
       "table": {
         "date": "Date",
         "shift": "Shift",
-        "start_time": "Start Time",
-        "end_time": "End Time",
+        "start_time": "Start",
+        "end_time": "End",
         "status": "Status",
         "actions": "Actions",
         "name": "Name",
-        "type": "Type",
         "time": "Time",
         "phone": "Phone",
         "email": "Email"
+      }
+    },
+    "legal": {
+      "title": "Legal Pages Management",
+      "subtitle": "Create and manage legal pages with structured sections",
+      "form_title_create": "Create Legal Page",
+      "form_title_edit": "Edit Legal Page",
+      "list_title": "Existing Legal Pages",
+      "section_page_info": "Page Info",
+      "section_sections": "Sections",
+      "section_label": "Section",
+      "subsections_label": "Subsections",
+      "subsection_label": "Subsection",
+      "slug_hint": "(e.g. privacy-policy, terms-of-service)",
+      "fields": {
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "slug": "Page Slug",
+        "section_title_ar": "Section Title (Arabic)",
+        "section_title_en": "Section Title (English)",
+        "subsection_title_ar": "Subsection Title (Arabic)",
+        "subsection_title_en": "Subsection Title (English)",
+        "content_ar": "Content (Arabic)",
+        "content_en": "Content (English)"
+      },
+      "placeholders": {
+        "title_ar": "Enter page title in Arabic",
+        "title_en": "Enter page title in English",
+        "slug": "e.g. privacy-policy",
+        "section_title_ar": "Section title in Arabic",
+        "section_title_en": "Section title in English",
+        "subsection_title_ar": "Subsection title in Arabic",
+        "subsection_title_en": "Subsection title in English"
+      },
+      "actions": {
+        "create": "Create Page",
+        "update": "Update Page",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "add_section": "Add Section",
+        "add_subsection": "Add Subsection",
+        "remove_section": "Remove Section",
+        "remove_subsection": "Remove Subsection",
+        "move_up": "Move Up",
+        "move_down": "Move Down"
+      },
+      "table": {
+        "id": "ID",
+        "slug": "Slug",
+        "title_ar": "Title (AR)",
+        "title_en": "Title (EN)",
+        "sections": "Sections",
+        "sections_count": "sections",
+        "actions": "Actions"
+      },
+      "success": {
+        "created": "Legal page created successfully",
+        "updated": "Legal page updated successfully",
+        "deleted": "Legal page deleted successfully"
       },
       "error": {
-        "load_failed": "Failed to load data",
-        "save_failed": "Failed to save changes",
-        "update_failed": "Update failed"
+        "load_failed": "Failed to load legal pages",
+        "save_failed": "Failed to save. Please try again.",
+        "delete_failed": "Failed to delete. Please try again."
+      },
+      "confirm_delete_title": "Delete Legal Page",
+      "confirm_delete_text": "This will permanently delete the page and all its sections. This action cannot be undone.",
+      "delete_button": "Yes, Delete",
+      "cancel_button": "Cancel",
+      "empty": "No legal pages yet. Create your first one!"
+    },
+    "about": {
+      "pageTitle": "About Us CMS",
+      "pageSubtitle": "Manage all content for the About Us page",
+      "loading": "Loading data...",
+      "retry": "Retry",
+      "saveBtn": "Save",
+      "deleteBtn": "Delete",
+      "cancelBtn": "Cancel",
+      "confirmDeleteTitle": "Confirm Delete",
+      "confirmDeleteText": "Are you sure you want to delete this item? This action cannot be undone.",
+      "tabs": {
+        "general": "General",
+        "stats": "Stats",
+        "posts": "Posts",
+        "sections": "Sections",
+        "partners": "Partners"
+      },
+      "general": {
+        "cardTitle": "General Settings",
+        "isActive": "Page Active",
+        "logoSection": "Logo",
+        "logoLabel": "About Page Logo",
+        "logoHint": "PNG, JPG, or SVG",
+        "uploadLogo": "Upload Logo",
+        "mediaSection": "Hero Media",
+        "mediaLabel": "Hero Video / Image",
+        "mediaHint": "Image or video for the first section",
+        "uploadMedia": "Upload Media",
+        "changeFile": "Change File",
+        "saveBtn": "Save General Settings",
+        "saveSuccess": "General settings saved successfully"
+      },
+      "stats": {
+        "addTitle": "Add New Stat",
+        "listTitle": "Current Stats",
+        "numberLabel": "Number",
+        "numberHint": "e.g. +20 or 360° or 24/7",
+        "labelAr": "Label (Arabic)",
+        "labelEn": "Label (English)",
+        "labelArPlaceholder": "Enter label in Arabic",
+        "labelEnPlaceholder": "Enter label in English",
+        "orderLabel": "Order",
+        "isActive": "Active",
+        "addButton": "Add Stat",
+        "addSuccess": "Stat added successfully",
+        "updateSuccess": "Stat updated successfully",
+        "deleteSuccess": "Stat deleted successfully",
+        "validationError": "Please enter the number and at least one label"
+      },
+      "posts": {
+        "addTitle": "Add New Post",
+        "listTitle": "Current Posts",
+        "subtitleAr": "Subtitle (Arabic)",
+        "subtitleEn": "Subtitle (English)",
+        "subtitleArPlaceholder": "Enter subtitle in Arabic",
+        "subtitleEnPlaceholder": "Enter subtitle in English",
+        "titleAr": "Main Title (Arabic)",
+        "titleEn": "Main Title (English)",
+        "titleArPlaceholder": "Enter main title in Arabic",
+        "titleEnPlaceholder": "Enter main title in English",
+        "bodyAr": "Body Text (Arabic)",
+        "bodyEn": "Body Text (English)",
+        "bodyArPlaceholder": "Enter body text in Arabic",
+        "bodyEnPlaceholder": "Enter body text in English",
+        "imageLabel": "Post Image",
+        "uploadImage": "Upload Image",
+        "replaceImage": "Replace Image",
+        "addButton": "Add Post",
+        "addSuccess": "Post added successfully",
+        "updateSuccess": "Post updated successfully",
+        "deleteSuccess": "Post deleted successfully",
+        "validationError": "Please enter at least a main title"
+      },
+      "sections": {
+        "addTitle": "Add New Section",
+        "listTitle": "Current Sections",
+        "keyLabel": "Key",
+        "keyHint": "e.g. mission or vision",
+        "subtitleAr": "Subtitle (Arabic)",
+        "subtitleEn": "Subtitle (English)",
+        "titleAr": "Main Title (Arabic)",
+        "titleEn": "Main Title (English)",
+        "bodyAr": "Body Text (Arabic)",
+        "bodyEn": "Body Text (English)",
+        "addButton": "Add Section",
+        "addSuccess": "Section added successfully",
+        "updateSuccess": "Section updated successfully",
+        "deleteSuccess": "Section deleted successfully",
+        "validationError": "Please enter a title or key for the section",
+        "iconsTitle": "Icons Inside This Section",
+        "uploadIcon": "Upload Icon",
+        "iconLabelAr": "Icon Label (Arabic)",
+        "iconLabelEn": "Icon Label (English)",
+        "addIconButton": "Add Icon",
+        "iconFileRequired": "Please select an icon file first",
+        "iconAddSuccess": "Icon added successfully",
+        "iconUpdateSuccess": "Icon updated successfully",
+        "iconDeleteSuccess": "Icon deleted successfully"
+      },
+      "partners": {
+        "cardTitle": "Partners Section Settings",
+        "addTitle": "Add New Partner",
+        "listTitle": "Current Partners",
+        "subtitleAr": "Partners Subtitle (Arabic)",
+        "subtitleEn": "Partners Subtitle (English)",
+        "subtitleArPlaceholder": "Enter subtitle in Arabic",
+        "subtitleEnPlaceholder": "Enter subtitle in English",
+        "saveSubtitleBtn": "Save Subtitle",
+        "subtitleSaved": "Partners subtitle saved successfully",
+        "logoLabel": "Partner Logo",
+        "uploadLogo": "Upload Logo",
+        "logoRequired": "Please select a logo file first",
+        "addButton": "Add Partner",
+        "addSuccess": "Partner added successfully",
+        "updateSuccess": "Partner updated successfully",
+        "deleteSuccess": "Partner deleted successfully"
+      },
+      "preview": {
+        "title": "Live Preview",
+        "show": "Show Preview",
+        "hide": "Hide Preview",
+        "general": "General",
+        "stats": "Stats",
+        "posts": "Posts",
+        "sections": "Sections",
+        "partners": "Partners",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "error": {
+        "loadFailed": "Failed to load page data. Please try again.",
+        "saveFailed": "Failed to save changes. Please try again.",
+        "deleteFailed": "Failed to delete item. Please try again."
+      }
+    },
+    "forms": {
+      "title": "Form Builder",
+      "subtitle": "Create and manage dynamic forms with sections and fields",
+      "list_title": "All Forms",
+      "copy": "Copy",
+      "modal": {
+        "create_title": "Create New Form"
+      },
+      "view": {
+        "builder": "Builder",
+        "settings": "Settings"
+      },
+      "table": {
+        "title": "Form Name",
+        "slug": "Slug",
+        "sections": "Sections",
+        "submissions": "Submissions",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "slug_hint": "(unique identifier)",
+        "status": {
+          "active": "Active",
+          "inactive": "Inactive"
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "save": "Save"
+        },
+        "fields": {
+          "is_active": "Status"
+        },
+        "success_responses": {
+          "tab_label": "Success Responses",
+          "title": "Success Responses",
+          "subtitle": "Manage form success pages shown after submission",
+          "new_btn": "New Response",
+          "create_first": "Create First Response",
+          "empty_title": "No success responses yet",
+          "empty_subtitle": "Create your first success response to use in forms.",
+          "confirm_delete_title": "Delete Response",
+          "confirm_delete_text": "Are you sure you want to delete this success response?",
+          "delete_button": "Delete",
+          "cancel_button": "Cancel",
+          "modal_title_create": "Create Success Response",
+          "modal_title_edit": "Edit Success Response",
+          "default_option": "Default",
+          "fields": {
+            "slug": "Slug",
+            "logo": "Logo",
+            "title_ar": "Title (Arabic)",
+            "title_en": "Title (English)",
+            "subtitle_ar": "Subtitle (Arabic)",
+            "subtitle_en": "Subtitle (English)",
+            "description_ar": "Description (Arabic)",
+            "description_en": "Description (English)",
+            "show_reference": "Show Reference Number",
+            "reference_prefix": "Reference Prefix",
+            "button_label_ar": "Button Label (Arabic)",
+            "button_label_en": "Button Label (English)",
+            "button_action": "Button Action",
+            "button_url": "Button URL",
+            "context_type": "Form Context",
+            "form_type": "Form Type",
+            "success_response": "Success Response",
+            "requires_verification": "Requires Verification"
+          },
+          "placeholders": {
+            "slug": "e.g. form-submitted",
+            "title_ar": "العنوان الرئيسي",
+            "title_en": "Main title",
+            "subtitle_ar": "العنوان الفرعي",
+            "subtitle_en": "Subtitle",
+            "description_ar": "Short description",
+            "description_en": "Short description",
+            "button_label_ar": "نص الزر",
+            "button_label_en": "Button text"
+          },
+          "button_actions": {
+            "none": "None",
+            "close": "Close",
+            "url": "Redirect to URL"
+          },
+          "success": {
+            "created": "Success response created.",
+            "updated": "Success response updated.",
+            "deleted": "Success response deleted."
+          }
+        }
+      },
+      "empty": {
+        "title": "No forms yet",
+        "subtitle": "Create your first dynamic form to get started"
+      },
+      "settings": {
+        "tab_basic": "Basic Info",
+        "tab_messages": "Messages",
+        "tab_behavior": "Behavior",
+        "tab_terms": "Terms",
+        "section_titles": "Form Titles",
+        "section_slug": "Identifier",
+        "section_button": "Submit Button",
+        "section_success": "Success Message",
+        "section_behavior": "Submission Settings",
+        "section_terms": "Terms & Conditions",
+        "section_context": "Form Context",
+        "section_response": "Success Response"
+      },
+      "fields": {
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "description_ar": "Description (Arabic)",
+        "description_en": "Description (English)",
+        "slug": "Slug",
+        "is_active": "Status",
+        "submit_button_ar": "Submit Button (Arabic)",
+        "submit_button_en": "Submit Button (English)",
+        "success_ar": "Success Message (Arabic)",
+        "success_en": "Success Message (English)",
+        "requires_login": "Require login to submit",
+        "allow_multiple": "Allow multiple submissions",
+        "terms_ar": "Terms Text (Arabic)",
+        "terms_en": "Terms Text (English)",
+        "require_terms": "Require terms approval before submit",
+        "context_type": "Form Context",
+        "form_type": "Form Type",
+        "requires_verification": "Requires Verification",
+        "success_response": "Success Response"
+      },
+      "context_types": {
+        "generic": "Generic",
+        "appointments": "Appointments",
+        "services": "Services",
+        "careers": "Careers"
+      },
+      "placeholders": {
+        "slug": "e.g. contact-form",
+        "submit_button_ar": "Submit",
+        "submit_button_en": "Submit",
+        "success_ar": "Your form has been submitted successfully",
+        "success_en": "Your form has been submitted successfully",
+        "terms_ar": "Enter terms and conditions in Arabic...",
+        "terms_en": "Enter terms and conditions in English...",
+        "section_title_ar": "Section title in Arabic",
+        "section_title_en": "Section title in English",
+        "section_desc_ar": "Section description in Arabic",
+        "section_desc_en": "Section description in English",
+        "field_label_ar": "Field label in Arabic",
+        "field_label_en": "Field label in English",
+        "title_ar": "العنوان الرئيسي",
+        "title_en": "Main title",
+        "subtitle_ar": "العنوان الفرعي",
+        "subtitle_en": "Subtitle",
+        "description_ar": "وصف مختصر",
+        "description_en": "Short description",
+        "button_label_ar": "نص الزر",
+        "button_label_en": "Button text"
+      },
+      "slug_hint": "(auto-generated if left empty)",
+      "terms_preview_label": "Preview — how users will see the terms",
+      "section": {
+        "title_ar": "Section Title (Arabic)",
+        "title_en": "Section Title (English)",
+        "desc_ar": "Description (Arabic)",
+        "desc_en": "Description (English)",
+        "active": "Active",
+        "order": "Order",
+        "unnamed": "Unnamed Section",
+        "fields_count": "fields",
+        "no_fields": "No fields yet. Click \"Add Field\" to start.",
+        "empty_title": "No sections yet",
+        "empty_subtitle": "Sections are required. Add at least one section to build your form."
+      },
+      "field": {
+        "unnamed": "unnamed",
+        "required": "Required",
+        "active": "Active",
+        "type": "Field Type",
+        "key": "Field Key",
+        "width": "Width",
+        "label_ar": "Label (Arabic)",
+        "label_en": "Label (English)",
+        "placeholder_ar": "Placeholder (Arabic)",
+        "placeholder_en": "Placeholder (English)",
+        "help_ar": "Help Text (Arabic)",
+        "help_en": "Help Text (English)",
+        "tab_basic": "Basic",
+        "tab_labels": "Labels",
+        "tab_validation": "Validation",
+        "tab_options": "Options",
+        "saving": "Saving…",
+        "saved": "Saved",
+        "unsaved": "Unsaved",
+        "unsaved_changes": "Unsaved changes",
+        "has_errors": "Has errors",
+        "already_saved": "No changes to save",
+        "system_key": "System Key",
+        "custom_field_option": "— Custom field —",
+        "auto_generated": "Auto generated",
+        "tab_source": "Source",
+        "option_source": "Option Source",
+        "source_static": "Static Options",
+        "source_dynamic": "Dynamic Source",
+        "dynamic_source": "Dynamic Source",
+        "dynamic_source_hint": "Dynamic source enabled. Static options will be ignored."
+      },
+      "field_types": {
+        "text": "Text",
+        "textarea": "Textarea",
+        "email": "Email",
+        "phone": "Phone",
+        "number": "Number",
+        "date": "Date",
+        "select": "Select (Dropdown)",
+        "radio": "Radio Buttons",
+        "checkbox": "Checkbox",
+        "file": "File Upload"
+      },
+      "width": {
+        "full": "Full",
+        "half": "Half",
+        "third": "1/3"
+      },
+      "validation": {
+        "min_length": "Min Length",
+        "max_length": "Max Length",
+        "min": "Min Value",
+        "max": "Max Value",
+        "no_rules": "No validation rules for this field type."
+      },
+      "phone": {
+        "default_country": "Default Country Code",
+        "allowed_note": "Allowed Country Codes"
+      },
+      "file": {
+        "max_size": "Max File Size",
+        "extensions": "Allowed Extensions (click to toggle)"
+      },
+      "option": {
+        "label_ar": "Label (AR)",
+        "label_en": "Label (EN)",
+        "value": "Value",
+        "add": "+ Add Option",
+        "list_title": "Options"
+      },
+      "actions": {
+        "new_form": "New Form",
+        "create_first": "Create Your First Form",
+        "create": "Create Form",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "back": "Back",
+        "duplicate": "Duplicate",
+        "collapse": "Collapse",
+        "expand": "Expand",
+        "move_up": "Move Up",
+        "move_down": "Move Down",
+        "add_section": "+ Add Section",
+        "add_field": "+ Add Field",
+        "activate": "Activate",
+        "deactivate": "Deactivate",
+        "delete_section": "Delete Section",
+        "save_field": "Save Field"
+      },
+      "success": {
+        "created": "Form created successfully",
+        "settings_saved": "Settings saved",
+        "status_updated": "Status updated",
+        "deleted": "Form deleted",
+        "section_added": "Section added",
+        "section_deleted": "Section deleted",
+        "field_added": "Field added",
+        "field_deleted": "Field removed",
+        "field_saved": "Field saved successfully"
+      },
+      "errors": {
+        "title_required": "Please enter a title in Arabic or English",
+        "create_failed": "Failed to create form",
+        "update_failed": "Failed to update",
+        "delete_failed": "Failed to delete form",
+        "save_failed": "Failed to save",
+        "section_failed": "Section operation failed",
+        "field_failed": "Field operation failed",
+        "option_failed": "Option operation failed",
+        "save_field_first": "Save the field first before adding options",
+        "field_type_required": "Field type is required",
+        "label_ar_required": "Arabic label is required",
+        "key_required": "Key or system key is required",
+        "load_failed": "Failed to load data."
+      },
+      "confirm_delete_title": "Delete Form",
+      "confirm_delete_text": "This will permanently delete the form and all its data. Forms with submissions cannot be deleted — disable them instead.",
+      "delete_button": "Yes, Delete",
+      "cancel_button": "Cancel",
+      "loading": "Loading…",
+      "info": {
+        "form_create": "New Info Modal",
+        "form_edit": "Edit Info Modal",
+        "sections_title": "Sections",
+        "section_label": "Section",
+        "add_section": "Add Section",
+        "add_section_btn": "Add Section",
+        "delete_section": "Delete Section",
+        "empty": "No sections yet. Add the first section above.",
+        "fields": {
+          "slug": "Slug",
+          "title_ar": "Title (Arabic)",
+          "title_en": "Title (English)",
+          "subtitle_ar": "Subtitle (Arabic)",
+          "subtitle_en": "Subtitle (English)",
+          "description_ar": "Description (Arabic)",
+          "description_en": "Description (English)",
+          "body_ar": "Body (Arabic)",
+          "body_en": "Body (English)"
+        },
+        "placeholders": {
+          "title_ar": "العنوان بالعربية",
+          "title_en": "Title in English",
+          "body_ar": "المحتوى بالعربية",
+          "body_en": "Body content in English"
+        },
+        "confirm_delete_title": "Delete Info Modal",
+        "confirm_delete_text": "Are you sure you want to delete this info modal?",
+        "confirm_delete_section_title": "Delete Section",
+        "confirm_delete_section_text": "Are you sure you want to delete this section?",
+        "delete_button": "Delete",
+        "cancel_button": "Cancel",
+        "errors": {
+          "slug_required": "Slug is required.",
+          "title_ar_required": "Arabic title is required.",
+          "section_title_required": "Section Arabic title is required.",
+          "section_body_required": "Section Arabic body is required."
+        },
+        "success": {
+          "modal_created": "Info modal created.",
+          "modal_updated": "Info modal updated.",
+          "modal_deleted": "Info modal deleted.",
+          "section_created": "Section added.",
+          "section_deleted": "Section deleted."
+        }
+      },
+      "success_responses": {
+        "tab_label": "Success Responses",
+        "title": "Success Responses",
+        "subtitle": "Manage form success pages shown after submission",
+        "new_btn": "New Response",
+        "create_first": "Create First Response",
+        "empty_title": "No success responses yet",
+        "empty_subtitle": "Create your first success response to use in forms.",
+        "confirm_delete_title": "Delete Response",
+        "confirm_delete_text": "Are you sure you want to delete this success response?",
+        "delete_button": "Delete",
+        "cancel_button": "Cancel",
+        "modal_title_create": "Create Success Response",
+        "modal_title_edit": "Edit Success Response",
+        "default_option": "Default",
+        "fields": {
+          "slug": "Slug",
+          "logo": "Logo",
+          "title_ar": "Title (Arabic)",
+          "title_en": "Title (English)",
+          "subtitle_ar": "Subtitle (Arabic)",
+          "subtitle_en": "Subtitle (English)",
+          "description_ar": "Description (Arabic)",
+          "description_en": "Description (English)",
+          "show_reference": "Show Reference Number",
+          "reference_prefix": "Reference Prefix",
+          "button_label_ar": "Button Label (Arabic)",
+          "button_label_en": "Button Label (English)",
+          "button_action": "Button Action",
+          "button_url": "Button URL",
+          "context_type": "Form Context",
+          "form_type": "Form Type",
+          "success_response": "Success Response",
+          "requires_verification": "Requires Verification"
+        },
+        "success": {
+          "created": "Success response created.",
+          "updated": "Success response updated.",
+          "deleted": "Success response deleted."
+        }
+      },
+      "form_types": {
+        "dynamic": "Dynamic Form",
+        "info": "Info Modal"
+      },
+      "dynamic_sources": {
+        "services": "Services",
+        "appointment_slots": "Appointment Slots",
+        "career_jobs": "Career Jobs"
+      },
+      "button_actions": {
+        "none": "None",
+        "close": "Close",
+        "url": "Redirect to URL"
+      }
+    },
+    "info": {
+      "title": "Info Modals",
+      "subtitle": "Manage informational modal windows and their content sections",
+      "form_title_create": "Create Info Modal",
+      "form_title_edit": "Edit Info Modal",
+      "list_title": "Info Modals",
+      "empty": "No info modals yet. Create one above.",
+      "section_titles": "Titles",
+      "section_description": "Description",
+      "section_settings": "Settings",
+      "section_body": "Body Content",
+      "sections_label": "Sections",
+      "sections_editor_title": "Info Sections",
+      "sections_empty": "No sections added yet.",
+      "add_section": "Add Section",
+      "add_section_label": "Add New Section",
+      "section_number": "Section",
+      "slug_hint": "(unique identifier)",
+      "confirm_delete_title": "Delete Info Modal?",
+      "confirm_delete_text": "This will permanently delete the modal and all its sections.",
+      "confirm_delete_section_title": "Delete Section?",
+      "confirm_delete_section_text": "This section will be permanently removed.",
+      "delete_button": "Delete",
+      "cancel_button": "Cancel",
+      "fields": {
+        "title_ar": "Title (Arabic)",
+        "title_en": "Title (English)",
+        "subtitle_ar": "Subtitle (Arabic)",
+        "subtitle_en": "Subtitle (English)",
+        "description_ar": "Description (Arabic)",
+        "description_en": "Description (English)",
+        "body_ar": "Body (Arabic)",
+        "body_en": "Body (English)",
+        "slug": "Slug",
+        "active": "Status"
+      },
+      "placeholders": {
+        "title_ar": "أدخل العنوان بالعربية",
+        "title_en": "Enter title in English",
+        "subtitle_ar": "أدخل العنوان الفرعي",
+        "subtitle_en": "Enter subtitle",
+        "description_ar": "وصف مختصر بالعربية",
+        "description_en": "Short description in English",
+        "body_ar": "محتوى القسم بالعربية",
+        "body_en": "Section body in English",
+        "slug": "e.g. my-info-modal",
+        "section_title_ar": "عنوان القسم",
+        "section_title_en": "Section title"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "actions": {
+        "create": "Create",
+        "update": "Update",
+        "cancel": "Cancel",
+        "add_section": "Add Section",
+        "delete_section": "Delete Section"
+      },
+      "success": {
+        "created": "Info modal created",
+        "updated": "Info modal updated",
+        "deleted": "Info modal deleted",
+        "section_created": "Section added",
+        "section_deleted": "Section deleted"
+      },
+      "error": {
+        "load_failed": "Failed to load info modals",
+        "save_failed": "Save failed, please try again",
+        "delete_failed": "Delete failed, please try again",
+        "slug_required": "Slug is required",
+        "title_ar_required": "Arabic title is required",
+        "section_title_ar_required": "Section Arabic title is required",
+        "section_body_ar_required": "Section Arabic body is required"
       }
     }
   },
@@ -1515,22 +2584,36 @@
     "experience": "الخبرة"
   },
   "footer": {
-    "newsletter_placeholder": "Email address",
+    "newsletter_placeholder": "Your email address",
     "newsletter_confirm": "Confirm",
     "follow_us": "Follow us",
+    "choose_language": "Choose your Language",
     "language_ar": "Arabic",
     "language_en": "English",
     "country_default": "Kingdom of Saudi Arabia",
-    "copyright": "© {{year}} — Shahm Law Firm",
+    "copyright": "© {{year}} Shahm | All Rights Reserved",
     "country_label": "Country / Region",
-    "high_contrast_label": "Accessibility: Better Contrast",
-    "high_contrast_toggle": "Toggle high contrast"
+    "home": "Home",
+    "routes": {
+      "services": "Services",
+      "about": "About",
+      "blog": "Blog",
+      "contact": "Contact",
+      "faq": "FAQ",
+      "careers": "Careers",
+      "legal": "Legal",
+      "appointments": "Appointments",
+      "request-access": "Request Access"
+    }
   },
   "faq": {
-    "title": "Frequently Asked Questions",
-    "search": "Search questions...",
+    "title": "How can we help you?",
+    "subtitle": "Find out more information with our FAQ",
     "loading": "Loading...",
-    "no_results": "No results found"
+    "no_results": "No results found",
+    "browse_by_topic": "Browse by Topic",
+    "all": "All",
+    "all_faqs": "All FAQs"
   },
   "payment": {
     "title": "Complete Payment Process",
@@ -1776,7 +2859,6 @@
     "darb": "Ad Darb",
     "fayfa": "Fayfa",
     "harub": "Al Harth",
-    "najran": "Najran",
     "sharurah": "Sharurah",
     "habuna": "Habuna",
     "badr_janoub": "Badr Al Janoub",
@@ -1800,7 +2882,6 @@
     "nabhaniyah": "An Nabhaniyah",
     "jouf": "Al Jouf",
     "sakaka": "Sakaka",
-    "qurayyat": "Qurayyat",
     "tabarjal": "Tabarjal",
     "dumat_jandal": "Dumat Al Jandal",
     "other_location": "Other"
@@ -1858,7 +2939,10 @@
     "filter_category": "Category",
     "filter_tags": "Tags",
     "no_posts": "No posts available at the moment",
-    "read_more": "Read More"
+    "read_more": "Read More",
+    "search": "Search...",
+    "browse_by_topic": "Browse by Topic",
+    "all": "All"
   },
   "blogdetails": {
     "date": "Date",
@@ -1893,7 +2977,8 @@
     "interested": "Interested",
     "not_interested": "Not Interested",
     "step": "Step",
-    "of": "of"
+    "of": "of",
+    "option": "Option"
   },
   "serviceDetails": {
     "reference_id": "Reference ID",
@@ -2004,5 +3089,56 @@
     "thank_you_title": "Thank You!",
     "thank_you_message": "Your appointment request has been received and is currently under review. Within 12 hours, you will receive a payment link via your registered contact details; once payment is completed, your appointment will be confirmed and the details will be shared with you. Please prepare and bring any documents or information relevant to your appointment—if available—so our team can review them during the session.",
     "home_button": "Home"
+  },
+  "legalpage": {
+    "clauses": "Clauses",
+    "option_by_topic": "Option by Topic",
+    "share": "Share",
+    "print": "Print"
+  },
+  "about": {
+    "loading": "Loading...",
+    "error": "Failed to load page.",
+    "no_data": "No data.",
+    "play": "Play",
+    "pause": "Pause",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "welcome": {
+    "logo_alt": "Shahm Attorneys & Consultants",
+    "title_en": "Welcome.",
+    "subtitle_en": "Please select your preferred language",
+    "title_ar": "مرحبًا بــك.",
+    "subtitle_ar": "يُرجى اختيار اللغة المفضلة لتصفّح الموقع",
+    "btn_ar": "العربية (ar)",
+    "btn_en": "English (en)"
+  },
+  "forms": {
+    "invalid_email": "Invalid email address"
+  },
+  "request_access": {
+    "verify_title": "Verify Access",
+    "verify_desc": "A verification code will be sent to your registered contact.",
+    "send_code": "Send Verification Code",
+    "sending": "Sending...",
+    "otp_sent": "Verification code sent",
+    "otp_send_failed": "Failed to send code",
+    "otp_title": "Enter Verification Code",
+    "otp_desc": "Please enter the 6-digit code sent to your contact.",
+    "otp_label": "Verification Code",
+    "otp_required": "Please enter the verification code",
+    "otp_invalid": "Invalid code",
+    "no_code": "Didn't receive a code?",
+    "resend": "Resend",
+    "verifying": "Verifying...",
+    "verify": "Verify",
+    "verified": "Verification successful",
+    "loading": "Loading your request...",
+    "load_failed": "Failed to load request",
+    "saving": "Saving...",
+    "save_changes": "Save Changes",
+    "updated": "Your information has been saved and updated successfully",
+    "update_failed": "Update failed"
   }
 }

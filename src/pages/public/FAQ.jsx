@@ -5,130 +5,210 @@ import "../../styles/pages/faq.css";
 
 export default function FAQ() {
   const { t, i18n } = useTranslation();
-  const { faqs, fetchFaqs, loading } = useFaqStore();
-
+  const { faqs, categories, fetchFaqs, loading } = useFaqStore();
   const [openIndex, setOpenIndex] = useState(null);
-  const [query, setQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     fetchFaqs();
   }, []);
 
   const isEn = i18n.language === "en";
+  const isRTL = i18n.dir() === "rtl";
+
+  const getText = (f, field, lang) => {
+    if (f[`${field}_${lang}`]) return f[`${field}_${lang}`];
+    if (f[field]?.[lang]) return f[field][lang];
+    return "";
+  };
 
   const filtered = faqs.filter((f) => {
-    const q = query.toLowerCase();
-    return (
-      f.question_ar.toLowerCase().includes(q) ||
-      f.question_en.toLowerCase().includes(q) ||
-      f.answer_ar.toLowerCase().includes(q) ||
-      f.answer_en.toLowerCase().includes(q)
-    );
+    const matchesCategory =
+      !selectedCategory || String(f.category) === String(selectedCategory);
+    return matchesCategory;
   });
 
-  if (loading) return <p>{t("faq.loading")}</p>;
+  // Get active category label for right col title
+  const activeCategory = categories.find(
+    (c) => String(c.id) === String(selectedCategory)
+  );
+  const rightColTitle = activeCategory
+    ? isEn
+      ? activeCategory.title_en
+      : activeCategory.title_ar
+    : t("faq.all_faqs");
+
+  if (loading) return <p className="faq-loading">{t("faq.loading")}</p>;
 
   return (
-    <div className="faq-page">
-      {/* Title */}
-      <h1 className="faq-title-center">
-        {t("faq.title")}
-      </h1>
+    <div className="faq-page" dir={isRTL ? "rtl" : "ltr"}>
+      {/* ── Header ── */}
+      <div className="faq-header">
+        <h1 className="faq-title">{t("faq.title")}</h1>
+        <p className="faq-subtitle">{t("faq.subtitle")}</p>
+      </div>
 
-      {/* Full Width Divider */}
-      <div className="faq-title-divider"></div>
+      {/* ── Full-width divider ── */}
+      <div className="faq-divider-full" />
 
-      {/* FAQ + Search */}
+      {/* ── Two-column layout ── */}
       <div className="faq-wrapper">
-        {/* Two Column Layout: Search Left, Questions Right */}
         <div className="faq-content-row">
-          
-          {/* Left Column - Search */}
-          <div className="faq-search-column">
-            <div className="faq-search-box">
-              <svg 
-                className="faq-search-icon" 
-                width="16" 
-                height="16" 
-                viewBox="0 0 16 16" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
+
+          {/* ════ LEFT COLUMN — Filters ════ */}
+          <div className="faq-left-col">
+            <p className="faq-browse-label">{t("faq.browse_by_topic")}</p>
+
+            <div className="faq-categories">
+              {/* ALL button */}
+              <button
+                className={`faq-cat-item ${!selectedCategory ? "faq-cat-item--active" : ""}`}
+                onClick={() => setSelectedCategory(null)}
               >
-                <path 
-                  d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" 
-                  stroke="currentColor" 
-                  strokeWidth="1.5" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                />
-                <path 
-                  d="M14 14L11.1 11.1" 
-                  stroke="currentColor" 
-                  strokeWidth="1.5" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <input
-                className="faq-search"
-                placeholder={t("faq.search")}
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
+                <span className="faq-cat-icon">
+                  <svg
+                    width="15"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                  </svg>
+                </span>
+                <span className="faq-cat-label">{t("faq.all")}</span>
+              </button>
+
+              {categories.map((cat, idx) => {
+                // Every pair of items sits in the same row
+                // Divider between items (horizontal) handled by grid
+                // Divider between rows (horizontal full-width) added after every even index
+                const isEvenIdx = idx % 2 === 1; // after 2nd, 4th, etc.
+                return (
+                  <React.Fragment key={cat.id}>
+                    {/* Vertical divider between each pair */}
+                    {idx % 2 === 1 && (
+                      <>
+                        {/* Horizontal row divider BEFORE this item (between rows) */}
+                      </>
+                    )}
+                    <button
+                      className={`faq-cat-item ${
+                        String(selectedCategory) === String(cat.id)
+                          ? "faq-cat-item--active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setSelectedCategory(
+                          String(selectedCategory) === String(cat.id)
+                            ? null
+                            : cat.id
+                        )
+                      }
+                    >
+                      <span className="faq-cat-icon">
+                        {cat.icon_url ? (
+                          <img
+                            src={cat.icon_url}
+                            alt=""
+                            width="15"
+                            height="19"
+                          />
+                        ) : (
+                          <svg
+                            width="15"
+                            height="19"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                          >
+                            <circle cx="12" cy="12" r="9" />
+                          </svg>
+                        )}
+                      </span>
+                      <span className="faq-cat-label">
+                        {isEn ? cat.title_en : cat.title_ar}
+                      </span>
+                    </button>
+                  </React.Fragment>
+                );
+              })}
             </div>
           </div>
 
-          {/* Right Column - FAQ List */}
-          <div className="faq-list-column">
+          {/* ════ RIGHT COLUMN — FAQ List ════ */}
+          <div className="faq-right-col">
+            {/* Section title — changes based on selected filter */}
+            <h2 className="faq-section-title">{rightColTitle}</h2>
+
             <div className="faq-list">
               {filtered.length > 0 ? (
                 filtered.map((item, i) => {
                   const isOpen = openIndex === i;
-
                   return (
                     <div
                       key={item.id}
-                      className={`faq-item ${isOpen ? "open" : ""}`}
+                      className={`faq-item ${isOpen ? "faq-item--open" : ""}`}
                     >
-                      {/* Question with bottom border */}
+                      {/* Question row */}
                       <button
                         className="faq-question"
                         onClick={() => setOpenIndex(isOpen ? null : i)}
                       >
                         <span className="faq-q-text">
-                          {isEn ? item.question_en : item.question_ar}
+                          {isEn
+                            ? getText(item, "question", "en")
+                            : getText(item, "question", "ar")}
                         </span>
-
-                        <span className="faq-arrow">
-                          ▾
+                        {/* Chevron arrow — down when closed, up when open */}
+                        <span className="faq-arrow" aria-hidden="true">
+                          <svg
+                            width="11"
+                            height="6"
+                            viewBox="0 0 11 6"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1 1L5.5 5L10 1"
+                              stroke="#343C3C"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
                         </span>
                       </button>
 
-                      {/* Answer container with border above */}
+                      {/* Divider — color changes when open */}
+                      <div className="faq-question-divider" />
+
+                      {/* Answer */}
                       <div className="faq-answer-container">
-                        {/* Border between question and answer */}
-                        <div className="faq-answer-border"></div>
-                        
-                        {/* Answer text */}
                         <div className="faq-answer">
-                          {isEn ? item.answer_en : item.answer_ar}
+                          {isEn
+                            ? getText(item, "answer", "en")
+                            : getText(item, "answer", "ar")}
                         </div>
                       </div>
                     </div>
                   );
                 })
               ) : (
-                <div className="faq-no-results">
-                  {t("faq.no_results")}
-                </div>
+                <div className="faq-no-results">{t("faq.no_results")}</div>
               )}
             </div>
           </div>
-
         </div>
       </div>
-      {/* Full Width Divider */}
-      <div className="faq-end-divider"></div>
+
+      {/* ── Bottom full-width divider ── */}
+      <div className="faq-divider-full faq-divider-bottom" />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 {
   "login": {
-    "brand": "Shahm Dashboard",
-    "subtitle": "لوحة تحكم حديثة لإدارة المحتوى والبيانات بكفاءة عالية.",
     "title": "تسجيل الدخول",
     "desc": "أدخل بياناتك للمتابعة إلى لوحة التحكم.",
     "email": "البريد الإلكتروني",
@@ -13,13 +11,7 @@
     "required": "يرجى إدخال البريد الإلكتروني وكلمة المرور",
     "invalid": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
     "showPassword": "إظهار كلمة المرور",
-    "hidePassword": "إخفاء كلمة المرور",
-    "footer_text": "© 2024 مكتب شهم للمحاماة. جميع الحقوق محفوظة.",
-    "stats": {
-      "cases": "قضية منجزة",
-      "success": "نسبة النجاح",
-      "years": "سنة خبرة"
-    }
+    "hidePassword": "إخفاء كلمة المرور"
   },
   "sidebar": {
     "general": "عام",
@@ -47,12 +39,66 @@
     "email_templates": "قوالب البريد",
     "logout": "تسجيل الخروج",
     "dashboard": "لوحة التحكم",
-    "change_language": "تغيير اللغة"
+    "change_language": "تغيير اللغة",
+    "cms_about": "من نحن",
+    "forms": "النماذج",
+    "cms_legal": "الصفحات القانونية",
+    "close_sidebar": "إغلاق الشريط الجانبي",
+    "open_sidebar": "فتح الشريط الجانبي",
+    "user": "مستخدم",
+    "welcome": "مرحباً",
+    "page_dashboard": "لوحة التحكم",
+    "page_messages": "الرسائل",
+    "page_heroes": "أقسام الهيرو",
+    "page_about": "من نحن",
+    "page_forms": "النماذج",
+    "page_pages": "الصفحات",
+    "page_legal": "الصفحات القانونية",
+    "page_faq": "الأسئلة الشائعة",
+    "page_contact": "التواصل",
+    "page_header": "الهيدر",
+    "page_footer": "الفوتر",
+    "page_services": "الخدمات",
+    "page_appointments": "المواعيد",
+    "page_blog": "المدونة",
+    "page_team": "الفريق",
+    "page_careers": "الوظائف",
+    "page_applications": "المتقدمين",
+    "page_users": "المستخدمون",
+    "page_seo": "تحسين محركات البحث",
+    "page_settings": "إعدادات النظام",
+    "page_email_settings": "إعدادات البريد",
+    "page_email_templates": "قوالب البريد",
+    "footer_rights": "جميع الحقوق محفوظة.",
+    "footer_quick_links": "روابط سريعة",
+    "footer_link_home": "الرئيسية",
+    "footer_link_services": "الخدمات",
+    "footer_link_about": "من نحن",
+    "footer_link_blog": "المدونة",
+    "footer_link_careers": "الوظائف",
+    "footer_link_contact": "تواصل معنا",
+    "footer_link_faq": "الأسئلة الشائعة",
+    "footer_link_appointments": "المواعيد"
   },
   "navbar": {
     "toggle_menu": "قائمة التنقل",
     "notifications": "الإشعارات",
-    "user": "مستخدم"
+    "user": "مستخدم",
+    "menu": {
+      "back": "رجوع",
+      "search": "بحث",
+      "open": "فتح القائمة",
+      "close": "إغلاق",
+      "individuals": "الأفراد",
+      "business_sector": "قطاع الأعمال"
+    },
+    "client_privileges": {
+      "title": "امتيازات العملاء",
+      "description": "اكتشف الامتيازات المخصصة والمزايا الإضافية المتاحة لعملاء الأعمال والأفراد."
+    },
+    "quick_access": {
+      "title": "الوصول السريع"
+    }
   },
   "dashboard": {
     "title": "لوحة التحكم",
@@ -71,7 +117,7 @@
       "total_messages": "عدد الرسائل",
       "subscribers": "المشتركون بالنشرة"
     },
-    "latest_messages": "آخر الرسائل",
+    "latest_messages": "طلبات التواصل",
     "latest_subscribers": "أحدث المشتركين",
     "top_pages": "الصفحات الأكثر زيارة"
   },
@@ -131,12 +177,20 @@
     "pagination": {
       "page": "صفحة",
       "of": "من"
-    }
+    },
+    "contact_requests": "طلبات التواصل",
+    "cancel": "إلغاء",
+    "delete_confirm_title": "حذف المشترك",
+    "delete_confirm_text": "هل أنت متأكد من حذف هذا المشترك؟ لا يمكن التراجع عن هذا الإجراء.",
+    "save_confirm_title": "حفظ التغييرات",
+    "save_confirm_text": "هل أنت متأكد من تحديث حالة هذا الطلب؟",
+    "edit": "تعديل"
   },
   "common": {
     "yes": "نعم",
     "no": "لا",
-    "loading": "جاري التحميل..."
+    "loading": "جاري التحميل...",
+    "back": "رجوع"
   },
   "services": {
     "page_title": "خدماتنا",
@@ -169,6 +223,20 @@
       "table": {
         "id": "المعرّف",
         "status": "الحالة"
+      },
+      "form_title_create": "إنشاء قسم هيرو",
+      "form_title_edit": "تعديل قسم الهيرو",
+      "show_header": "عرض الهيدر",
+      "add_media_label": "رفع وسائط جديدة",
+      "no_media": "لم يتم رفع أي وسائط لهذا الهيرو بعد.",
+      "empty": "لا توجد أقسام هيرو بعد.",
+      "confirm_delete_title": "حذف قسم الهيرو",
+      "confirm_delete_media_title": "حذف الوسائط",
+      "delete_button": "نعم، احذف",
+      "cancel_button": "إلغاء",
+      "success": {
+        "deleted": "تم حذف قسم الهيرو",
+        "media_deleted": "تم حذف الوسائط"
       },
       "status": {
         "active": "نشط",
@@ -253,6 +321,142 @@
         "request_info": "معلومات الطلب"
       }
     },
+    "requestservices": {
+      "title": "طلبات الخدمات",
+      "subtitle": "إدارة وتتبع جميع طلبات الاستشارات الواردة",
+      "total": "الإجمالي",
+      "list_title": "جميع الطلبات",
+      "table": {
+        "ref": "المرجع",
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "services": "الخدمات",
+        "date": "التاريخ",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "search_placeholder": "ابحث بالاسم أو البريد الإلكتروني…",
+      "filter_all": "كل الحالات",
+      "refresh": "تحديث",
+      "retry": "إعادة المحاولة",
+      "loading": "جارٍ التحميل…",
+      "empty_title": "لا توجد طلبات",
+      "empty_default": "لم يتم تقديم أي طلبات خدمة حتى الآن.",
+      "empty_filtered": "لا توجد طلبات تطابق الفلاتر الحالية.",
+      "error": {
+        "load_failed": "فشل في تحميل الطلبات.",
+        "delete_failed": "فشل في حذف الطلب."
+      },
+      "success": {
+        "deleted": "تم حذف الطلب بنجاح."
+      },
+      "actions": {
+        "view": "عرض",
+        "delete": "حذف"
+      },
+      "confirm_delete_title": "حذف الطلب",
+      "confirm_delete_text": "هل أنت متأكد من حذف هذا الطلب نهائياً؟",
+      "delete_btn": "حذف",
+      "cancel": "إلغاء",
+      "close": "إغلاق",
+      "status": {
+        "new": "جديد",
+        "reviewing": "قيد المراجعة",
+        "awaiting_client": "في انتظار العميل",
+        "client_updated": "تم التحديث من العميل",
+        "contracting": "التعاقد",
+        "closed": "مغلق",
+        "cancelled": "ملغى"
+      },
+      "status_updated": "تم تحديث الحالة",
+      "status_update_failed": "فشل تحديث الحالة",
+      "saving": "جارٍ الحفظ…",
+      "modal": {
+        "tab_details": "التفاصيل",
+        "tab_status": "الحالة",
+        "tab_access": "روابط الوصول",
+        "tab_logs": "سجل النشاط",
+        "tab_history": "سجل التعديلات",
+        "personal_info": "المعلومات الشخصية",
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "submitted": "تاريخ التقديم",
+        "title": "العنوان",
+        "services": "الخدمات المطلوبة",
+        "message": "الرسالة",
+        "files": "الملفات",
+        "voice_note": "الرسالة الصوتية",
+        "audio_unsupported": "الصوت غير مدعوم",
+        "form_metadata": "معلومات النموذج",
+        "form_id": "معرف النموذج",
+        "submission_id": "معرف الإرسال",
+        "form_title": "عنوان النموذج",
+        "snapshot": "بيانات النموذج",
+        "change_status": "تغيير الحالة",
+        "edit_submission": "تعديل الإرسال",
+        "save_changes": "حفظ التغييرات",
+        "edit_saved": "تم تحديث الإرسال.",
+        "edit_failed": "فشل في حفظ التغييرات.",
+        "editable": "قابل للتعديل",
+        "readonly": "للقراءة فقط"
+      },
+      "access": {
+        "title": "روابط وصول العميل",
+        "new_link": "رابط جديد",
+        "create_btn": "إنشاء رابط",
+        "form": "نموذج الوصول",
+        "select_form": "اختر النموذج",
+        "expires_hours": "ينتهي خلال (ساعات)",
+        "max_edits": "الحد الأقصى للتعديلات",
+        "form_required": "يرجى اختيار نموذج الوصول.",
+        "created": "تم إنشاء رابط الوصول",
+        "create_failed": "فشل في إنشاء الرابط",
+        "no_submission": "هذا الطلب غير مرتبط بإرسال نموذج.",
+        "no_submission_hint": "لا يمكن إنشاء روابط الوصول إلا للطلبات المقدمة عبر نموذج.",
+        "no_links": "لم يتم إنشاء أي روابط وصول بعد.",
+        "copy_url": "نسخ رابط الوصول",
+        "copy": "نسخ",
+        "copied": "تم النسخ إلى الحافظة",
+        "copy_failed": "فشل النسخ",
+        "regenerate": "إعادة توليد",
+        "revoke": "إلغاء",
+        "revoke_title": "إلغاء هذا الرابط؟",
+        "revoke_text": "لن يتمكن العميل من استخدام هذا الرابط بعد الآن.",
+        "revoke_btn": "إلغاء الرابط",
+        "revoked": "تم إلغاء الرابط",
+        "revoke_failed": "فشل في إلغاء الرابط",
+        "regen_title": "إعادة توليد الرابط؟",
+        "regen_text": "سيتم إلغاء الرابط القديم وإنشاء رابط جديد.",
+        "regen_btn": "إعادة التوليد",
+        "regenerated": "تم إعادة توليد الرابط",
+        "regen_failed": "فشل في إعادة التوليد",
+        "edits": "التعديلات",
+        "created_at": "تاريخ الإنشاء",
+        "expires_at": "تاريخ الانتهاء",
+        "verified_at": "تاريخ التحقق",
+        "last_accessed": "آخر وصول",
+        "status": {
+          "active": "نشط",
+          "revoked": "ملغى",
+          "expired": "منتهي الصلاحية"
+        }
+      },
+      "logs": {
+        "empty": "لا توجد سجلات نشاط.",
+        "load_failed": "فشل في تحميل السجلات."
+      },
+      "edit_history": {
+        "empty": "لا يوجد سجل تعديلات.",
+        "old_value": "القيمة القديمة",
+        "new_value": "القيمة الجديدة",
+        "edited_by_admin": "تم التعديل بواسطة المدير",
+        "edited_by_client": "تم التعديل بواسطة العميل",
+        "unknown_editor": "محرر غير معروف"
+      },
+      "creating": "جارٍ الإنشاء…"
+    },
     "actions": {
       "actions": "الإجراءات",
       "view": "عرض",
@@ -335,63 +539,94 @@
       }
     },
     "header": {
-      "title": "إدارة الهيدر",
-      "subtitle": "إدارة شعار وقائمة التنقل الرئيسية",
-      "form_create": "إضافة عنصر جديد",
-      "form_edit": "تعديل العنصر",
-      "section_basic": "المعلومات الأساسية",
-      "section_hierarchy": "التسلسل والترتيب",
-      "label_ar": "العنوان (عربي)",
-      "label_en": "العنوان (إنجليزي)",
-      "placeholder_label_ar": "النص بالعربية",
-      "placeholder_label_en": "النص بالإنجليزية",
+      "title": "إدارة رأس الصفحة",
+      "subtitle": "إدارة التنقل والشعارات والوصول السريع ومحتوى الصفحات",
+      "tabs": {
+        "menu": "هيكل القائمة",
+        "logos": "الشعارات",
+        "menu_images": "صور القائمة",
+        "quick_access": "الوصول السريع",
+        "page_content": "محتوى الصفحة"
+      },
+      "label_ar": "التسمية (عربي)",
+      "label_en": "التسمية (إنجليزي)",
+      "placeholder_label_ar": "العنوان بالعربية",
+      "placeholder_label_en": "Label in English",
       "custom_url": "رابط مخصص",
-      "placeholder_url": "/custom-url",
-      "select_page": "اختر صفحة من CMS",
-      "parent": "العنصر الرئيسي",
-      "root_item": "— عنصر رئيسي —",
+      "placeholder_url": "https://…",
+      "select_page": "اختر الصفحة",
+      "root_item": "رئيسي (بدون أصل)",
       "order": "الترتيب",
-      "active": "نشط",
-      "inactive": "غير مفعل",
-      "cms_page": "صفحة من CMS",
-      "create": "إضافة",
+      "inactive": "غير نشط",
+      "empty": "لا توجد عناصر بعد.",
       "edit": "تعديل",
-      "update": "تحديث",
       "delete": "حذف",
       "cancel": "إلغاء",
-      "current_menu": "القائمة الحالية",
-      "empty": "لا توجد عناصر في القائمة حتى الآن. قم بإضافة العنصر الأول!",
-      "confirm_delete": "هل أنت متأكد من حذف هذا العنصر؟",
-      "confirm_delete_title": "تأكيد الحذف",
-      "confirm_delete_text": "لن تتمكن من التراجع عن هذا الإجراء!",
-      "delete_button": "نعم، احذف",
+      "create": "إنشاء",
+      "update": "تحديث",
+      "confirm_delete_title": "حذف العنصر",
+      "confirm_delete_text": "هل أنت متأكد من حذف هذا العنصر؟",
+      "delete_button": "حذف",
       "cancel_button": "إلغاء",
-      "deleted_title": "تم الحذف!",
-      "delete_failed": "تعذر حذف العنصر",
-      "save_failed": "فشل حفظ البيانات",
-      "url_page_conflict": "لا يمكن استخدام رابط مخصص مع صفحة CMS معًا",
-      "page_url_conflict": "لا يمكن اختيار صفحة CMS مع وجود رابط مخصص",
-      "self_parent_error": "لا يمكن تعيين العنصر كأب لنفسه",
+      "section_basic": "المعلومات الأساسية",
+      "section_hierarchy": "التسلسل الهرمي والإعدادات",
+      "fields": {
+        "description_ar": "الوصف (عربي)",
+        "description_en": "الوصف (إنجليزي)",
+        "slug": "المسار / Slug",
+        "parent": "العنصر الأصل",
+        "order": "ترتيب العرض",
+        "is_active": "نشط",
+        "image": "الصورة"
+      },
+      "url_page_conflict": "أفرغ حقل الرابط قبل اختيار صفحة.",
+      "page_url_conflict": "أفرغ حقل الصفحة قبل إدخال رابط.",
+      "form_create": "عنصر قائمة جديد",
+      "form_edit": "تعديل عنصر القائمة",
+      "current_menu": "هيكل القائمة",
+      "save_failed": "فشل في حفظ التغييرات.",
+      "delete_failed": "فشل في حذف العنصر.",
       "success": {
-        "created": "تم إضافة العنصر بنجاح",
-        "updated": "تم تحديث العنصر بنجاح",
-        "deleted": "تم حذف العنصر بنجاح",
-        "order_updated": "تم تحديث الترتيب"
+        "created": "تم إنشاء العنصر بنجاح.",
+        "updated": "تم تحديث العنصر بنجاح.",
+        "deleted": "تم حذف العنصر بنجاح.",
+        "order_updated": "تم تحديث الترتيب."
       },
       "logo": {
-        "title": "شعار الهيدر",
-        "upload": "رفع الشعار",
+        "full_ar": "الشعار الكامل (عربي)",
+        "scroll_ar": "شعار التمرير (عربي)",
+        "full_en": "الشعار الكامل (إنجليزي)",
+        "scroll_en": "شعار التمرير (إنجليزي)",
+        "upload": "رفع",
         "delete": "حذف الشعار",
-        "file_required": "يرجى اختيار ملف الشعار",
-        "confirm_delete_title": "تأكيد حذف الشعار",
-        "confirm_delete_text": "هل أنت متأكد من حذف شعار الهيدر؟",
-        "delete_button": "نعم، احذف الشعار",
+        "file_required": "يرجى اختيار ملف صورة.",
+        "confirm_delete_title": "حذف الشعار",
+        "confirm_delete_text": "هل أنت متأكد من حذف هذا الشعار؟",
+        "delete_button": "حذف",
         "cancel_button": "إلغاء",
-        "deleted_title": "تم الحذف!",
         "success": {
-          "uploaded": "تم رفع الشعار بنجاح",
-          "deleted": "تم حذف الشعار بنجاح"
+          "uploaded": "تم رفع الشعار بنجاح.",
+          "deleted": "تم حذف الشعار."
         }
+      },
+      "menu_images": {
+        "form_title": "صورة قائمة جديدة",
+        "list_title": "صور القائمة",
+        "keep_existing": "لم يتم اختيار ملف جديد — ستبقى الصورة الحالية."
+      },
+      "quick_access": {
+        "title": "روابط الوصول السريع",
+        "form_title": "رابط وصول سريع جديد",
+        "limit_hint": "{{count}} / 8 روابط محددة. الحد الأقصى 8 روابط وصول سريع."
+      },
+      "page_content": {
+        "title": "محتوى الصفحة",
+        "hint": "أدخل مسار الصفحة لتحميل محتواها وتعديله.",
+        "load_btn": "تحميل",
+        "title_ar": "العنوان (عربي)",
+        "title_en": "العنوان (إنجليزي)",
+        "content_ar": "المحتوى (عربي)",
+        "content_en": "المحتوى (إنجليزي)"
       }
     },
     "footer": {
@@ -456,210 +691,245 @@
       "confirm_delete_logo": "هل أنت متأكد من حذف الشعار؟",
       "confirm_delete_logo_title": "تأكيد حذف الشعار",
       "confirm_delete_logo_text": "هل تريد حقًا حذف شعار الفوتر؟",
-      "logo_delete_button": "نعم، احذف الشعار"
+      "logo_delete_button": "نعم، احذف الشعار",
+      "tab_columns": "الأعمدة والروابط",
+      "tab_cta": "أزرار CTA",
+      "tab_settings": "إعدادات الفوتر",
+      "url_hint": "(مثال: /about-us)",
+      "cta_url_hint": "(مثال: /contact)",
+      "system_badge": "نظام",
+      "link_disabled": "معطّل",
+      "disable": "تعطيل",
+      "enable": "تفعيل",
+      "no_links_yet": "لا توجد روابط بعد",
+      "add_cta": "إضافة زر CTA",
+      "edit_cta": "تعديل زر CTA",
+      "desc_ar": "الوصف (عربي)",
+      "desc_en": "الوصف (إنجليزي)",
+      "desc_ar_placeholder": "وصف قصير...",
+      "desc_en_placeholder": "Short description...",
+      "no_cta_yet": "لا توجد أزرار CTA بعد. يمكنك إضافة حتى 3.",
+      "cta_max_reached": "الحد الأقصى 3 أزرار CTA",
+      "cta_max_notice": "الحد الأقصى 3 أزرار. احذف أحدها لإضافة جديد.",
+      "section_newsletter_title": "عنوان النشرة البريدية",
+      "section_copyright": "نص حقوق النشر",
+      "section_logos": "الشعارات",
+      "newsletter_title_ar_placeholder": "أرغب في تلقّي كل جديد...",
+      "newsletter_title_en_placeholder": "I want to receive updates...",
+      "copyright_ar_placeholder": "© 2025. جميع الحقوق محفوظة.",
+      "copyright_en_placeholder": "© 2025. All rights reserved.",
+      "logo_ar_label": "الشعار (عربي)",
+      "logo_en_label": "الشعار (إنجليزي)",
+      "vat_logo_label": "شعار ضريبة القيمة المضافة",
+      "settings_saved": "تم حفظ الإعدادات بنجاح",
+      "newsletter_info": "عنوان النشرة يُدار من إعدادات الفوتر. نموذج الاشتراك ثابت ولا يمكن تعديله من هنا."
     },
     "services": {
       "title": "إدارة الخدمات",
-      "subtitle": "إدارة المحتوى، المجالات القانونية، الخدمات والطلبات",
+      "subtitle": "إدارة الخدمات الرئيسية والفرعية والأقسام ومحتوى CMS وطلبات الاستشارة",
+      "loading": "جارٍ التحميل...",
       "tabs": {
-        "content": "محتوى الصفحة",
-        "areas": "المجالات القانونية",
+        "cms": "محتوى الصفحة",
+        "mainServices": "الخدمات الرئيسية",
         "services": "الخدمات",
-        "requests": "الطلبات"
-      },
-      "actions": {
-        "save": "حفظ",
-        "create": "إضافة",
-        "update": "تحديث",
-        "edit": "تعديل",
-        "delete": "حذف",
-        "cancel": "إلغاء",
-        "close": "إغلاق",
-        "view": "عرض",
-        "activate": "تفعيل",
-        "deactivate": "إيقاف"
+        "sections": "الأقسام",
+        "requests": "الطلبات",
+        "import": "استيراد"
       },
       "status": {
         "active": "نشط",
         "inactive": "غير نشط"
       },
+      "filter_all_status": "جميع الحالات",
       "table": {
-        "id": "المعرف",
-        "name": "الاسم",
+        "id": "المعرّف",
         "title": "العنوان",
-        "area": "المجال",
         "icon": "الأيقونة",
         "order": "الترتيب",
         "status": "الحالة",
-        "actions": "الإجراءات",
-        "email": "البريد الإلكتروني",
-        "phone": "الهاتف",
-        "service": "الخدمة",
-        "date": "التاريخ"
+        "actions": "الإجراءات"
       },
-      "content": {
-        "title": "محتوى الصفحة",
-        "subtitle": "إدارة محتوى صفحة الخدمات الاستشارية",
-        "section_top": "القسم العلوي",
-        "section_bottom": "القسم السفلي",
-        "title_top_ar": "العنوان العلوي (عربي)",
-        "title_top_en": "العنوان العلوي (إنجليزي)",
-        "description_top_ar": "الوصف العلوي (عربي)",
-        "description_top_en": "الوصف العلوي (إنجليزي)",
-        "title_bottom_ar": "العنوان السفلي (عربي)",
-        "title_bottom_en": "العنوان السفلي (إنجليزي)",
-        "description_bottom_ar": "الوصف السفلي (عربي)",
-        "description_bottom_en": "الوصف السفلي (إنجليزي)",
-        "placeholder_title_top_ar": "أدخل العنوان بالعربية",
-        "placeholder_title_top_en": "أدخل العنوان بالإنجليزية",
-        "placeholder_description_top_ar": "أدخل الوصف بالعربية",
-        "placeholder_description_top_en": "أدخل الوصف بالإنجليزية",
-        "placeholder_title_bottom_ar": "أدخل العنوان بالعربية",
-        "placeholder_title_bottom_en": "أدخل العنوان بالإنجليزية",
-        "placeholder_description_bottom_ar": "أدخل الوصف بالعربية",
-        "placeholder_description_bottom_en": "أدخل الوصف بالإنجليزية"
+      "actions": {
+        "edit": "تعديل",
+        "delete": "حذف",
+        "cancel": "إلغاء",
+        "save": "حفظ",
+        "create": "إنشاء",
+        "update": "تحديث",
+        "saving": "جارٍ الحفظ...",
+        "search": "بحث",
+        "activate": "تفعيل",
+        "deactivate": "تعطيل"
       },
-      "areas": {
-        "title": "المجالات القانونية",
-        "subtitle": "إدارة مجالات الممارسة القانونية",
-        "form_create": "إضافة مجال قانوني",
-        "form_edit": "تعديل المجال القانوني",
-        "list_title": "قائمة المجالات القانونية",
-        "name_ar": "الاسم (عربي)",
-        "name_en": "الاسم (إنجليزي)",
-        "placeholder_name_ar": "أدخل اسم المجال بالعربية",
-        "placeholder_name_en": "أدخل اسم المجال بالإنجليزية",
-        "icon": "الأيقونة",
-        "select_icon": "اختر أيقونة",
-        "order": "الترتيب",
+      "confirm_delete_title": "حذف العنصر",
+      "confirm_delete_text": "لا يمكن التراجع عن هذا الإجراء.",
+      "delete_button": "نعم، احذف",
+      "cancel_button": "إلغاء",
+      "error": {
+        "load_failed": "فشل تحميل البيانات",
+        "save_failed": "فشل الحفظ",
+        "delete_failed": "فشل الحذف",
+        "toggle_failed": "فشل تحديث الحالة"
+      },
+      "cms": {
+        "title": "محتوى صفحة الخدمات",
+        "subtitle": "ضبط قسم الهيرو والعناوين ومربع البحث وزر طلب الخدمة",
+        "section_hero": "وسائط الهيرو",
+        "section_content": "محتوى الصفحة",
+        "section_titles": "العناوين والأوصاف",
+        "section_search": "نص حقل البحث",
+        "section_button": "زر تقديم الطلب",
+        "hero_media_type": "نوع وسائط الهيرو",
+        "hero_logo": "شعار الهيرو",
+        "hero_image": "صورة الهيرو",
+        "hero_video": "فيديو الهيرو",
+        "choose_file": "اختر ملفاً",
+        "title_ar": "العنوان (عربي)",
+        "title_en": "العنوان (إنجليزي)",
+        "description_ar": "الوصف (عربي)",
+        "description_en": "الوصف (إنجليزي)",
+        "search_placeholder_ar": "نص البحث (عربي)",
+        "search_placeholder_en": "نص البحث (إنجليزي)",
+        "placeholder_title_ar": "أدخل عنوان الصفحة بالعربية",
+        "placeholder_title_en": "أدخل عنوان الصفحة بالإنجليزية",
+        "placeholder_description_ar": "أدخل وصف الصفحة بالعربية",
+        "placeholder_description_en": "أدخل وصف الصفحة بالإنجليزية",
+        "placeholder_search_ar": "نص مربع البحث بالعربية",
+        "placeholder_search_en": "نص مربع البحث بالإنجليزية",
         "active": "نشط",
-        "empty": "لا توجد مجالات قانونية. قم بإضافة أول مجال!",
+        "button_labels": "تسميات الزر",
+        "button_action": "إجراء الزر",
+        "button_label_ar": "تسمية الزر (عربي)",
+        "button_label_en": "تسمية الزر (إنجليزي)",
+        "action_type": "نوع الإجراء",
+        "action_none": "بلا",
+        "action_url": "رابط URL",
+        "action_form_modal": "نموذج منبثق",
+        "action_url_label": "الرابط",
+        "action_form_label": "النموذج",
+        "select_form": "— اختر نموذجاً —",
         "success": {
-          "created": "تم إضافة المجال بنجاح",
-          "updated": "تم تحديث المجال بنجاح",
-          "deleted": "تم حذف المجال بنجاح",
-          "toggled": "تم تحديث حالة المجال"
-        },
-        "error": {
-          "save_failed": "فشل حفظ المجال",
-          "delete_failed": "فشل حذف المجال",
-          "toggle_failed": "فشل تحديث الحالة"
-        },
-        "confirm_delete_title": "تأكيد حذف المجال",
-        "confirm_delete_text": "سيتم حذف جميع الخدمات المرتبطة بهذا المجال!",
-        "delete_button": "نعم، احذف المجال",
-        "cancel_button": "إلغاء",
-        "deleted_title": "تم الحذف!"
+          "created": "تم إنشاء المحتوى بنجاح",
+          "updated": "تم تحديث المحتوى بنجاح"
+        }
+      },
+      "mainServices": {
+        "title": "الخدمات الرئيسية",
+        "subtitle": "فئات الخدمات الرئيسية مع الرمز والأيقونة والترتيب",
+        "form_create": "إضافة خدمة رئيسية",
+        "form_edit": "تعديل الخدمة الرئيسية",
+        "list_title": "قائمة الخدمات الرئيسية",
+        "section_basic": "المعلومات الأساسية",
+        "section_icon": "الأيقونة",
+        "code": "الرمز",
+        "order": "الترتيب",
+        "title_ar": "الاسم (عربي)",
+        "title_en": "الاسم (إنجليزي)",
+        "placeholder_title_ar": "اسم الفئة بالعربية",
+        "placeholder_title_en": "Category name in English",
+        "icon": "صورة الأيقونة",
+        "choose_icon": "اختر أيقونة",
+        "active": "نشط",
+        "services_count": "الخدمات",
+        "empty": "لا توجد خدمات رئيسية.",
+        "success": {
+          "created": "تم إنشاء الخدمة الرئيسية",
+          "updated": "تم تحديث الخدمة الرئيسية",
+          "deleted": "تم حذف الخدمة الرئيسية",
+          "toggled": "تم تحديث الحالة"
+        }
       },
       "services": {
         "title": "الخدمات",
-        "subtitle": "إدارة الخدمات الاستشارية",
-        "form_create": "إضافة خدمة جديدة",
+        "subtitle": "إدارة الخدمات المنتمية لفئات الخدمات الرئيسية",
+        "form_create": "إضافة خدمة",
         "form_edit": "تعديل الخدمة",
         "list_title": "قائمة الخدمات",
-        "section_basic": "المعلومات الأساسية",
-        "section_details": "التفاصيل الكاملة",
-        "practice_area": "المجال القانوني",
-        "select_area": "اختر المجال القانوني",
-        "title_ar": "عنوان الخدمة (عربي)",
-        "title_en": "عنوان الخدمة (إنجليزي)",
-        "placeholder_title_ar": "أدخل عنوان الخدمة بالعربية",
-        "placeholder_title_en": "أدخل عنوان الخدمة بالإنجليزية",
-        "description_ar": "الوصف المختصر (عربي)",
-        "description_en": "الوصف المختصر (إنجليزي)",
-        "placeholder_description_ar": "أدخل وصفًا مختصرًا بالعربية",
-        "placeholder_description_en": "أدخل وصفًا مختصرًا بالإنجليزية",
+        "section_main": "الفئة",
+        "section_titles": "العناوين والأوصاف",
+        "section_settings": "الإعدادات",
+        "main_service": "الخدمة الرئيسية",
+        "select_main_service": "— اختر الخدمة الرئيسية —",
+        "filter_all_main": "جميع الخدمات الرئيسية",
         "serial_number": "الرقم التسلسلي",
-        "placeholder_serial": "مثال: SRV-001",
-        "icon": "الأيقونة",
-        "select_icon": "اختر أيقونة",
-        "cover_image": "صورة الخدمة",
-        "featured": "خدمة مميزة",
-        "most_requested": "الأكثر طلبًا",
-        "overview_ar": "نظرة عامة (عربي)",
-        "overview_en": "نظرة عامة (إنجليزي)",
-        "placeholder_overview_ar": "أدخل نظرة عامة عن الخدمة بالعربية",
-        "placeholder_overview_en": "أدخل نظرة عامة عن الخدمة بالإنجليزية",
-        "who_for_ar": "لمن هذه الخدمة؟ (عربي)",
-        "who_for_en": "لمن هذه الخدمة؟ (إنجليزي)",
-        "placeholder_who_for_ar": "اشرح الفئة المستهدفة بالعربية",
-        "placeholder_who_for_en": "اشرح الفئة المستهدفة بالإنجليزية",
-        "scope_ar": "نطاق الخدمة (عربي)",
-        "scope_en": "نطاق الخدمة (إنجليزي)",
-        "placeholder_scope_ar": "حدد نطاق الخدمة بالعربية",
-        "placeholder_scope_en": "حدد نطاق الخدمة بالإنجليزية",
-        "deliverables_ar": "المخرجات (عربي)",
-        "deliverables_en": "المخرجات (إنجليزي)",
-        "placeholder_deliverables_ar": "حدد مخرجات الخدمة بالعربية",
-        "placeholder_deliverables_en": "حدد مخرجات الخدمة بالإنجليزية",
-        "how_it_works_ar": "كيف تعمل الخدمة؟ (عربي)",
-        "how_it_works_en": "كيف تعمل الخدمة؟ (إنجليزي)",
-        "placeholder_how_it_works_ar": "اشرح آلية العمل بالعربية",
-        "placeholder_how_it_works_en": "اشرح آلية العمل بالإنجليزية",
-        "faqs": "الأسئلة الشائعة",
-        "faqs_help": "اضغط Ctrl (أو Cmd) لاختيار عدة أسئلة",
-        "empty": "لا توجد خدمات. قم بإضافة أول خدمة!",
+        "title_ar": "الاسم (عربي)",
+        "title_en": "الاسم (إنجليزي)",
+        "placeholder_title_ar": "اسم الخدمة بالعربية",
+        "placeholder_title_en": "Service name in English",
+        "short_description_ar": "وصف مختصر (عربي)",
+        "short_description_en": "وصف مختصر (إنجليزي)",
+        "placeholder_short_description_ar": "وصف مختصر بالعربية",
+        "placeholder_short_description_en": "Brief description in English",
+        "order": "الترتيب",
+        "featured": "مميز",
+        "active": "نشط",
+        "empty": "لا توجد خدمات.",
         "success": {
-          "created": "تم إضافة الخدمة بنجاح",
-          "updated": "تم تحديث الخدمة بنجاح",
-          "deleted": "تم حذف الخدمة بنجاح",
-          "toggled": "تم تحديث حالة الخدمة"
-        },
-        "error": {
-          "save_failed": "فشل حفظ الخدمة",
-          "delete_failed": "فشل حذف الخدمة",
-          "toggle_failed": "فشل تحديث الحالة"
-        },
-        "confirm_delete_title": "تأكيد حذف الخدمة",
-        "confirm_delete_text": "لن تتمكن من التراجع عن هذا الإجراء!",
-        "delete_button": "نعم، احذف الخدمة",
-        "cancel_button": "إلغاء",
-        "deleted_title": "تم الحذف!"
+          "created": "تم إنشاء الخدمة",
+          "updated": "تم تحديث الخدمة",
+          "deleted": "تم حذف الخدمة",
+          "toggled": "تم تحديث الحالة"
+        }
       },
-      "requests": {
-        "title": "طلبات الخدمات",
-        "subtitle": "إدارة طلبات الخدمات الاستشارية الواردة",
-        "list_title": "قائمة الطلبات",
-        "table": {
-          "id": "#",
-          "name": "الاسم",
-          "email": "البريد الإلكتروني",
-          "phone": "الهاتف",
-          "service": "الخدمات",
-          "date": "التاريخ",
-          "actions": "الإجراءات"
-        },
-        "modal": {
-          "title": "تفاصيل الطلب",
-          "personal_info": "المعلومات الشخصية",
-          "name": "الاسم",
-          "email": "البريد الإلكتروني",
-          "phone": "الهاتف",
-          "date": "تاريخ الطلب",
-          "services": "الخدمات المطلوبة",
-          "message": "الرسالة",
-          "voice_note": "المذكرة الصوتية",
-          "audio_not_supported": "المتصفح لا يدعم تشغيل الصوت",
-          "attachment": "المرفق",
-          "download_attachment": "تحميل المرفق",
-          "status": "حالة الطلب"
-        },
-        "status": {
-          "new": "جديد",
-          "replied": "تم الرد",
-          "closed": "مغلق"
-        },
-        "empty": "لا توجد طلبات حتى الآن",
-        "download_success": "تم تحميل الملف بنجاح",
-        "download_failed": "فشل تحميل الملف",
-        "status_updated": "تم تحديث حالة الطلب",
-        "status_update_failed": "فشل تحديث حالة الطلب"
+      "sections": {
+        "title": "أقسام الخدمات",
+        "subtitle": "إدارة أقسام المحتوى لكل خدمة",
+        "form_create": "إضافة قسم",
+        "form_edit": "تعديل القسم",
+        "list_title": "قائمة الأقسام",
+        "section_meta": "القسم والترتيب",
+        "section_titles": "العناوين والعناوين الفرعية",
+        "section_content": "المحتوى",
+        "service": "الخدمة",
+        "select_service": "— اختر الخدمة —",
+        "filter_all_services": "جميع الخدمات",
+        "order": "الترتيب",
+        "title_ar": "العنوان (عربي)",
+        "title_en": "العنوان (إنجليزي)",
+        "placeholder_title_ar": "عنوان القسم بالعربية",
+        "placeholder_title_en": "Section title in English",
+        "subtitle_ar": "العنوان الفرعي (عربي)",
+        "subtitle_en": "العنوان الفرعي (إنجليزي)",
+        "placeholder_subtitle_ar": "عنوان فرعي بالعربية",
+        "placeholder_subtitle_en": "Subtitle in English",
+        "content_ar": "المحتوى (عربي)",
+        "content_en": "المحتوى (إنجليزي)",
+        "placeholder_content_ar": "محتوى القسم بالعربية",
+        "placeholder_content_en": "Section content in English",
+        "active": "نشط",
+        "empty": "لا توجد أقسام.",
+        "success": {
+          "created": "تم إنشاء القسم",
+          "updated": "تم تحديث القسم",
+          "deleted": "تم حذف القسم",
+          "toggled": "تم تحديث الحالة"
+        }
       },
-      "success": {
-        "content_saved": "تم حفظ المحتوى بنجاح"
-      },
-      "error": {
-        "save_failed": "فشل حفظ التغييرات"
+      "import": {
+        "title": "استيراد الخدمات من Excel",
+        "subtitle": "استيراد جماعي للخدمات الرئيسية والخدمات والأقسام من ملف Excel",
+        "upload_section": "رفع ملف Excel",
+        "drop_hint": "اسحب وأفلت ملف Excel هنا، أو انقر للتصفح",
+        "accepts": "يقبل ملفات .xlsx و .xls",
+        "run_import": "تشغيل الاستيراد",
+        "importing": "جارٍ الاستيراد...",
+        "reset": "إعادة تعيين",
+        "invalid_file": "يرجى رفع ملف Excel صحيح (.xlsx أو .xls)",
+        "no_file": "يرجى اختيار ملف أولاً",
+        "success": "اكتمل الاستيراد بنجاح",
+        "error": "فشل الاستيراد",
+        "success_title": "نجح الاستيراد",
+        "error_title": "فشل الاستيراد",
+        "main_services_created": "خدمات رئيسية أُنشئت",
+        "services_created": "خدمات أُنشئت",
+        "sections_created": "أقسام أُنشئت",
+        "schema_title": "هيكل Excel المطلوب",
+        "schema_description": "يجب أن يحتوي الملف على هذه الأوراق بالضبط مع رؤوس الأعمدة التالية:",
+        "tips_title": "نصائح",
+        "tip1": "استورد ورقة main_services أولاً — الخدمات تعتمد على رموز الخدمات الرئيسية.",
+        "tip2": "استورد الخدمات ثانياً — الأقسام تعتمد على مسارات الخدمات.",
+        "tip3": "السجلات الموجودة ذات المفاتيح المطابقة ستُحدَّث ولن تُكرَّر.",
+        "tip4": "مسارات الخدمات تُنشأ تلقائياً من title_en باستخدام slugify."
       }
     },
     "blog": {
@@ -735,7 +1005,31 @@
         "person_name_en": "الاسم (إنجليزي)",
         "person_desc_ar": "الوصف (عربي)",
         "person_desc_en": "الوصف (إنجليزي)",
+        "intro_ar": "المقدمة (عربي)",
+        "intro_en": "المقدمة (إنجليزي)",
+        "intro_ar_placeholder": "اكتب مقدمة المقال بالعربية...",
+        "intro_en_placeholder": "Write post intro in English...",
+        "status": "الحالة",
+        "status_draft": "مسودة",
+        "status_published": "منشور",
+        "status_scheduled": "مجدول",
+        "color": "اللون",
+        "icon": "الأيقونة",
         "order": "الترتيب"
+      },
+      "sections": {
+        "title": "أقسام المقال",
+        "item_label": "قسم",
+        "add": "إضافة قسم",
+        "remove": "حذف",
+        "title_ar": "عنوان القسم (عربي)",
+        "title_en": "عنوان القسم (إنجليزي)",
+        "title_ar_placeholder": "عنوان القسم بالعربية",
+        "title_en_placeholder": "Section title in English",
+        "content_ar": "محتوى القسم (عربي)",
+        "content_en": "محتوى القسم (إنجليزي)",
+        "content_ar_placeholder": "اكتب محتوى القسم بالعربية...",
+        "content_en_placeholder": "Write section content in English..."
       },
       "actions": {
         "save": "حفظ",
@@ -756,7 +1050,8 @@
         "title_ar": "العنوان",
         "category": "التصنيف",
         "cover": "الغلاف",
-        "actions": "الإجراءات"
+        "actions": "الإجراءات",
+        "id": "الرقم"
       },
       "success": {
         "settings_saved": "تم حفظ الإعدادات بنجاح",
@@ -774,7 +1069,8 @@
         "category_failed": "فشل حفظ التصنيف",
         "tag_required": "اسم الوسم بالعربية مطلوب",
         "tag_failed": "فشل حفظ الوسم",
-        "post_failed": "فشل حفظ المقال"
+        "post_failed": "فشل حفظ المقال",
+        "invalid_color": "صيغة اللون غير صالحة"
       },
       "confirm_delete_category_title": "تأكيد حذف التصنيف",
       "confirm_delete_category": "هل أنت متأكد من حذف هذا التصنيف؟",
@@ -913,6 +1209,7 @@
       "confirm_delete": "هل أنت متأكد من حذف هذه الوظيفة؟",
       "deleted_title": "تم الحذف!",
       "empty": "لا توجد وظائف حتى الآن. قم بإضافة أول وظيفة!",
+      "edit_job": "تعديل الوظيفة",
       "fields": {
         "title_ar": "اسم الوظيفة (عربي)",
         "title_en": "اسم الوظيفة (إنجليزي)"
@@ -924,20 +1221,26 @@
       "table": {
         "title_ar": "الاسم (عربي)",
         "title_en": "الاسم (إنجليزي)",
-        "actions": "الإجراءات"
+        "actions": "الإجراءات",
+        "id": "الرقم"
       },
       "actions": {
         "create": "إضافة وظيفة",
         "delete": "حذف",
-        "cancel": "إلغاء"
+        "cancel": "إلغاء",
+        "save": "حفظ",
+        "saving": "جارٍ الحفظ…"
       },
       "success": {
         "job_created": "تم إضافة الوظيفة بنجاح!",
-        "job_deleted": "تم حذف الوظيفة بنجاح!"
+        "job_deleted": "تم حذف الوظيفة بنجاح!",
+        "job_updated": "تم تحديث الوظيفة بنجاح"
       },
       "errors": {
         "title_required": "اسم الوظيفة (عربي وإنجليزي) مطلوب",
-        "save_failed": "فشل في حفظ الوظيفة. يرجى المحاولة مرة أخرى."
+        "save_failed": "فشل في حفظ الوظيفة. يرجى المحاولة مرة أخرى.",
+        "load_failed": "فشل تحميل الوظائف",
+        "delete_failed": "فشل حذف الوظيفة"
       }
     },
     "applications": {
@@ -1134,7 +1437,8 @@
         "smtp": "إعدادات SMTP",
         "sender": "بريد الإرسال",
         "smtp_config": "إعدادات الخادم",
-        "sender_config": "إعدادات المرسل"
+        "sender_config": "إعدادات المرسل",
+        "security": "الأمان"
       },
       "fields": {
         "smtp_host": "SMTP Host",
@@ -1151,7 +1455,9 @@
         "reset": "إعادة الإعدادات الافتراضية",
         "save": "حفظ الإعدادات",
         "testing": "جارٍ الاختبار...",
-        "saving": "جارٍ الحفظ..."
+        "saving": "جارٍ الحفظ...",
+        "reset_confirm": "نعم، أعد التعيين",
+        "cancel": "إلغاء"
       },
       "success": {
         "saved": "تم حفظ الإعدادات بنجاح",
@@ -1170,6 +1476,7 @@
         "contact_email": "admin@example.com",
         "auto_reply_email": "noreply@example.com"
       },
+      "confirm_reset_title": "إعادة الإعدادات الافتراضية",
       "confirm_reset": "هل أنت متأكد من إعادة تعيين الإعدادات إلى القيم الافتراضية؟"
     },
     "email_templates": {
@@ -1191,27 +1498,46 @@
         "site_name": "اسم الموقع"
       },
       "actions": {
-        "save": "حفظ القالب"
+        "save": "حفظ القالب",
+        "saving": "جارٍ الحفظ..."
       },
       "success": {
         "saved": "تم حفظ القالب بنجاح"
       },
       "errors": {
         "load_failed": "فشل تحميل القوالب",
-        "save_failed": "فشل حفظ القالب"
+        "save_failed": "فشل حفظ القالب",
+        "empty_content": "محتوى القالب لا يمكن أن يكون فارغًا"
+      },
+      "fields": {
+        "subject": "موضوع البريد",
+        "content": "محتوى البريد (HTML)"
+      },
+      "placeholders": {
+        "subject": "أدخل موضوع البريد الإلكتروني..."
       }
     },
     "contact": {
       "title": "إدارة صفحة التواصل",
-      "subtitle": "إدارة عنوان الصفحة، كروت التواصل، ومعاينة الأسئلة الشائعة",
+      "subtitle": "إدارة محتوى صفحة التواصل والبطاقات ومعاينة الأسئلة",
       "tabs": {
-        "page_header": "عنوان الصفحة",
-        "contact_cards": "كروت التواصل",
+        "page_header": "رأس الصفحة",
+        "contact_cards": "بطاقات التواصل",
         "faq_preview": "معاينة الأسئلة"
       },
+      "actions": {
+        "save": "حفظ",
+        "saving": "جارٍ الحفظ…",
+        "cancel": "إلغاء"
+      },
+      "error": {
+        "load_failed": "فشل في تحميل البيانات.",
+        "save_failed": "فشل في حفظ التغييرات."
+      },
       "page_header": {
-        "title": "عنوان صفحة التواصل",
-        "section_title": "محتوى العنوان",
+        "title": "رأس الصفحة",
+        "subtitle": "إدارة عنوان ووصف صفحة التواصل",
+        "section_title": "محتوى الصفحة",
         "fields": {
           "title_ar": "العنوان (عربي)",
           "title_en": "العنوان (إنجليزي)",
@@ -1219,78 +1545,94 @@
           "description_en": "الوصف (إنجليزي)"
         },
         "placeholders": {
-          "title_ar": "أدخل العنوان بالعربية",
-          "title_en": "أدخل العنوان بالإنجليزية",
-          "description_ar": "أدخل الوصف بالعربية",
-          "description_en": "أدخل الوصف بالإنجليزية"
+          "title_ar": "عنوان الصفحة بالعربية",
+          "title_en": "Page title in English",
+          "description_ar": "وصف الصفحة بالعربية",
+          "description_en": "Page description in English"
         },
         "actions": {
-          "save": "حفظ العنوان"
+          "save": "حفظ"
         },
         "success": {
-          "saved": "تم حفظ عنوان الصفحة بنجاح"
+          "saved": "تم حفظ رأس الصفحة بنجاح."
         }
       },
       "cards": {
-        "form_title": "إضافة كرت تواصل",
-        "list_title": "كروت التواصل",
-        "section_card_settings": "إعدادات الكرت",
+        "section_heading": "بطاقات التواصل",
+        "section_subtitle": "إنشاء وإدارة بطاقات التواصل في الصفحة",
+        "form_title": "بطاقة جديدة",
+        "form_edit": "تعديل البطاقة",
+        "list_title": "جميع البطاقات",
+        "empty": "لا توجد بطاقات. أنشئ أول بطاقة أعلاه.",
+        "section_card_settings": "إعدادات البطاقة",
+        "section_primary_btn": "الزر الرئيسي",
+        "section_secondary_btn": "الزر الثانوي",
         "fields": {
-          "type": "نوع الكرت",
+          "type": "نوع البطاقة",
+          "order": "ترتيب العرض",
           "title_ar": "العنوان (عربي)",
           "title_en": "العنوان (إنجليزي)",
+          "subtitle_ar": "العنوان الفرعي (عربي)",
+          "subtitle_en": "العنوان الفرعي (إنجليزي)",
           "description_ar": "الوصف (عربي)",
           "description_en": "الوصف (إنجليزي)",
-          "button_label_ar": "نص الزر (عربي)",
-          "button_label_en": "نص الزر (إنجليزي)",
+          "btn_label_ar": "نص الزر (عربي)",
+          "btn_label_en": "نص الزر (إنجليزي)",
+          "action_type": "نوع الإجراء",
           "url": "الرابط",
-          "order": "ترتيب العرض",
-          "active": "مفعل"
+          "form": "النموذج",
+          "info_modal": "نافذة المعلومات",
+          "active": "نشط"
         },
         "placeholders": {
-          "title_ar": "أدخل العنوان بالعربية",
-          "title_en": "أدخل العنوان بالإنجليزية",
-          "description_ar": "أدخل الوصف بالعربية",
-          "description_en": "أدخل الوصف بالإنجليزية",
-          "button_label_ar": "أدخل نص الزر بالعربية",
-          "button_label_en": "أدخل نص الزر بالإنجليزية",
-          "url": "https://example.com"
+          "title_ar": "عنوان البطاقة",
+          "title_en": "Card title",
+          "subtitle_ar": "العنوان الفرعي",
+          "subtitle_en": "Subtitle",
+          "description_ar": "وصف قصير",
+          "description_en": "Short description",
+          "btn_label_ar": "نص الزر",
+          "btn_label_en": "Button text"
         },
-        "types": {
-          "info": "معلومات",
-          "button": "زر",
-          "form": "نموذج",
-          "faq": "معاينة الأسئلة"
+        "options": {
+          "type_default": "افتراضي",
+          "type_faq": "معاينة الأسئلة",
+          "action_none": "بدون",
+          "action_url": "رابط",
+          "action_form_modal": "نموذج",
+          "action_contact_request": "طلب تواصل",
+          "action_info_modal": "نافذة معلومات",
+          "select_form": "اختر النموذج",
+          "select_info_modal": "اختر نافذة المعلومات"
         },
         "actions": {
-          "save": "حفظ الكرت",
+          "save": "حفظ البطاقة",
+          "update": "تحديث البطاقة",
+          "edit": "تعديل",
+          "delete": "حذف",
           "activate": "تفعيل",
-          "deactivate": "إيقاف",
-          "delete": "حذف"
+          "deactivate": "تعطيل"
+        },
+        "confirm_delete_title": "حذف البطاقة",
+        "confirm_delete_text": "هل أنت متأكد من حذف هذه البطاقة؟",
+        "errors": {
+          "type_required": "يرجى اختيار نوع البطاقة."
         },
         "success": {
-          "card_created": "تم إضافة الكرت بنجاح",
-          "card_deleted": "تم حذف الكرت بنجاح",
-          "status_updated": "تم تحديث الحالة بنجاح"
-        },
-        "errors": {
-          "type_required": "يرجى اختيار نوع الكرت"
-        },
-        "confirm_delete": "هل أنت متأكد من حذف هذا الكرت؟",
-        "confirm_delete_title": "تأكيد الحذف",
-        "confirm_delete_text": "لن تتمكن من التراجع عن هذا الإجراء!",
-        "delete_button": "نعم، احذف",
-        "cancel_button": "إلغاء",
-        "deleted_title": "تم الحذف!",
-        "empty": "لا توجد كروت تواصل حتى الآن. قم بإضافة أول كرت!"
+          "card_created": "تم إنشاء البطاقة بنجاح.",
+          "card_updated": "تم تحديث البطاقة بنجاح.",
+          "card_deleted": "تم حذف البطاقة بنجاح.",
+          "status_updated": "تم تحديث حالة البطاقة."
+        }
       },
       "faq": {
-        "title": "الأسئلة الشائعة داخل صفحة التواصل",
-        "description": "اختر الأسئلة التي تريد عرضها في صفحة التواصل",
+        "title": "معاينة الأسئلة الشائعة",
+        "description": "اختر الأسئلة التي تريد عرضها في صفحة التواصل.",
+        "select_title": "اختر الأسئلة",
+        "empty": "لا توجد أسئلة.",
         "success": {
-          "updated": "تم تحديث اختيار الأسئلة"
-        },
-        "empty": "لا توجد أسئلة شائعة متاحة. قم بإضافة الأسئلة أولاً."
+          "updated": "تم تحديث الأسئلة المختارة."
+        }
       }
     },
     "faq": {
@@ -1302,20 +1644,37 @@
       "section_questions": "الأسئلة",
       "section_answers": "الأجوبة",
       "section_settings": "الإعدادات",
+      "tabs": {
+        "overview": "نظرة عامة",
+        "categories": "الفئات",
+        "questions": "الأسئلة"
+      },
+      "overview": {
+        "total_categories": "إجمالي الفئات",
+        "total_questions": "إجمالي الأسئلة",
+        "active_questions": "الأسئلة النشطة",
+        "inactive_questions": "الأسئلة غير النشطة",
+        "recent_categories": "أحدث الفئات",
+        "recent_questions": "أحدث الأسئلة",
+        "view_all": "عرض الكل",
+        "questions_count": "سؤال"
+      },
       "fields": {
         "question_ar": "السؤال (عربي)",
         "question_en": "السؤال (إنجليزي)",
         "answer_ar": "الإجابة (عربي)",
         "answer_en": "الإجابة (إنجليزي)",
         "order": "الترتيب",
-        "active": "مفعل"
+        "active": "الحالة",
+        "category": "الفئة"
       },
       "placeholders": {
         "question_ar": "أدخل السؤال بالعربية",
         "question_en": "أدخل السؤال بالإنجليزية",
         "answer_ar": "أدخل الإجابة بالعربية",
         "answer_en": "أدخل الإجابة بالإنجليزية",
-        "order": "0"
+        "order": "0",
+        "category": "اختر فئة"
       },
       "actions": {
         "create": "إضافة",
@@ -1335,25 +1694,64 @@
         "saved": "تم الحفظ بنجاح",
         "deleted": "تم الحذف بنجاح"
       },
+      "error": {
+        "save_failed": "فشل الحفظ. يرجى المحاولة مجدداً."
+      },
       "confirm_delete": "هل أنت متأكد من حذف هذا السؤال؟",
       "confirm_delete_title": "تأكيد الحذف",
       "confirm_delete_text": "لن تتمكن من التراجع عن هذا الإجراء!",
       "delete_button": "نعم، احذف",
       "cancel_button": "إلغاء",
       "deleted_title": "تم الحذف!",
-      "empty": "لا توجد أسئلة شائعة حتى الآن. قم بإضافة أول سؤال!"
+      "empty": "لا توجد أسئلة شائعة حتى الآن. قم بإضافة أول سؤال!",
+      "category": {
+        "form_title_create": "إضافة فئة جديدة",
+        "form_title_edit": "تعديل الفئة",
+        "list_title": "فئات الأسئلة الشائعة",
+        "section_titles": "العناوين",
+        "section_settings": "الإعدادات",
+        "section_media": "الأيقونة والحالة",
+        "slug_hint": "(يتم إنشاؤه تلقائيًا إذا تُرك فارغًا)",
+        "choose_icon": "اختر أيقونة",
+        "empty": "لا توجد فئات بعد. أنشئ أول فئة!",
+        "confirm_delete_title": "حذف الفئة",
+        "confirm_delete_text": "سيؤثر ذلك على جميع الأسئلة في هذه الفئة!",
+        "fields": {
+          "title_ar": "الاسم (عربي)",
+          "title_en": "الاسم (إنجليزي)",
+          "slug": "الرابط المختصر",
+          "order": "الترتيب",
+          "icon": "أيقونة الفئة",
+          "is_active": "مفعل"
+        },
+        "placeholders": {
+          "title_ar": "أدخل اسم الفئة بالعربية",
+          "title_en": "أدخل اسم الفئة بالإنجليزية",
+          "slug": "رابط-مختصر-تلقائي"
+        },
+        "table": {
+          "icon": "الأيقونة",
+          "title_ar": "الاسم (ع)",
+          "title_en": "الاسم (إن)",
+          "slug": "الرابط المختصر",
+          "order": "الترتيب",
+          "status": "الحالة",
+          "actions": "الإجراءات"
+        }
+      }
     },
     "appointments": {
-      "title": "إدارة المواعيد",
-      "subtitle": "إدارة المحتوى، الأوقات المتاحة والحجوزات",
+      "title": "المواعيد",
+      "subtitle": "إدارة فترات الحجز والمواعيد ومحتوى الصفحة",
+      "loading": "جارٍ التحميل…",
       "tabs": {
-        "content": "المحتوى والإعدادات",
-        "slots": "الأوقات المتاحة",
+        "content": "محتوى الصفحة",
+        "slots": "الفترات الزمنية",
         "bookings": "الحجوزات"
       },
       "view": {
-        "calendar": "عرض التقويم",
-        "list": "عرض القائمة"
+        "calendar": "التقويم",
+        "list": "القائمة"
       },
       "calendar": {
         "sun": "الأحد",
@@ -1367,139 +1765,764 @@
       "actions": {
         "save": "حفظ",
         "save_settings": "حفظ الإعدادات",
-        "enable": "تفعيل",
-        "disable": "إيقاف",
+        "saving": "جارٍ الحفظ…",
         "delete": "حذف",
+        "enable": "تفعيل",
+        "disable": "تعطيل",
         "view": "عرض",
         "view_details": "عرض التفاصيل",
         "close": "إغلاق"
       },
+      "error": {
+        "load_failed": "فشل في تحميل البيانات.",
+        "save_failed": "فشل في حفظ التغييرات.",
+        "update_failed": "فشل في التحديث."
+      },
       "content": {
         "title": "محتوى الصفحة",
-        "subtitle": "إدارة محتوى صفحة المواعيد",
-        "section_page": "محتوى الصفحة",
+        "subtitle": "إدارة عنوان ووصف صفحة المواعيد",
+        "section_page": "معلومات الصفحة",
         "section_settings": "الإعدادات",
         "title_ar": "العنوان (عربي)",
         "title_en": "العنوان (إنجليزي)",
-        "placeholder_title_ar": "أدخل العنوان بالعربية",
-        "placeholder_title_en": "أدخل العنوان بالإنجليزية",
         "description_ar": "الوصف (عربي)",
         "description_en": "الوصف (إنجليزي)",
-        "placeholder_description_ar": "أدخل الوصف بالعربية",
-        "placeholder_description_en": "أدخل الوصف بالإنجليزية",
-        "price_in_person": "سعر الموعد الحضوري",
-        "price_online": "سعر الموعد الإلكتروني",
-        "placeholder_price": "أدخل السعر",
-        "slot_duration": "مدة الموعد",
+        "default_price": "السعر الافتراضي",
+        "slot_duration": "مدة الفترة",
         "minutes": "دقيقة",
+        "placeholder_title_ar": "عنوان الصفحة بالعربية",
+        "placeholder_title_en": "Page title in English",
+        "placeholder_description_ar": "وصف الصفحة بالعربية",
+        "placeholder_description_en": "Page description in English",
+        "placeholder_price": "مثال: 200",
         "success": {
-          "page_saved": "تم حفظ محتوى الصفحة بنجاح",
-          "settings_saved": "تم حفظ الإعدادات بنجاح"
+          "page_saved": "تم حفظ محتوى الصفحة بنجاح.",
+          "settings_saved": "تم حفظ الإعدادات بنجاح."
         }
       },
       "slots": {
-        "title": "إدارة الأوقات المتاحة",
-        "subtitle": "إنشاء وإدارة الأوقات المتاحة للحجز",
-        "generator_title": "منشئ الأوقات التلقائي",
-        "select_date": "اختر التاريخ",
-        "morning_shift": "فترة الصباح",
-        "evening_shift": "فترة المساء",
+        "title": "الفترات الزمنية",
+        "subtitle": "إنشاء وإدارة الفترات الزمنية المتاحة للمواعيد",
+        "list_title": "جميع الفترات",
+        "generator_title": "مولّد الفترات",
+        "filters_title": "الفلاتر",
+        "select_date": "التاريخ",
+        "morning_shift": "الفترة الصباحية",
+        "evening_shift": "الفترة المسائية",
         "start_time": "وقت البداية",
         "end_time": "وقت النهاية",
-        "generate_button": "إنشاء الأوقات",
-        "filters_title": "التصفية",
-        "filter_date_from": "من تاريخ",
-        "filter_date_to": "إلى تاريخ",
-        "filter_shift": "الفترة",
+        "generate_button": "توليد الفترات",
+        "generating": "جارٍ التوليد…",
+        "slots": "فترة",
+        "slots_for": "الفترات ليوم",
+        "no_slots_day": "لا توجد فترات لهذا اليوم.",
+        "filter_date_from": "من",
+        "filter_date_to": "إلى",
+        "filter_shift": "الوردية",
         "filter_status": "الحالة",
-        "shift_all": "الكل",
-        "shift_morning": "صباحي",
-        "shift_evening": "مسائي",
+        "shift_all": "جميع الورديات",
+        "shift_morning": "صباحية",
+        "shift_evening": "مسائية",
         "status_all": "الكل",
         "status_available": "متاح",
-        "status_disabled": "معطل",
-        "list_title": "قائمة الأوقات المتاحة",
-        "slots": "مواعيد",
-        "slots_for": "المواعيد المتاحة ليوم",
-        "empty": "لا توجد أوقات متاحة. قم بإنشاء أول موعد!",
+        "status_disabled": "معطّل",
+        "empty": "لا توجد فترات.",
+        "confirm_delete_title": "حذف الفترة",
+        "confirm_delete_text": "هل أنت متأكد من حذف هذه الفترة؟",
+        "delete_button": "حذف",
+        "cancel_button": "إلغاء",
         "success": {
-          "generated": "تم إنشاء الأوقات بنجاح",
-          "toggled": "تم تحديث حالة الموعد",
-          "deleted": "تم حذف الموعد بنجاح"
+          "generated": "تم توليد الفترات بنجاح.",
+          "toggled": "تم تحديث حالة الفترة.",
+          "deleted": "تم حذف الفترة."
         },
         "error": {
-          "select_date": "الرجاء اختيار التاريخ",
-          "generation_failed": "فشل إنشاء الأوقات",
-          "delete_failed": "فشل حذف الموعد"
-        },
-        "confirm_delete_title": "تأكيد حذف الموعد",
-        "confirm_delete_text": "هل أنت متأكد من حذف هذا الموعد؟",
-        "delete_button": "نعم، احذف الموعد",
-        "cancel_button": "إلغاء",
-        "deleted_title": "تم الحذف!"
+          "select_date": "يرجى تحديد تاريخ.",
+          "generation_failed": "فشل توليد الفترات.",
+          "delete_failed": "فشل حذف الفترة."
+        }
       },
       "bookings": {
-        "title": "إدارة الحجوزات",
-        "subtitle": "عرض وإدارة حجوزات المواعيد",
-        "filters_title": "التصفية والبحث",
+        "title": "الحجوزات",
+        "subtitle": "عرض وإدارة جميع حجوزات المواعيد",
+        "list_title": "جميع الحجوزات",
+        "filters_title": "الفلاتر",
+        "bookings": "حجز",
+        "bookings_for": "الحجوزات ليوم",
+        "no_bookings_day": "لا توجد حجوزات لهذا اليوم.",
+        "empty": "لا توجد حجوزات.",
         "filter_search": "بحث",
-        "placeholder_search": "ابحث بالاسم أو البريد الإلكتروني",
-        "filter_date_from": "من تاريخ",
-        "filter_date_to": "إلى تاريخ",
-        "filter_type": "نوع الموعد",
+        "filter_date_from": "من",
+        "filter_date_to": "إلى",
         "filter_status": "الحالة",
-        "type_all": "الكل",
-        "type_in_person": "حضوري",
-        "type_online": "إلكتروني",
+        "placeholder_search": "ابحث بالاسم أو البريد…",
         "status_all": "الكل",
         "status_pending": "قيد الانتظار",
         "status_confirmed": "مؤكد",
-        "status_cancelled": "ملغي",
-        "list_title": "قائمة الحجوزات",
-        "bookings": "حجوزات",
-        "bookings_for": "الحجوزات ليوم",
-        "empty": "لا توجد حجوزات حتى الآن",
+        "status_cancelled": "ملغى",
+        "success": {
+          "status_updated": "تم تحديث حالة الحجز."
+        },
         "modal": {
-          "title": "تفاصيل الحجز",
-          "personal_info": "المعلومات الشخصية",
-          "name": "الاسم",
-          "email": "البريد الإلكتروني",
-          "phone": "الهاتف",
-          "visitors": "عدد الزوار",
+          "title": "حجز",
+          "details": "معلومات العميل",
           "appointment_details": "تفاصيل الموعد",
-          "type": "نوع الموعد",
           "date": "التاريخ",
           "time": "الوقت",
           "status": "الحالة",
-          "message": "الرسالة",
-          "attachments": "المرفقات",
-          "voice_note": "المذكرة الصوتية",
-          "audio_not_supported": "المتصفح لا يدعم تشغيل الصوت",
-          "download_attachment": "تحميل المرفق"
-        },
-        "success": {
-          "status_updated": "تم تحديث حالة الحجز"
-        },
-        "download_success": "تم تحميل الملف بنجاح",
-        "download_failed": "فشل تحميل الملف"
+          "open_file": "فتح الملف"
+        }
       },
       "table": {
         "date": "التاريخ",
-        "shift": "الفترة",
-        "start_time": "وقت البداية",
-        "end_time": "وقت النهاية",
+        "shift": "الوردية",
+        "start_time": "البداية",
+        "end_time": "النهاية",
         "status": "الحالة",
         "actions": "الإجراءات",
         "name": "الاسم",
-        "type": "النوع",
         "time": "الوقت",
         "phone": "الهاتف",
         "email": "البريد الإلكتروني"
+      }
+    },
+    "legal": {
+      "title": "إدارة الصفحات القانونية",
+      "subtitle": "إنشاء وإدارة الصفحات القانونية بأقسام منظمة",
+      "form_title_create": "إنشاء صفحة قانونية",
+      "form_title_edit": "تعديل الصفحة القانونية",
+      "list_title": "الصفحات القانونية الحالية",
+      "section_page_info": "معلومات الصفحة",
+      "section_sections": "الأقسام",
+      "section_label": "القسم",
+      "subsections_label": "الأقسام الفرعية",
+      "subsection_label": "القسم الفرعي",
+      "slug_hint": "(مثال: privacy-policy أو terms-of-service)",
+      "fields": {
+        "title_ar": "العنوان (عربي)",
+        "title_en": "العنوان (إنجليزي)",
+        "slug": "معرّف الصفحة",
+        "section_title_ar": "عنوان القسم (عربي)",
+        "section_title_en": "عنوان القسم (إنجليزي)",
+        "subsection_title_ar": "عنوان القسم الفرعي (عربي)",
+        "subsection_title_en": "عنوان القسم الفرعي (إنجليزي)",
+        "content_ar": "المحتوى (عربي)",
+        "content_en": "المحتوى (إنجليزي)"
+      },
+      "placeholders": {
+        "title_ar": "أدخل عنوان الصفحة بالعربية",
+        "title_en": "أدخل عنوان الصفحة بالإنجليزية",
+        "slug": "مثال: privacy-policy",
+        "section_title_ar": "عنوان القسم بالعربية",
+        "section_title_en": "عنوان القسم بالإنجليزية",
+        "subsection_title_ar": "عنوان القسم الفرعي بالعربية",
+        "subsection_title_en": "عنوان القسم الفرعي بالإنجليزية"
+      },
+      "actions": {
+        "create": "إنشاء الصفحة",
+        "update": "تحديث الصفحة",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "cancel": "إلغاء",
+        "add_section": "إضافة قسم",
+        "add_subsection": "إضافة قسم فرعي",
+        "remove_section": "حذف القسم",
+        "remove_subsection": "حذف القسم الفرعي",
+        "move_up": "تحريك لأعلى",
+        "move_down": "تحريك لأسفل"
+      },
+      "table": {
+        "id": "المعرف",
+        "slug": "المعرّف",
+        "title_ar": "العنوان (ع)",
+        "title_en": "العنوان (إن)",
+        "sections": "الأقسام",
+        "sections_count": "أقسام",
+        "actions": "الإجراءات"
+      },
+      "success": {
+        "created": "تم إنشاء الصفحة القانونية بنجاح",
+        "updated": "تم تحديث الصفحة القانونية بنجاح",
+        "deleted": "تم حذف الصفحة القانونية بنجاح"
       },
       "error": {
-        "load_failed": "فشل تحميل البيانات",
-        "save_failed": "فشل حفظ التغييرات",
-        "update_failed": "فشل التحديث"
+        "load_failed": "فشل تحميل الصفحات القانونية",
+        "save_failed": "فشل الحفظ. يرجى المحاولة مجدداً.",
+        "delete_failed": "فشل الحذف. يرجى المحاولة مجدداً."
+      },
+      "confirm_delete_title": "حذف الصفحة القانونية",
+      "confirm_delete_text": "سيؤدي هذا إلى حذف الصفحة وجميع أقسامها نهائياً. لا يمكن التراجع عن هذا الإجراء.",
+      "delete_button": "نعم، احذف",
+      "cancel_button": "إلغاء",
+      "empty": "لا توجد صفحات قانونية بعد. أنشئ أول صفحة!"
+    },
+    "about": {
+      "pageTitle": "إدارة صفحة من نحن",
+      "pageSubtitle": "إدارة محتوى صفحة About Us بالكامل",
+      "loading": "جارٍ تحميل البيانات...",
+      "retry": "إعادة المحاولة",
+      "saveBtn": "حفظ",
+      "deleteBtn": "حذف",
+      "cancelBtn": "إلغاء",
+      "confirmDeleteTitle": "تأكيد الحذف",
+      "confirmDeleteText": "هل أنت متأكد من حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.",
+      "tabs": {
+        "general": "عام",
+        "stats": "الأرقام",
+        "posts": "البوستات",
+        "sections": "السكشنز",
+        "partners": "الشركاء"
+      },
+      "general": {
+        "cardTitle": "الإعدادات العامة",
+        "isActive": "تفعيل الصفحة",
+        "logoSection": "الشعار",
+        "logoLabel": "شعار صفحة About",
+        "logoHint": "PNG أو JPG أو SVG",
+        "uploadLogo": "رفع الشعار",
+        "mediaSection": "وسائط الهيرو",
+        "mediaLabel": "فيديو / صورة الهيرو",
+        "mediaHint": "صورة أو فيديو للقسم الأول",
+        "uploadMedia": "رفع الوسائط",
+        "changeFile": "تغيير الملف",
+        "saveBtn": "حفظ الإعدادات العامة",
+        "saveSuccess": "تم حفظ الإعدادات العامة بنجاح"
+      },
+      "stats": {
+        "addTitle": "إضافة رقم جديد",
+        "listTitle": "الأرقام الحالية",
+        "numberLabel": "الرقم",
+        "numberHint": "مثال: +20 أو 360° أو 24/7",
+        "labelAr": "النص تحت الرقم (عربي)",
+        "labelAr_placeholder": "نص بالعربية",
+        "labelEn": "النص تحت الرقم (إنجليزي)",
+        "labelEn_placeholder": "Text in English",
+        "labelArPlaceholder": "أدخل النص بالعربية",
+        "labelEnPlaceholder": "Enter text in English",
+        "orderLabel": "الترتيب",
+        "isActive": "مفعّل",
+        "addButton": "إضافة رقم",
+        "addSuccess": "تم إضافة الرقم بنجاح",
+        "updateSuccess": "تم تحديث الرقم بنجاح",
+        "deleteSuccess": "تم حذف الرقم بنجاح",
+        "validationError": "يرجى إدخال الرقم والنص على الأقل"
+      },
+      "posts": {
+        "addTitle": "إضافة بوست جديد",
+        "listTitle": "البوستات الحالية",
+        "subtitleAr": "العنوان الفرعي (عربي)",
+        "subtitleAr_placeholder": "عنوان فرعي بالعربية",
+        "subtitleEn": "العنوان الفرعي (إنجليزي)",
+        "subtitleEn_placeholder": "Subtitle in English",
+        "subtitleArPlaceholder": "أدخل العنوان الفرعي بالعربية",
+        "subtitleEnPlaceholder": "Enter subtitle in English",
+        "titleAr": "العنوان الرئيسي (عربي)",
+        "titleAr_placeholder": "عنوان رئيسي بالعربية",
+        "titleEn": "العنوان الرئيسي (إنجليزي)",
+        "titleEn_placeholder": "Main title in English",
+        "titleArPlaceholder": "أدخل العنوان الرئيسي بالعربية",
+        "titleEnPlaceholder": "Enter main title in English",
+        "bodyAr": "محتوى النص (عربي)",
+        "bodyAr_placeholder": "أدخل المحتوى بالعربية",
+        "bodyEn": "محتوى النص (إنجليزي)",
+        "bodyEn_placeholder": "Enter content in English",
+        "bodyArPlaceholder": "أدخل المحتوى بالعربية",
+        "bodyEnPlaceholder": "Enter content in English",
+        "imageLabel": "صورة البوست",
+        "uploadImage": "رفع صورة",
+        "replaceImage": "استبدال الصورة",
+        "addButton": "إضافة بوست",
+        "addSuccess": "تم إضافة البوست بنجاح",
+        "updateSuccess": "تم تحديث البوست بنجاح",
+        "deleteSuccess": "تم حذف البوست بنجاح",
+        "validationError": "يرجى إدخال العنوان الرئيسي على الأقل"
+      },
+      "sections": {
+        "addTitle": "إضافة سكشن جديد",
+        "listTitle": "السكشنز الحالية",
+        "keyLabel": "المفتاح",
+        "keyHint": "مثال: mission أو vision",
+        "subtitleAr": "العنوان الفرعي (عربي)",
+        "subtitleEn": "العنوان الفرعي (إنجليزي)",
+        "titleAr": "العنوان الرئيسي (عربي)",
+        "titleEn": "العنوان الرئيسي (إنجليزي)",
+        "bodyAr": "محتوى النص (عربي)",
+        "bodyEn": "محتوى النص (إنجليزي)",
+        "addButton": "إضافة سكشن",
+        "addSuccess": "تم إضافة السكشن بنجاح",
+        "updateSuccess": "تم تحديث السكشن بنجاح",
+        "deleteSuccess": "تم حذف السكشن بنجاح",
+        "validationError": "يرجى إدخال عنوان أو مفتاح للسكشن",
+        "iconsTitle": "الأيقونات داخل السكشن",
+        "uploadIcon": "رفع أيقونة",
+        "iconLabelAr": "عنوان الأيقونة (عربي)",
+        "iconLabelEn": "Icon label (EN)",
+        "addIconButton": "إضافة أيقونة",
+        "iconFileRequired": "يرجى اختيار ملف الأيقونة أولاً",
+        "iconAddSuccess": "تم إضافة الأيقونة بنجاح",
+        "iconUpdateSuccess": "تم تحديث الأيقونة بنجاح",
+        "iconDeleteSuccess": "تم حذف الأيقونة بنجاح"
+      },
+      "partners": {
+        "cardTitle": "إعدادات قسم الشركاء",
+        "addTitle": "إضافة شريك جديد",
+        "listTitle": "الشركاء الحاليون",
+        "subtitleAr": "العنوان الفرعي للشركاء (عربي)",
+        "subtitleEn": "Partners subtitle (English)",
+        "subtitleArPlaceholder": "أدخل العنوان الفرعي بالعربية",
+        "subtitleEnPlaceholder": "Enter subtitle in English",
+        "saveSubtitleBtn": "حفظ العنوان",
+        "subtitleSaved": "تم حفظ عنوان الشركاء بنجاح",
+        "logoLabel": "شعار الشريك",
+        "uploadLogo": "رفع الشعار",
+        "logoRequired": "يرجى اختيار ملف الشعار أولاً",
+        "addButton": "إضافة شريك",
+        "addSuccess": "تم إضافة الشريك بنجاح",
+        "updateSuccess": "تم تحديث بيانات الشريك بنجاح",
+        "deleteSuccess": "تم حذف الشريك بنجاح"
+      },
+      "preview": {
+        "title": "معاينة مباشرة",
+        "show": "عرض المعاينة",
+        "hide": "إخفاء المعاينة",
+        "general": "عام",
+        "stats": "الأرقام",
+        "posts": "البوستات",
+        "sections": "السكشنز",
+        "partners": "الشركاء",
+        "active": "مفعّلة",
+        "inactive": "غير مفعّلة"
+      },
+      "error": {
+        "loadFailed": "فشل تحميل بيانات الصفحة. يرجى المحاولة مجدداً.",
+        "saveFailed": "فشل حفظ التغييرات. يرجى المحاولة مجدداً.",
+        "deleteFailed": "فشل حذف العنصر. يرجى المحاولة مجدداً."
+      }
+    },
+    "forms": {
+      "title": "منشئ النماذج",
+      "subtitle": "إنشاء وإدارة النماذج الديناميكية مع الأقسام والحقول",
+      "list_title": "جميع النماذج",
+      "copy": "نسخ",
+      "modal": {
+        "create_title": "إنشاء نموذج جديد"
+      },
+      "view": {
+        "builder": "المنشئ",
+        "settings": "الإعدادات"
+      },
+      "table": {
+        "title": "اسم النموذج",
+        "slug": "المعرّف",
+        "sections": "الأقسام",
+        "submissions": "الطلبات",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "empty": {
+        "title": "لا توجد نماذج بعد",
+        "subtitle": "قم بإنشاء أول نموذج ديناميكي للبدء"
+      },
+      "settings": {
+        "tab_basic": "المعلومات الأساسية",
+        "tab_messages": "الرسائل",
+        "tab_behavior": "السلوك",
+        "tab_terms": "الشروط",
+        "section_titles": "عناوين النموذج",
+        "section_slug": "المعرّف",
+        "section_button": "زر الإرسال",
+        "section_success": "رسالة النجاح",
+        "section_behavior": "إعدادات الإرسال",
+        "section_terms": "الشروط والأحكام",
+        "section_context": "سياق النموذج",
+        "section_response": "استجابة النجاح"
+      },
+      "fields": {
+        "title_ar": "العنوان (عربي)",
+        "title_en": "العنوان (إنجليزي)",
+        "description_ar": "الوصف (عربي)",
+        "description_en": "الوصف (إنجليزي)",
+        "slug": "المعرّف",
+        "is_active": "الحالة",
+        "submit_button_ar": "زر الإرسال (عربي)",
+        "submit_button_en": "زر الإرسال (إنجليزي)",
+        "success_ar": "رسالة النجاح (عربي)",
+        "success_en": "رسالة النجاح (إنجليزي)",
+        "requires_login": "يتطلب تسجيل الدخول للإرسال",
+        "allow_multiple": "السماح بإرسال متعدد",
+        "terms_ar": "نص الشروط (عربي)",
+        "terms_en": "نص الشروط (إنجليزي)",
+        "require_terms": "يتطلب الموافقة على الشروط قبل الإرسال",
+        "context_type": "سياق النموذج",
+        "form_type": "نوع النموذج",
+        "requires_verification": "يتطلب التحقق",
+        "success_response": "استجابة النجاح"
+      },
+      "context_types": {
+        "generic": "عام",
+        "appointments": "المواعيد",
+        "services": "الخدمات",
+        "careers": "الوظائف"
+      },
+      "placeholders": {
+        "slug": "مثال: contact-form",
+        "submit_button_ar": "إرسال",
+        "submit_button_en": "Submit",
+        "success_ar": "تم إرسال النموذج بنجاح",
+        "success_en": "Your form has been submitted successfully",
+        "terms_ar": "أدخل الشروط والأحكام بالعربية...",
+        "terms_en": "Enter terms and conditions in English...",
+        "section_title_ar": "عنوان القسم بالعربية",
+        "section_title_en": "عنوان القسم بالإنجليزية",
+        "section_desc_ar": "وصف القسم بالعربية",
+        "section_desc_en": "وصف القسم بالإنجليزية",
+        "field_label_ar": "عنوان الحقل بالعربية",
+        "field_label_en": "عنوان الحقل بالإنجليزية",
+        "title_ar": "العنوان الرئيسي",
+        "title_en": "العنوان الرئيسي",
+        "subtitle_ar": "العنوان الفرعي",
+        "subtitle_en": "العنوان الفرعي",
+        "description_ar": "وصف مختصر",
+        "description_en": "وصف مختصر",
+        "button_label_ar": "نص الزر",
+        "button_label_en": "نص الزر"
+      },
+      "slug_hint": "(يتم توليده تلقائيًا إذا تُرك فارغًا)",
+      "terms_preview_label": "معاينة — كيف سيشاهد المستخدمون الشروط",
+      "section": {
+        "title_ar": "عنوان القسم (عربي)",
+        "title_en": "عنوان القسم (إنجليزي)",
+        "desc_ar": "الوصف (عربي)",
+        "desc_en": "الوصف (إنجليزي)",
+        "active": "نشط",
+        "order": "الترتيب",
+        "unnamed": "قسم بدون اسم",
+        "fields_count": "حقول",
+        "no_fields": "لا توجد حقول بعد. اضغط \"إضافة حقل\" للبدء.",
+        "empty_title": "لا توجد أقسام بعد",
+        "empty_subtitle": "الأقسام مطلوبة. أضف قسمًا واحدًا على الأقل لبناء النموذج."
+      },
+      "field": {
+        "unnamed": "بدون اسم",
+        "required": "إلزامي",
+        "active": "نشط",
+        "type": "نوع الحقل",
+        "key": "مفتاح الحقل",
+        "width": "العرض",
+        "label_ar": "العنوان (عربي)",
+        "label_en": "العنوان (إنجليزي)",
+        "placeholder_ar": "النص الإرشادي (عربي)",
+        "placeholder_en": "النص الإرشادي (إنجليزي)",
+        "help_ar": "النص المساعد (عربي)",
+        "help_en": "النص المساعد (إنجليزي)",
+        "tab_basic": "أساسي",
+        "tab_labels": "العناوين",
+        "tab_validation": "التحقق",
+        "tab_options": "الخيارات",
+        "saving": "جارٍ الحفظ…",
+        "saved": "تم الحفظ",
+        "unsaved": "غير محفوظ",
+        "unsaved_changes": "توجد تغييرات غير محفوظة",
+        "has_errors": "يوجد أخطاء",
+        "already_saved": "لا توجد تغييرات للحفظ",
+        "system_key": "المفتاح النظامي",
+        "custom_field_option": "— حقل مخصص —",
+        "auto_generated": "يتم توليده تلقائيًا",
+        "tab_source": "المصدر",
+        "option_source": "مصدر الخيارات",
+        "source_static": "خيارات ثابتة",
+        "source_dynamic": "مصدر ديناميكي",
+        "dynamic_source": "المصدر الديناميكي",
+        "dynamic_source_hint": "تم تفعيل المصدر الديناميكي. سيتم تجاهل الخيارات الثابتة."
+      },
+      "field_types": {
+        "text": "نص",
+        "textarea": "منطقة نص",
+        "email": "بريد إلكتروني",
+        "phone": "رقم هاتف",
+        "number": "رقم",
+        "date": "تاريخ",
+        "select": "قائمة منسدلة",
+        "radio": "أزرار اختيار",
+        "checkbox": "مربع اختيار",
+        "file": "رفع ملف"
+      },
+      "width": {
+        "full": "كامل",
+        "half": "نصف",
+        "third": "ثلث"
+      },
+      "validation": {
+        "min_length": "الحد الأدنى للطول",
+        "max_length": "الحد الأقصى للطول",
+        "min": "الحد الأدنى للقيمة",
+        "max": "الحد الأقصى للقيمة",
+        "no_rules": "لا توجد قواعد تحقق لهذا النوع من الحقول."
+      },
+      "phone": {
+        "default_country": "رمز الدولة الافتراضي",
+        "allowed_note": "رموز الدول المسموح بها"
+      },
+      "file": {
+        "max_size": "الحد الأقصى لحجم الملف",
+        "extensions": "الامتدادات المسموح بها (اضغط للتبديل)"
+      },
+      "option": {
+        "label_ar": "العنوان (عربي)",
+        "label_en": "العنوان (إنجليزي)",
+        "value": "القيمة",
+        "add": "+ إضافة خيار",
+        "list_title": "الخيارات"
+      },
+      "actions": {
+        "new_form": "نموذج جديد",
+        "create_first": "أنشئ أول نموذج لك",
+        "create": "إنشاء نموذج",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "cancel": "إلغاء",
+        "save": "حفظ",
+        "back": "رجوع",
+        "duplicate": "نسخ",
+        "collapse": "طي",
+        "expand": "توسيع",
+        "move_up": "تحريك للأعلى",
+        "move_down": "تحريك للأسفل",
+        "add_section": "+ إضافة قسم",
+        "add_field": "+ إضافة حقل",
+        "activate": "تفعيل",
+        "deactivate": "تعطيل",
+        "delete_section": "حذف القسم",
+        "save_field": "حفظ الحقل"
+      },
+      "success": {
+        "created": "تم إنشاء النموذج بنجاح",
+        "settings_saved": "تم حفظ الإعدادات",
+        "status_updated": "تم تحديث الحالة",
+        "deleted": "تم حذف النموذج",
+        "section_added": "تمت إضافة القسم",
+        "section_deleted": "تم حذف القسم",
+        "field_added": "تمت إضافة الحقل",
+        "field_deleted": "تمت إزالة الحقل",
+        "field_saved": "تم حفظ الحقل بنجاح"
+      },
+      "errors": {
+        "title_required": "يرجى إدخال عنوان بالعربية أو الإنجليزية",
+        "create_failed": "فشل إنشاء النموذج",
+        "update_failed": "فشل التحديث",
+        "delete_failed": "فشل حذف النموذج",
+        "save_failed": "فشل الحفظ",
+        "section_failed": "فشلت عملية القسم",
+        "field_failed": "فشلت عملية الحقل",
+        "option_failed": "فشلت عملية الخيار",
+        "save_field_first": "احفظ الحقل أولًا قبل إضافة الخيارات",
+        "field_type_required": "نوع الحقل مطلوب",
+        "label_ar_required": "العنوان العربي مطلوب",
+        "key_required": "المفتاح أو المفتاح النظامي مطلوب",
+        "load_failed": "فشل تحميل البيانات."
+      },
+      "confirm_delete_title": "حذف النموذج",
+      "confirm_delete_text": "سيتم حذف النموذج وجميع بياناته نهائيًا. لا يمكن حذف النماذج التي تحتوي على طلبات — قم بتعطيلها بدلًا من ذلك.",
+      "delete_button": "نعم، حذف",
+      "cancel_button": "إلغاء",
+      "loading": "جارٍ التحميل…",
+      "info": {
+        "form_create": "نافذة معلومات جديدة",
+        "form_edit": "تعديل نافذة المعلومات",
+        "sections_title": "الأقسام",
+        "section_label": "القسم",
+        "add_section": "إضافة قسم",
+        "add_section_btn": "إضافة قسم",
+        "delete_section": "حذف القسم",
+        "empty": "لا توجد أقسام بعد. أضف أول قسم بالأعلى.",
+        "fields": {
+          "slug": "المعرّف",
+          "title_ar": "العنوان (عربي)",
+          "title_en": "العنوان (إنجليزي)",
+          "subtitle_ar": "العنوان الفرعي (عربي)",
+          "subtitle_en": "العنوان الفرعي (إنجليزي)",
+          "description_ar": "الوصف (عربي)",
+          "description_en": "الوصف (إنجليزي)",
+          "body_ar": "المحتوى (عربي)",
+          "body_en": "المحتوى (إنجليزي)"
+        },
+        "placeholders": {
+          "title_ar": "العنوان بالعربية",
+          "title_en": "العنوان بالإنجليزية",
+          "body_ar": "المحتوى بالعربية",
+          "body_en": "المحتوى بالإنجليزية"
+        },
+        "confirm_delete_title": "حذف نافذة المعلومات",
+        "confirm_delete_text": "هل أنت متأكد من حذف نافذة المعلومات هذه؟",
+        "confirm_delete_section_title": "حذف القسم",
+        "confirm_delete_section_text": "هل أنت متأكد من حذف هذا القسم؟",
+        "delete_button": "حذف",
+        "cancel_button": "إلغاء",
+        "errors": {
+          "slug_required": "المعرّف مطلوب.",
+          "title_ar_required": "العنوان العربي مطلوب.",
+          "section_title_required": "عنوان القسم بالعربية مطلوب.",
+          "section_body_required": "محتوى القسم بالعربية مطلوب."
+        },
+        "success": {
+          "modal_created": "تم إنشاء نافذة المعلومات.",
+          "modal_updated": "تم تحديث نافذة المعلومات.",
+          "modal_deleted": "تم حذف نافذة المعلومات.",
+          "section_created": "تمت إضافة القسم.",
+          "section_deleted": "تم حذف القسم."
+        }
+      },
+      "success_responses": {
+        "tab_label": "استجابات النجاح",
+        "title": "استجابات النجاح",
+        "subtitle": "إدارة صفحات النجاح التي تظهر بعد إرسال النموذج",
+        "new_btn": "استجابة جديدة",
+        "create_first": "إنشاء أول استجابة",
+        "empty_title": "لا توجد استجابات نجاح بعد",
+        "empty_subtitle": "قم بإنشاء أول استجابة نجاح لاستخدامها في النماذج.",
+        "confirm_delete_title": "حذف الاستجابة",
+        "confirm_delete_text": "هل أنت متأكد من حذف استجابة النجاح هذه؟",
+        "delete_button": "حذف",
+        "cancel_button": "إلغاء",
+        "modal_title_create": "إنشاء استجابة نجاح",
+        "modal_title_edit": "تعديل استجابة النجاح",
+        "default_option": "افتراضي",
+        "fields": {
+          "slug": "المعرّف",
+          "logo": "الشعار",
+          "title_ar": "العنوان (عربي)",
+          "title_en": "العنوان (إنجليزي)",
+          "subtitle_ar": "العنوان الفرعي (عربي)",
+          "subtitle_en": "العنوان الفرعي (إنجليزي)",
+          "description_ar": "الوصف (عربي)",
+          "description_en": "الوصف (إنجليزي)",
+          "show_reference": "إظهار الرقم المرجعي",
+          "reference_prefix": "بادئة الرقم المرجعي",
+          "button_label_ar": "نص الزر (عربي)",
+          "button_label_en": "نص الزر (إنجليزي)",
+          "button_action": "إجراء الزر",
+          "button_url": "رابط الزر",
+          "context_type": "سياق النموذج",
+          "form_type": "نوع النموذج",
+          "success_response": "استجابة النجاح",
+          "requires_verification": "يتطلب التحقق"
+        },
+        "placeholders": {
+          "slug": "مثال: form-submitted",
+          "title_ar": "العنوان الرئيسي",
+          "title_en": "Main title",
+          "subtitle_ar": "العنوان الفرعي",
+          "subtitle_en": "Subtitle",
+          "description_ar": "وصف مختصر",
+          "description_en": "Short description",
+          "button_label_ar": "نص الزر",
+          "button_label_en": "Button text"
+        },
+        "button_actions": {
+          "none": "بدون",
+          "close": "إغلاق",
+          "url": "إعادة توجيه إلى رابط"
+        },
+        "success": {
+          "created": "تم إنشاء استجابة النجاح.",
+          "updated": "تم تحديث استجابة النجاح.",
+          "deleted": "تم حذف استجابة النجاح."
+        }
+      },
+      "form_types": {
+        "dynamic": "نموذج ديناميكي",
+        "info": "نافذة معلومات"
+      },
+      "dynamic_sources": {
+        "services": "الخدمات",
+        "appointment_slots": "مواعيد الحجز",
+        "career_jobs": "الوظائف"
+      },
+      "button_actions": {
+        "none": "بدون",
+        "close": "إغلاق",
+        "url": "إعادة توجيه إلى رابط"
+      }
+    },
+    "info": {
+      "title": "النوافذ التعريفية",
+      "subtitle": "إدارة النوافذ التعريفية ومحتوياتها",
+      "form_title_create": "إنشاء نافذة تعريفية",
+      "form_title_edit": "تعديل النافذة التعريفية",
+      "list_title": "النوافذ التعريفية",
+      "empty": "لا توجد نوافذ تعريفية حتى الآن. قم بإنشاء واحدة من الأعلى.",
+      "section_titles": "العناوين",
+      "section_description": "الوصف",
+      "section_settings": "الإعدادات",
+      "section_body": "محتوى النص",
+      "sections_label": "الأقسام",
+      "sections_editor_title": "أقسام النافذة التعريفية",
+      "sections_empty": "لم يتم إضافة أي أقسام بعد.",
+      "add_section": "إضافة قسم",
+      "add_section_label": "إضافة قسم جديد",
+      "section_number": "القسم",
+      "slug_hint": "(معرّف فريد)",
+      "confirm_delete_title": "حذف النافذة التعريفية؟",
+      "confirm_delete_text": "سيتم حذف النافذة التعريفية وجميع أقسامها نهائيًا.",
+      "confirm_delete_section_title": "حذف القسم؟",
+      "confirm_delete_section_text": "سيتم حذف هذا القسم نهائيًا.",
+      "delete_button": "حذف",
+      "cancel_button": "إلغاء",
+      "fields": {
+        "title_ar": "العنوان (العربية)",
+        "title_en": "العنوان (الإنجليزية)",
+        "subtitle_ar": "العنوان الفرعي (العربية)",
+        "subtitle_en": "العنوان الفرعي (الإنجليزية)",
+        "description_ar": "الوصف (العربية)",
+        "description_en": "الوصف (الإنجليزية)",
+        "body_ar": "المحتوى (العربية)",
+        "body_en": "المحتوى (الإنجليزية)",
+        "slug": "المعرّف",
+        "active": "الحالة"
+      },
+      "placeholders": {
+        "title_ar": "أدخل العنوان بالعربية",
+        "title_en": "أدخل العنوان بالإنجليزية",
+        "subtitle_ar": "أدخل العنوان الفرعي بالعربية",
+        "subtitle_en": "أدخل العنوان الفرعي بالإنجليزية",
+        "description_ar": "أدخل وصفًا مختصرًا بالعربية",
+        "description_en": "Enter a short description in English",
+        "body_ar": "أدخل محتوى القسم بالعربية",
+        "body_en": "Enter section content in English",
+        "slug": "مثال: my-info-modal",
+        "section_title_ar": "عنوان القسم بالعربية",
+        "section_title_en": "عنوان القسم بالإنجليزية"
+      },
+      "status": {
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "actions": {
+        "create": "إنشاء",
+        "update": "تحديث",
+        "cancel": "إلغاء",
+        "add_section": "إضافة قسم",
+        "delete_section": "حذف القسم"
+      },
+      "success": {
+        "created": "تم إنشاء النافذة التعريفية بنجاح",
+        "updated": "تم تحديث النافذة التعريفية بنجاح",
+        "deleted": "تم حذف النافذة التعريفية بنجاح",
+        "section_created": "تمت إضافة القسم بنجاح",
+        "section_deleted": "تم حذف القسم بنجاح"
+      },
+      "error": {
+        "load_failed": "فشل تحميل النوافذ التعريفية",
+        "save_failed": "فشل الحفظ، يرجى المحاولة مرة أخرى",
+        "delete_failed": "فشل الحذف، يرجى المحاولة مرة أخرى",
+        "slug_required": "المعرّف مطلوب",
+        "title_ar_required": "العنوان بالعربية مطلوب",
+        "section_title_ar_required": "عنوان القسم بالعربية مطلوب",
+        "section_body_ar_required": "محتوى القسم بالعربية مطلوب"
       }
     }
   },
@@ -1519,22 +2542,36 @@
     "experience": "الخبرة"
   },
   "footer": {
-    "newsletter_placeholder": "البريد الإلكتروني",
+    "newsletter_placeholder": "عنوان البريد الإلكتروني",
     "newsletter_confirm": "تأكيد",
     "follow_us": "تابعنا",
+    "choose_language": "اختر لغتك",
     "language_ar": "العربية",
     "language_en": "English",
     "country_default": "المملكة العربية السعودية",
-    "copyright": "© {{year}} — مكتب شهم للمحاماة",
-    "country_label": "البلد/المنطقة",
-    "high_contrast_label": "سهولة الوصول: تباين أفضل",
-    "high_contrast_toggle": "تبديل التباين العالي"
+    "copyright": "© {{year}} شهم | جميع الحقوق محفوظة",
+    "country_label": "البلد / المنطقة",
+    "home": "الرئيسية",
+    "routes": {
+      "services": "الخدمات",
+      "about": "من نحن",
+      "blog": "المدونة",
+      "contact": "تواصل معنا",
+      "faq": "الأسئلة الشائعة",
+      "careers": "الوظائف",
+      "legal": "القانونية",
+      "appointments": "المواعيد",
+      "request-access": "طلب وصول"
+    }
   },
   "faq": {
-    "title": "الأسئلة الشائعة",
-    "search": "بحث في الأسئلة...",
+    "title": "كيف يمكننا مساعدتك؟",
+    "subtitle": "اعرف أكثر عبر الأسئلة الشائعة",
     "loading": "جاري التحميل...",
-    "no_results": "لم يتم العثور على نتائج"
+    "no_results": "لم يتم العثور على نتائج",
+    "browse_by_topic": "تصفح حسب الموضوع",
+    "all": "الكل",
+    "all_faqs": "جميع الأسئلة الشائعة"
   },
   "payment": {
     "title": "إتمام عملية الدفع",
@@ -1860,7 +2897,10 @@
     "filter_category": "الفئة",
     "filter_tags": "الوسوم",
     "no_posts": "لا توجد منشورات متاحة حاليًا",
-    "read_more": "اقرأ المزيد"
+    "read_more": "اقرأ المزيد",
+    "search": "بحث...",
+    "browse_by_topic": "تصفح حسب الموضوع",
+    "all": "الكل"
   },
   "blogdetails": {
     "date": "التاريخ",
@@ -1895,7 +2935,8 @@
     "interested": "مهتم",
     "not_interested": "غير مهتم",
     "step": "خطوة",
-    "of": "من"
+    "of": "من",
+    "option": "الخيارات"
   },
   "serviceDetails": {
     "reference_id": "الرقم المرجعي",
@@ -2006,5 +3047,58 @@
     "thank_you_title": "شكرًا لك!",
     "thank_you_message": "تم استلام طلب الموعد وهو قيد المراجعة حاليًا. خلال 12 ساعة، ستتلقى رابط الدفع عبر تفاصيل الاتصال المسجلة؛ وبمجرد إتمام الدفع، سيتم تأكيد موعدك ومشاركة التفاصيل معك. يرجى إحضار أي مستندات أو معلومات ذات صلة بموعدك—إن وجدت—حتى يتمكن فريقنا من مراجعتها أثناء الجلسة.",
     "home_button": "الصفحة الرئيسية"
+  },
+  "legalpage": {
+    "clauses": "البنود",
+    "option_by_topic": "الخيار حسب الموضوع",
+    "share": "مشاركة",
+    "print": "طباعة"
+  },
+  "about": {
+    "loading": "جاري التحميل...",
+    "error": "فشل تحميل الصفحة.",
+    "no_data": "لا توجد بيانات.",
+    "play": "تشغيل",
+    "pause": "إيقاف مؤقت",
+    "previous": "السابق",
+    "next": "التالي"
+  },
+  "welcome": {
+    "logo_alt": "شركة شهم محامون ومستشارون",
+    "title_en": "Welcome.",
+    "subtitle_en": "Please select your preferred language",
+    "title_ar": "مرحبًا بــك.",
+    "subtitle_ar": "يُرجى اختيار اللغة المفضلة لتصفّح الموقع",
+    "btn_ar": "العربية (ar)",
+    "btn_en": "English (en)"
+  },
+  "forms": {
+    "required_field_placeholder": "حقل مطلوب",
+    "typing_indicator": "...",
+    "invalid_email": "البريد الإلكتروني غير صحيح"
+  },
+  "request_access": {
+    "verify_title": "التحقق من الوصول",
+    "verify_desc": "سيتم إرسال رمز التحقق إلى جهة الاتصال المسجلة.",
+    "send_code": "إرسال رمز التحقق",
+    "sending": "جاري الإرسال...",
+    "otp_sent": "تم إرسال رمز التحقق",
+    "otp_send_failed": "فشل إرسال الرمز",
+    "otp_title": "أدخل رمز التحقق",
+    "otp_desc": "يرجى إدخال الرمز المكون من 6 أرقام.",
+    "otp_label": "رمز التحقق",
+    "otp_required": "يرجى إدخال رمز التحقق",
+    "otp_invalid": "الرمز غير صحيح",
+    "no_code": "لم تستلم رمزاً؟",
+    "resend": "إعادة الإرسال",
+    "verifying": "جاري التحقق...",
+    "verify": "تحقق",
+    "verified": "تم التحقق بنجاح",
+    "loading": "جاري تحميل طلبك...",
+    "load_failed": "فشل تحميل الطلب",
+    "saving": "جاري الحفظ...",
+    "save_changes": "حفظ التغييرات",
+    "updated": "تم حفظ معلوماتك وتحديثها بنجاح",
+    "update_failed": "فشل التحديث"
   }
 }

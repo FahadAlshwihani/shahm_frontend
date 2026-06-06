@@ -5,9 +5,15 @@ import api from "./axiosClient";
 // Categories
 // ================================
 export const getCategories = () => api.get("blog/admin/categories/");
-export const createCategory = (data) => api.post("blog/admin/categories/", data);
+export const createCategory = (data) =>
+  api.post("blog/admin/categories/", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
 export const updateCategory = (id, data) =>
-  api.patch(`blog/admin/categories/${id}/`, data);
+  api.patch(`blog/admin/categories/${id}/`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 export const deleteCategory = (id) =>
   api.delete(`blog/admin/categories/${id}/`);
 
@@ -23,8 +29,8 @@ export const deleteTag = (id) => api.delete(`blog/admin/tags/${id}/`);
 // ================================
 // Blog Posts
 // ================================
-export const getPosts = (type) =>
-  api.get(`blog/admin/posts/?type=${type}`);
+export const getPosts = () =>
+  api.get("blog/admin/posts/");
 
 export const createPost = (formData) =>
   api.post("blog/admin/posts/", formData, {

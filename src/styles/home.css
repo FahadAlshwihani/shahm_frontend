@@ -3,11 +3,9 @@
   --font-ar-heading: "HT Sonata", serif;
   --font-en-heading: "Ciclo Display", sans-serif;
   --font-content: "Noto Kufi Arabic", sans-serif;
-
   --color-primary: #33383c;
   --color-secondary: #7b8487;
 }
-
 
 .dual-hero-wrapper {
   width: 100%;
@@ -16,8 +14,7 @@
   position: relative;
   overflow: hidden;
   background: #000;
-  direction: rtl;
- font-family: var(--font-ar-heading);
+  font-family: var(--font-ar-heading);
 }
 
 .dual-hero-wrapper::before {
@@ -37,6 +34,12 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  transition: filter 0.6s ease;
+}
+
+/* Dimmed overlay when opposite side is playing */
+.hero-side.is-dimmed {
+  filter: brightness(0.6);
 }
 
 .hero-img {
@@ -47,7 +50,7 @@
   transition: filter 0.6s ease;
 }
 
-/* Desktop hover only */
+/* Desktop hover — color reveal */
 @media (hover: hover) {
   .hero-side:hover .hero-img {
     filter: grayscale(0%);
@@ -64,88 +67,161 @@
   inset: 0;
   z-index: 1;
   transition: opacity 0.6s ease;
+  pointer-events: none;
 }
 
 .hero-gray-overlay-left {
-  background: rgba(2, 2, 2, 0.4);
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .hero-gray-overlay-right {
-  background: rgba(81, 81, 81, 0.4);
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* ===== PLAY / PAUSE ICON ===== */
+/* Exact Figma specs: 33×33px, background #40404066, border-radius 3px
+   padding: 6px top/bottom, 7px left/right
+   Always positioned at bottom-left corner of each section */
+.hero-play-icon {
+  position: absolute;
+  inset-inline-start: 32px;
+  bottom: 32px;
+  width: 33px;
+  height: 33px;
+  padding: 6px 7px;
+  border-radius: 3px;
+  background: #40404066;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero-play-icon:hover {
+  background: #40404099;
+}
+
+.hero-play-icon svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 /* ===== CONTENT ===== */
 .hero-content {
   position: absolute;
-  bottom: 74px;
+  bottom: 110px;
   width: 100%;
-  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 17px;
+  z-index: 5;
   text-align: center;
   color: #fff;
 }
 
+/* DESKTOP: Title - 865×55px */
 .hero-title {
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 1;
+  width: 865px;
+  height: 55px;
+  font-family: var(--font-en-heading);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 55px;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 0;
 }
 
+[dir="rtl"] .hero-title {
+  font-family: var(--font-ar-heading);
+}
+
+/* DESKTOP: Button - 549×27px */
 .hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: 27px;
+  font-family: var(--font-content);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 100%;
+  color: #FFFFFF;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #fff;
-  padding: 4px 10px;
-  font-size: 15px;
-  color: #fff;
   cursor: pointer;
-  transition: border-color 0.25s ease, opacity 0.25s ease;
-  font-family: var(--font-content);
+  position: relative;
+  padding: 0;
+  transition: all 0.3s ease;
 }
 
-.hero-btn:hover,
-.hero-btn:active,
-.hero-btn:focus {
-  border-bottom-color: transparent;
-  opacity: 0.8;
+.hero-btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+/* Dynamic underline - grows/shrinks based on text width */
+.hero-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 1.5px;
+  width: 100%;
+  background: #FFFFFF;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover animation - underline disappears from right to left */
+.hero-btn:hover::after {
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ===== DESKTOP LOGO ===== */
+/* Exact Figma specs: 694×221px, perfectly centered */
 .hero-center-logo {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
+  pointer-events: none;
 }
 
 .center-logo {
-  width: 1226.2431640625px;
-  height: 181px;
+  width: 694px;
+  height: 221px;
   object-fit: contain;
   filter: brightness(0) invert(1);
 }
 
 /* ===== MOBILE LOGO ===== */
+/* Exact Figma specs: 404×129px, top: 30px */
 .hero-mobile-logo {
   position: absolute;
-  top: clamp(24px, 6vh, 64px);
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  width: auto;
   display: flex;
   justify-content: center;
-  z-index: 10;
+  z-index: 999;   /* كان 10 فقط */
+  pointer-events: none;
 }
 
-
 .mobile-logo {
-  width: 274.75px;
-  height: 33px;
+  width: 404px;
+  height: 129px;
   object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
 /* ===== VISIBILITY ===== */
@@ -157,6 +233,20 @@
   display: none;
 }
 
+/* ===== VIDEO ===== */
+.hero-video {
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.6s ease;
+  pointer-events: auto;
+}
+
+@media (hover: hover) {
+  .hero-side:hover .hero-video {
+    filter: grayscale(0%);
+  }
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
   .dual-hero-wrapper {
@@ -166,6 +256,11 @@
 
   .dual-hero-wrapper::before {
     display: none;
+  }
+
+  /* No dimming effect on mobile */
+  .hero-side.is-dimmed {
+    filter: none;
   }
 
   .hero-img {
@@ -184,28 +279,94 @@
     display: flex;
   }
 
+  /* Mobile title - 641×52px */
+  .hero-title {
+    width: 641px;
+    max-width: 90%;
+    height: 52px;
+    font-size: 45px;
+    line-height: 52px;
+  }
+
+  /* Mobile content */
+  .hero-content {
+    bottom: 70px;
+    gap: 17px;
+  }
+
+  /* Mobile button - 549×27px */
+  .hero-btn {
+    width: auto;
+    max-width: 549px;
+    height: 27px;
+    font-size: 19px;
+    padding: 0 8px;
+  }
+
+  /* Mobile underline */
+  .hero-btn::after {
+    bottom: -6px;
+  }
+
+  /* Mobile play icon - 33×33px, always at bottom corner */
+  .hero-play-icon {
+    bottom: 24px;
+    inset-inline-start: 24px;
+    width: 33px;
+    height: 33px;
+    padding: 6px 7px;
+  }
+
+  /* Mobile logo sizing */
+  .mobile-logo {
+    width: 404px;
+    height: 129px;
+  }
+}
+
+/* Extra small mobile */
+@media (max-width: 480px) {
   .hero-title {
     font-size: 32px;
+    line-height: 40px;
+    height: auto;
   }
 
-  .hero-content {
-    bottom: 48px;
+  .mobile-logo {
+    width: clamp(250px, 80vw, 404px);
+    height: auto;
+  }
+
+  .hero-btn {
+    font-size: 16px;
+  }
+
+  .hero-play-icon {
+    inset-inline-start: 16px;
+    bottom: 16px;
+  }
+}
+
+/* Responsive sizing for smaller desktops */
+@media (max-width: 1400px) {
+  .center-logo {
+    width: 550px;
+    height: auto;
   }
 }
 
-.hero-video {
-  object-fit: cover;
-  filter: grayscale(100%);
-  transition: filter 0.6s ease;
-  pointer-events: auto;
-}
-
-/* Hover play effect */
-@media (hover: hover) {
-  .hero-side:hover .hero-video {
-    filter: grayscale(0%);
+@media (max-width: 1200px) {
+  .center-logo {
+    width: 450px;
+    height: auto;
   }
 }
-.hero-gray-overlay {
-  pointer-events: none; 
+
+/* Smooth transitions for all states */
+.hero-side,
+.hero-img,
+.hero-gray-overlay,
+.hero-play-icon,
+.hero-btn::after {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }

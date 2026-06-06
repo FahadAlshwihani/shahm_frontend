@@ -1,0 +1,61 @@
+/* ===== SOCIAL MEDIA COMPONENT ===== */
+
+/* ── Wrapper ── */
+.social-media {
+  display: flex;
+  align-items: center;
+  gap: 50px;           /* desktop: 50px between each icon */
+}
+
+.social-media--mobile {
+  gap: 71px;           /* mobile: 71px between each icon */
+  justify-content: center;
+}
+
+/* ── Link reset ── */
+.social-media__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #647272;      /* default/active colour */
+  text-decoration: none;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+  line-height: 0;      /* removes phantom spacing under SVGs */
+}
+
+.social-media__link:hover {
+  color: #1C2121;      /* hover colour */
+}
+
+/* ── Desktop icon sizes (Figma desktop specs) ── */
+.social-icon--x {
+  width: 22px;
+  height: 20px;
+}
+
+.social-icon--tiktok {
+  width: 20px;
+  height: 20px;
+}
+
+.social-icon--instagram {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Mobile icon sizes (Figma mobile specs) ── */
+.social-media--mobile .social-icon--x {
+  width: 20px;
+  height: 20px;
+}
+
+.social-media--mobile .social-icon--tiktok {
+  width: 20px;
+  height: 20px;
+}
+
+.social-media--mobile .social-icon--instagram {
+  width: 20px;
+  height: 20px;
+}

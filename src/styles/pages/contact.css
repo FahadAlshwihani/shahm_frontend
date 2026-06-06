@@ -1,109 +1,219 @@
-:root {
-  --font-ar-heading: "HT Sonata", serif;
-  --font-en-heading: "Ciclo Display", sans-serif;
-  --font-content: "Noto Kufi Arabic", sans-serif;
-
-  --color-primary: #33383C;
-  --color-secondary: #7b8487;
-  --color-border: #e5e5e5;
-  --color-bg-light: #FDFDFD;
-  --color-button-dark: #222;
-  --color-button-disabled: #eee;
-}
-
-/* Page Container */
+/* ============================================================
+   CONTACT PAGE — scoped CSS variables
+   All tokens prefixed with --ct- to avoid global conflicts
+   ============================================================ */
 .contact-page {
-  max-width: 1354px;
-  margin: 0 auto;
+  --ct-font-display-ar: "HT Sonata", serif;
+  --ct-font-display-en: "Ciclo Display", serif;
+  --ct-font-body:       "Noto Kufi Arabic", sans-serif;
+
+  --ct-primary:         #343C3C;
+  --ct-secondary:       #7C8D8D;
+  --ct-border:          #E9ECEC;
+  --ct-bg-light:        #FDFDFD;
+  --ct-button-dark:     #4C5757;
+  --ct-button-disabled: #F1F1F1;
 }
 
-/* Header Section */
+/* ── Page Container ── */
+.contact-page {
+  max-width: 1260px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-top: 60px;
+}
+
+/* ── Header Section ── */
 .contact-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 0;
 }
 
+/* Title — AR default */
 .contact-header h1 {
-  font-family: var(--font-ar-heading);
+  font-family: var(--ct-font-display-ar);
   font-size: 40px;
-  line-height: 52px;
+  line-height: 55px;
   font-weight: 400;
-  color: var(--color-primary);
-  margin-bottom: 16px;
+  color: var(--ct-primary);
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1260px;
+  text-align: center;
+  letter-spacing: 0%;
 }
 
+/* Title — EN */
+[dir="ltr"] .contact-header h1 {
+  font-family: var(--ct-font-display-en);
+}
+
+/* Description — 16px below title */
 .contact-header p {
-  font-family: var(--font-content);
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--color-secondary);
-  max-width: 700px;
-  margin: 0 auto 30px;
+  font-family: var(--ct-font-body);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 22px;
+  color: var(--ct-secondary);
+  width: 100%;
+  max-width: 1260px;
+  margin: 16px auto 0;
+  text-align: center;
+  letter-spacing: 0%;
 }
 
-/* Full Width Divider Below Header */
+/* ── Header divider — full viewport width, 60px below description ── */
 .contact-header::after {
   content: '';
   display: block;
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-border);
-  margin-top: 30px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  height: 0;
+  border: none;
+  border-top: 1.5px solid #E9ECEC;
+  margin-top: 60px;
 }
 
-/* Full Width Divider */
+/* ── Standalone divider — full viewport width, direction-safe ── */
 .contact-divider {
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-border);
-  margin: 30px 0 50px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  height: 0;
+  border: none;
+  border-top: 1.5px solid #E9ECEC;
+  margin-top: 60px;
+  margin-bottom: 0;
 }
 
-/* Remove - no longer needed */
-
-/* Grid Layout - 3 columns x 2 rows */
+/* ── Cards Grid — 60px below the header divider ── */
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  column-gap: 55px;
+  row-gap: 0;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  width: 100%;
+  max-width: 1260px;
 }
 
-/* Card Styling */
+/* Row divider — within grid width only, 40px above and below */
+.contact-row-divider {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 0;
+  border: none;
+  border-top: 1.5px solid #E9ECEC;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 0;
+  box-sizing: border-box;
+  position: static;
+  transform: none;
+}
+
+/* ── Card — flex column so buttons can align-self to inline-start ── */
 .contact-card {
-  padding: 32px;
-  border-radius: 8px;
+  width: 100%;
+  max-width: 380px;
+  min-height: 298px;
+  padding: 32px 0;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
-  min-height: 240px;
+  align-items: flex-start;
+  box-sizing: border-box;
 }
 
+/* text children stretch full width regardless of card's align-items */
+.contact-card h3,
+.contact-card-subtitle,
+.contact-card-description,
+.contact-card-note {
+  width: 100%;
+  align-self: stretch;
+}
+
+/* Title — 15px semibold #343C3C, 100% line-height */
 .contact-card h3 {
-  font-family: var(--font-content);
-  font-size: 16px;
+  font-family: var(--ct-font-body);
+  font-size: 15px;
   font-weight: 600;
-  color: var(--color-primary);
-  margin-bottom: 16px;
+  color: #343C3C;
+  margin: 0;
   line-height: 100%;
   letter-spacing: 0%;
   text-align: right;
+  width: 100%;
 }
 
-.contact-card p {
-  font-family: var(--font-content);
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--color-secondary);
-  margin-bottom: 20px;
-  text-align: right;
+[dir="ltr"] .contact-card h3 {
+  text-align: left;
 }
+
+/* Subtitle — 14px regular #343C3C, 28px line-height, 35px below title */
+.contact-card-subtitle {
+  font-family: var(--ct-font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: #343C3C;
+  line-height: 28px;
+  letter-spacing: 0%;
+  margin: 35px 0 0;
+  text-align: right;
+  width: 100%;
+}
+
+[dir="ltr"] .contact-card-subtitle {
+  text-align: left;
+}
+
+/* Description — 12px / 500 / #7C8D8D / 22px line-height / 35px below subtitle */
+.contact-card-description {
+  font-family: var(--ct-font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: #7C8D8D;
+  line-height: 22px;
+  letter-spacing: 0%;
+  margin: 35px 0 0;
+  text-align: right;
+  width: 100%;
+  max-width: 380px;
+  /* height driven by content — spec shows ~53px which is ~2-3 lines at 22px */
+}
+
+[dir="ltr"] .contact-card-description {
+  text-align: left;
+}/* Description — 12px / 500 / #7C8D8D / 22px line-height / 35px below subtitle */
+.contact-card-description {
+  font-family: var(--ct-font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: #7C8D8D;
+  line-height: 22px;
+  letter-spacing: 0%;
+  margin: 35px 0 0;
+  text-align: right;
+  width: 100%;
+  max-width: 380px;
+  /* height driven by content — spec shows ~53px which is ~2-3 lines at 22px */
+}
+
+[dir="ltr"] .contact-card-description {
+  text-align: left;
+}
+
+/* no generic p rule — all card text uses explicit classes:
+   .contact-card-subtitle   → subtitle text
+   .contact-card-description → description text
+   .contact-card-note        → note/disclaimer text */
 
 /* Contact Meta (Phone & Hours) */
 .contact-meta {
-  font-family: var(--font-content);
+  font-family: var(--ct-font-body);
   font-size: 14px;
-  color: var(--color-primary);
+  color: var(--ct-primary);
   margin-top: 8px;
   text-align: right;
   display: flex;
@@ -112,44 +222,132 @@
   direction: rtl;
 }
 
+[dir="ltr"] .contact-meta {
+  direction: ltr;
+  text-align: left;
+}
+
 .contact-meta-icon {
   font-size: 16px;
 }
 
-/* Buttons */
-.contact-card .btn {
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px;
-  cursor: pointer;
-  font-family: var(--font-content);
+/* ================================
+   Contact Buttons
+   Primary: filled pill — size driven by text content
+   Secondary: underline text link — no background
+================================ */
+
+/* Primary button — always last in card, 48px below whatever precedes it */
+.contact-btn--primary-last {
+  margin-top: 48px;
+  align-self: flex-start;
+}
+
+/* Primary button — width fits content, inline-start always */
+.contact-btn {
+  min-width: 120px;
+  width: fit-content;
+  height: 50px;
+  padding: 8px 24px;
+  gap: 8px;
+  border-radius: 7px;
+  font-family: var(--ct-font-body);
+  font-weight: 500;
   font-size: 14px;
-  font-weight: 600;
   line-height: 100%;
   letter-spacing: 0%;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  transition: background 0.25s ease, opacity 0.2s ease;
   text-align: center;
-  width: 157px;
-  height: 43;
-  gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  align-self: flex-start;
 }
 
-.contact-card .btn.active {
-  background: var(--color-button-dark);
-  color: #fff;
+[dir="ltr"] .contact-btn {
+  margin-left: 0;
 }
 
-.contact-card .btn.active:hover {
-  background: #000;
+[dir="rtl"] .contact-btn {
+  margin-right: 0;
 }
 
-.contact-card .btn.disabled {
-  background: var(--color-button-disabled);
-  color: #999;
+.contact-btn--active {
+  background: #4C5757;
+  color: #FDFDFD;
+  border: none;
+}
+
+.contact-btn--active:hover {
+  background: #3a4343;
+}
+
+.contact-btn--active:active {
+  background: #2e3535;
+  opacity: 0.92;
+}
+
+.contact-btn--disabled {
+  background: var(--ct-button-disabled);
+  color: var(--ct-secondary);
+  border: 1px solid #D5D5D5;
   cursor: not-allowed;
 }
 
-/* FAQ Preview Card */
+/* Secondary button — underline link, always inline-start */
+.contact-btn--secondary {
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  font-family: var(--ct-font-body);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  color: #343C3C;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: auto;
+  text-decoration-thickness: auto;
+  text-decoration-skip-ink: auto;
+  cursor: pointer;
+  display: block;
+  width: fit-content;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 35px;
+  margin-bottom: 0;
+  text-align: start;
+}
+
+[dir="ltr"] .contact-btn--secondary {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .contact-btn--secondary {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.contact-btn--secondary:hover {
+  color: var(--ct-secondary);
+}
+
+.contact-btn--secondary:hover {
+  color: var(--ct-secondary);
+}
+
+/* ================================
+   FAQ Preview Card
+================================ */
+
 .contact-card.faq-preview {
   position: relative;
   display: flex;
@@ -160,7 +358,6 @@
   margin-bottom: 20px;
 }
 
-/* Use FAQ styles for preview */
 .contact-card.faq-preview .faq-list {
   width: 100%;
   display: flex;
@@ -178,23 +375,29 @@
   width: 100%;
   background: none;
   border: none;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--ct-border);
   padding-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  font-family: var(--font-ar-heading);
+  font-family: var(--ct-font-display-ar);
   font-size: 14px;
   font-weight: 400;
-  color: var(--color-primary);
+  color: var(--ct-primary);
   text-align: right;
   transition: color 0.3s ease;
   direction: rtl;
 }
 
+[dir="ltr"] .contact-card.faq-preview .faq-question {
+  font-family: var(--ct-font-display-en);
+  direction: ltr;
+  text-align: left;
+}
+
 .contact-card.faq-preview .faq-question:hover {
-  color: var(--color-secondary);
+  color: var(--ct-secondary);
 }
 
 .contact-card.faq-preview .faq-q-text {
@@ -204,15 +407,27 @@
   line-height: 1.6;
 }
 
-.contact-card.faq-preview .faq-arrow {
+/* Desktop arrow — shown on desktop, hidden on mobile */
+.faq-arrow--desktop {
   font-size: 14px;
   color: var(--color-secondary);
   transition: transform 0.25s ease;
   flex-shrink: 0;
+  display: inline-block;
 }
 
-.contact-card.faq-preview .faq-item.open .faq-arrow {
+.contact-card.faq-preview .faq-item.open .faq-arrow--desktop {
   transform: rotate(180deg);
+}
+
+/* Mobile +/- toggle — hidden on desktop, shown on mobile */
+.faq-arrow--mobile {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-secondary);
+  flex-shrink: 0;
+  line-height: 1;
+  display: none;
 }
 
 .contact-card.faq-preview .faq-answer-container {
@@ -244,48 +459,94 @@
   transform: translateY(0);
 }
 
-.faq-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-content);
-  font-size: 14px;
+/* ================================
+   FAQ Link — inline text style
+================================ */
+
+.faq-link-text {
+  font-family: var(--ct-font-body);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: right;
   color: var(--color-primary);
-  text-decoration: none;
   margin-top: auto;
-  transition: color 0.3s ease;
-  direction: rtl;
+  margin-bottom: 0;
 }
 
-.faq-link:hover {
+.faq-link-plain {
+  font-family: var(--ct-font-body);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: right;
+  color: var(--color-primary);
+}
+
+.faq-link-here {
+  font-family: var(--ct-font-body);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: right;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: auto;
+  text-decoration-thickness: auto;
+  text-decoration-skip-ink: auto;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.faq-link-here:hover {
   color: var(--color-secondary);
 }
 
-.faq-link-arrow {
+.faq-link-dot {
+  font-family: var(--ct-font-body);
+  font-weight: 500;
   font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: right;
+  color: var(--color-primary);
 }
 
-/* Contact Form */
+/* ================================
+   Contact Form
+================================ */
+
 .contact-form-card {
   grid-column: span 1;
 }
 
 .contact-form-card h3 {
-  font-family: var(--font-content);
+  font-family: var(--ct-font-body);
   font-size: 20px;
   font-weight: 400;
-  color: var(--color-primary);
+  color: var(--ct-primary);
   margin-bottom: 12px;
   text-align: right;
 }
 
+[dir="ltr"] .contact-form-card h3 {
+  text-align: left;
+}
+
 .contact-form-card p {
-  font-family: var(--font-content);
+  font-family: var(--ct-font-body);
   font-size: 14px;
   line-height: 1.8;
-  color: var(--color-secondary);
+  color: var(--ct-secondary);
   margin-bottom: 20px;
   text-align: right;
+}
+
+[dir="ltr"] .contact-form-card p {
+  text-align: left;
 }
 
 .contact-form-inputs {
@@ -294,53 +555,89 @@
   gap: 20px;
 }
 
-.contact-form-inputs input {
+/* Quick input wrapper — floating label container */
+.contact-quick-wrapper {
+  position: relative;
   width: 100%;
-  padding: 12px 0;
+  margin-bottom: 24px;
+}
+
+.contact-quick-wrapper .contact-quick-label {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  font-family: var(--ct-font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ct-secondary);
+  pointer-events: none;
+  transition: top 0.2s ease, font-size 0.2s ease;
+  white-space: nowrap;
+}
+
+[dir="rtl"] .contact-quick-wrapper .contact-quick-label {
+  left: auto;
+  right: 0;
+}
+
+/* Floated state */
+.contact-quick-wrapper.is-filled .contact-quick-label,
+.contact-quick-wrapper.is-focused .contact-quick-label {
+  top: -8px;
+  font-size: 10px;
+}
+
+.contact-quick-input {
+  width: 100%;
+  padding: 18px 0 8px 0;
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--color-border);
-  font-family: var(--font-content);
+  border-bottom: 1px solid var(--ct-border);
+  font-family: var(--ct-font-body);
   font-size: 14px;
-  color: var(--color-primary);
+  font-weight: 500;
+  color: var(--ct-primary);
   transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  direction: ltr;
+  text-align: left;
+}
+
+/* RTL page: wrapper and label flip right, input stays LTR */
+[dir="rtl"] .contact-quick-wrapper {
+  direction: rtl;
+}
+
+[dir="rtl"] .contact-quick-wrapper .contact-quick-input {
+  direction: ltr;
   text-align: right;
 }
 
-.contact-form-inputs input:focus {
+[dir="rtl"] .contact-quick-wrapper .contact-quick-label {
+  left: auto;
+  right: 0;
+  text-align: right;
+}
+
+.contact-quick-input:focus {
   outline: none;
-  border-bottom-color: var(--color-primary);
+  border-bottom-color: var(--ct-primary);
 }
 
-.contact-form-inputs input::placeholder {
-  color: var(--color-secondary);
+.contact-quick-input::placeholder {
+  color: transparent;
 }
 
-.contact-form-inputs button {
-  background: var(--color-button-dark);
-  color: #fff;
-  font-family: var(--font-content);
-  cursor: pointer;
-  margin-top: 10px;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 100%;
-  letter-spacing: 0%;
-  transition: all 0.3s ease;
-  text-align: center;
-  width: 157px;
-  height: 43;
-  gap: 8px;
+/* Card note — below note text */
+.contact-card-note {
+  margin-top: 12px;
+  margin-bottom: 0;
 }
 
-.contact-form-inputs button:hover {
-  background: #000;
-}
+/* ================================
+   Two-in-One Card
+================================ */
 
-/* Two-in-One Card */
 .contact-card.two-in-one {
   display: flex;
   flex-direction: column;
@@ -353,67 +650,81 @@
 }
 
 .two-in-one-section h3 {
-  font-family: var(--font-content);
+  font-family: var(--ct-font-body);
   font-size: 18px;
   font-weight: 400;
-  color: var(--color-primary);
+  color: var(--ct-primary);
   margin-bottom: 12px;
   text-align: right;
 }
 
+[dir="ltr"] .two-in-one-section h3 {
+  text-align: left;
+}
+
 .two-in-one-section p {
-  font-family: var(--font-content);
+  font-family: var(--ct-font-body);
   font-size: 14px;
   line-height: 1.8;
-  color: var(--color-secondary);
+  color: var(--ct-secondary);
   margin-bottom: 16px;
   text-align: right;
 }
 
-
-/* RTL/LTR Support */
-[dir="ltr"] .contact-card h3,
-[dir="ltr"] .contact-card p,
-[dir="ltr"] .contact-meta,
-[dir="ltr"] .contact-form-card h3,
-[dir="ltr"] .contact-form-card p,
-[dir="ltr"] .contact-form-inputs input,
-[dir="ltr"] .two-in-one-section h3,
 [dir="ltr"] .two-in-one-section p {
   text-align: left;
-  direction: ltr;
 }
 
-[dir="ltr"] .contact-form-inputs input {
-  text-align: left;
-}
-
-[dir="ltr"] .contact-card.faq-preview .faq-question,
-[dir="ltr"] .contact-card.faq-preview .faq-q-text,
-[dir="ltr"] .contact-card.faq-preview .faq-answer {
-  text-align: left;
-  direction: ltr;
-}
-
+/* ── RTL/LTR — remaining overrides not already handled inline ── */
 [dir="ltr"] .contact-card.faq-preview .faq-q-text {
   padding-left: 0;
   padding-right: 20px;
+  text-align: left;
+  direction: ltr;
 }
 
 [dir="ltr"] .contact-card.faq-preview .faq-answer {
   padding: 12px 24px 0 0;
-}
-
-[dir="ltr"] .faq-link {
+  text-align: left;
   direction: ltr;
 }
 
-[dir="ltr"] .contact-header h1,
-[dir="ltr"] .contact-header p {
+[dir="ltr"] .faq-link-text {
+  text-align: left;
+  direction: ltr;
+}
+
+/* header always centered in both directions */
+.contact-header h1,
+.contact-header p {
   text-align: center;
 }
 
-/* Responsive Design */
+/* ── Notes ── */
+.contact-card-note {
+  font-family: var(--ct-font-body);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 22px;
+  text-align: right;
+  color: #6f7578;
+  margin-bottom: 16px;
+}
+
+.contact-card-note a {
+  font-family: var(--ct-font-body);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 22px;
+  text-decoration: underline;
+  color: #6f7578;
+  cursor: pointer;
+}
+
+/* ================================
+   Responsive Design
+================================ */
+
 @media (max-width: 1200px) {
   .contact-grid {
     gap: 25px;
@@ -427,11 +738,12 @@
 @media (max-width: 968px) {
   .contact-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 0;
   }
 
   .contact-card {
     min-height: auto;
+    max-width: 100%;
   }
 
   .contact-header h1 {
@@ -440,10 +752,26 @@
   }
 }
 
+/* ================================
+   Mobile — Single Column
+   Cards look like FAQ accordions
+================================ */
+
 @media (max-width: 640px) {
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 0;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .contact-card {
+    max-width: 100%;
+  }
+
+  .contact-btn--secondary {
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .contact-page {
@@ -459,31 +787,155 @@
     font-size: 14px;
   }
 
-  .contact-card {
-    padding: 24px;
-  }
-
   .contact-divider {
     margin: 25px 0 35px;
   }
-}
 
-.contact-card-note{
-font-family: "Noto Kufi Arabic", sans-serif;
-font-weight: 500;
-font-size: 12px;
-line-height: 22px;
-text-align: right;
-color:#6f7578;
-margin-bottom:16px;
-}
+  /* Row divider hidden on mobile (cards already separated) */
+  .contact-row-divider {
+    display: none;
+  }
 
-.contact-card-note a{
-font-family: "Noto Kufi Arabic", sans-serif;
-font-weight: 500;
-font-size: 12px;
-line-height: 22px;
-text-decoration: underline;
-color:#6f7578;
-cursor:pointer;
+  /* Each card becomes an accordion item on mobile */
+  .contact-card {
+    padding: 0;
+    border-radius: 0;
+    min-height: unset;
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  /* Card accordion toggle — uses h3 as trigger */
+  .contact-card h3 {
+    cursor: pointer;
+    padding: 18px 0;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #7C8D8D;
+    transition: color 0.2s ease;
+  }
+
+  .contact-card h3:hover {
+    color: #343C3C;
+  }
+
+  .contact-card.mobile-open h3 {
+    color: #343C3C;
+  }
+
+  /* Plus/Minus icon after h3 on mobile */
+  .contact-card h3::after {
+    content: "+";
+    font-size: 20px;
+    font-weight: 300;
+    color: inherit;
+    flex-shrink: 0;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  /* Open state: show minus */
+  .contact-card.mobile-open h3::after {
+    content: "−";
+  }
+
+  /* Collapsed content wrapper on mobile */
+  .contact-card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0;
+  }
+
+  .contact-card.mobile-open .contact-card-body {
+    max-height: 1000px;
+    padding-bottom: 28px;
+  }
+
+  /* FAQ card on mobile: keep FAQ accordion inside card body */
+  .contact-card.faq-preview {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* On mobile FAQ items use +/- */
+  .faq-arrow--desktop {
+    display: none;
+  }
+
+  .faq-arrow--mobile {
+    display: inline-block;
+  }
+
+  /* Two-in-one card on mobile */
+  .contact-card.two-in-one {
+    gap: 0;
+  }
+
+  .two-in-one-section {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .two-in-one-section h3 {
+    cursor: pointer;
+    padding: 18px 0;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #7C8D8D;
+    transition: color 0.2s ease;
+  }
+
+  .two-in-one-section h3:hover {
+    color: #343C3C;
+  }
+
+  .two-in-one-section.mobile-open h3 {
+    color: #343C3C;
+  }
+
+  .two-in-one-section h3::after {
+    content: "+";
+    font-size: 20px;
+    font-weight: 300;
+    color: inherit;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .two-in-one-section.mobile-open h3::after {
+    content: "−";
+  }
+
+  .two-in-one-section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0;
+  }
+
+  .two-in-one-section.mobile-open .two-in-one-section-body {
+    max-height: 600px;
+    padding-bottom: 20px;
+  }
+
+  /* Buttons fit content on mobile, never full width */
+  .contact-btn {
+    width: fit-content;
+    min-width: 120px;
+    align-self: flex-start;
+  }
+
+  /* Only the quick input takes full width */
+  .contact-quick-input {
+    width: 100%;
+  }
 }

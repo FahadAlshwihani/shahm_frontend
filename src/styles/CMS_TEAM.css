@@ -1422,3 +1422,145 @@
     padding: 10px 12px;
   }
 }
+
+.dashboard-files-dropdown {
+  position: relative;
+}
+
+.dashboard-files-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  font-size: 13px;
+  font-weight: 600;
+  user-select: none;
+}
+
+.dashboard-files-menu {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  min-width: 220px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  padding: 8px;
+  z-index: 50;
+}
+
+.dashboard-files-item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #111827;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.dashboard-files-item:hover {
+  background: #f9fafb;
+}
+
+/* ================================================================
+   CAREERS CMS ADDITIONS
+   Append these to the bottom of CMS_TEAM.css
+   Replaces dashboard-careers-btn-primary hover bug with new
+   dashboard-careers-btn-solid (clean, no pseudo-overlay trick)
+   and adds dashboard-careers-btn-ghost for cancel/secondary.
+   Also adds fixed-direction table cell classes.
+================================================================ */
+
+/* ─── Solid primary button (create / save) ───────────────────
+   No ::before overlay — text always visible on hover           */
+.dashboard-careers-btn-solid {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: 10px;
+  border: 1.5px solid #353C3C;
+  background: #353C3C;
+  color: #ffffff;
+  font-family: var(--font-content, inherit);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.22s ease, border-color 0.22s ease;
+  white-space: nowrap;
+  box-shadow: none;
+}
+.dashboard-careers-btn-solid:hover:not(:disabled) {
+  background: #2a3030;
+  border-color: #2a3030;
+  color: #ffffff;
+}
+.dashboard-careers-btn-solid:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─── Ghost / cancel button ──────────────────────────────────  */
+.dashboard-careers-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: 10px;
+  border: 1.5px solid #E9ECEC;
+  background: transparent;
+  color: #7C8D8D;
+  font-family: var(--font-content, inherit);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+  white-space: nowrap;
+  box-shadow: none;
+}
+.dashboard-careers-btn-ghost:hover {
+  border-color: #353C3C;
+  color: #353C3C;
+  background: #F7F8F9;
+}
+
+/* ─── Spinner ────────────────────────────────────────────────  */
+.dashboard-careers-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(53, 60, 60, 0.12);
+  border-top-color: #353C3C;
+  border-radius: 50%;
+  animation: careers-spin 0.8s linear infinite;
+  margin: 40px auto;
+  display: block;
+}
+@keyframes careers-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Table: fixed-direction columns ─────────────────────────
+   Arabic column always RTL, English column always LTR,
+   regardless of page language direction.                        */
+
+/* ID column — narrow, centered */
+.dashboard-careers-th--id,
+.dashboard-careers-td--id {
+  width: 60px;
+  font-weight: 700;
+  color: var(--color-secondary, #7C8D8D);
+  text-align: center;
+}
+
+
+/* Actions column — always inline row */
+.dashboard-careers-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}

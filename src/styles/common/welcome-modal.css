@@ -1,0 +1,265 @@
+/* ============================================================
+   WELCOME / LANGUAGE SELECTOR MODAL
+   All classes prefixed with .wlc-
+   Scoped entirely — no global selectors.
+   ============================================================ */
+
+.wlc-modal {
+  /* Font tokens */
+  --wlc-font-display-ar: "HT Sonata", serif;
+  --wlc-font-display-en: "Ciclo Display", serif;
+  --wlc-font-body:       "Noto Kufi Arabic", sans-serif;
+
+  /* Palette */
+  --wlc-primary:   #343C3C;
+  --wlc-muted:     #7D8D8D;
+  --wlc-border:    #E9ECEC;
+  --wlc-light:     #ffffff;
+  --wlc-btn-bg:    #4C5757;
+  --wlc-btn-text:  #FDFDFD;
+
+  /* Easing */
+  --wlc-ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Backdrop — blur + dark overlay, blocks all interaction ── */
+.wlc-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(28, 33, 33, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* no pointer-events block needed — backdrop itself catches clicks */
+}
+
+/* ── Modal card ── */
+.wlc-modal {
+  position: relative;
+  width: 662px;
+  max-width: calc(100vw - 32px);
+  max-height: 90dvh;
+  background: var(--wlc-light);
+  border: 1px solid var(--wlc-border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* tighter side padding matching the screenshot */
+  padding: 36px 40px 36px;
+  box-sizing: border-box;
+  animation: wlc-enter 0.35s var(--wlc-ease-out) both;
+}
+
+@keyframes wlc-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Logo ── */
+.wlc-logo {
+  width: 340px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Top divider — 28px below logo ── */
+.wlc-divider {
+  width: 100%;
+  height: 0;
+  border: none;
+  border-top: 1px solid var(--wlc-border);
+  border-radius: 7px;
+  margin: 28px 0 0;
+  flex-shrink: 0;
+}
+
+/* ── Content grid — EN left | AR right, always fixed regardless of page dir ── */
+.wlc-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  width: 100%;
+  margin-top: 20px;
+  gap: 0;
+  direction: ltr;
+}
+
+/* no vertical separator — removed */
+.wlc-content-grid::before {
+  display: none;
+}
+
+/* EN column — always left, text left-aligned */
+.wlc-col-en {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 12px;
+  direction: ltr;
+}
+
+/* AR column — always right, text right-aligned */
+.wlc-col-ar {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-left: 12px;
+}
+
+/* Welcome title — AR */
+.wlc-title-ar {
+  font-family: var(--wlc-font-display-ar);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: 0%;
+  color: var(--wlc-primary);
+  text-align: right;
+  margin: 0;
+}
+
+/* Welcome title — EN */
+.wlc-title-en {
+  font-family: var(--wlc-font-display-en);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: 0%;
+  color: var(--wlc-primary);
+  text-align: left;
+  margin: 0;
+}
+
+/* Subtitle — AR */
+.wlc-subtitle-ar {
+  font-family: var(--wlc-font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0%;
+  color: var(--wlc-muted);
+  text-align: right;
+  margin: 6px 0 0;
+}
+
+/* Subtitle — EN */
+.wlc-subtitle-en {
+  font-family: var(--wlc-font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0%;
+  color: var(--wlc-muted);
+  text-align: left;
+  margin: 6px 0 0;
+}
+
+/* ── Middle divider — 20px below text grid ── */
+.wlc-divider-mid {
+  width: 100%;
+  height: 0;
+  border: none;
+  border-top: 1px solid var(--wlc-border);
+  border-radius: 7px;
+  margin-top: 20px;
+  flex-shrink: 0;
+}
+
+/* ── Language buttons — stacked, full width, 20px below mid divider ── */
+.wlc-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Base button — matches Services/Navbar exactly */
+.wlc-btn {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  gap: 8px;
+  background: var(--wlc-btn-bg);
+  color: var(--wlc-btn-text);
+  border: none;
+  border-radius: 7px;
+  font-family: var(--wlc-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: 0%;
+  cursor: pointer;
+  transition: background 0.25s ease, opacity 0.2s ease;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.wlc-btn:hover {
+  background: #3a4343;
+}
+
+.wlc-btn:active {
+  background: #2e3535;
+  opacity: 0.92;
+}
+
+.wlc-btn:focus-visible {
+  outline: 2px solid var(--wlc-btn-bg);
+  outline-offset: 3px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .wlc-modal {
+    padding: 36px 24px 36px;
+    border-radius: 10px;
+  }
+
+  .wlc-logo {
+    width: 280px;
+  }
+
+  .wlc-content-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* hide the vertical separator on mobile */
+  .wlc-content-grid::before {
+    display: none;
+  }
+
+  .wlc-col-en {
+    grid-column: 1;
+    align-items: flex-start;
+    padding-right: 0;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--wlc-border);
+  }
+
+  .wlc-col-ar {
+    grid-column: 2;
+    align-items: flex-end;
+    padding-left: 0;
+  }
+}

@@ -23,13 +23,17 @@ export const getPublicTeam = () => api.get("public/team/");
 // ================================
 // BLOG
 // ================================
-export const getPublicBlog = (type = null) =>
-  type
-    ? api.get(`blog/?type=${type}`)
-    : api.get("blog/");
+export const getPublicPosts = (params = {}) =>
+  api.get("blog/posts/", { params });
 
-export const getPublicBlogPost = (slug) =>
-  api.get(`blog/${slug}/`);
+export const getPublicPostDetails = (slug) =>
+  api.get(`blog/posts/${slug}/`);
+
+export const getPublicCategories = () =>
+  api.get("blog/categories/");
+
+export const getPublicTags = () =>
+  api.get("blog/tags/");
 
 export const getPublicBlogSettings = () =>
   api.get("blog/settings/");
@@ -71,7 +75,7 @@ export const getPublicSettings = () => api.get("public/settings/");
 // Public Search
 // ================================
 export const searchPublic = (q, lang) =>
-  api.get("/cms/public/search/", {
+  api.get("public/search/", {
     params: { q, lang },
   });
 

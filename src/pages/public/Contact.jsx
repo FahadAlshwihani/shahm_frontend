@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { getPublicSettings } from "../../api/publicApi";
 import "../../styles/pages/contact.css";
-import ServiceRequestModal from "./Modals/ServiceAdvisoryAbout";
-import AppointmentBookingModal from "./Modals/AppointmentBookingModal";
+import DynamicPublicForm from "../../components/forms/DynamicPublicForm";
+import InfoModal from "../../components/forms/InfoModal";
 
 export default function Contact() {
 
@@ -38,12 +38,17 @@ export default function Contact() {
   ========================== */
 
   const [settings, setSettings] = useState(null);
-
   const [form, setForm] = useState({ phone: "" });
-
   const [openIndex, setOpenIndex] = useState(null);
   const [serviceModalOpen, setServiceModalOpen] = useState(false);
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
+  const [activeFormSlug, setActiveFormSlug] = useState(null);
+
+  /* Mobile accordion open states per card order */
+  const [mobileOpenCard, setMobileOpenCard] = useState({});
+  /* Mobile accordion for two-in-one sections */
+  const [mobileTwoInOneOpen, setMobileTwoInOneOpen] = useState({});
+  const [activeInfoModalSlug, setActiveInfoModalSlug] = useState(null);
 
 
   /* =========================
@@ -70,7 +75,6 @@ export default function Contact() {
 
   /* =========================
      Submit Contact Form
-     ارسال نموذج التواصل
   ========================== */
 
   const handleSubmit = async (e) => {
@@ -78,32 +82,16 @@ export default function Contact() {
     e.preventDefault();
 
     if (!form.phone) {
-      toast.error(
-        isEn
-          ? "Please enter phone number"
-          : "يرجى إدخال رقم الجوال"
-      );
+      toast.error(isEn ? "Please enter phone number" : "يرجى إدخال رقم الجوال");
       return;
     }
 
     try {
-
       await submitContact(form);
-
-      toast.success(
-        isEn
-          ? "Sent successfully"
-          : "تم الإرسال بنجاح"
-      );
-
+      toast.success(isEn ? "Sent successfully" : "تم الإرسال بنجاح");
       setForm({ phone: "" });
-
     } catch (err) {
-      toast.error(
-        isEn
-          ? "Submission failed"
-          : "فشل الإرسال"
-      );
+      toast.error(isEn ? "Submission failed" : "فشل الإرسال");
     }
 
   };
@@ -111,66 +99,47 @@ export default function Contact() {
 
   /* =========================
      Helpers
-     أدوات مساعدة
   ========================== */
 
   const getCards = (order) =>
     cards.filter((c) => Number(c.order) === order);
 
+  const toggleMobileCard = (order) =>
+    setMobileOpenCard((prev) => ({ ...prev, [order]: !prev[order] }));
 
-  /* =========================
-     Button Actions
-     أزرار التفاعل
-  ========================== */
-
-  const handleButtonAction = (order, index = 0) => {
-
-    switch (order) {
-
-      /* Disabled button */
-      case 2:
-        return;
-
-      /* WhatsApp button */
-      case 3:
-
-        if (settings?.whatsapp_number) {
-          window.open(
-            `https://wa.me/${settings.whatsapp_number}`,
-            "_blank"
-          );
-        }
-
-        break;
-
-      /* Two in One card */
-      case 5:
-
-        if (index === 0) {
-          setAppointmentModalOpen(true);
-        } else {
-          setServiceModalOpen(true);
-        }
-
-        break;
-
-
-      default:
-        break;
-    }
-  };
+  const toggleMobileTwoInOne = (idx) =>
+    setMobileTwoInOneOpen((prev) => ({ ...prev, [idx]: !prev[idx] }));
 
 
   /* =========================
      Reusable Note Component
-     مكون الملاحظة أسفل النص
   ========================== */
 
   const CardNote = ({ children }) => (
-    <p className="contact-card-note">
-      {children}
-    </p>
+    <p className="contact-card-note">{children}</p>
   );
+
+
+  const handleAction = (
+    type,
+    url,
+    formSlug,
+    infoModalSlug,
+  ) => {
+    if (type === "url" && url) {
+      window.open(url, "_blank");
+      return;
+    }
+
+    if (type === "form_modal" && formSlug) {
+      setActiveFormSlug(formSlug);
+      return;
+    }
+
+    if (type === "info_modal" && infoModalSlug) {
+      setActiveInfoModalSlug(infoModalSlug);
+    }
+  };
 
 
   /* =========================
@@ -180,390 +149,244 @@ export default function Contact() {
   return (
     <div className="contact-page" dir={isEn ? "ltr" : "rtl"}>
 
-      {/* =========================
-          Header Section
-      ========================== */}
-
+      {/* Header */}
       {(title_ar || title_en) && (
-
         <div className="contact-header">
-
-          <h1>
-            {isEn ? title_en : title_ar}
-          </h1>
-
+          <h1>{isEn ? title_en : title_ar}</h1>
           {(description_ar || description_en) && (
-            <p>
-              {isEn
-                ? description_en
-                : description_ar}
-            </p>
+            <p>{isEn ? description_en : description_ar}</p>
           )}
-
         </div>
-
       )}
 
 
-      {/* =========================
-          Cards Grid
-      ========================== */}
-
+      {/* Cards Grid */}
       <div className="contact-grid">
 
+        {
+          cards.map((card, cardIndex) => {
 
-        {/* =========================
-            CARD 1
-            Contact Info
-        ========================== */}
+            const title = isEn
+              ? card.title_en
+              : card.title_ar;
 
-        {getCards(1).map((card) => (
+            const subtitle = isEn
+              ? card.subtitle_en
+              : card.subtitle_ar;
 
-          <div className="contact-card" key={card.id}>
+            const description = isEn
+              ? card.description_en
+              : card.description_ar;
 
-            <h3>
-              {isEn ? card.title_en : card.title_ar}
-            </h3>
+            return (
+              <React.Fragment key={card.id}>
 
-            <p>
-              {isEn
-                ? card.description_en
-                : card.description_ar}
-            </p>
-
-            {card.description2_ar && (
-              <p>
-                {isEn
-                  ? card.description2_en
-                  : card.description2_ar}
-              </p>
-            )}
-
-            <CardNote>
-              {isEn
-                ? "WhatsApp communication is preferred to ensure faster response and higher service quality."
-                : "يُفضَّل اختيار التواصل عبر تطبيق واتساب لضمان سرعة المتابعة ودقة التواصل وجودة أعلى في تقديم الخدمة."}
-            </CardNote>
-
-          </div>
-
-        ))}
-
-
-
-        {/* =========================
-            CARD 2
-            Ask Question (Disabled)
-        ========================== */}
-
-        {getCards(2).map((card) => (
-
-          <div className="contact-card" key={card.id}>
-
-            <h3>
-              {isEn ? card.title_en : card.title_ar}
-            </h3>
-
-            <p>
-              {isEn
-                ? card.description_en
-                : card.description_ar}
-            </p>
-
-            <CardNote>
-              {isEn
-                ? <>By clicking below you confirm reading the <a href="/privacy">Privacy Policy</a>.</>
-                : <>عبر النقر أدناه، تؤكد أنك قد اطّلعت على <a href="/privacy">بيان الخصوصية</a>.</>}
-            </CardNote>
-
-            <button className="btn disabled" disabled>
-              {isEn
-                ? card.button_label_en
-                : card.button_label_ar}
-            </button>
-
-          </div>
-
-        ))}
-
-
-
-        {/* =========================
-            CARD 3
-            WhatsApp Chat
-        ========================== */}
-
-        {getCards(3).map((card) => (
-
-          <div className="contact-card" key={card.id}>
-
-            <h3>
-              {isEn ? card.title_en : card.title_ar}
-            </h3>
-
-            <p>
-              {isEn
-                ? card.description_en
-                : card.description_ar}
-            </p>
-
-            <CardNote>
-              {isEn
-                ? <>By clicking below you confirm reading the <a href="/privacy">Privacy Policy</a>.</>
-                : <>عبر النقر أدناه، تؤكد أنك قد اطّلعت على <a href="/privacy">بيان الخصوصية</a>.</>}
-            </CardNote>
-
-            <button
-              className={`btn ${card.is_active ? "active" : "disabled"}`}
-              disabled={!card.is_active}
-              onClick={() => handleButtonAction(3)}
-            >
-              {isEn
-                ? card.button_label_en
-                : card.button_label_ar}
-            </button>
-
-          </div>
-
-        ))}
-
-
-
-        {/* =========================
-            CARD 4
-            Contact Form
-        ========================== */}
-
-        {getCards(4).map((card) => (
-
-          <div
-            className="contact-card contact-form-card"
-            key={card.id}
-          >
-
-            <h3>
-              {isEn ? card.title_en : card.title_ar}
-            </h3>
-
-            <p>
-              {isEn
-                ? card.description_en
-                : card.description_ar}
-            </p>
-
-            <CardNote>
-              {isEn
-                ? "Please fill the field below:"
-                : "يرجى ملء الحقل أدناه:"}
-            </CardNote>
-
-            <form
-              className="contact-form-inputs"
-              onSubmit={handleSubmit}
-            >
-
-              <input
-                type="tel"
-                placeholder={
-                  isEn
-                    ? "Phone Number"
-                    : "رقم الجوال"
-                }
-                value={form.phone}
-                onChange={(e) =>
-                  setForm({
-                    phone: e.target.value
-                  })
-                }
-              />
-
-              <button type="submit">
-                {isEn
-                  ? "Contact Me"
-                  : "تواصل معي"}
-              </button>
-
-            </form>
-
-          </div>
-
-        ))}
-
-
-
-        {/* =========================
-            CARD 5
-            Two in One
-        ========================== */}
-
-        {getCards(5).length === 2 && (
-
-          <div className="contact-card two-in-one">
-
-            {getCards(5).map((card, i) => (
-
-              <div
-                key={card.id}
-                className="two-in-one-section"
-              >
-
-                <h3>
-                  {isEn
-                    ? card.title_en
-                    : card.title_ar}
-                </h3>
-
-                <p>
-                  {isEn
-                    ? card.description_en
-                    : card.description_ar}
-                </p>
-
-                <CardNote>
-
-                  {i === 0 ? (
-
-                    isEn
-                      ? <>By clicking below you confirm reading the <a href="/appointment-terms">Appointment Terms</a>.</>
-                      : <>عبر النقر أدناه، تؤكد أنك قد اطّلعت على <a href="/appointment-terms">شروط وأحكام حجز المواعيد</a>.</>
-
-                  ) : (
-
-                    isEn
-                      ? <>By clicking below you confirm reading the <a href="/legal-terms">Legal Service Terms</a>.</>
-                      : <>عبر النقر أدناه، تؤكد أنك قد اطّلعت على <a href="/legal-terms">شروط وأحكام تقديم الخدمات القانونية</a>.</>
-
-                  )}
-
-                </CardNote>
-
-                <button
-                  className={`btn ${card.is_active ? "active" : "disabled"}`}
-                  disabled={!card.is_active}
-                  onClick={() =>
-                    handleButtonAction(5, i)
-                  }
-                >
-                  {isEn
-                    ? card.button_label_en
-                    : card.button_label_ar}
-                </button>
-
-                {i === 0 && (
-                  <div className="two-in-one-divider" />
+                {/* Row divider — inject before every card that starts a new row (every 3rd, not the first) */}
+                {cardIndex > 0 && cardIndex % 3 === 0 && (
+                  <div className="contact-row-divider" />
                 )}
 
-              </div>
+                <div
+                  className={`contact-card${card.type === "faq_preview" ? " faq-preview" : ""}${mobileOpenCard[cardIndex] ? " mobile-open" : ""}`}
+                >
 
-            ))}
-
-          </div>
-
-        )}
-
-
-
-        {/* =========================
-            CARD 6
-            FAQ
-        ========================== */}
-
-        {getCards(6).map((card) => (
-
-          <div
-            className="contact-card faq-preview"
-            key={card.id}
-          >
-
-            <h3>
-              {isEn ? card.title_en : card.title_ar}
-            </h3>
-
-            <div className="faq-list">
-
-              {faqPreview.map((f, i) => {
-
-                const isOpen = openIndex === i;
-
-                return (
-
-                  <div
-                    key={f.id}
-                    className={`faq-item ${isOpen ? "open" : ""
-                      }`}
+                  <h3
+                    onClick={() => toggleMobileCard(cardIndex)}
                   >
+                    {title}
+                  </h3>
 
-                    <button
-                      className="faq-question"
-                      onClick={() =>
-                        setOpenIndex(
-                          isOpen ? null : i
-                        )
-                      }
-                    >
+                  <div className="contact-card-body">
 
-                      <span className="faq-q-text">
-                        {isEn
-                          ? f.faq.question_en
-                          : f.faq.question_ar}
-                      </span>
+                  {
+                    subtitle && (
+                      <p className="contact-card-subtitle">
+                        {subtitle}
+                      </p>
+                    )
+                  }
 
-                      <span className="faq-arrow">
-                        ▾
-                      </span>
+                  {/* Secondary button — optional, sits between subtitle and description */}
+                  {
+                    card.secondary_action_type !== "none" && (
+                      <button
+                        className="contact-btn contact-btn--secondary"
+                        onClick={() =>
+                          handleAction(
+                            card.secondary_action_type,
+                            card.secondary_url,
+                            card.secondary_form_slug,
+                            card.secondary_info_modal?.slug,
+                          )
+                        }
+                      >
+                        {
+                          isEn
+                            ? card.secondary_button_label_en
+                            : card.secondary_button_label_ar
+                        }
+                      </button>
+                    )
+                  }
 
-                    </button>
+                  {
+                    description && (
+                      <p className="contact-card-description">
+                        {description}
+                      </p>
+                    )
+                  }
 
-                    <div className="faq-answer-container">
-                      <div className="faq-answer">
-                        {isEn
-                          ? f.faq.answer_en
-                          : f.faq.answer_ar}
+                  {
+                    card.type === "faq_preview" && (
+                      <div className="faq-list">
+
+                        {
+                          faqPreview.map((f, i) => {
+
+                            const isOpen = openIndex === i;
+
+                            return (
+                              <div
+                                key={f.id}
+                                className={`faq-item ${isOpen ? "open" : ""}`}
+                              >
+
+                                <button
+                                  className="faq-question"
+                                  onClick={() =>
+                                    setOpenIndex(
+                                      isOpen
+                                        ? null
+                                        : i
+                                    )
+                                  }
+                                >
+
+                                  <span className="faq-q-text">
+                                    {
+                                      isEn
+                                        ? f.faq.question_en
+                                        : f.faq.question_ar
+                                    }
+                                  </span>
+
+                                  <span className="faq-toggle">
+                                    {isOpen ? "−" : "+"}
+                                  </span>
+
+                                </button>
+
+                                <div className="faq-answer-container">
+                                  <div className="faq-answer">
+                                    {
+                                      isEn
+                                        ? f.faq.answer_en
+                                        : f.faq.answer_ar
+                                    }
+                                  </div>
+                                </div>
+
+                              </div>
+                            );
+                          })
+                        }
+
                       </div>
-                    </div>
+                    )
+                  }
 
-                  </div>
+                  {/* Primary button — always last, 48px below whatever is above it */}
+                  {
+                    card.primary_action_type === "contact_request" ? (
+                      <form
+                        className="contact-form-inputs"
+                        onSubmit={handleSubmit}
+                        style={{ marginTop: "48px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0" }}
+                      >
+                        {/* Floating label phone input */}
+                        <div
+                          className={[
+                            "contact-quick-wrapper",
+                            form.phone ? "is-filled" : "",
+                          ].filter(Boolean).join(" ")}
+                        >
+                          <span className="contact-quick-label">
+                            {isEn ? "*Mobile Number" : "*رقم الجوال"}
+                          </span>
+                          <input
+                            type="tel"
+                            className="contact-quick-input"
+                            placeholder=" "
+                            value={form.phone}
+                            onFocus={(e) => e.currentTarget.closest(".contact-quick-wrapper")?.classList.add("is-focused")}
+                            onBlur={(e) => e.currentTarget.closest(".contact-quick-wrapper")?.classList.remove("is-focused")}
+                            onChange={(e) =>
+                              setForm({ ...form, phone: e.target.value })
+                            }
+                          />
+                        </div>
 
-                );
+                        <button
+                          type="submit"
+                          className="contact-btn contact-btn--active"
+                          style={{ marginTop: "24px" }}
+                        >
+                          {isEn
+                            ? card.primary_button_label_en
+                            : card.primary_button_label_ar}
+                        </button>
+                      </form>
+                    ) : (
+                      card.primary_action_type !== "none" && (
+                        <button
+                          className="contact-btn contact-btn--active contact-btn--primary-last"
+                          onClick={() =>
+                            handleAction(
+                              card.primary_action_type,
+                              card.primary_url,
+                              card.primary_form_slug,
+                              card.primary_info_modal?.slug,
+                            )
+                          }
+                        >
+                          {
+                            isEn
+                              ? card.primary_button_label_en
+                              : card.primary_button_label_ar
+                          }
+                        </button>
+                      )
+                    )
+                  }
 
-              })}
+              </div>{/* end contact-card-body */}
+                </div>
 
-            </div>
-
-            <a href="/faq" className="faq-link">
-              {isEn
-                ? "View all FAQs"
-                : "الاطلاع على جميع الأسئلة الشائعة"}
-              <span className="faq-link-arrow">←</span>
-            </a>
-
-          </div>
-
-        ))}
+              </React.Fragment>
+            );
+          })
+        }
 
       </div>
 
-
-      {/* Service Modal */}
-      <ServiceRequestModal
-        isOpen={serviceModalOpen}
-        onClose={() => setServiceModalOpen(false)}
-        openAppointmentModal={() => {
-          setServiceModalOpen(false);
-          setTimeout(() => setAppointmentModalOpen(true), 150);
-        }}
-      />
-
-      {/* Appointment Modal */}
-      <AppointmentBookingModal
-        isOpen={appointmentModalOpen}
-        onClose={() => setAppointmentModalOpen(false)}
-        openServiceModal={() => {
-          setAppointmentModalOpen(false);
-          setTimeout(() => setServiceModalOpen(true), 150);
-        }}
-      />
-
+      {
+        activeFormSlug && (
+          <DynamicPublicForm
+            slug={activeFormSlug}
+            isOpen={!!activeFormSlug}
+            onClose={() => setActiveFormSlug(null)}
+          />
+        )
+      }
+      {activeInfoModalSlug && (
+        <InfoModal
+          slug={activeInfoModalSlug}
+          isOpen={!!activeInfoModalSlug}
+          isEn={isEn}
+          onClose={() => setActiveInfoModalSlug(null)}
+        />
+      )}
 
     </div>
   );

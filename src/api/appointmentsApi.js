@@ -57,3 +57,10 @@ export const generateSlots = (data) =>
 
 export const updateBookingStatus = (id, data) =>
   api.patch(`/services/admin/appointments/bookings/${id}/status/`, data);
+
+
+export const getPublicAppointments =
+  () =>
+    api.get(
+      "/services/public/appointments/slots/"
+    );

@@ -4,7 +4,8 @@ import api from "./axiosClient";
 // ===============================
 // Public CMS (لو احتجناه لاحقًا)
 // ===============================
-export const getPage = (slug) => api.get(`public/page/${slug}/`);
+export const getPublicContent = (slug) =>
+  api.get(`public/content/${slug}/`);
 
 // ===============================
 // ADMIN: Heroes (Sections)
@@ -55,12 +56,31 @@ export const adminDeletePage = (id) =>
   api.delete(`cms/admin/pages/${id}/`);
 
 // ===============================
-// ADMIN: FAQ
+// ADMIN: FAQ Categories
 // ===============================
+export const adminFaqCategories = () =>
+  api.get("cms/admin/faq-categories/");
+
+export const adminCreateFaqCategory = (formData) =>
+  api.post("cms/admin/faq-categories/", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+export const adminEditFaqCategory = (id, formData) =>
+  api.patch(`cms/admin/faq-categories/${id}/`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+export const adminDeleteFaqCategory = (id) =>
+  api.delete(`cms/admin/faq-categories/${id}/`);
+
 export const adminFaq = () => api.get("cms/admin/faq/");
+
 export const adminCreateFaq = (data) =>
   api.post("cms/admin/faq/", data);
+
 export const adminEditFaq = (id, data) =>
   api.patch(`cms/admin/faq/${id}/`, data);
+
 export const adminDeleteFaq = (id) =>
   api.delete(`cms/admin/faq/${id}/`);

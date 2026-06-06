@@ -1,74 +1,110 @@
-// src/pages/dashboard/Services_Manage.jsx
+// src/pages/dashboard/services/Services_Manage.jsx
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import ServicesPageCMS from "./ServicesPageCMS";
+import MainServices from "./MainServices";
+import Services from "./Services";
+import ServiceSections from "./ServiceSections";
+import ServiceRequests from "./requests/ServiceRequests";
+import ImportServices from "./ImportServices";
+import "../../../styles/CMS_SERVICES.css";
+import "../../../styles/dashboard/content/dashboard-common.css";
 
-import ServiceAdvisoryCMS from "./ServiceAdvisoryCMS";
-import ServiceAdvisoryRequests from "./ServiceAdvisoryRequests";
-import ServiceAdvisoryServices from "./ServiceAdvisoryServices";
-import ServicePracticeAreas from "./ServicePracticeAreas";
-
-import "../../../styles/CMS_SERVICE_ADVISORY.css";
+/* ── Tab icons ── */
+const IconCMS = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M13 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1zM3 9h10M7 4v5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+  </svg>
+);
+const IconFolder = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M1.5 3.5A1.5 1.5 0 013 2h3l1.5 2H13A1.5 1.5 0 0114.5 5.5v6A1.5 1.5 0 0113 13H3a1.5 1.5 0 01-1.5-1.5V3.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" fill="none" />
+  </svg>
+);
+const IconServices = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <rect x="1.5" y="1.5" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3" />
+    <rect x="9.5" y="1.5" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3" />
+    <rect x="1.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3" />
+    <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3" />
+  </svg>
+);
+const IconSections = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M2 3h12M2 7h12M2 11h8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+  </svg>
+);
+const IconRequests = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+    <path d="M1.5 6l6.5 3.5L14.5 6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+  </svg>
+);
+const IconImport = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M2 12v1.5A1.5 1.5 0 003.5 15h9a1.5 1.5 0 001.5-1.5V12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+  </svg>
+);
+const IconGear = () => (
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+    <rect x="2" y="2" width="18" height="18" rx="4" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M2 8h18M8 8v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
 
 export default function Services_Manage() {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState("content");
+  const [activeTab, setActiveTab] = useState("cms");
 
   const tabs = [
-    { id: "content", label: t("cms.services.tabs.content"), icon: "📝" },
-    { id: "areas", label: t("cms.services.tabs.areas"), icon: "📂" },
-    { id: "services", label: t("cms.services.tabs.services"), icon: "⚙️" },
-    { id: "requests", label: t("cms.services.tabs.requests"), icon: "📩" },
+    { id: "cms",           label: t("cms.services.tabs.cms"),          icon: <IconCMS /> },
+    { id: "main-services", label: t("cms.services.tabs.mainServices"),  icon: <IconFolder /> },
+    { id: "services",      label: t("cms.services.tabs.services"),      icon: <IconServices /> },
+    { id: "sections",      label: t("cms.services.tabs.sections"),      icon: <IconSections /> },
+    { id: "requests",      label: t("cms.services.tabs.requests"),      icon: <IconRequests /> },
+    { id: "import",        label: t("cms.services.tabs.import"),        icon: <IconImport /> },
   ];
 
   return (
-    <div className="dashboard-services-container">
-      {/* ===== PAGE HEADER ===== */}
-      <div className="dashboard-services-header">
-        <div className="dashboard-services-header-content">
-          <h1 className="dashboard-services-title">
-            {t("cms.services.title")}
-          </h1>
-          <p className="dashboard-services-subtitle">
-            {t("cms.services.subtitle")}
-          </p>
+    <div className="cms-services-root">
+
+      {/* Page header */}
+      <div className="cms-services-page-header">
+        <div className="cms-services-page-header-left">
+          <div className="cms-services-page-header-icon"><IconGear /></div>
+          <div>
+            <h1 className="cms-services-page-title">{t("cms.services.title")}</h1>
+            <p className="cms-services-page-subtitle">{t("cms.services.subtitle")}</p>
+          </div>
         </div>
       </div>
 
-      {/* ===== TABS ===== */}
-      <div className="dashboard-services-tabs">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            className={`dashboard-services-tab ${
-              activeTab === tab.id ? "dashboard-services-tab-active" : ""
-            }`}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              {tab.id === "content" && (
-                <path d="M3 3H17V7H3V3ZM3 9H17V13H3V9ZM3 15H12V17H3V15Z" fill="currentColor"/>
-              )}
-              {tab.id === "areas" && (
-                <path d="M10 4H4C2.9 4 2 4.9 2 6V14C2 15.1 2.9 16 4 16H16C17.1 16 18 15.1 18 14V8C18 6.9 17.1 6 16 6H12L10 4Z" fill="currentColor"/>
-              )}
-              {tab.id === "services" && (
-                <path d="M12.5 6.9C12.99 6.9 13.39 7.29 13.39 7.79V14.79C13.39 15.29 12.99 15.69 12.5 15.69C12.01 15.69 11.61 15.29 11.61 14.79V7.79C11.61 7.29 12.01 6.9 12.5 6.9ZM7.5 10C7.99 10 8.39 10.4 8.39 10.89V14.79C8.39 15.29 7.99 15.69 7.5 15.69C7.01 15.69 6.61 15.29 6.61 14.79V10.89C6.61 10.4 7.01 10 7.5 10ZM17.5 4C17.99 4 18.39 4.4 18.39 4.89V14.79C18.39 15.29 17.99 15.69 17.5 15.69C17.01 15.69 16.61 15.29 16.61 14.79V4.89C16.61 4.4 17.01 4 17.5 4ZM2.5 13C2.99 13 3.39 13.4 3.39 13.89V14.79C3.39 15.29 2.99 15.69 2.5 15.69C2.01 15.69 1.61 15.29 1.61 14.79V13.89C1.61 13.4 2.01 13 2.5 13Z" fill="currentColor"/>
-              )}
-              {tab.id === "requests" && (
-                <path d="M4 4H16C17.1 4 18 4.9 18 6V14C18 15.1 17.1 16 16 16H4C2.9 16 2 15.1 2 14V6C2 4.9 2.9 4 4 4ZM4 8L10 11L16 8V6L10 9L4 6V8Z" fill="currentColor"/>
-              )}
-            </svg>
-            <span>{tab.label}</span>
-          </button>
-        ))}
+      {/* Tabs bar */}
+      <div className="cms-services-tabs-bar">
+        <div className="cms-services-tabs-inner">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`cms-services-tab-btn ${activeTab === tab.id ? "cms-services-tab-btn--active" : ""}`}
+              onClick={() => setActiveTab(tab.id)}
+              type="button"
+            >
+              <span className="cms-services-tab-icon">{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* ===== TAB CONTENT ===== */}
-      <div className="dashboard-services-tab-content">
-        {activeTab === "content" && <ServiceAdvisoryCMS />}
-        {activeTab === "areas" && <ServicePracticeAreas />}
-        {activeTab === "services" && <ServiceAdvisoryServices />}
-        {activeTab === "requests" && <ServiceAdvisoryRequests />}
+      {/* Tab content */}
+      <div className="cms-services-tab-content">
+        {activeTab === "cms"           && <ServicesPageCMS />}
+        {activeTab === "main-services" && <MainServices />}
+        {activeTab === "services"      && <Services />}
+        {activeTab === "sections"      && <ServiceSections />}
+        {activeTab === "requests"      && <ServiceRequests />}
+        {activeTab === "import"        && <ImportServices />}
       </div>
     </div>
   );

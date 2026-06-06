@@ -4,6 +4,8 @@ import api from "./axiosClient";
 // Public
 export const getPublicTeam = () => api.get("/team/public/");
 
+
+
 // Admin
 export const adminTeamList = () => api.get("/team/admin/members/");
 

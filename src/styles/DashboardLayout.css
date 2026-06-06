@@ -1,254 +1,201 @@
-/* ================= DASHBOARD LAYOUT ROOT ================= */
+/* ==========================================
+   DASHBOARD LAYOUT ROOT
+========================================== */
 .dashboard-layout-root {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background: var(--color-bg-light);
-  color: var(--color-primary);
-  font-family: var(--font-content);
+  background: var(--color-bg-light, #f4f5f7);
+  font-family: var(--font-content, inherit);
   position: relative;
   animation: fadeIn 0.3s ease;
 }
 
-/* ================= MAIN CONTENT AREA ================= */
+/* ==========================================
+   NAVBAR — full width, pinned to top
+========================================== */
 .dashboard-layout-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-width: 0; /* Prevents overflow issues */
-  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
+  width: 100%;
 }
 
+/* ==========================================
+   CONTENT — left padding = sidebar width + side inset + gap
+   Transitions smoothly when sidebar collapses
+========================================== */
 .dashboard-layout-content {
   flex: 1;
-  max-width: 1600px;
-  margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  animation: fadeInContent 0.4s ease;
+  padding: 28px 32px;
+  /* Reserve space for sidebar on the inline-start side */
+  padding-inline-start: calc(
+    var(--ds-width, 280px) +
+    var(--ds-inset-side, 20px) +
+    24px
+  );
+  transition: padding-inline-start var(--ds-transition, 0.32s cubic-bezier(0.4,0,0.2,1));
+  animation: fadeSlideUp 0.4s ease both;
 }
 
-/* ================= FOOTER ================= */
+/* Collapsed sidebar → shrink the reserved space */
+.layout-sidebar-collapsed .dashboard-layout-content {
+  padding-inline-start: calc(
+    var(--ds-collapsed-width, 62px) +
+    var(--ds-inset-side, 20px) +
+    24px
+  );
+}
+
+/* ==========================================
+   FOOTER — full width, pinned to bottom of flex column
+========================================== */
 .dashboard-layout-footer {
-  background: white;
-  border-top: 1px solid var(--color-border);
-  padding: 24px 32px;
-  margin-top: 40px;
-  animation: fadeIn 0.5s ease 0.2s backwards;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--ds-bg, rgba(10,10,12,0.82));
+  backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
+  border-top: var(--ds-border-spec, 1px solid rgba(233,236,236,0.1));
+  color: var(--ds-text, rgba(255,255,255,0.88));
+  box-shadow: none;
+  z-index: 100;
+  animation: fadeSlideUp 0.45s ease 0.15s both;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grain */
+.dashboard-layout-footer::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  z-index: 0;
 }
 
 .dashboard-layout-footer-content {
-  max-width: 1600px;
-  margin: 0 auto;
+  position: relative;
+  z-index: 1;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 10px 16px;
+  padding: 16px 32px;
+  /* Mirror the same inline-start offset as content */
+  padding-inline-start: calc(
+    var(--ds-width, 280px) +
+    var(--ds-inset-side, 20px) +
+    24px
+  );
+  transition: padding-inline-start var(--ds-transition, 0.32s cubic-bezier(0.4,0,0.2,1));
 }
 
+.layout-sidebar-collapsed .dashboard-layout-footer-content {
+  padding-inline-start: calc(
+    var(--ds-collapsed-width, 62px) +
+    var(--ds-inset-side, 20px) +
+    24px
+  );
+}
+
+/* Copyright */
 .dashboard-layout-footer-text {
-  font-family: var(--font-content);
-  font-size: 13px;
-  color: var(--color-secondary);
+  font-family: var(--font-content, inherit);
+  font-size: 12px;
+  color: var(--ds-text-muted, rgba(255,255,255,0.38));
   margin: 0;
+  white-space: nowrap;
 }
 
+/* Quick links */
 .dashboard-layout-footer-links {
   display: flex;
   align-items: center;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 6px 10px;
 }
 
 .dashboard-layout-footer-link {
-  font-family: var(--font-content);
-  font-size: 13px;
-  color: var(--color-secondary);
+  font-family: var(--font-content, inherit);
+  font-size: 12px;
+  color: var(--ds-text-muted, rgba(255,255,255,0.38));
   text-decoration: none;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
-
 .dashboard-layout-footer-link:hover {
-  color: var(--color-primary);
-  text-decoration: underline;
+  color: var(--ds-text, rgba(255,255,255,0.88));
 }
 
 .dashboard-layout-footer-divider {
-  color: var(--color-border);
-  font-size: 13px;
+  color: var(--ds-divider, rgba(255,255,255,0.15));
+  font-size: 11px;
+  user-select: none;
 }
 
-/* ================= MOBILE OVERLAY ================= */
-.dashboard-layout-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  z-index: 998;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.dashboard-layout-overlay-active {
-  display: block;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ================= ANIMATIONS ================= */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeInContent {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ================= RESPONSIVE DESIGN ================= */
-
-/* Large Desktop (1400px+) */
-@media (min-width: 1400px) {
-  .dashboard-layout-footer {
-    padding: 28px 40px;
-  }
-}
-
-/* Tablet and below (1024px) */
-@media (max-width: 1024px) {
-  .dashboard-layout-footer {
-    padding: 20px 24px;
-    margin-top: 32px;
-  }
-}
-
-/* Tablet (768px) */
+/* ==========================================
+   RESPONSIVE
+========================================== */
 @media (max-width: 768px) {
-  .dashboard-layout-root {
-    flex-direction: column;
-  }
-
-  .dashboard-layout-footer {
-    padding: 16px;
-    margin-top: 24px;
-  }
-
-  .dashboard-layout-footer-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
-  }
-
-  .dashboard-layout-footer-links {
-    justify-content: center;
-  }
-}
-
-/* Mobile (640px) */
-@media (max-width: 640px) {
-  .dashboard-layout-footer {
-    padding: 16px 12px;
-    margin-top: 20px;
-  }
-
-  .dashboard-layout-footer-text,
-  .dashboard-layout-footer-link {
-    font-size: 12px;
-  }
-}
-
-/* Small Mobile (480px) */
-@media (max-width: 480px) {
-  .dashboard-layout-footer {
-    padding: 14px;
-  }
-
-  .dashboard-layout-footer-links {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-/* ================= RTL SUPPORT ================= */
-[dir="rtl"] .dashboard-layout-footer-content {
-  direction: rtl;
-}
-
-[dir="rtl"] .dashboard-layout-footer-text,
-[dir="rtl"] .dashboard-layout-footer-link {
-  font-family: var(--font-content);
-}
-
-/* ================= PRINT STYLES ================= */
-@media print {
-  .dashboard-layout-root {
-    display: block;
-    background: white;
-  }
-
   .dashboard-layout-content {
-    padding: 0;
-    max-width: none;
+    padding: 20px 16px;
   }
-
-  .dashboard-layout-footer {
-    display: none;
-  }
-
-  .dashboard-layout-overlay {
-    display: none !important;
+  .dashboard-layout-footer-content {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }
 
-/* ================= ACCESSIBILITY ================= */
+@media (max-width: 480px) {
+  .dashboard-layout-content { padding: 16px 12px; }
+  .dashboard-layout-footer-content { padding: 12px; }
+  .dashboard-layout-footer-text,
+  .dashboard-layout-footer-link { font-size: 11px; }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
 .dashboard-layout-footer-link:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid rgba(255,255,255,0.5);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Reduced Motion */
+/* ==========================================
+   KEYFRAMES
+========================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes glassIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dashboard-layout-root,
   .dashboard-layout-content,
-  .dashboard-layout-footer {
-    animation: none;
-  }
-  
-  .dashboard-layout-main,
-  .dashboard-layout-overlay {
-    transition: none;
-  }
+  .dashboard-layout-footer { animation: none; }
+  .dashboard-layout-content,
+  .dashboard-layout-footer-content { transition: none; }
 }
 
-/* ================= SCROLLBAR STYLING ================= */
-.dashboard-layout-content::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+@media print {
+  .dashboard-layout-root { display: block; }
+  .dashboard-layout-footer { display: none; }
 }
-
-.dashboard-layout-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.dashboard-layout-content::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 4px;
-}
-
-.dashboard-layout-content::-webkit-scrollbar-thumb:hover {
-  background: var(--color-secondary);
-}
-

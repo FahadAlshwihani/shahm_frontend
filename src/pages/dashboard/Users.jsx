@@ -2,352 +2,401 @@
 import React, { useEffect, useState } from "react";
 import { useUsersStore } from "../../store/useUsersStore";
 import { useTranslation } from "react-i18next";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import Modal    from "../../components/common/dashboard/Modal";
+import Editbtn  from "../../components/common/dashboard/Editbtn";
+import Deletebtn from "../../components/common/dashboard/Deletebtn";
+import { useSweetAlert } from "../../components/common/SweetAlert";
 import "../../styles/CMS_USERS.css";
+
+/* ── Icons ──────────────────────────────────────────────────── */
+const IcoUsers = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <path d="M10 10a4 4 0 100-8 4 4 0 000 8zM2 17c0-3.33 5.33-5 8-5s8 1.67 8 5v1H2v-1z" fill="currentColor"/>
+  </svg>
+);
+const IcoPlus = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+const IcoSave = () => (
+  <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+    <path d="M15.75 8.063v7.124a.938.938 0 0 1-.937.938H3.187a.938.938 0 0 1-.937-.938V3.563c0-.25.1-.488.255-.663A.937.937 0 0 1 3.187 2.5h7.126"
+      stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="m13.5 1.5 3 3-8.25 8.25H5.25V9.75L13.5 1.5Z"
+      stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const IcoSpinner = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="users-spin">
+    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.8"
+      strokeDasharray="28" strokeDashoffset="8" strokeLinecap="round"/>
+  </svg>
+);
+const IcoEmail = () => (
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+    <rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.4"/>
+    <path d="M1 5l7 4.5L15 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+  </svg>
+);
+const IcoKey = () => (
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+    <circle cx="6" cy="8" r="4" stroke="currentColor" strokeWidth="1.4"/>
+    <path d="M9.5 8H15M13 6v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+  </svg>
+);
+const IcoRole = () => (
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+    <path d="M8 2a3 3 0 100 6 3 3 0 000-6zM2 13c0-2.5 4-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+  </svg>
+);
+const IcoPerson = () => (
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+    <circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.4"/>
+    <path d="M2 14c0-2.2 2.7-4 6-4s6 1.8 6 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+  </svg>
+);
+
+/* ── Role meta ─────────────────────────────────────────────── */
+const ROLE_META = {
+  super_admin: { color: "#a855f7", bg: "rgba(168,85,247,0.09)",  border: "rgba(168,85,247,0.25)" },
+  admin:       { color: "#3b82f6", bg: "rgba(59,130,246,0.09)",  border: "rgba(59,130,246,0.25)" },
+  editor:      { color: "#22c55e", bg: "rgba(34,197,94,0.09)",   border: "rgba(34,197,94,0.25)"  },
+  viewer:      { color: "#64748b", bg: "rgba(100,116,139,0.09)", border: "rgba(100,116,139,0.25)"},
+};
+function RoleBadge({ role, t }) {
+  const m = ROLE_META[role] || ROLE_META.viewer;
+  return (
+    <span className="du-role-badge" style={{ "--rb-color": m.color, "--rb-bg": m.bg, "--rb-border": m.border }}>
+      {t(`cms.users.roles.${role}`, role)}
+    </span>
+  );
+}
+
+/* ── Avatar ─────────────────────────────────────────────────── */
+function Avatar({ name, email }) {
+  const letter = (name || email || "?")[0]?.toUpperCase();
+  return <span className="du-avatar">{letter}</span>;
+}
+
+/* ── User Form (shared for Create + Edit) ──────────────────── */
+function UserForm({ form, setForm, isEdit, saving, onSubmit, onCancel, t }) {
+  return (
+    <div className="du-form">
+      <div className="du-form-grid">
+
+        {/* Email */}
+        <div className="du-form-group">
+          <label className="du-label">
+            <IcoEmail />
+            {t("cms.users.fields.email")}
+          </label>
+          <input
+            className="du-input"
+            type="email"
+            placeholder={t("cms.users.fields.email_placeholder")}
+            value={form.email}
+            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+            autoComplete="off"
+          />
+        </div>
+
+        {/* Name */}
+        <div className="du-form-group">
+          <label className="du-label">
+            <IcoPerson />
+            {t("cms.users.fields.name")}
+          </label>
+          <input
+            className="du-input"
+            type="text"
+            placeholder={t("cms.users.fields.name_placeholder")}
+            value={form.name}
+            onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+          />
+        </div>
+
+        {/* Password */}
+        <div className="du-form-group">
+          <label className="du-label">
+            <IcoKey />
+            {isEdit ? t("cms.users.fields.new_password") : t("cms.users.fields.password")}
+          </label>
+          <input
+            className="du-input"
+            type="password"
+            placeholder={
+              isEdit
+                ? t("cms.users.fields.new_password_placeholder")
+                : t("cms.users.fields.password_placeholder")
+            }
+            value={form.password}
+            onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+            autoComplete="new-password"
+          />
+        </div>
+
+        {/* Role */}
+        <div className="du-form-group">
+          <label className="du-label">
+            <IcoRole />
+            {t("cms.users.fields.role")}
+          </label>
+          <select
+            className="du-input du-select"
+            value={form.role}
+            onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+          >
+            <option value="super_admin">{t("cms.users.roles.super_admin")}</option>
+            <option value="admin">{t("cms.users.roles.admin")}</option>
+            <option value="editor">{t("cms.users.roles.editor")}</option>
+            <option value="viewer">{t("cms.users.roles.viewer")}</option>
+          </select>
+        </div>
+
+      </div>
+
+      {/* Actions */}
+      <div className="du-form-actions">
+        <button
+          className="du-btn du-btn--primary"
+          onClick={onSubmit}
+          disabled={saving}
+          type="button"
+        >
+          {saving ? <IcoSpinner /> : <IcoSave />}
+          {saving
+            ? t("cms.users.actions.saving", "Saving…")
+            : isEdit
+              ? t("cms.users.actions.save_changes")
+              : t("cms.users.actions.save")}
+        </button>
+        <button
+          className="du-btn du-btn--ghost"
+          onClick={onCancel}
+          disabled={saving}
+          type="button"
+        >
+          {t("cms.users.actions.cancel")}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Main Component ─────────────────────────────────────────── */
+const EMPTY_FORM = { email: "", name: "", password: "", role: "viewer" };
 
 export default function Users() {
   const { t, i18n } = useTranslation();
-
+  const isRtl = i18n.language === "ar";
   const { users, fetchUsers, addUser, editUser, removeUser, loading } = useUsersStore();
+  const { alert: sweetEl, show: showAlert } = useSweetAlert();
 
-  const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(null);
+  const [modalMode,  setModalMode]  = useState(null); // "create" | "edit" | null
+  const [editTarget, setEditTarget] = useState(null);
+  const [form,       setForm]       = useState(EMPTY_FORM);
+  const [saving,     setSaving]     = useState(false);
 
-  const [form, setForm] = useState({
-    email: "",
-    name: "",
-    password: "",
-    role: "viewer",
-  });
+  useEffect(() => { fetchUsers(); }, []);
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  /* ── Open modals ── */
+  const openCreate = () => {
+    setForm(EMPTY_FORM);
+    setEditTarget(null);
+    setModalMode("create");
+  };
 
+  const openEdit = (user) => {
+    setForm({ email: user.email, name: user.name, password: "", role: user.role });
+    setEditTarget(user);
+    setModalMode("edit");
+  };
+
+  const closeModal = () => {
+    setModalMode(null);
+    setEditTarget(null);
+    setForm(EMPTY_FORM);
+  };
+
+  /* ── Submit ── */
   const handleCreate = async () => {
-    const ok = await addUser(form);
-    if (ok) {
-      setShowAdd(false);
-      setForm({ email: "", name: "", password: "", role: "viewer" });
-    }
+    setSaving(true);
+    try {
+      const ok = await addUser(form);
+      if (ok) {
+        toast.success(t("cms.users.success.user_created", "User created successfully"));
+        closeModal();
+      }
+    } finally { setSaving(false); }
   };
 
   const handleUpdate = async () => {
-    const ok = await editUser(showEdit.id, form);
-    if (ok) {
-      setShowEdit(null);
-      setForm({ email: "", name: "", password: "", role: "viewer" });
-    }
-  };
-
-  const handleDelete = async (user) => {
-    const result = await Swal.fire({
-      title: t("cms.users.confirm_delete_title"),
-      text: t("cms.users.confirm_delete"),
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#ef4444",
-      cancelButtonColor: "#6b7280",
-      confirmButtonText: t("cms.users.actions.delete"),
-      cancelButtonText: t("cms.users.actions.cancel"),
-      reverseButtons: i18n.language === "ar",
-    });
-
-    if (result.isConfirmed) {
-      const success = await removeUser(user.id);
-      if (success) {
-        Swal.fire({
-          title: t("cms.users.deleted_title"),
-          text: t("cms.users.success.user_deleted"),
-          icon: "success",
-          confirmButtonColor: "#22c55e",
-        });
+    setSaving(true);
+    try {
+      const ok = await editUser(editTarget.id, form);
+      if (ok) {
+        toast.success(t("cms.users.success.user_updated", "User updated successfully"));
+        closeModal();
       }
-    }
+    } finally { setSaving(false); }
   };
+
+  /* ── Delete — handled by Deletebtn's own confirm ── */
+  const handleDelete = async (user) => {
+    const success = await removeUser(user.id);
+    if (success) toast.success(t("cms.users.success.user_deleted"));
+    else toast.error(t("cms.users.error.delete_failed", "Failed to delete user"));
+  };
+
+  /* ── Modal title / subtitle ── */
+  const modalTitle = modalMode === "edit"
+    ? t("cms.users.actions.edit_title")
+    : t("cms.users.actions.create_title");
+
+  const modalSubtitle = modalMode === "edit" && editTarget ? (
+    <div className="du-modal-user-meta">
+      <Avatar name={editTarget.name} email={editTarget.email} />
+      <span className="du-modal-user-name">{editTarget.name || editTarget.email}</span>
+      <RoleBadge role={editTarget.role} t={t} />
+    </div>
+  ) : null;
 
   return (
-    <div className="dashboard-users-container">
-      <div className="dashboard-users-header">
-        <div className="dashboard-users-header-content">
-          <h1 className="dashboard-users-title">{t("cms.users.title")}</h1>
-          <p className="dashboard-users-subtitle">{t("cms.users.subtitle")}</p>
+    <div
+      className="du-root"
+      dir={isRtl ? "rtl" : "ltr"}
+    >
+      {sweetEl}
+
+      {/* ── PAGE HEADER ── */}
+      <div className="du-page-header">
+        <div className="du-page-header-left">
+          <div className="du-page-header-icon"><IcoUsers /></div>
+          <div>
+            <h1 className="du-page-title">{t("cms.users.title")}</h1>
+            <p className="du-page-subtitle">{t("cms.users.subtitle")}</p>
+          </div>
         </div>
-        <button className="dashboard-users-btn-add" onClick={() => setShowAdd(true)}>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M9 3V15M3 9H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
+        <button className="du-btn-add" onClick={openCreate} type="button">
+          <IcoPlus />
           {t("cms.users.actions.add")}
         </button>
       </div>
 
-      {/* ==================== USERS TABLE ==================== */}
-      <div className="dashboard-users-list-card">
-        <div className="dashboard-users-list-header">
-          <div className="dashboard-users-list-title-wrapper">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M10 10C12.21 10 14 8.21 14 6C14 3.79 12.21 2 10 2C7.79 2 6 3.79 6 6C6 8.21 7.79 10 10 10ZM10 12C6.67 12 0 13.67 0 17V18H20V17C20 13.67 13.33 12 10 12Z" fill="currentColor"/>
-            </svg>
-            <h3>{t("cms.users.users_list")}</h3>
+      {/* ── USERS TABLE CARD ── */}
+      <div className="du-card">
+        {/* Card header */}
+        <div className="du-card-header">
+          <div className="du-card-header-left">
+            <span className="du-card-icon"><IcoUsers /></span>
+            <h2 className="du-card-title">{t("cms.users.users_list")}</h2>
           </div>
-          <span className="dashboard-users-count-badge">{users.length}</span>
+          <span className="du-count-badge">{users.length}</span>
         </div>
 
+        {/* Table body */}
         {loading ? (
-          <div className="dashboard-users-loading">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="dashboard-users-loading-icon">
-              <path d="M24 4V12M24 36V44M44 24H36M12 24H4M37.66 37.66L32.24 32.24M15.76 15.76L10.34 10.34M37.66 10.34L32.24 15.76M15.76 32.24L10.34 37.66" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+          <div className="du-loading">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="users-spin">
+              <circle cx="18" cy="18" r="15" stroke="rgba(53,60,60,0.15)" strokeWidth="3"/>
+              <path d="M33 18C33 9.7 26.3 3 18 3" stroke="#353C3C" strokeWidth="3" strokeLinecap="round"/>
             </svg>
             <p>{t("cms.users.loading")}</p>
           </div>
+        ) : users.length === 0 ? (
+          <div className="du-empty">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" opacity="0.2">
+              <circle cx="24" cy="16" r="10" stroke="currentColor" strokeWidth="2"/>
+              <path d="M4 40c0-8.8 8.95-16 20-16s20 7.2 20 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <p>{t("cms.users.empty_state", "No users found")}</p>
+          </div>
         ) : (
-          <>
-            {users.length > 0 ? (
-              <div className="dashboard-users-table-wrapper">
-                <table className="dashboard-users-table">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>{t("cms.users.table.email")}</th>
-                      <th>{t("cms.users.table.name")}</th>
-                      <th>{t("cms.users.table.role")}</th>
-                      <th>{t("cms.users.table.active")}</th>
-                      <th>{t("cms.users.table.actions")}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.map((u) => (
-                      <tr key={u.id}>
-                        <td className="dashboard-users-table-id">{u.id}</td>
-                        <td className="dashboard-users-table-email">{u.email}</td>
-                        <td className="dashboard-users-table-name">{u.name}</td>
-                        <td>
-                          <span className={`dashboard-users-role-badge dashboard-users-role-${u.role}`}>
-                            {t(`cms.users.roles.${u.role}`)}
-                          </span>
-                        </td>
-                        <td>
-                          <span
-                            className={`dashboard-users-status-badge ${
-                              u.is_active ? "dashboard-users-status-active" : "dashboard-users-status-inactive"
-                            }`}
-                          >
-                            {u.is_active ? t("common.yes") : t("common.no")}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="dashboard-users-table-actions">
-                            <button
-                              className="dashboard-users-btn-edit"
-                              onClick={() => {
-                                setShowEdit(u);
-                                setForm({
-                                  email: u.email,
-                                  name: u.name,
-                                  password: "",
-                                  role: u.role,
-                                });
-                                window.scrollTo({ top: 0, behavior: "smooth" });
-                              }}
-                            >
-                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M11.333 2L14 4.667L5.333 13.333H2.667V10.667L11.333 2Z" fill="currentColor"/>
-                              </svg>
-                              {t("cms.users.actions.edit")}
-                            </button>
-                            <button
-                              className="dashboard-users-btn-delete"
-                              onClick={() => handleDelete(u)}
-                            >
-                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M4 6V14H12V6H4ZM10.5 2L9.5 1H6.5L5.5 2H2V4H14V2H10.5Z" fill="currentColor"/>
-                              </svg>
-                              {t("cms.users.actions.delete")}
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <div className="dashboard-users-empty">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                  <path d="M24 4C16.83 4 11 9.83 11 17C11 24.17 16.83 30 24 30C31.17 30 37 24.17 37 17C37 9.83 31.17 4 24 4ZM24 34C16.67 34 2 37.67 2 45V48H46V45C46 37.67 31.33 34 24 34Z" fill="currentColor"/>
-                </svg>
-                <p>{t("cms.users.empty")}</p>
-              </div>
-            )}
-          </>
+          <div className="du-table-wrapper">
+            <table className="du-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>{t("cms.users.table.email")}</th>
+                  <th>{t("cms.users.table.name")}</th>
+                  <th>{t("cms.users.table.role")}</th>
+                  <th>{t("cms.users.table.active")}</th>
+                  <th>{t("cms.users.table.actions")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((u) => (
+                  <tr key={u.id} className="du-table-row">
+                    <td>
+                      <span className="du-id-chip">#{u.id}</span>
+                    </td>
+                    <td>
+                      <div className="du-user-cell">
+                        <Avatar name={u.name} email={u.email} />
+                        <div className="du-user-cell-info">
+                          <span className="du-user-name">{u.name || "—"}</span>
+                          <span className="du-user-email">{u.email}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="du-muted">{u.name || "—"}</td>
+                    <td><RoleBadge role={u.role} t={t} /></td>
+                    <td>
+                      <span className={`du-status-badge${u.is_active ? " du-status-badge--active" : " du-status-badge--inactive"}`}>
+                        <span className="du-status-dot" />
+                        {u.is_active ? t("common.yes") : t("common.no")}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="du-actions-cell">
+                        {/* Global Editbtn */}
+                        <Editbtn
+                          onClick={() => openEdit(u)}
+                          className="du-icon-btn du-icon-btn--edit"
+                          iconOnly={false}
+                          label={t("cms.users.actions.edit")}
+                        />
+                        {/* Global Deletebtn — SweetAlert built-in */}
+                        <Deletebtn
+                          onConfirm={() => handleDelete(u)}
+                          confirmTitle={t("cms.users.confirm_delete_title")}
+                          confirmMessage={t("cms.users.confirm_delete")}
+                          className="du-icon-btn du-icon-btn--delete"
+                          iconOnly={false}
+                          label={t("cms.users.actions.delete")}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
-      {/* ==================== ADD USER FORM ==================== */}
-      {showAdd && (
-        <div className="dashboard-users-form-card">
-          <div className="dashboard-users-form-header">
-            <div className="dashboard-users-form-header-left">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M15 12C17.21 12 19 10.21 19 8C19 5.79 17.21 4 15 4C12.79 4 11 5.79 11 8C11 10.21 12.79 12 15 12ZM15 14C12.33 14 7 15.34 7 18V20H23V18C23 15.34 17.67 14 15 14ZM6 10V7H4V10H1V12H4V15H6V12H9V10H6Z" fill="currentColor"/>
-              </svg>
-              <h3>{t("cms.users.actions.create_title")}</h3>
-            </div>
-          </div>
-
-          <div className="dashboard-users-form-section">
-            <div className="dashboard-users-form-grid">
-              <div className="dashboard-users-form-group">
-                <label className="dashboard-users-label">{t("cms.users.fields.email")}</label>
-                <input
-                  className="dashboard-users-input"
-                  type="email"
-                  placeholder={t("cms.users.fields.email_placeholder")}
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                />
-              </div>
-
-              <div className="dashboard-users-form-group">
-                <label className="dashboard-users-label">{t("cms.users.fields.name")}</label>
-                <input
-                  className="dashboard-users-input"
-                  type="text"
-                  placeholder={t("cms.users.fields.name_placeholder")}
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                />
-              </div>
-
-              <div className="dashboard-users-form-group">
-                <label className="dashboard-users-label">{t("cms.users.fields.password")}</label>
-                <input
-                  className="dashboard-users-input"
-                  type="password"
-                  placeholder={t("cms.users.fields.password_placeholder")}
-                  value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
-                />
-              </div>
-
-              <div className="dashboard-users-form-group">
-                <label className="dashboard-users-label">{t("cms.users.fields.role")}</label>
-                <select
-                  className="dashboard-users-select"
-                  value={form.role}
-                  onChange={(e) => setForm({ ...form, role: e.target.value })}
-                >
-                  <option value="super_admin">{t("cms.users.roles.super_admin")}</option>
-                  <option value="admin">{t("cms.users.roles.admin")}</option>
-                  <option value="editor">{t("cms.users.roles.editor")}</option>
-                  <option value="viewer">{t("cms.users.roles.viewer")}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="dashboard-users-form-actions">
-            <button className="dashboard-users-btn-primary" onClick={handleCreate}>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M15.75 8.0625V15.1875C15.75 15.4361 15.6512 15.6746 15.4754 15.8504C15.2996 16.0262 15.0611 16.125 14.8125 16.125H3.1875C2.93886 16.125 2.70041 16.0262 2.52459 15.8504C2.34878 15.6746 2.25 15.4361 2.25 15.1875V3.5625C2.25 3.31386 2.34878 3.07541 2.52459 2.89959C2.70041 2.72378 2.93886 2.625 3.1875 2.625H10.3125" stroke="currentColor" strokeWidth="1.5"/>
-                <path d="M13.5 1.5L16.5 4.5L8.25 12.75H5.25V9.75L13.5 1.5Z" stroke="currentColor" strokeWidth="1.5"/>
-              </svg>
-              {t("cms.users.actions.save")}
-            </button>
-            <button
-              className="dashboard-users-btn-cancel"
-              onClick={() => {
-                setShowAdd(false);
-                setForm({ email: "", name: "", password: "", role: "viewer" });
-              }}
-            >
-              {t("cms.users.actions.cancel")}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ==================== EDIT USER FORM ==================== */}
-      {showEdit && (
-        <div className="dashboard-users-form-card">
-          <div className="dashboard-users-form-header">
-            <div className="dashboard-users-form-header-left">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
-              </svg>
-              <h3>{t("cms.users.actions.edit_title")}</h3>
-            </div>
-          </div>
-
-          <div className="dashboard-users-form-section">
-            <div className="dashboard-users-form-grid">
-              <div className="dashboard-users-form-group">
-                <label className="dashboard-users-label">{t("cms.users.fields.email")}</label>
-                <input
-                  className="dashboard-users-input"
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                />
-              </div>
-
-              <div className="dashboard-users-form-group">
-                <label className="dashboard-users-label">{t("cms.users.fields.name")}</label>
-                <input
-                  className="dashboard-users-input"
-                  type="text"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                />
-              </div>
-
-              <div className="dashboard-users-form-group">
-                <label className="dashboard-users-label">{t("cms.users.fields.new_password")}</label>
-                <input
-                  className="dashboard-users-input"
-                  type="password"
-                  placeholder={t("cms.users.fields.new_password_placeholder")}
-                  value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
-                />
-              </div>
-
-              <div className="dashboard-users-form-group">
-                <label className="dashboard-users-label">{t("cms.users.fields.role")}</label>
-                <select
-                  className="dashboard-users-select"
-                  value={form.role}
-                  onChange={(e) => setForm({ ...form, role: e.target.value })}
-                >
-                  <option value="super_admin">{t("cms.users.roles.super_admin")}</option>
-                  <option value="admin">{t("cms.users.roles.admin")}</option>
-                  <option value="editor">{t("cms.users.roles.editor")}</option>
-                  <option value="viewer">{t("cms.users.roles.viewer")}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="dashboard-users-form-actions">
-            <button className="dashboard-users-btn-primary" onClick={handleUpdate}>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M15.75 8.0625V15.1875C15.75 15.4361 15.6512 15.6746 15.4754 15.8504C15.2996 16.0262 15.0611 16.125 14.8125 16.125H3.1875C2.93886 16.125 2.70041 16.0262 2.52459 15.8504C2.34878 15.6746 2.25 15.4361 2.25 15.1875V3.5625C2.25 3.31386 2.34878 3.07541 2.52459 2.89959C2.70041 2.72378 2.93886 2.625 3.1875 2.625H10.3125" stroke="currentColor" strokeWidth="1.5"/>
-                <path d="M13.5 1.5L16.5 4.5L8.25 12.75H5.25V9.75L13.5 1.5Z" stroke="currentColor" strokeWidth="1.5"/>
-              </svg>
-              {t("cms.users.actions.save_changes")}
-            </button>
-            <button
-              className="dashboard-users-btn-cancel"
-              onClick={() => {
-                setShowEdit(null);
-                setForm({ email: "", name: "", password: "", role: "viewer" });
-              }}
-            >
-              {t("cms.users.actions.cancel")}
-            </button>
-          </div>
-        </div>
-      )}
+      {/* ── CREATE / EDIT MODAL ── */}
+      <Modal
+        open={modalMode !== null}
+        onClose={closeModal}
+        title={modalTitle}
+        subtitle={modalSubtitle}
+        footer={null}   /* actions are inside UserForm */
+        dir={isRtl ? "rtl" : "ltr"}
+        width={600}
+      >
+        <UserForm
+          form={form}
+          setForm={setForm}
+          isEdit={modalMode === "edit"}
+          saving={saving}
+          onSubmit={modalMode === "edit" ? handleUpdate : handleCreate}
+          onCancel={closeModal}
+          t={t}
+        />
+      </Modal>
     </div>
   );
 }

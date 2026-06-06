@@ -1,505 +1,531 @@
-/* ===== ROOT ===== */
+/* ============================================================
+   LOGIN PAGE — Login.css
+   Exact same design tokens as DashboardSidebar/Navbar/Layout
+   --ds-* variables are declared in DashboardSidebar.css (:root)
+   so they're available globally — we reference them directly.
+   ============================================================ */
+
+/* ── Page root ───────────────────────────────────────────────── */
 .sh-login-root {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
-  display: flex;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Noto Kufi Arabic', sans-serif;
-  color: #fff;
-  overflow: hidden;
-}
-
-/* ===== LAYOUT ===== */
-.sh-login-shell {
   width: 100%;
-  display: grid;
-  grid-template-columns: 55% 45%;
-  animation: fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.sh-login-shell.is-shaking {
-  animation: shake 0.45s ease;
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  50% { transform: translateX(8px); }
-  75% { transform: translateX(-4px); }
-  100% { transform: translateX(0); }
-}
-
-/* ===== LEFT PANEL ===== */
-.sh-login-brand {
-  position: relative;
-  padding: 80px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
-  border-right: 1px solid #1a1a1a;
-  overflow: hidden;
-}
-
-/* ===== 3D GRID BACKGROUND ===== */
-.sh-login-grid-bg {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 20s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes gridMove {
-  0% { transform: perspective(500px) rotateX(60deg) translateZ(0); }
-  100% { transform: perspective(500px) rotateX(60deg) translateZ(100px); }
-}
-
-/* ===== 3D ELEMENTS ===== */
-.sh-login-3d-elements {
-  position: absolute;
-  inset: 0;
-  perspective: 1000px;
-  pointer-events: none;
-}
-
-/* 3D Cube */
-.sh-3d-cube {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  top: 15%;
-  left: 10%;
-  transform-style: preserve-3d;
-  animation: rotateCube 20s infinite linear;
-}
-
-@keyframes rotateCube {
-  0% { transform: rotateX(0deg) rotateY(0deg); }
-  100% { transform: rotateX(360deg) rotateY(360deg); }
-}
-
-.cube-face {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-}
-
-.cube-face.front { transform: translateZ(50px); }
-.cube-face.back { transform: rotateY(180deg) translateZ(50px); }
-.cube-face.left { transform: rotateY(-90deg) translateZ(50px); }
-.cube-face.right { transform: rotateY(90deg) translateZ(50px); }
-.cube-face.top { transform: rotateX(90deg) translateZ(50px); }
-.cube-face.bottom { transform: rotateX(-90deg) translateZ(50px); }
-
-/* 3D Sphere */
-.sh-3d-sphere {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  top: 60%;
-  left: 70%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.03));
-  box-shadow: 
-    inset -20px -20px 40px rgba(0, 0, 0, 0.4),
-    0 0 60px rgba(255, 255, 255, 0.1);
-  animation: floatSphere 8s ease-in-out infinite;
-}
-
-@keyframes floatSphere {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-30px) scale(1.05); }
-}
-
-/* 3D Pyramid */
-.sh-3d-pyramid {
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 40%;
-  right: 15%;
-  transform-style: preserve-3d;
-  animation: rotatePyramid 15s infinite linear;
-}
-
-@keyframes rotatePyramid {
-  0% { transform: rotateY(0deg) rotateX(20deg); }
-  100% { transform: rotateY(360deg) rotateX(20deg); }
-}
-
-.pyramid-face {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 86px solid rgba(255, 255, 255, 0.08);
-}
-
-.pyramid-face.side1 { transform: rotateY(0deg) translateZ(28px); }
-.pyramid-face.side2 { transform: rotateY(90deg) translateZ(28px); }
-.pyramid-face.side3 { transform: rotateY(180deg) translateZ(28px); }
-.pyramid-face.side4 { transform: rotateY(270deg) translateZ(28px); }
-
-/* ===== BRAND CONTENT ===== */
-.sh-login-brand-content {
+  box-sizing: border-box;
   position: relative;
-  z-index: 10;
+  overflow: hidden;
+  /* Same dark background as the overall dashboard shell */
+  background: #ffffff;
+  color: var(--ds-text, rgba(255,255,255,0.88));
 }
 
-.sh-login-mark {
-  width: 60px;
-  height: auto;
-  margin-bottom: 24px;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.1));
-  animation: logoFloat 3s ease-in-out infinite;
+/* ── Full-page dark glass background — same as sidebar/navbar ── */
+.sh-login-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  /* Multi-layer depth exactly like the dashboard bg */
+  background:
+    radial-gradient(ellipse 90% 70% at 20% 10%,  #F7F8F8 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 80% 90%,  #B3BCBC 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 60% 40%,  #f8f8f8 0%, transparent 50%),
+    #ffffff;
+  backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
 }
 
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+/* Grain texture overlay — identical to sidebar/navbar/footer */
+.sh-login-bg::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  z-index: 1;
 }
 
-.sh-login-brandName {
-  font-size: 36px;
-  font-weight: 700;
-  margin: 0 0 16px;
-  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.02em;
-}
-
-.sh-login-brandHint {
-  max-width: 480px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 48px;
-}
-
-/* ===== STATS ===== */
-.sh-login-stats {
+/* ── Content wrapper — stacks card between header and footer ─── */
+.sh-login-content {
+  position: relative;
+  z-index: 2;
   display: flex;
-  gap: 32px;
-  margin-top: 48px;
-}
-
-.sh-stat-item {
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-.sh-stat-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-.sh-stat-icon {
-  font-size: 32px;
-  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.2));
-}
-
-.sh-stat-value {
-  font-size: 24px;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1;
-}
-
-.sh-stat-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* ===== RIGHT PANEL ===== */
-.sh-login-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
-}
-
-.sh-login-formWrapper {
   width: 100%;
-  max-width: 480px;
-  padding: 64px 48px;
+  flex: 1;
+  justify-content: center;
+  padding: 32px 20px;
+  box-sizing: border-box;
 }
 
-/* ===== FORM HEADER ===== */
+/* ============================================================
+   GLASSY CARD
+   Exact same spec as .dashboard-sidebar:
+   background: var(--ds-bg) = rgba(10,10,12,0.82)
+   backdrop-filter: blur(28px) saturate(160%)
+   border: 1px solid rgba(233,236,236,0.1)
+   shadow: --ds-shadow
+   border-radius: --ds-radius = 18px
+   ============================================================ */
+.sh-login-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--ds-bg, rgba(10,10,12,0.82));
+  backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
+  border: var(--ds-border-spec, 1px solid rgba(233,236,236,0.1));
+  border-radius: var(--ds-radius, 18px);
+  box-shadow: var(--ds-shadow,
+    0 8px 40px rgba(0,0,0,0.45),
+    0 2px 8px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.06)
+  );
+  padding: 40px 36px 36px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  animation: sh-login-card-in 0.45s cubic-bezier(0.34,1.2,0.64,1) 0.05s both;
+}
+
+/* Grain on card — same as sidebar */
+.sh-login-card::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: var(--ds-radius, 18px);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+.sh-login-card > * { position: relative; z-index: 1; }
+
+/* ── Shake on error ──────────────────────────────────────────── */
+.sh-login-card.is-shaking {
+  animation: sh-login-shake 0.45s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+/* ── Logo — centred above title ─────────────────────────────── */
+.sh-login-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 22px;
+  animation: fadeSlideDown 0.4s ease 0.10s both;
+}
+
+.sh-login-logo {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  /* Navbar uses brightness(1.05) filter on its logo */
+  filter: brightness(1.05);
+}
+
+/* ── Card header ─────────────────────────────────────────────── */
 .sh-login-header {
-  margin-bottom: 40px;
-  animation: slideUp 0.6s ease 0.2s backwards;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  text-align: center;
+  margin-bottom: 30px;
+  animation: fadeSlideUp 0.4s ease 0.15s both;
 }
 
 .sh-login-title {
-  font-size: 32px;
-  font-weight: 800;
-  margin: 0 0 8px;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  /* Same weight/size as .dashboard-navbar-title */
+  font-family: var(--font-en-heading, "Ciclo Display", serif);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 32px;
+  color: var(--ds-text, rgba(255,255,255,0.88));
+  margin: 0 0 6px;
+  letter-spacing: 0.01em;
+}
+
+[dir="rtl"] .sh-login-title {
+  font-family: var(--font-ar-heading, "HT Sonata", serif);
 }
 
 .sh-login-desc {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.6;
+  font-family: var(--font-content, "Noto Kufi Arabic", sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  /* Same as --ds-text-muted */
+  color: var(--ds-text-muted, rgba(255,255,255,0.38));
+  margin: 0;
 }
 
-/* ===== FORM FIELDS ===== */
+/* ── Form fields ─────────────────────────────────────────────── */
 .sh-login-field {
-  margin-bottom: 24px;
-  animation: slideUp 0.6s ease 0.3s backwards;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 18px;
+  animation: fadeSlideUp 0.4s ease both;
 }
+
+.sh-login-field:nth-child(1) { animation-delay: 0.22s; }
+.sh-login-field:nth-child(2) { animation-delay: 0.29s; }
 
 .sh-login-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #b3b3b3;
-  margin-bottom: 8px;
+  font-family: var(--font-content, "Noto Kufi Arabic", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
+  /* Same as sidebar section labels — ds-text-muted */
+  color: var(--ds-text-muted, rgba(255,255,255,0.38));
 }
 
+/* ── Input wrapper — mirrors .dashboard-navbar-user pill ─────── */
 .sh-input-wrapper {
-  position: relative;
   display: flex;
   align-items: center;
+  gap: 10px;
+  height: 46px;
+  /* Same glassy surface as user avatar pill */
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--ds-border, rgba(255,255,255,0.08));
+  border-radius: 10px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    background   0.2s ease,
+    box-shadow   0.2s ease;
 }
 
+.sh-input-wrapper:focus-within {
+  /* Active state — same as --ds-active-bg */
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
+}
+
+/* Error state */
+.sh-login-field.has-error .sh-input-wrapper {
+  border-color: rgba(220,38,38,0.5);
+  background: rgba(220,38,38,0.06);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.08);
+}
+
+/* ── SVG icon ────────────────────────────────────────────────── */
 .sh-input-icon {
-  position: absolute;
-  left: 16px;
-  font-size: 20px;
-  pointer-events: none;
-  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  /* Matches .section-icon color */
+  color: rgba(255,255,255,0.35);
+  transition: color 0.2s ease;
 }
 
+.sh-input-wrapper:focus-within .sh-input-icon {
+  color: rgba(255,255,255,0.7);
+}
+
+.sh-input-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* ── Text input ──────────────────────────────────────────────── */
 .sh-login-input {
-  width: 100%;
-  height: 56px;
-  padding: 0 16px 0 52px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
-  font-size: 15px;
-  font-family: inherit;
-  transition: all 0.2s ease;
-}
-
-.sh-login-input:focus {
+  flex: 1;
+  min-width: 0;
+  border: none;
   outline: none;
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  background: transparent;
+  font-family: var(--font-content, "Noto Kufi Arabic", sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--ds-text, rgba(255,255,255,0.88));
 }
 
 .sh-login-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  /* Same as ds-text-muted */
+  color: rgba(255,255,255,0.25);
+  font-size: 13px;
 }
 
-.sh-login-field.has-error .sh-login-input {
-  border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.05);
-}
-
+/* ── Password toggle — mirrors .dashboard-sidebar-collapse-btn ─ */
 .sh-password-toggle {
-  position: absolute;
-  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
-  font-size: 20px;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  z-index: 1;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  flex-shrink: 0;
+  color: rgba(255,255,255,0.35);
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .sh-password-toggle:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.8);
 }
 
-/* ===== SUBMIT BUTTON ===== */
+.sh-password-toggle svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* ── Submit button — mirrors .dashboard-sidebar-language-toggle ─
+   (glassy white border pill, full-width, centred)
+   but filled with ds-active-bg for prominence
+   ─────────────────────────────────────────────────────────────── */
 .sh-login-actions {
-  margin-top: 32px;
-  animation: slideUp 0.6s ease 0.4s backwards;
+  margin-top: 26px;
+  animation: fadeSlideUp 0.4s ease 0.36s both;
 }
 
 .sh-login-btn {
   width: 100%;
-  height: 56px;
-  border-radius: 12px;
-  background: #ffffff;
-  color: #000000;
-  font-size: 15px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+  /* Active-state surface from --ds-active-bg */
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: var(--font-content, "Noto Kufi Arabic", sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.15s ease;
+  box-sizing: border-box;
 }
 
 .sh-login-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.20);
+  border-color: rgba(255,255,255,0.42);
 }
 
 .sh-login-btn:active:not(:disabled) {
-  transform: translateY(0);
+  background: rgba(255,255,255,0.24);
+  transform: scale(0.99);
+}
+
+.sh-login-btn:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
 }
 
 .sh-login-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
+/* Arrow nudge */
 .sh-btn-arrow {
-  font-size: 18px;
-  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s cubic-bezier(0.22,1,0.36,1);
 }
+.sh-btn-arrow svg { width: 16px; height: 16px; }
 
-.sh-login-btn:hover:not(:disabled) .sh-btn-arrow {
-  transform: translateX(4px);
-}
+.sh-login-btn:hover:not(:disabled) .sh-btn-arrow { transform: translateX(3px); }
+[dir="rtl"] .sh-login-btn:hover:not(:disabled) .sh-btn-arrow { transform: translateX(-3px); }
 
+/* Spinner */
 .sh-btn-spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid #000000;
-  border-top-color: transparent;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-top-color: rgba(255,255,255,0.85);
   border-radius: 50%;
-  animation: spin 0.6s linear infinite;
+  animation: sh-spin 0.65s linear infinite;
+  flex-shrink: 0;
 }
 
-@keyframes spin {
+/* ============================================================
+   FOOTER — exact copy of .dashboard-layout-footer
+   Same glass bg, same grain, same border-top, same text styles
+   ============================================================ */
+.sh-login-footer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--ds-bg, rgba(10,10,12,0.82));
+  backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
+  border-top: var(--ds-border-spec, 1px solid rgba(233,236,236,0.1));
+  overflow: hidden;
+  animation: fadeSlideUp 0.45s ease 0.45s both;
+}
+
+/* Grain on footer */
+.sh-login-footer::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+.sh-login-footer-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 24px;
+}
+
+/* Quick links row */
+.sh-login-footer-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 8px;
+}
+
+/* Links — same as .dashboard-layout-footer-link */
+.sh-login-footer-link {
+  font-family: var(--font-content, "Noto Kufi Arabic", sans-serif);
+  font-size: 12px;
+  color: var(--ds-text-muted, rgba(255,255,255,0.38));
+  text-decoration: none;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+.sh-login-footer-link:hover { color: var(--ds-text, rgba(255,255,255,0.88)); }
+.sh-login-footer-link:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Divider dot — same as .dashboard-layout-footer-divider */
+.sh-login-footer-dot {
+  color: var(--ds-divider, rgba(255,255,255,0.15));
+  font-size: 11px;
+  user-select: none;
+}
+
+/* Bottom row: copyright + language toggle */
+.sh-login-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Copyright — same as .dashboard-layout-footer-text */
+.sh-login-footer-copy {
+  font-family: var(--font-content, "Noto Kufi Arabic", sans-serif);
+  font-size: 12px;
+  color: var(--ds-text-muted, rgba(255,255,255,0.38));
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Language button — same as .dashboard-sidebar-language-toggle */
+.sh-login-lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--ds-border, rgba(255,255,255,0.08));
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-content, "Noto Kufi Arabic", sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.sh-login-lang-btn:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.18);
+  color: #fff;
+}
+.sh-login-lang-btn:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+.sh-login-lang-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   KEYFRAMES — same names used by dashboard (re-declared here
+   so Login.css is self-contained if loaded without others)
+   ============================================================ */
+@keyframes sh-login-card-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+@keyframes sh-login-shake {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-7px); }
+  30%  { transform: translateX(6px); }
+  45%  { transform: translateX(-5px); }
+  60%  { transform: translateX(4px); }
+  75%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sh-spin {
   to { transform: rotate(360deg); }
 }
 
-/* ===== FOOTER ===== */
-.sh-login-footer {
-  margin-top: 32px;
-  text-align: center;
-  animation: slideUp 0.6s ease 0.5s backwards;
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 520px) {
+  .sh-login-content { padding: 24px 14px; }
+  .sh-login-card    { padding: 32px 22px 28px; border-radius: 14px; }
+  .sh-login-title   { font-size: 19px; }
+  .sh-login-footer-inner { padding: 14px 16px; }
 }
 
-.sh-login-footer-text {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1024px) {
-  .sh-login-shell {
-    grid-template-columns: 50% 50%;
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-
-  .sh-login-brand {
-    padding: 60px 40px;
-  }
-
-  .sh-login-stats {
-    flex-direction: column;
-    gap: 16px;
-  }
-}
-
-@media (max-width: 768px) {
-  .sh-login-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .sh-login-brand {
-    display: none;
-  }
-
-  .sh-login-formWrapper {
-    padding: 48px 32px;
-    max-width: 100%;
-  }
-
-  .sh-login-title {
-    font-size: 28px;
-  }
-}
-
-@media (max-width: 480px) {
-  .sh-login-formWrapper {
-    padding: 32px 24px;
-  }
-
-  .sh-login-title {
-    font-size: 24px;
-  }
-
-  .sh-login-input {
-    height: 52px;
-  }
-
-  .sh-login-btn {
-    height: 52px;
-  }
-}
-
-/* ===== RTL SUPPORT ===== */
-[dir="rtl"] .sh-input-icon {
-  left: auto;
-  right: 16px;
-}
-
-[dir="rtl"] .sh-login-input {
-  padding: 0 52px 0 16px;
-}
-
-[dir="rtl"] .sh-password-toggle {
-  right: auto;
-  left: 16px;
-}
-
-[dir="rtl"] .sh-btn-arrow {
-  transform: scaleX(-1);
 }

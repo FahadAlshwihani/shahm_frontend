@@ -1,20 +1,26 @@
-import React, { useEffect } from "react";
-import { useCmsStore } from "../../store/useCmsStore";
+import React, { useState } from "react";
 import HomeHero from "./HomeHero";
-import Navbar from "../../components/layout/Navbar";
+import Footer from "../../components/layout/public/Footer";
+import WelcomeModal, { hasSelectedLanguage } from "../../components/common/WelcomeModal";
+import { usePublicStore } from "../../store/usePublicStore";
 
 export default function Home() {
-  const fetchPublicHome = useCmsStore((s) => s.fetchPublicHome);
-  const hero = useCmsStore((s) => s.hero);
+  const home = usePublicStore((s) => s.home);
+  const hero = home?.hero || null;
 
-  useEffect(() => {
-    fetchPublicHome();
-  }, []);
+  const [showWelcome, setShowWelcome] = useState(
+    !hasSelectedLanguage()
+  );
 
   return (
     <>
+      {showWelcome && (
+        <WelcomeModal onSelect={() => setShowWelcome(false)} />
+      )}
+
       <HomeHero hero={hero} />
+
+      <Footer />
     </>
   );
 }
-

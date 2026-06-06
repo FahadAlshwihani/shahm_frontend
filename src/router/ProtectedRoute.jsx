@@ -1,21 +1,25 @@
 // src/router/ProtectedRoute.jsx
-import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import DashboardLayout from "../components/layout/DashboardLayout";
+import DashboardLayout from "../components/layout/dashboard/DashboardLayout";
 
-export default function ProtectedRoute({ children, allowedRoles = [] }) {
+export default function ProtectedRoute({ allowedRoles = [] }) {
   const { isAuthenticated, user } = useAuthStore();
 
-  // شرط 1: مهو مسجل دخول
+  // Not logged in
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  // شرط 2: لو فيه أدوار مطلوبة
+  // Role check
   if (allowedRoles.length > 0 && !allowedRoles.includes(user?.role)) {
     return <Navigate to="/login" replace />;
   }
 
-return <DashboardLayout>{children}</DashboardLayout>;
+  // Render matched child route inside the dashboard layout
+  return (
+    <DashboardLayout>
+      <Outlet />
+    </DashboardLayout>
+  );
 }

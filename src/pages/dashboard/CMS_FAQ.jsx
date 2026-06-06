@@ -1,296 +1,633 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useFaqCmsStore } from "../../store/useFaqCmsStore";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
+import { useSweetAlert } from "../../components/common/SweetAlert";
 import "../../styles/CMS_FAQ.css";
 
+// ─── Icon Components ─────────────────────────────────────────────────────────
+const Icon = {
+  Grid: () => (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <rect x="1.5" y="1.5" width="6" height="6" rx="1.5" fill="currentColor" opacity=".9" />
+      <rect x="10.5" y="1.5" width="6" height="6" rx="1.5" fill="currentColor" opacity=".9" />
+      <rect x="1.5" y="10.5" width="6" height="6" rx="1.5" fill="currentColor" opacity=".9" />
+      <rect x="10.5" y="10.5" width="6" height="6" rx="1.5" fill="currentColor" opacity=".9" />
+    </svg>
+  ),
+  Folder: () => (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <path d="M1.5 3.75A1.5 1.5 0 013 2.25h4.5l1.5 2.25H15A1.5 1.5 0 0116.5 6v8.25A1.5 1.5 0 0115 15.75H3a1.5 1.5 0 01-1.5-1.5V3.75z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" fill="none" />
+    </svg>
+  ),
+  QuestionMark: () => (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="7.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M6.75 6.75a2.25 2.25 0 014.5 0c0 1.5-2.25 1.875-2.25 3.75" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="9" cy="13.5" r=".75" fill="currentColor" />
+    </svg>
+  ),
+  Plus: () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  /* ── Modern Edit pen icon ── */
+  Edit: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M13.2583 3.75L16.5 7.00001M2.25 21.75L3.64706 16.6765L15.5294 4.79412C15.7347 4.58881 16.0128 4.47354 16.3029 4.47354C16.5931 4.47354 16.8712 4.58881 17.0765 4.79412L19.2059 6.92353C19.4112 7.12882 19.5265 7.40693 19.5265 7.69706C19.5265 7.98719 19.4112 8.2653 19.2059 8.47059L7.32353 20.3529L2.25 21.75Z"
+        stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+      />
+    </svg>
+  ),
+  /* ── Modern Trash bin icon (provided SVG) ── */
+  Trash: () => (
+    <svg width="16" height="16" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 20 2 C 18.35503 2 17 3.3550302 17 5 L 17 7 L 4 7 A 1.0001 1.0001 0 1 0 4 9 L 17.832031 9 A 1.0001 1.0001 0 0 0 18.158203 9 L 29.832031 9 A 1.0001 1.0001 0 0 0 30.158203 9 L 44 9 A 1.0001 1.0001 0 1 0 44 7 L 31 7 L 31 5 C 31 3.3550302 29.64497 2 28 2 L 20 2 z M 20 4 L 28 4 C 28.56503 4 29 4.4349698 29 5 L 29 7 L 19 7 L 19 5 C 19 4.4349698 19.43497 4 20 4 z M 6.9804688 10.986328 A 1.0001 1.0001 0 0 0 5.9941406 12.09375 L 8.6640625 40.462891 C 8.900709 43.030242 11.061274 45 13.640625 45 L 34.359375 45 C 36.938726 45 39.099291 43.030242 39.335938 40.462891 L 39.335938 40.460938 L 42.005859 12.09375 A 1.0004955 1.0004955 0 1 0 40.013672 11.90625 L 37.34375 40.275391 A 1.0001 1.0001 0 0 0 37.34375 40.279297 C 37.199488 41.851004 35.939375 43 34.359375 43 L 13.640625 43 C 12.060625 43 10.800512 41.850998 10.65625 40.279297 A 1.0001 1.0001 0 0 0 10.65625 40.275391 L 7.9863281 11.90625 A 1.0001 1.0001 0 0 0 6.9804688 10.986328 z" />
+    </svg>
+  ),
+  X: () => (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M11 3L3 11M3 3l8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  Save: () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M13.5 2.5L11 1H3a1.5 1.5 0 00-1.5 1.5v11A1.5 1.5 0 003 15h10a1.5 1.5 0 001.5-1.5V4.5l-1-2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+      <rect x="4.5" y="1" width="5" height="4" rx=".5" stroke="currentColor" strokeWidth="1.3" />
+      <rect x="3" y="9" width="10" height="6" rx=".5" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
+  ),
+  Image: () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="5.5" cy="6" r="1.5" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M1.5 10.5l4-3.5 3 2.5 2.5-2 3 4" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+    </svg>
+  ),
+  /* ChevronRight — CSS flips it in RTL via .faq-chevron-icon */
+  ChevronRight: () => (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="faq-chevron-icon">
+      <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  Hash: () => (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M2.5 5.5h9M2.5 8.5h9M5.5 2l-1 10M9.5 2l-1 10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  ),
+  Tag: () => (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M7.5 1.5H12.5V6.5L7 12a1 1 0 01-1.5 0L1 7.5a1 1 0 010-1.5L7.5 1.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+      <circle cx="10" cy="4" r="1" fill="currentColor" />
+    </svg>
+  ),
+  Layers: () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 1.5l6 3-6 3-6-3 6-3z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+      <path d="M2 10l6 3 6-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2 7.5l6 3 6-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  Activity: () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M1.5 8h2.5l2-5 3 10 2-7 1.5 2H14.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+};
+
+// ─── Stat Card ───────────────────────────────────────────────────────────────
+function StatCard({ icon, label, value, accent, delay = 0 }) {
+  return (
+    <div className={`faq-stat-card faq-stat-card--${accent}`} style={{ animationDelay: `${delay}ms` }}>
+      <div className={`faq-stat-icon faq-stat-icon--${accent}`}>{icon}</div>
+      <div className="faq-stat-body">
+        <span className="faq-stat-value">{value}</span>
+        <span className="faq-stat-label">{label}</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Badge ────────────────────────────────────────────────────────────────────
+function StatusBadge({ active, t }) {
+  return (
+    <span className={`faq-badge ${active ? "faq-badge--active" : "faq-badge--inactive"}`}>
+      <span className="faq-badge-dot" />
+      {active ? t("cms.faq.status.active") : t("cms.faq.status.inactive")}
+    </span>
+  );
+}
+
+// ─── Empty State ─────────────────────────────────────────────────────────────
+function EmptyState({ message }) {
+  return (
+    <div className="faq-empty">
+      <div className="faq-empty-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1.5" opacity=".3" />
+          <path d="M14 17a6 6 0 0112 0c0 4-6 5-6 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" opacity=".5" />
+          <circle cx="20" cy="31" r="1.5" fill="currentColor" opacity=".5" />
+        </svg>
+      </div>
+      <p>{message}</p>
+    </div>
+  );
+}
+
+// ─── Form Section Divider ─────────────────────────────────────────────────────
+function SectionDivider({ icon, label }) {
+  return (
+    <div className="faq-form-section-divider">
+      <span className="faq-form-section-icon">{icon}</span>
+      <span className="faq-form-section-label">{label}</span>
+      <div className="faq-form-section-line" />
+    </div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 export default function CMS_FAQ() {
   const { t, i18n } = useTranslation();
-  const { faqs, fetchFaqs, createFaq, updateFaq, deleteFaq } = useFaqCmsStore();
+  const isRtl = i18n.language === "ar";
+  const { alert, show } = useSweetAlert();
 
-  const [edit, setEdit] = useState(null);
-  const [form, setForm] = useState({
-    question_ar: "",
-    question_en: "",
-    answer_ar: "",
-    answer_en: "",
-    order: 0,
-    is_active: true,
+  const {
+    faqs,
+    fetchFaqs,
+    createFaq,
+    updateFaq,
+    deleteFaq,
+    categories,
+    fetchCategories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+  } = useFaqCmsStore();
+
+  const [activeTab, setActiveTab] = useState("overview");
+
+  const [faqEdit, setFaqEdit] = useState(null);
+  const [faqSaving, setFaqSaving] = useState(false);
+  const [faqForm, setFaqForm] = useState({
+    category: "", question_ar: "", question_en: "",
+    answer_ar: "", answer_en: "", order: 0, is_active: true,
   });
 
-  useEffect(() => {
-    fetchFaqs();
-  }, []);
+  const [catEdit, setCatEdit] = useState(null);
+  const [catSaving, setCatSaving] = useState(false);
+  const [catIconPreview, setCatIconPreview] = useState(null);
+  const [catIconFile, setCatIconFile] = useState(null);
+  const [catForm, setCatForm] = useState({
+    title_ar: "", title_en: "", slug: "", order: 0, is_active: true,
+  });
 
-  const handleSubmit = async (e) => {
+  const faqFormRef = useRef(null);
+  const catFormRef = useRef(null);
+
+  useEffect(() => { fetchFaqs(); fetchCategories(); }, []);
+
+  const totalCategories = categories.length;
+  const totalQuestions = faqs.length;
+  const activeQuestions = faqs.filter((f) => f.is_active).length;
+  const inactiveQuestions = faqs.filter((f) => !f.is_active).length;
+
+  // ─── FAQ Handlers ──────────────────────────────────────────────────────────
+  const handleFaqSubmit = async (e) => {
     e.preventDefault();
-
-    const res = edit
-      ? await updateFaq(edit.id, form)
-      : await createFaq(form);
-
-    if (res.success) {
-      toast.success(t("cms.faq.success.saved"));
-      setEdit(null);
-      setForm({
-        question_ar: "",
-        question_en: "",
-        answer_ar: "",
-        answer_en: "",
-        order: 0,
-        is_active: true,
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    setFaqSaving(true);
+    try {
+      const res = faqEdit ? await updateFaq(faqEdit.id, faqForm) : await createFaq(faqForm);
+      if (res.success) { toast.success(t("cms.faq.success.saved")); resetFaqForm(); }
+    } catch { toast.error(t("cms.faq.error.save_failed")); }
+    finally { setFaqSaving(false); }
   };
 
-  const handleEdit = (f) => {
-    setEdit(f);
-    setForm(f);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleCancel = () => {
-    setEdit(null);
-    setForm({
-      question_ar: "",
-      question_en: "",
-      answer_ar: "",
-      answer_en: "",
-      order: 0,
-      is_active: true,
+  const handleFaqEdit = (f) => {
+    setFaqEdit(f);
+    setFaqForm({
+      category: f.category || "", question_ar: f.question_ar, question_en: f.question_en,
+      answer_ar: f.answer_ar, answer_en: f.answer_en, order: f.order, is_active: f.is_active,
     });
+    setActiveTab("questions");
+    setTimeout(() => faqFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
   };
 
-  const handleDelete = async (id) => {
-    const result = await Swal.fire({
+  const handleFaqDelete = async (id) => {
+    const confirmed = await show({
+      type: "confirm",
       title: t("cms.faq.confirm_delete_title"),
-      text: t("cms.faq.confirm_delete_text"),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#ef4444',
-      cancelButtonColor: '#6b7280',
-      confirmButtonText: t("cms.faq.delete_button"),
-      cancelButtonText: t("cms.faq.cancel_button"),
-      reverseButtons: i18n.language === 'ar',
+      message: t("cms.faq.confirm_delete_text"),
+      confirmText: t("cms.faq.delete_button"),
+      cancelText: t("cms.faq.cancel_button"),
+      showCancel: true,
     });
+    if (confirmed) { const res = await deleteFaq(id); if (res.success) toast.success(t("cms.faq.success.deleted")); }
+  };
 
-    if (result.isConfirmed) {
-      const res = await deleteFaq(id);
-      if (res.success) {
-        Swal.fire({
-          title: t("cms.faq.deleted_title"),
-          text: t("cms.faq.success.deleted"),
-          icon: 'success',
-          confirmButtonColor: '#22c55e',
-        });
-      }
-    }
+  const resetFaqForm = () => {
+    setFaqEdit(null);
+    setFaqForm({ category: "", question_ar: "", question_en: "", answer_ar: "", answer_en: "", order: 0, is_active: true });
+  };
+
+  // ─── Category Handlers ─────────────────────────────────────────────────────
+  const handleCatSubmit = async (e) => {
+    e.preventDefault();
+    setCatSaving(true);
+    try {
+      const fd = new FormData();
+      fd.append("title_ar", catForm.title_ar);
+      fd.append("title_en", catForm.title_en);
+      if (catForm.slug) fd.append("slug", catForm.slug);
+      fd.append("order", catForm.order);
+      fd.append("is_active", catForm.is_active);
+      if (catIconFile) fd.append("icon", catIconFile);
+      const res = catEdit ? await updateCategory(catEdit.id, fd) : await createCategory(fd);
+      if (res.success) { toast.success(t("cms.faq.success.saved")); resetCatForm(); }
+    } catch { toast.error(t("cms.faq.error.save_failed")); }
+    finally { setCatSaving(false); }
+  };
+
+  const handleCatEdit = (c) => {
+    setCatEdit(c);
+    setCatForm({ title_ar: c.title_ar, title_en: c.title_en, slug: c.slug || "", order: c.order, is_active: c.is_active });
+    setCatIconPreview(c.icon_url || null);
+    setCatIconFile(null);
+    catFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleCatDelete = async (id) => {
+    const confirmed = await show({
+      type: "confirm",
+      title: t("cms.faq.category.confirm_delete_title"),
+      message: t("cms.faq.category.confirm_delete_text"),
+      confirmText: t("cms.faq.delete_button"),
+      cancelText: t("cms.faq.cancel_button"),
+      showCancel: true,
+    });
+    if (confirmed) { const res = await deleteCategory(id); if (res.success) toast.success(t("cms.faq.success.deleted")); }
+  };
+
+  const resetCatForm = () => {
+    setCatEdit(null);
+    setCatForm({ title_ar: "", title_en: "", slug: "", order: 0, is_active: true });
+    setCatIconPreview(null); setCatIconFile(null);
+  };
+
+  const handleIconChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setCatIconFile(file);
+    setCatIconPreview(URL.createObjectURL(file));
+  };
+
+  const tabs = [
+    { key: "overview", label: t("cms.faq.tabs.overview"), icon: <Icon.Grid /> },
+    { key: "categories", label: t("cms.faq.tabs.categories"), icon: <Icon.Folder /> },
+    { key: "questions", label: t("cms.faq.tabs.questions"), icon: <Icon.QuestionMark /> },
+  ];
+
+  const getCatName = (id) => {
+    const cat = categories.find((c) => String(c.id) === String(id));
+    if (!cat) return "—";
+    return isRtl ? cat.title_ar : cat.title_en;
   };
 
   return (
-    <div className="dashboard-faq-container">
-      {/* ===== HEADER ===== */}
-      <div className="dashboard-faq-header">
-        <div className="dashboard-faq-header-content">
-          <h1 className="dashboard-faq-title">{t("cms.faq.title")}</h1>
-          <p className="dashboard-faq-subtitle">{t("cms.faq.subtitle")}</p>
-        </div>
-      </div>
+    <>
+      {alert}
 
-      {/* ===== FORM CARD ===== */}
-      <div className="dashboard-faq-form-card">
-        <div className="dashboard-faq-form-header">
-          <div className="dashboard-faq-form-header-left">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 19H11V17H13V19ZM15.07 11.25L14.17 12.17C13.45 12.9 13 13.5 13 15H11V14.5C11 13.4 11.45 12.4 12.17 11.67L13.41 10.41C13.78 10.05 14 9.55 14 9C14 7.9 13.1 7 12 7C10.9 7 10 7.9 10 9H8C8 6.79 9.79 5 12 5C14.21 5 16 6.79 16 9C16 9.88 15.64 10.68 15.07 11.25Z" fill="currentColor"/>
-            </svg>
-            <h2>{edit ? t("cms.faq.form_title_edit") : t("cms.faq.form_title_create")}</h2>
+      <div className="faq-dashboard" dir={isRtl ? "rtl" : "ltr"}>
+
+        {/* PAGE HEADER */}
+        <div className="faq-page-header">
+          <div className="faq-page-header-left">
+            <div className="faq-page-header-icon"><Icon.Layers /></div>
+            <div>
+              <h1 className="faq-page-title">{t("cms.faq.title")}</h1>
+              <p className="faq-page-subtitle">{t("cms.faq.subtitle")}</p>
+            </div>
           </div>
-          {edit && (
-            <button className="dashboard-faq-btn-cancel" onClick={handleCancel}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              {t("cms.faq.actions.cancel")}
-            </button>
-          )}
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="dashboard-faq-form-section">
-            <h3 className="dashboard-faq-section-title">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M9 1.5C4.86 1.5 1.5 4.86 1.5 9C1.5 13.14 4.86 16.5 9 16.5C13.14 16.5 16.5 13.14 16.5 9C16.5 4.86 13.14 1.5 9 1.5ZM10.5 13.5H7.5V12H10.5V13.5ZM10.5 10.5H7.5V4.5H10.5V10.5Z" fill="currentColor"/>
-              </svg>
-              {t("cms.faq.section_questions")}
-            </h3>
-
-            <div className="dashboard-faq-form-grid-row">
-              <div className="dashboard-faq-form-group">
-                <label className="dashboard-faq-label">{t("cms.faq.fields.question_ar")}</label>
-                <input
-                  className="dashboard-faq-input"
-                  placeholder={t("cms.faq.placeholders.question_ar")}
-                  value={form.question_ar}
-                  onChange={(e) => setForm({ ...form, question_ar: e.target.value })}
-                  required
-                  dir="rtl"
-                />
-              </div>
-
-              <div className="dashboard-faq-form-group">
-                <label className="dashboard-faq-label">{t("cms.faq.fields.question_en")}</label>
-                <input
-                  className="dashboard-faq-input"
-                  placeholder={t("cms.faq.placeholders.question_en")}
-                  value={form.question_en}
-                  onChange={(e) => setForm({ ...form, question_en: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="dashboard-faq-form-section">
-            <h3 className="dashboard-faq-section-title">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M15 2.25H3C2.175 2.25 1.5 2.925 1.5 3.75V14.25C1.5 15.075 2.175 15.75 3 15.75H15C15.825 15.75 16.5 15.075 16.5 14.25V3.75C16.5 2.925 15.825 2.25 15 2.25ZM15 14.25H3V6H15V14.25Z" fill="currentColor"/>
-              </svg>
-              {t("cms.faq.section_answers")}
-            </h3>
-
-            <div className="dashboard-faq-form-grid-row">
-              <div className="dashboard-faq-form-group">
-                <label className="dashboard-faq-label">{t("cms.faq.fields.answer_ar")}</label>
-                <textarea
-                  className="dashboard-faq-textarea"
-                  placeholder={t("cms.faq.placeholders.answer_ar")}
-                  value={form.answer_ar}
-                  onChange={(e) => setForm({ ...form, answer_ar: e.target.value })}
-                  required
-                  dir="rtl"
-                />
-              </div>
-
-              <div className="dashboard-faq-form-group">
-                <label className="dashboard-faq-label">{t("cms.faq.fields.answer_en")}</label>
-                <textarea
-                  className="dashboard-faq-textarea"
-                  placeholder={t("cms.faq.placeholders.answer_en")}
-                  value={form.answer_en}
-                  onChange={(e) => setForm({ ...form, answer_en: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="dashboard-faq-form-section">
-            <h3 className="dashboard-faq-section-title">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M13.5 2.25H4.5C3.675 2.25 3 2.925 3 3.75V14.25C3 15.075 3.675 15.75 4.5 15.75H13.5C14.325 15.75 15 15.075 15 14.25V3.75C15 2.925 14.325 2.25 13.5 2.25ZM13.5 14.25H4.5V3.75H13.5V14.25Z" fill="currentColor"/>
-              </svg>
-              {t("cms.faq.section_settings")}
-            </h3>
-
-            <div className="dashboard-faq-form-grid">
-              <div className="dashboard-faq-form-group">
-                <label className="dashboard-faq-label">{t("cms.faq.fields.order")}</label>
-                <input
-                  className="dashboard-faq-input"
-                  type="number"
-                  placeholder={t("cms.faq.placeholders.order")}
-                  value={form.order}
-                  onChange={(e) => setForm({ ...form, order: e.target.value })}
-                />
-              </div>
-
-              <div className="dashboard-faq-form-group dashboard-faq-checkbox-wrapper">
-                <label className="dashboard-faq-checkbox-label">
-                  <input
-                    type="checkbox"
-                    className="dashboard-faq-checkbox"
-                    checked={form.is_active}
-                    onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
-                  />
-                  <span className="dashboard-faq-checkbox-text">{t("cms.faq.fields.active")}</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="dashboard-faq-form-actions">
-            <button type="submit" className="dashboard-faq-btn-primary">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M15.75 8.0625V15.1875C15.75 15.4361 15.6512 15.6746 15.4754 15.8504C15.2996 16.0262 15.0611 16.125 14.8125 16.125H3.1875C2.93886 16.125 2.70041 16.0262 2.52459 15.8504C2.34878 15.6746 2.25 15.4361 2.25 15.1875V3.5625C2.25 3.31386 2.34878 3.07541 2.52459 2.89959C2.70041 2.72378 2.93886 2.625 3.1875 2.625H10.3125" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M13.5 1.5L16.5 4.5L8.25 12.75H5.25V9.75L13.5 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              {edit ? t("cms.faq.actions.update") : t("cms.faq.actions.create")}
-            </button>
-            {edit && (
-              <button type="button" className="dashboard-faq-btn-secondary" onClick={handleCancel}>
-                {t("cms.faq.actions.cancel")}
+        {/* TABS */}
+        <div className="faq-tabs-bar">
+          <div className="faq-tabs-inner">
+            {tabs.map((tab) => (
+              <button key={tab.key}
+                className={`faq-tab-btn ${activeTab === tab.key ? "faq-tab-btn--active" : ""}`}
+                onClick={() => setActiveTab(tab.key)}
+              >
+                <span className="faq-tab-btn-icon">{tab.icon}</span>
+                <span>{tab.label}</span>
+                {tab.key === "categories" && <span className="faq-tab-pill">{totalCategories}</span>}
+                {tab.key === "questions" && <span className="faq-tab-pill">{totalQuestions}</span>}
               </button>
-            )}
+            ))}
           </div>
-        </form>
-      </div>
-
-      {/* ===== LIST CARD ===== */}
-      <div className="dashboard-faq-list-card">
-        <div className="dashboard-faq-list-header">
-          <div className="dashboard-faq-list-title-wrapper">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M3 3H17V7H3V3ZM3 9H17V13H3V9ZM3 15H17V17H3V15Z" fill="currentColor"/>
-            </svg>
-            <h2 className="dashboard-faq-list-title">{t("cms.faq.list_title")}</h2>
-          </div>
-          <span className="dashboard-faq-count-badge">{faqs.length}</span>
         </div>
 
-        {faqs.length === 0 ? (
-          <div className="dashboard-faq-empty">{t("cms.faq.empty")}</div>
-        ) : (
-          faqs.map((f) => (
-            <div key={f.id} className="dashboard-faq-item">
-              <div className="dashboard-faq-item-header">
-                <div className="dashboard-faq-question">
-                  {i18n.language === 'ar' ? f.question_ar : f.question_en}
+        {/* ── OVERVIEW ── */}
+        {activeTab === "overview" && (
+          <div className="faq-tab-content faq-tab-content--animate">
+            <div className="faq-stats-grid">
+              <StatCard icon={<Icon.Folder />} label={t("cms.faq.overview.total_categories")} value={totalCategories} accent="blue" delay={0} />
+              <StatCard icon={<Icon.Layers />} label={t("cms.faq.overview.total_questions")} value={totalQuestions} accent="purple" delay={60} />
+              <StatCard icon={<Icon.Activity />} label={t("cms.faq.overview.active_questions")} value={activeQuestions} accent="green" delay={120} />
+              <StatCard icon={<Icon.Hash />} label={t("cms.faq.overview.inactive_questions")} value={inactiveQuestions} accent="amber" delay={180} />
+            </div>
+
+            <div className="faq-overview-grid">
+              {/* Recent Categories */}
+              <div className="faq-card">
+                <div className="faq-card-header">
+                  <div className="faq-card-header-left">
+                    <span className="faq-card-header-icon faq-card-header-icon--blue"><Icon.Folder /></span>
+                    <h3 className="faq-card-title">{t("cms.faq.overview.recent_categories")}</h3>
+                  </div>
+                  <button className="faq-card-link-btn" onClick={() => setActiveTab("categories")}>
+                    {t("cms.faq.overview.view_all")}<Icon.ChevronRight />
+                  </button>
                 </div>
-                <div className="dashboard-faq-item-actions">
-                  <button className="dashboard-faq-btn-edit" onClick={() => handleEdit(f)}>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <path d="M11.333 2L14 4.667L5.333 13.333H2.667V10.667L11.333 2Z" fill="currentColor"/>
-                    </svg>
-                    {t("cms.faq.actions.edit")}
-                  </button>
-                  <button className="dashboard-faq-btn-delete" onClick={() => handleDelete(f.id)}>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <path d="M4 6V14H12V6H4ZM10.5 2L9.5 1H6.5L5.5 2H2V4H14V2H10.5Z" fill="currentColor"/>
-                    </svg>
-                    {t("cms.faq.actions.delete")}
-                  </button>
+                <div className="faq-card-body">
+                  {categories.length === 0 ? <EmptyState message={t("cms.faq.category.empty")} /> : (
+                    categories.slice(0, 5).map((c, i) => (
+                      <div key={c.id} className="faq-overview-row" style={{ animationDelay: `${i * 50}ms` }}>
+                        <div className="faq-overview-row-left">
+                          {c.icon_url
+                            ? <img src={c.icon_url} alt="" className="faq-overview-icon-img" />
+                            : <div className="faq-overview-icon-placeholder"><Icon.Folder /></div>}
+                          <div>
+                            <p className="faq-overview-name">{isRtl ? c.title_ar : c.title_en}</p>
+                            <p className="faq-overview-sub">{c.slug}</p>
+                          </div>
+                        </div>
+                        <div className="faq-overview-row-right">
+                          <StatusBadge active={c.is_active} t={t} />
+                          <span className="faq-overview-count">{c.faqs?.length ?? 0} {t("cms.faq.overview.questions_count")}</span>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
-              
-              <div className="dashboard-faq-answer">
-                {i18n.language === 'ar' ? f.answer_ar : f.answer_en}
-              </div>
-              
-              <div className="dashboard-faq-meta">
-                <span className="dashboard-faq-order">
-                  {t("cms.faq.table.order")}: {f.order}
-                </span>
-                <span className={`dashboard-faq-status ${f.is_active ? 'dashboard-faq-status-active' : 'dashboard-faq-status-inactive'}`}>
-                  {f.is_active ? t("cms.faq.status.active") : t("cms.faq.status.inactive")}
-                </span>
+
+              {/* Recent Questions */}
+              <div className="faq-card">
+                <div className="faq-card-header">
+                  <div className="faq-card-header-left">
+                    <span className="faq-card-header-icon faq-card-header-icon--purple"><Icon.QuestionMark /></span>
+                    <h3 className="faq-card-title">{t("cms.faq.overview.recent_questions")}</h3>
+                  </div>
+                  <button className="faq-card-link-btn" onClick={() => setActiveTab("questions")}>
+                    {t("cms.faq.overview.view_all")}<Icon.ChevronRight />
+                  </button>
+                </div>
+                <div className="faq-card-body">
+                  {faqs.length === 0 ? <EmptyState message={t("cms.faq.empty")} /> : (
+                    faqs.slice(0, 5).map((f, i) => (
+                      <div key={f.id} className="faq-overview-row" style={{ animationDelay: `${i * 50}ms` }}>
+                        <div className="faq-overview-row-left">
+                          <div className="faq-overview-icon-placeholder faq-overview-icon-placeholder--purple"><Icon.QuestionMark /></div>
+                          <div>
+                            <p className="faq-overview-name">{isRtl ? f.question_ar : f.question_en}</p>
+                            <span className="faq-cat-chip">{getCatName(f.category)}</span>
+                          </div>
+                        </div>
+                        <div className="faq-overview-row-right">
+                          <StatusBadge active={f.is_active} t={t} />
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
-          ))
+          </div>
         )}
+
+        {/* ── CATEGORIES ── */}
+        {activeTab === "categories" && (
+          <div className="faq-tab-content faq-tab-content--animate">
+            <div className="faq-card faq-card--form" ref={catFormRef}>
+              <div className="faq-card-header">
+                <div className="faq-card-header-left">
+                  <span className="faq-card-header-icon faq-card-header-icon--blue"><Icon.Folder /></span>
+                  <h3 className="faq-card-title">{catEdit ? t("cms.faq.category.form_title_edit") : t("cms.faq.category.form_title_create")}</h3>
+                </div>
+                {catEdit && <button className="faq-icon-btn faq-icon-btn--ghost" onClick={resetCatForm}><Icon.X /></button>}
+              </div>
+              <form onSubmit={handleCatSubmit} className="faq-form">
+                <SectionDivider icon={<Icon.Tag />} label={t("cms.faq.category.section_titles")} />
+                <div className="faq-form-row">
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.category.fields.title_ar")}</label>
+                    <input className="faq-input" dir="rtl" placeholder={t("cms.faq.category.placeholders.title_ar")} value={catForm.title_ar} onChange={(e) => setCatForm({ ...catForm, title_ar: e.target.value })} required />
+                  </div>
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.category.fields.title_en")}</label>
+                    <input className="faq-input" dir="ltr" placeholder={t("cms.faq.category.placeholders.title_en")} value={catForm.title_en} onChange={(e) => setCatForm({ ...catForm, title_en: e.target.value })} required />
+                  </div>
+                </div>
+                <SectionDivider icon={<Icon.Hash />} label={t("cms.faq.category.section_settings")} />
+                <div className="faq-form-row">
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.category.fields.slug")} <span className="faq-label-hint">{t("cms.faq.category.slug_hint")}</span></label>
+                    <input className="faq-input" dir="ltr" placeholder={t("cms.faq.category.placeholders.slug")} value={catForm.slug} onChange={(e) => setCatForm({ ...catForm, slug: e.target.value })} />
+                  </div>
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.fields.order")}</label>
+                    <input className="faq-input" type="number" min="0" placeholder="0" value={catForm.order} onChange={(e) => setCatForm({ ...catForm, order: e.target.value })} />
+                  </div>
+                </div>
+                <SectionDivider icon={<Icon.Image />} label={t("cms.faq.category.section_media")} />
+                <div className="faq-form-row">
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.category.fields.icon")}</label>
+                    <div className="faq-file-row">
+                      {catIconPreview && <div className="faq-icon-preview"><img src={catIconPreview} alt="preview" /></div>}
+                      <label className="faq-file-label">
+                        <Icon.Image /><span>{t("cms.faq.category.choose_icon")}</span>
+                        <input type="file" accept=".png,.jpg,.jpeg,.svg" className="faq-file-input" onChange={handleIconChange} />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="faq-form-group faq-form-group--center">
+                    <label className="faq-label">{t("cms.faq.fields.active")}</label>
+                    <label className="faq-toggle">
+                      <input type="checkbox" checked={catForm.is_active} onChange={(e) => setCatForm({ ...catForm, is_active: e.target.checked })} />
+                      <span className="faq-toggle-track"><span className="faq-toggle-thumb" /></span>
+                      <span className="faq-toggle-label">{catForm.is_active ? t("cms.faq.status.active") : t("cms.faq.status.inactive")}</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="faq-form-actions">
+                  <button type="submit" className="faq-btn faq-btn--primary" disabled={catSaving}>
+                    {catSaving ? <span className="faq-spinner" /> : <Icon.Save />}
+                    {catEdit ? t("cms.faq.actions.update") : t("cms.faq.actions.create")}
+                  </button>
+                  {catEdit && <button type="button" className="faq-btn faq-btn--ghost" onClick={resetCatForm}><Icon.X />{t("cms.faq.actions.cancel")}</button>}
+                </div>
+              </form>
+            </div>
+
+            <div className="faq-card">
+              <div className="faq-card-header">
+                <div className="faq-card-header-left">
+                  <span className="faq-card-header-icon faq-card-header-icon--blue"><Icon.Layers /></span>
+                  <h3 className="faq-card-title">{t("cms.faq.category.list_title")}</h3>
+                </div>
+                <span className="faq-count-badge">{categories.length}</span>
+              </div>
+              {categories.length === 0 ? <EmptyState message={t("cms.faq.category.empty")} /> : (
+                <div className="faq-table-wrapper">
+                  <table className="faq-table">
+                    <thead>
+                      <tr>
+                        <th>{t("cms.faq.category.table.icon")}</th>
+                        <th>{t("cms.faq.category.table.title_ar")}</th>
+                        <th>{t("cms.faq.category.table.title_en")}</th>
+                        <th>{t("cms.faq.category.table.slug")}</th>
+                        <th>{t("cms.faq.category.table.order")}</th>
+                        <th>{t("cms.faq.category.table.status")}</th>
+                        <th>{t("cms.faq.category.table.actions")}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {categories.map((c, i) => (
+                        <tr key={c.id} style={{ animationDelay: `${i * 40}ms` }} className="faq-table-row--animate">
+                          <td>{c.icon_url ? <img src={c.icon_url} alt="" className="faq-table-icon" /> : <div className="faq-table-icon-placeholder"><Icon.Folder /></div>}</td>
+                          <td dir="rtl" className="faq-cell-ar">{c.title_ar}</td>
+                          <td className="faq-cell-en">{c.title_en}</td>
+                          <td><code className="faq-slug-code">{c.slug}</code></td>
+                          <td><span className="faq-order-chip">{c.order}</span></td>
+                          <td><StatusBadge active={c.is_active} t={t} /></td>
+                          <td>
+                            <div className="faq-actions-cell">
+                              <button className="faq-icon-btn faq-icon-btn--edit" onClick={() => handleCatEdit(c)} title={t("cms.faq.actions.edit")}><Icon.Edit /></button>
+                              <button className="faq-icon-btn faq-icon-btn--delete" onClick={() => handleCatDelete(c.id)} title={t("cms.faq.actions.delete")}><Icon.Trash /></button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ── QUESTIONS ── */}
+        {activeTab === "questions" && (
+          <div className="faq-tab-content faq-tab-content--animate">
+            <div className="faq-card faq-card--form" ref={faqFormRef}>
+              <div className="faq-card-header">
+                <div className="faq-card-header-left">
+                  <span className="faq-card-header-icon faq-card-header-icon--purple"><Icon.QuestionMark /></span>
+                  <h3 className="faq-card-title">{faqEdit ? t("cms.faq.form_title_edit") : t("cms.faq.form_title_create")}</h3>
+                </div>
+                {faqEdit && <button className="faq-icon-btn faq-icon-btn--ghost" onClick={resetFaqForm}><Icon.X /></button>}
+              </div>
+              <form onSubmit={handleFaqSubmit} className="faq-form">
+                <SectionDivider icon={<Icon.QuestionMark />} label={t("cms.faq.section_questions")} />
+                <div className="faq-form-row">
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.fields.question_ar")}</label>
+                    <input className="faq-input" dir="rtl" placeholder={t("cms.faq.placeholders.question_ar")} value={faqForm.question_ar} onChange={(e) => setFaqForm({ ...faqForm, question_ar: e.target.value })} required />
+                  </div>
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.fields.question_en")}</label>
+                    <input className="faq-input" dir="ltr" placeholder={t("cms.faq.placeholders.question_en")} value={faqForm.question_en} onChange={(e) => setFaqForm({ ...faqForm, question_en: e.target.value })} required />
+                  </div>
+                </div>
+                <SectionDivider icon={<Icon.Layers />} label={t("cms.faq.section_answers")} />
+                <div className="faq-form-row">
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.fields.answer_ar")}</label>
+                    <textarea className="faq-textarea" dir="rtl" placeholder={t("cms.faq.placeholders.answer_ar")} value={faqForm.answer_ar} onChange={(e) => setFaqForm({ ...faqForm, answer_ar: e.target.value })} required />
+                  </div>
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.fields.answer_en")}</label>
+                    <textarea className="faq-textarea" dir="ltr" placeholder={t("cms.faq.placeholders.answer_en")} value={faqForm.answer_en} onChange={(e) => setFaqForm({ ...faqForm, answer_en: e.target.value })} required />
+                  </div>
+                </div>
+                <SectionDivider icon={<Icon.Hash />} label={t("cms.faq.section_settings")} />
+                <div className="faq-form-row">
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.fields.category")}</label>
+                    <select className="faq-input faq-select" value={faqForm.category} onChange={(e) => setFaqForm({ ...faqForm, category: e.target.value })} required>
+                      <option value="">{t("cms.faq.placeholders.category")}</option>
+                      {categories.map((c) => <option key={c.id} value={c.id}>{isRtl ? c.title_ar : c.title_en}</option>)}
+                    </select>
+                  </div>
+                  <div className="faq-form-group">
+                    <label className="faq-label">{t("cms.faq.fields.order")}</label>
+                    <input className="faq-input" type="number" min="0" placeholder="0" value={faqForm.order} onChange={(e) => setFaqForm({ ...faqForm, order: e.target.value })} />
+                  </div>
+                </div>
+                <div className="faq-form-row">
+                  <div className="faq-form-group faq-form-group--center">
+                    <label className="faq-label">{t("cms.faq.fields.active")}</label>
+                    <label className="faq-toggle">
+                      <input type="checkbox" checked={faqForm.is_active} onChange={(e) => setFaqForm({ ...faqForm, is_active: e.target.checked })} />
+                      <span className="faq-toggle-track"><span className="faq-toggle-thumb" /></span>
+                      <span className="faq-toggle-label">{faqForm.is_active ? t("cms.faq.status.active") : t("cms.faq.status.inactive")}</span>
+                    </label>
+                  </div>
+                  <div className="faq-form-spacer" aria-hidden="true" />
+                </div>
+                <div className="faq-form-actions">
+                  <button type="submit" className="faq-btn faq-btn--primary" disabled={faqSaving}>
+                    {faqSaving ? <span className="faq-spinner" /> : <Icon.Save />}
+                    {faqEdit ? t("cms.faq.actions.update") : t("cms.faq.actions.create")}
+                  </button>
+                  {faqEdit && <button type="button" className="faq-btn faq-btn--ghost" onClick={resetFaqForm}><Icon.X />{t("cms.faq.actions.cancel")}</button>}
+                </div>
+              </form>
+            </div>
+
+            <div className="faq-card">
+              <div className="faq-card-header">
+                <div className="faq-card-header-left">
+                  <span className="faq-card-header-icon faq-card-header-icon--purple"><Icon.Layers /></span>
+                  <h3 className="faq-card-title">{t("cms.faq.list_title")}</h3>
+                </div>
+                <span className="faq-count-badge">{faqs.length}</span>
+              </div>
+              {faqs.length === 0 ? <EmptyState message={t("cms.faq.empty")} /> : (
+                <div className="faq-questions-list">
+                  {faqs.map((f, i) => (
+                    <div key={f.id} className="faq-question-card" style={{ animationDelay: `${i * 40}ms` }}>
+                      <div className="faq-question-card-top">
+                        <div className="faq-question-card-main">
+                          <p className="faq-question-text">{isRtl ? f.question_ar : f.question_en}</p>
+                          <p className="faq-answer-preview">
+                            {(isRtl ? f.answer_ar : f.answer_en)?.slice(0, 120)}
+                            {(isRtl ? f.answer_ar : f.answer_en)?.length > 120 ? "…" : ""}
+                          </p>
+                        </div>
+                        <div className="faq-question-card-actions">
+                          <button className="faq-icon-btn faq-icon-btn--edit" onClick={() => handleFaqEdit(f)} title={t("cms.faq.actions.edit")}><Icon.Edit /></button>
+                          <button className="faq-icon-btn faq-icon-btn--delete" onClick={() => handleFaqDelete(f.id)} title={t("cms.faq.actions.delete")}><Icon.Trash /></button>
+                        </div>
+                      </div>
+                      <div className="faq-question-card-footer">
+                        <span className="faq-cat-chip"><Icon.Tag /> {getCatName(f.category)}</span>
+                        <span className="faq-order-chip"><Icon.Hash /> {f.order}</span>
+                        <StatusBadge active={f.is_active} t={t} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
       </div>
-    </div>
+    </>
+
   );
 }

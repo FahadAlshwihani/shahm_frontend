@@ -12,19 +12,29 @@
 }
 
 /* ===== OVERLAY ===== */
+/* ===== OVERLAY ===== */
 .srm-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10000;
   padding: 20px;
-  overflow-y: auto;
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Lock body scroll whenever modal is open */
+body:has(.srm-overlay) {
+  overflow: hidden;
+  touch-action: none;
 }
 
 /* ===== MODAL CONTAINER - Responsive ===== */
@@ -33,14 +43,16 @@
   border-radius: 12px;
   width: 858px;
   max-width: calc(100vw - 40px);
-  max-height: calc(100vh - 40px);
+  height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 68px 64px;
+  padding: 64px 64px;
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   animation: slideUp 0.4s ease-out;
   margin: auto;
+  box-sizing: border-box;
 }
 
 @keyframes slideUp {
@@ -59,8 +71,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 68px;
+  margin-bottom: 24px;
   position: relative;
+  min-height: 27px;
 }
 
 /* Logo - 551.8×45px - CENTERED */
@@ -70,25 +83,37 @@
   object-fit: contain;
 }
 
-/* Close Button - 24×24px - Absolute positioned */
+/* Close Button - with "Close" text label */
 .srm-close-button {
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
+  width: auto;
+  min-width: 80px;
+  height: 27px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  color: #353C3C;
+  color: #343C3C;
   transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 29px;
+  letter-spacing: 0%;
+  white-space: nowrap;
 }
 
 [dir="rtl"] .srm-close-button {
   left: auto;
   right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .srm-close-button:hover {
@@ -96,42 +121,57 @@
 }
 
 .srm-close-button svg {
-  width: 24px;
-  height: 24px;
+  width: 13.31px;
+  height: 13.31px;
+  flex-shrink: 0;
+  color: #343C3C;
 }
 
-/* ===== DIVIDER - 800px ===== */
+/* ===== DIVIDER - always full width, bleeds to container edges ===== */
 .srm-divider {
-  width: 800px;
+  width: calc(100% + 128px);
+  margin-left: -64px;
+  margin-right: -64px;
   height: 0;
-  border: 1px solid #E9ECEC;
-  margin: 0 0 60px 0;
+  border: none;
+  border-top: 1px solid #F7F8F8;
+  margin-bottom: 40px;
+  margin-top: 0;
 }
 
-/* ===== TERMS SECTION - 736×185px ===== */
+/* ===== TERMS SECTION ===== */
 .srm-terms {
-  width: 736px;
-  min-height: 185px;
-  margin-bottom: 60px;
+  width: 100%;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-/* Terms Title - 437×12px */
+/* Form Title - centered, Ciclo Display */
 .srm-terms-title {
-  width: 437px;
-  height: 12px;
-  font-family: var(--font-content);
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 29px;
+  width: 100%;
+  max-width: 466px;
+  height: auto;
+  font-family: var(--font-en-heading);
+  font-weight: 300;
+  font-size: 35px;
+  line-height: 1.2;
   letter-spacing: 0%;
-  color: #353C3C;
+  color: #343C3C;
   margin: 0 0 16px 0;
+  text-align: center;
 }
 
-/* Terms Description - 736×140px */
+[dir="rtl"] .srm-terms-title {
+  font-family: var(--font-ar-heading);
+}
+
+/* Terms Description */
 .srm-terms-description {
-  width: 736px;
-  min-height: 140px;
+  width: 100%;
+  max-width: 620px;
   font-family: var(--font-content);
   font-weight: 300;
   font-size: 14px;
@@ -139,6 +179,7 @@
   letter-spacing: 0%;
   color: #7D8D8D;
   margin: 0;
+  text-align: center;
 }
 
 /* WhatsApp and Book Appointment Links */
@@ -163,30 +204,36 @@
   margin-bottom: 40px;
 }
 
-/* Section Title - 235×12px */
+/* Section Title */
 .srm-section-title {
-  width: 235px;
-  height: 12px;
-  font-family: var(--font-content);
-  font-weight: 600;
-  font-size: 16px;
+  width: 100%;
+  max-width: 437px;
+  height: auto;
+  font-family: var(--font-en-heading);
+  font-weight: 400;
+  font-size: 20px;
   line-height: 29px;
   letter-spacing: 0%;
-  color: #353C3C;
-  margin: 0 0 8px 0;
+  color: #343C3C;
+  margin: 0 0 4px 0;
 }
 
-/* Section Subtitle - 303×30px */
+[dir="rtl"] .srm-section-title {
+  font-family: var(--font-ar-heading);
+}
+
+/* Section Subtitle */
 .srm-section-subtitle {
-  width: 303px;
-  height: 30px;
+  width: 100%;
+  max-width: 736px;
+  height: auto;
   font-family: var(--font-content);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 29px;
   letter-spacing: 0%;
-  color: #7D8D8D;
-  margin: 0 0 24px 0;
+  color: #7C8D8D;
+  margin: 0 0 20px 0;
 }
 
 /* ===== SERVICES LIST ===== */
@@ -269,8 +316,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0;
   width: 100%;
-  padding: 12px 0;
+  padding: 18px 0 8px 0;
+  height: 48px;
+  box-sizing: border-box;
   border: none;
   border-bottom: 1px solid #E9ECEC;
   background: transparent;
@@ -280,7 +330,7 @@
   transition: border-color 0.3s ease;
 }
 
-.srm-custom-select-trigger span {
+.srm-custom-select-trigger > span:first-child {
   flex: 1;
   text-align: start;
 }
@@ -300,11 +350,11 @@
 }
 
 [dir="ltr"] .srm-dropdown-arrow {
-  margin-left: auto;
+  margin-left: 0;
 }
 
 [dir="rtl"] .srm-dropdown-arrow {
-  margin-right: auto;
+  margin-right: 0;
 }
 
 .srm-dropdown-arrow.open {
@@ -333,6 +383,14 @@
   color: #353C3C;
   cursor: pointer;
   transition: background 0.2s ease;
+  list-style: none;
+}
+
+.srm-custom-select-dropdown {
+  list-style: none;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
 }
 
 .srm-custom-select-option:hover {
@@ -340,7 +398,7 @@
 }
 
 .srm-custom-select-option:first-child {
-  color: #7D8D8D;
+  color: #353C3C;
 }
 
 /* ROW 2: Overview (left) + Details Grid (right) - Full Width */
@@ -517,39 +575,97 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   width: 100%;
 }
 
-.srm-form-row:has(.srm-form-field:only-child) {
+/* Only full-width rows collapse to 1 col when alone */
+.srm-form-row--full:has(.srm-form-field:only-child) {
   grid-template-columns: 1fr;
+}
+
+/* Full-width row always single column */
+.srm-form-row--full {
+  grid-template-columns: 1fr !important;
+}
+
+@media (max-width: 768px) {
+  /* Half-width fields become full width on mobile */
+  .srm-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Thirds collapse to 1 col on mobile */
+  .srm-form-row--thirds {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 .srm-form-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
   width: 100%;
+  position: relative;
 }
 
-.srm-form-field label {
+.srm-form-field > label:first-child {
   font-family: var(--font-content);
   font-weight: 400;
   font-size: 12px;
   line-height: 29px;
-  color: #7D8D8D;
+  color: #7C8D8D;
   margin: 0;
+  pointer-events: none;
+  transition: font-size 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-/* Input Wrapper for validation icons */
+/* Input Wrapper - floating label container */
 .srm-input-wrapper {
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .srm-input-wrapper input {
   width: 100%;
-  padding: 12px 0 !important;
+  padding: 18px 0 8px 0 !important;
+}
+
+/* Floating label inside input wrapper */
+.srm-input-wrapper label,
+.srm-input-wrapper .srm-float-label {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 29px;
+  color: #7C8D8D;
+  pointer-events: none;
+  transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+[dir="rtl"] .srm-input-wrapper label,
+[dir="rtl"] .srm-input-wrapper .srm-float-label {
+  left: auto;
+  right: 0;
+}
+
+/* Floated state — when input/textarea has value or is focused */
+.srm-input-wrapper input:focus ~ label,
+.srm-input-wrapper input:focus ~ .srm-float-label,
+.srm-input-wrapper input:not(:placeholder-shown) ~ label,
+.srm-input-wrapper input:not(:placeholder-shown) ~ .srm-float-label,
+.srm-input-wrapper textarea:focus ~ label,
+.srm-input-wrapper textarea:not(:placeholder-shown) ~ label {
+  top: 0px;
+  font-size: 10px;
+  color: #7C8D8D;
 }
 
 .srm-validation-icon {
@@ -575,24 +691,177 @@
 .srm-field-error {
   font-family: var(--font-content);
   font-size: 12px;
-  color: #F44336;
+  color: #EF5D5F;
   margin: 4px 0 0 0;
   line-height: 1.4;
+}
+
+/* ===== FIELD STATES ===== */
+
+/* Error border */
+.srm-form-field input.error,
+.srm-form-field textarea.error,
+.srm-custom-select-trigger.error {
+  border-bottom-color: #EF5D5F !important;
+  color: #EF5D5F;
+}
+
+/* Error label color */
+.srm-input-wrapper input.error ~ label,
+.srm-input-wrapper textarea.error ~ label {
+  color: #EF5D5F;
+}
+
+/* Required field inline placeholder text */
+/* Required placeholder — sits at input value level, label forced up */
+.srm-required-placeholder {
+  font-family: var(--font-content);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  color: #EF5D5F;
+  width: 115px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  pointer-events: none;
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+}
+
+[dir="rtl"] .srm-required-placeholder {
+  left: auto;
+  right: 0;
+}
+
+/* Inside textarea: required placeholder sits at the same vertical center as the label */
+.srm-textarea-wrapper .srm-required-placeholder {
+  top: 52px;
+  bottom: auto;
+}
+
+/* Force label to stay floated up whenever error placeholder is shown */
+.srm-input-wrapper:has(.srm-required-placeholder) label {
+  top: 0px !important;
+  font-size: 10px !important;
+  color: #EF5D5F !important;
+}
+
+/* Select field: force label up when error state active */
+.srm-form-field .srm-input-wrapper:has(+ * .srm-custom-select-trigger.error) label,
+.srm-input-wrapper label.is-error {
+  top: 0px !important;
+  font-size: 10px !important;
+  color: #EF5D5F !important;
+}
+
+/* Valid checkmark icon — default: absolute at bottom of input/textarea */
+.srm-valid-icon {
+  position: absolute;
+  bottom: 12px;
+  right: 0;
+  width: 13.58px;
+  height: 10.02px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: #12A0A3;
+}
+
+[dir="rtl"] .srm-valid-icon {
+  right: auto;
+  left: 0;
+}
+
+.srm-valid-icon svg {
+  width: 13.58px;
+  height: 10.02px;
+  stroke: #12A0A3;
+}
+
+/* Phone field: always right edge of number input */
+.srm-phone-row .srm-valid-icon {
+  right: 0;
+  left: auto;
+}
+
+/* Inside select trigger: override absolute, sit inline beside the arrow */
+.srm-custom-select-trigger .srm-valid-icon {
+  position: static;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  transform: none;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+/* ===== TYPING DOTS ANIMATION ===== */
+.srm-typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  pointer-events: none;
+  position: absolute;
+  /* align to the text baseline — matches input font metrics */
+  bottom: 12px;
+}
+
+[dir="ltr"] .srm-typing-dots {
+  left: calc(var(--text-width, 0px) + 6px);
+}
+
+[dir="rtl"] .srm-typing-dots {
+  right: calc(var(--text-width, 0px) + 6px);
+}
+
+.srm-typing-dots span {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #343C3C;
+  /* all three dots animate on the exact same vertical axis */
+  animation: srmTypingBounce 1.2s infinite ease-in-out;
+}
+
+.srm-typing-dots span:nth-child(1) { animation-delay: 0s; }
+.srm-typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+.srm-typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes srmTypingBounce {
+  0%, 50%, 100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  25% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
 }
 
 .srm-form-field input,
 .srm-form-field textarea {
   width: 100%;
-  padding: 12px 0;
+  padding: 12px 0 8px 0;
   border: none;
   border-bottom: 1px solid #E9ECEC;
   border-radius: 0;
   font-family: var(--font-content);
+  font-weight: 500;
   font-size: 14px;
-  color: #353C3C;
+  line-height: 29px;
+  color: #343C3C;
   background: transparent;
   outline: none;
   transition: border-color 0.3s ease;
+}
+
+.srm-form-field input::placeholder,
+.srm-form-field textarea::placeholder {
+  color: transparent;
 }
 
 .srm-form-field input.error,
@@ -606,11 +875,64 @@
 }
 
 .srm-form-field textarea {
-  resize: vertical;
-  min-height: 100px;
+  resize: none;
+  min-height: 120px;
   font-family: var(--font-content);
-  line-height: 1.6;
-  padding-top: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 29px;
+  color: #343C3C;
+  padding-top: 52px;
+  padding-bottom: 8px;
+}
+
+/* Textarea wrapper — same pattern as input wrapper */
+.srm-textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Floating label inside textarea — starts vertically centered */
+.srm-textarea-wrapper .srm-float-label {
+  position: absolute;
+  top: 52px;
+  left: 0;
+  right: auto;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 29px;
+  color: #7C8D8D;
+  pointer-events: none;
+  transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+[dir="rtl"] .srm-textarea-wrapper .srm-float-label {
+  left: auto;
+  right: 0;
+}
+
+/* Floated state — user is typing or field has value */
+.srm-textarea-wrapper.is-filled .srm-float-label,
+.srm-textarea-wrapper.is-focused .srm-float-label {
+  top: 8px;
+  font-size: 10px;
+}
+
+/* Error state */
+.srm-textarea-wrapper.is-error .srm-float-label {
+  top: 8px;
+  font-size: 10px;
+  color: #EF5D5F;
+}
+
+/* Typing dots inside textarea — pinned to last line */
+.srm-textarea-wrapper .srm-typing-dots {
+  bottom: auto;
+  /* JS sets --line-top to track the last line's Y position */
+  top: var(--line-top, auto);
 }
 
 /* Character Counter */
@@ -641,41 +963,88 @@
   cursor: pointer;
 }
 
-/* ===== SUBMIT ROW - Button + Icons ===== */
+/* ===== SUBMIT ROW - button inline-start + terms below ===== */
 .srm-submit-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
   margin-top: 24px;
-  gap: 16px;
+  gap: 0;
 }
 
+[dir="rtl"] .srm-submit-row {
+  align-items: flex-start;
+}
+
+/* ── Button ── */
 .srm-submit-button {
   width: 198px;
   height: 50px;
-  background: #FBFBFB;
+  background: #F7F8F8;
   border: 1px solid #CED4D4;
   border-radius: 6px;
-  color: #7D8D8D;
+  color: #7C8D8D;
   font-family: var(--font-content);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
+  line-height: 100%;
   cursor: not-allowed;
-  transition: all 0.3s ease;
+  transition: background 0.25s ease, opacity 0.2s ease, border-color 0.25s ease, color 0.25s ease;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
+/* active / all required filled */
 .srm-submit-button.active {
-  background: #353C3C;
-  border-color: #353C3C;
-  color: var(--color-white);
+  background: #4C5757;
+  border-color: #4C5757;
+  color: #FDFDFD;
   cursor: pointer;
 }
 
 .srm-submit-button.active:hover {
-  background: #000000;
-  border-color: #000000;
+  background: #3a4343;
+  border-color: #3a4343;
+}
+
+.srm-submit-button.active:active {
+  background: #2e3535;
+  opacity: 0.92;
+}
+
+/* loading state */
+.srm-submit-button.loading {
+  background: #4C5757;
+  border-color: #4C5757;
+  color: #FDFDFD;
+  cursor: wait;
+  opacity: 0.75;
+}
+
+/* ── Terms text — below button ── */
+.srm-submit-terms {
+  width: 100%;
+  max-width: 736px;
+  margin-top: 16px;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  color: #7C8D8D;
+}
+
+.srm-submit-terms a,
+.srm-submit-terms .srm-policy-link {
+  font-weight: 600;
+  text-decoration: underline;
+  color: #7C8D8D;
+  cursor: pointer;
 }
 
 /* Upload Icons Row */
@@ -824,11 +1193,110 @@
   background: #000000;
 }
 
+/* ===== PHONE FIELD — fits grid like any other field ===== */
+.srm-phone-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-end;
+  width: 100%;
+}
+
+/* RTL: keep internal order LTR (code always first visually) */
+[dir="rtl"] .srm-phone-row {
+  flex-direction: row-reverse;
+}
+
+.srm-phone-code-col {
+  width: 100px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.srm-phone-number-col {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.srm-phone-row .srm-custom-select {
+  width: 100%;
+}
+
+.srm-phone-row input[type="tel"] {
+  width: 100%;
+  direction: ltr;
+  text-align: left;
+}
+
+/* Floating label inside phone columns — LTR anchor always */
+.srm-phone-code-col .srm-float-label,
+.srm-phone-number-col .srm-float-label {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: auto;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 29px;
+  color: #7C8D8D;
+  pointer-events: none;
+  transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  z-index: 1;
+  direction: ltr;
+  text-align: left;
+}
+
+/* RTL page: labels still anchor left inside their LTR column */
+[dir="rtl"] .srm-phone-code-col .srm-float-label,
+[dir="rtl"] .srm-phone-number-col .srm-float-label {
+  left: 0;
+  right: auto;
+  text-align: left;
+}
+
+/* Floated state */
+.srm-phone-code-col.is-filled .srm-float-label,
+.srm-phone-code-col.is-focused .srm-float-label,
+.srm-phone-number-col.is-filled .srm-float-label,
+.srm-phone-number-col.is-focused .srm-float-label {
+  top: 0;
+  font-size: 10px;
+}
+
+/* Error state label */
+.srm-phone-code-col.is-error .srm-float-label,
+.srm-phone-number-col.is-error .srm-float-label {
+  top: 0;
+  font-size: 10px;
+  color: #EF5D5F;
+}
+
+/* Padding top to make room for floated label */
+.srm-phone-code-col .srm-custom-select-trigger,
+.srm-phone-number-col .srm-input-wrapper input {
+  padding-top: 18px;
+}
+
+/* Valid icon always right edge of number input */
+.srm-phone-row .srm-valid-icon {
+  right: 0 !important;
+  left: auto !important;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
   .srm-container {
     max-width: 90%;
     padding: 40px 32px;
+  }
+
+  .srm-divider {
+    width: calc(100% + 64px);
+    margin-left: -32px;
+    margin-right: -32px;
   }
 
   .srm-logo {
@@ -840,7 +1308,6 @@
   .srm-terms,
   .srm-terms-title,
   .srm-terms-description {
-    width: 100%;
     max-width: 100%;
   }
 
@@ -850,35 +1317,61 @@
 }
 
 @media (max-width: 768px) {
+  .srm-overlay {
+    padding: 16px;
+    align-items: center;
+  }
+
   .srm-container {
+    width: 100%;
+    max-width: calc(100vw - 32px);
+    height: calc(100vh - 80px);
+    max-height: calc(100vh - 80px);
+    border-radius: 12px;
     padding: 32px 24px;
+    margin: auto;
+  }
+
+  .srm-divider {
+    width: calc(100% + 48px);
+    margin-left: -24px;
+    margin-right: -24px;
   }
 
   .srm-header {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
   }
 
   .srm-logo {
-    width: 300px;
+    width: 200px;
   }
 
+  /* all rows collapse to single column on mobile */
   .srm-form-row,
-  .srm-service-row {
-    grid-template-columns: 1fr;
+  .srm-form-row--thirds {
+    grid-template-columns: 1fr !important;
   }
 
-  .srm-add-service {
-    flex-direction: column;
-    align-items: flex-start;
+  .srm-terms-title {
+    font-size: 26px;
+    line-height: 1.3;
   }
 
-  .srm-add-service span {
-    width: auto;
+  .srm-section-title {
+    font-size: 17px;
   }
 
   .srm-thankyou-logo img {
-    width: 300px;
+    width: 200px;
     height: auto;
+  }
+
+  .srm-submit-button {
+    width: 100%;
+  }
+
+  .srm-submit-terms {
+    max-width: 100%;
   }
 }
 
@@ -887,19 +1380,25 @@
     padding: 24px 16px;
   }
 
+  .srm-divider {
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+
   .srm-logo {
-    width: 200px;
+    width: 160px;
   }
 
   .srm-section-title,
-  .srm-section-subtitle,
-  .srm-add-service span {
+  .srm-section-subtitle {
     width: auto;
     height: auto;
+    max-width: 100%;
   }
 
   .srm-thankyou {
-    padding: 40px 24px;
+    padding: 40px 16px;
   }
 
   .srm-thankyou-title {
@@ -907,7 +1406,556 @@
   }
 }
 
+/* ===== SELECT FIELD — fixed height so rows never shift ===== */
+.srm-form-field .srm-input-wrapper:has(.srm-custom-select) {
+  min-height: 68px;
+  box-sizing: border-box;
+}
+
+.srm-custom-select {
+  width: 100%;
+}
+
+/* ===== FILE UPLOAD FIELD ===== */
+.srm-file-wrapper {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  min-height: 68px; /* label 20px + trigger 48px = consistent height */
+  box-sizing: border-box;
+}
+
+/* floating label — same pattern as input wrapper */
+.srm-file-wrapper .srm-float-label {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: auto;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 29px;
+  color: #7C8D8D;
+  pointer-events: none;
+  transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+[dir="rtl"] .srm-file-wrapper .srm-float-label {
+  left: auto;
+  right: 0;
+}
+
+/* floated state */
+.srm-file-wrapper.is-filled .srm-float-label,
+.srm-file-wrapper.is-focused .srm-float-label {
+  top: 0px;
+  font-size: 10px;
+}
+
+/* error state */
+.srm-file-wrapper.is-error .srm-float-label {
+  top: 0px;
+  font-size: 10px;
+  color: #EF5D5F;
+}
+
+/* the visible "input" row — borderless until bottom border */
+.srm-file-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 18px 0 8px 0;
+  border: none;
+  border-bottom: 1px solid #E9ECEC;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  height: 48px;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.srm-file-trigger:hover {
+  border-bottom-color: #343C3C;
+}
+
+.srm-file-trigger.error {
+  border-bottom-color: #EF5D5F;
+}
+
+/* filename text */
+.srm-file-filename {
+  font-family: var(--font-content);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 29px;
+  color: #343C3C;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: start;
+}
+
+/* required placeholder inside file trigger */
+.srm-file-trigger .srm-required-placeholder {
+  position: static;
+  width: auto;
+  height: auto;
+}
+
+/* file icon — right edge */
+.srm-file-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: 8px;
+}
+
+.srm-file-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* delete X icon — normal state: border only, no background */
+.srm-file-delete {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1.5px solid #EF5D5F;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0;
+  margin-inline-start: 8px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+/* hover state: filled red background */
+.srm-file-delete:hover {
+  background: #EF5D5F;
+}
+
+.srm-file-delete svg {
+  width: 9px;
+  height: 9px;
+  stroke: #EF5D5F;
+  stroke-width: 2;
+  transition: stroke 0.2s ease;
+}
+
+.srm-file-delete:hover svg {
+  stroke: #ffffff;
+}
+
+/* ensure trigger row always same height */
+.srm-file-trigger {
+  min-height: 48px;
+}
+
+/* hidden native input */
+.srm-file-wrapper input[type="file"] {
+  display: none;
+}
+
+/* ===== SERVICES PICKER ===== */
+
+.services-picker-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Each group row — first is required, additional have X */
+.services-picker-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* First row — two equal selects */
+.services-picker-selects-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Additional row — X button shrinks the first select so second select
+   ends at the same right edge as in the first row */
+.services-picker-selects-row.has-remove {
+  display: grid;
+  /* X=50px | gap=16px | first select shrinks by (50+16)=66px | gap=32px | second select same width */
+  grid-template-columns: 50px 1fr 1fr;
+  gap: 16px 32px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* X remove button — bordered box */
+.services-remove-btn {
+  width: 50px;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #EF5D5F;
+  border-radius: 6px;
+  color: #EF5D5F;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease;
+  margin-top: 28px; /* aligns with the select trigger baseline */
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.services-remove-btn svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.services-remove-btn:hover {
+  background: #EF5D5F;
+  color: #fff;
+}
+
+/* Add additional service button row */
+.services-add-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* Add button — 83×50 bordered box */
+.services-add-btn {
+  width: 83px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #353C3C;
+  border: 1px solid #353C3C;
+  border-radius: 6px;
+  color: #FFFFFF;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.25s ease, border-color 0.25s ease;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.services-add-btn svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.services-add-btn:hover {
+  background: #4C5757;
+  border-color: #4C5757;
+}
+
+/* Add label text */
+.services-add-label {
+  font-family: var(--font-content);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 29px;
+  color: #353C3C;
+}
+
+/* Disabled service select — no hover, no cursor */
+.services-service-disabled {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+.services-service-disabled .srm-custom-select-trigger {
+  cursor: default !important;
+  border-bottom-color: #E9ECEC !important;
+}
+
+.services-service-disabled .srm-custom-select-trigger:hover {
+  border-bottom-color: #E9ECEC !important;
+}
+
+.services-service-disabled .srm-dropdown-arrow {
+  opacity: 0.35;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .services-picker-selects-row {
+    grid-template-columns: 1fr;
+  }
+
+  .services-picker-selects-row.has-remove {
+    grid-template-columns: 50px 1fr;
+  }
+
+  .services-picker-selects-row.has-remove .services-picker-service-col {
+    grid-column: 2;
+  }
+}
+
+/* ===== CUSTOM DATE PICKER ===== */
+
+.srm-date-picker {
+  position: relative;
+  width: 100%;
+  min-height: 68px;
+  box-sizing: border-box;
+}
+
+/* Calendar dropdown */
+.srm-date-calendar {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 500;
+  background: #FFFFFF;
+  border: 1px solid #E9ECEC;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+  padding: 16px;
+  min-width: 280px;
+  box-sizing: border-box;
+  animation: srmCalendarFadeIn 0.15s ease-out;
+}
+
+[dir="rtl"] .srm-date-calendar {
+  left: auto;
+  right: 0;
+}
+
+@keyframes srmCalendarFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Month navigation header */
+.srm-date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.srm-date-nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: #343C3C;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.srm-date-nav-btn:hover {
+  background: #F7F8F8;
+}
+
+.srm-date-nav-label {
+  font-family: var(--font-content);
+  font-weight: 500;
+  font-size: 14px;
+  color: #343C3C;
+  text-align: center;
+  flex: 1;
+}
+
+/* Day-of-week headers */
+.srm-date-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.srm-date-weekday {
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 11px;
+  color: #7C8D8D;
+  text-align: center;
+  padding: 4px 0;
+}
+
+/* Days grid */
+.srm-date-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.srm-date-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 13px;
+  color: #343C3C;
+  border-radius: 50%;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: background 0.15s ease, color 0.15s ease;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.srm-date-day:hover:not(:disabled) {
+  background: #F7F8F8;
+}
+
+.srm-date-day.selected {
+  background: #4C5757;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.srm-date-day.today {
+  border: 1px solid #CED4D4;
+}
+
+.srm-date-day.other-month {
+  color: #CED4D4;
+}
+
+.srm-date-day:disabled {
+  color: #CED4D4;
+  cursor: not-allowed;
+}
+
+.srm-date-day.empty {
+  background: none;
+  cursor: default;
+  pointer-events: none;
+}
+
 /* ===== APPOINTMENT BOOKING SLOTS ===== */
+
+.appointment-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 125px);
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+/* RTL: grid flows right to left naturally via direction */
+[dir="rtl"] .appointment-slots-grid {
+  direction: rtl;
+}
+
+/* Each slot button */
+.appointment-slot {
+  width: 125px;
+  height: 50px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: background 0.25s ease, opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Available — normal state */
+.appointment-slot.available {
+  background: #647272;
+  color: #FFFFFF;
+}
+
+/* Hover on available */
+.appointment-slot.available:hover {
+  background: #3a4343;
+  transform: translateY(-1px);
+}
+
+/* Selected / picked — same as submit active */
+.appointment-slot.available.selected,
+.appointment-slot.selected {
+  background: #4C5757;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(76, 87, 87, 0.35);
+}
+
+.appointment-slot.available.selected:hover {
+  background: #3a4343;
+}
+
+/* Disabled — unavailable slot */
+.appointment-slot.disabled {
+  width: 125px;
+  height: 50px;
+  background: #F7F8F8;
+  color: #647272;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  border: 1px solid #E9ECEC;
+  opacity: 1;
+}
+
+.appointment-slot.disabled:hover {
+  transform: none;
+  background: #F7F8F8;
+}
+
+/* No slots message */
+.appointment-no-slots {
+  font-family: var(--font-content);
+  font-size: 13px;
+  color: #7C8D8D;
+  padding: 12px 0;
+}
+
+/* Responsive — collapse to fewer columns on smaller screens */
+@media (max-width: 768px) {
+  .appointment-slots-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .appointment-slot,
+  .appointment-slot.disabled {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .appointment-slots-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 .appointment-slots-grid {
   display: grid;
   grid-template-columns: repeat(5, 126px);
@@ -1093,4 +2141,56 @@
 
 .appointment-toggle-btn:hover {
   opacity: 0.7;
+}
+
+/*
+ * dynamic-form-addendum.css
+ *
+ * APPEND THIS to ServiceRequestModal.css (or import after it).
+ *
+ * Adds only the missing grid variants for the dynamic form's
+ * full / half / third field-width system.
+ * All other classes (srm-form-field, srm-custom-select, etc.)
+ * are already defined in ServiceRequestModal.css and reused as-is.
+ */
+
+/* ── Full-width row: single column ── */
+.srm-form-row--full {
+  grid-template-columns: 1fr;
+}
+
+/* ── Thirds row: 3 equal columns ── */
+.srm-form-row--thirds {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+  .srm-form-row--thirds {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .srm-form-row--thirds {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Custom select error state (border colour only) ── */
+.srm-custom-select-trigger.error {
+  border-bottom-color: #F44336;
+}
+
+/* ── Upload button error state ── */
+.srm-upload-icon-button.error {
+  border-color: #F44336;
+  color: #F44336;
+}
+
+/* ── Loading field placeholder ── */
+.dpf-loading-field {
+  font-family: var(--font-content);
+  font-size: 14px;
+  color: #7D8D8D;
+  padding: 12px 0;
 }

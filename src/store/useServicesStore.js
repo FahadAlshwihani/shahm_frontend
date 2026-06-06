@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import {
-  getAreas,
-  createArea as apiCreateArea,
-  updateArea as apiUpdateArea,
-  deleteArea as apiDeleteArea,
+  getMainServices,
+  createMainService as apiCreateArea,
+  updateMainService as apiUpdateArea,
+  deleteMainService as apiDeleteArea,
 
   getServices,
   createService as apiCreateService,
@@ -17,8 +17,11 @@ export const useServicesStore = create((set, get) => ({
   services: [],
 
   fetchAreas: async () => {
-    const res = await getAreas();
-    set({ areas: res.data });
+    const res = await getMainServices();
+
+    set({
+      areas: res.data?.results || res.data || [],
+    });
   },
 
   createArea: async (data) => {
@@ -53,7 +56,10 @@ export const useServicesStore = create((set, get) => ({
 
   fetchServices: async () => {
     const res = await getServices();
-    set({ services: res.data });
+
+    set({
+      services: res.data?.results || res.data || [],
+    });
   },
 
   createService: async (data) => {

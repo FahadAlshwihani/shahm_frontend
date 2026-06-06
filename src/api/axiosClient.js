@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
-
+const pendingRequests = new Map();
 const axiosClient = axios.create({
   baseURL: "http://127.0.0.1:8000/api",
+  timeout: 15000,
 });
 
 let isRefreshing = false;
@@ -32,18 +33,41 @@ axiosClient.interceptors.request.use(
       config.headers["Content-Type"] = "application/json";
     }
 
+    const requestKey = `${config.method}:${config.url}`;
+
+    if (pendingRequests.has(requestKey)) {
+      const controller = pendingRequests.get(requestKey);
+      controller.abort();
+    }
+
+    const controller = new AbortController();
+
+    config.signal = controller.signal;
+
+    pendingRequests.set(requestKey, controller);
+
     return config;
   },
   (error) => Promise.reject(error)
 );
 
 axiosClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const requestKey = `${response.config.method}:${response.config.url}`;
+    pendingRequests.delete(requestKey);
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
     const auth = useAuthStore.getState();
 
     if (!error.response) {
+      if (error.config) {
+        const requestKey =
+          `${error.config.method}:${error.config.url}`;
+
+        pendingRequests.delete(requestKey);
+      }
       return Promise.reject(error);
     }
 
@@ -98,6 +122,13 @@ axiosClient.interceptors.response.use(
       } finally {
         isRefreshing = false;
       }
+    }
+
+
+
+    if (error.config) {
+      const requestKey = `${error.config.method}:${error.config.url}`;
+      pendingRequests.delete(requestKey);
     }
 
     return Promise.reject(error);

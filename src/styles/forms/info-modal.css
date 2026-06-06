@@ -1,0 +1,308 @@
+/* ============================================================
+   INFO MODAL — info-modal.css
+   Reuses .srv-panel classes from services.css for layout.
+   Only overrides what differs:
+     • subtitle color → #647272  (instead of #353C3C)
+     • tab indicator width set to full tab text (no JS measurement needed
+       since tabs are static — set via inline style in JSX)
+     • panel is centered on desktop (not corner-anchored like services)
+   ============================================================ */
+
+/* ── CSS tokens (scoped to the modal so no global bleed) ── */
+.info-modal-root {
+  --im-font-body:    "Noto Kufi Arabic", sans-serif;
+  --im-font-ar:      "Adapter Arabic Text", "Noto Kufi Arabic", sans-serif;
+  --im-primary:      #353C3C;
+  --im-muted:        #647272;
+  --im-border:       #CED4D4;
+  --im-border-soft:  #E9ECEC;
+  --im-light:        #ffffff;
+  --im-ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+  --panel-h-pad:     24px;
+}
+
+/* ── Backdrop — identical to services ── */
+.info-modal-root .srv-panel__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 33, 33, 0);
+  z-index: 900;
+  opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: opacity 0.4s ease, background 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+.info-modal-root .srv-panel__backdrop--visible {
+  opacity: 1;
+  pointer-events: all;
+  background: rgba(28, 33, 33, 0.32);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+/* ── Panel — top-right corner (LTR) / top-left corner (RTL) ── */
+.info-modal-root .srv-panel {
+  --panel-h-pad: 24px;
+
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  left: auto;
+  transform: scale(0.96) translateY(-6px);
+  transform-origin: top right;
+
+  width: 340px;
+  max-width: calc(100vw - 24px);
+  height: auto;
+  max-height: calc(100dvh - 24px);
+
+  background: var(--im-light);
+  z-index: 901;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 8px 40px rgba(28, 33, 33, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+/* RTL: top-left corner */
+[dir="rtl"] .info-modal-root .srv-panel {
+  right: auto;
+  left: 12px;
+  transform-origin: top left;
+}
+
+.info-modal-root .srv-panel--open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+}
+
+[dir="rtl"] .info-modal-root .srv-panel--open {
+  transform: scale(1) translateY(0);
+}
+
+/* ── Close button ── */
+.info-modal-root .srv-panel__close {
+  position: absolute;
+  top: 20px;
+  inset-inline-end: 20px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #343C3C;
+  border-radius: 6px;
+  z-index: 10;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.info-modal-root .srv-panel__close:hover {
+  background: rgba(52, 60, 60, 0.07);
+}
+
+/* ── Tabs ── */
+.info-modal-root .srv-panel__tabs {
+  padding: 60px var(--panel-h-pad) 0;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.info-modal-root .srv-panel__tabs-bar {
+  display: flex;
+  gap: 0;
+  align-items: flex-end;
+}
+
+.info-modal-root .srv-panel__tab {
+  height: 38px;
+  padding: 0;
+  margin-inline-end: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--im-font-body);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  color: var(--im-muted);
+  transition: color 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.info-modal-root .srv-panel__tab--active {
+  color: var(--im-primary);
+}
+
+/* Full divider track */
+.info-modal-root .srv-panel__tabs-track {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: var(--im-border);
+  border-radius: 7px;
+  margin-top: 0;
+}
+
+/* Active indicator */
+.info-modal-root .srv-panel__tabs-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 1px;
+  background: var(--im-primary);
+  border-radius: 7px;
+  transition: left 0.3s var(--im-ease-out),
+              right 0.3s var(--im-ease-out),
+              width 0.3s var(--im-ease-out);
+}
+
+/* ── Meta — 51px below indicator ── */
+.info-modal-root .srv-panel__meta {
+  padding: 51px var(--panel-h-pad) 0;
+  flex-shrink: 0;
+}
+
+/* subtitle — #647272 instead of services' #353C3C */
+.info-modal-root .srv-panel__subtitle-title {
+  font-family: var(--im-font-ar);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 28px;
+  color: #647272;   /* ← only difference from services */
+  margin: 0;
+}
+
+/* ── Body wrap — 62px below meta, fixed 277px height ── */
+.info-modal-root .srv-panel__body-wrap {
+  height: 277px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  margin-top: 62px;
+  overflow: hidden;
+}
+
+/* ── Scroll track ── */
+.info-modal-root .srv-panel__scroll-track {
+  position: relative;
+  width: 1px;
+  flex-shrink: 0;
+  background: var(--im-border);
+  border-radius: 7px;
+  margin-inline-start: var(--panel-h-pad);
+  pointer-events: none;
+  align-self: stretch;
+}
+
+[dir="rtl"] .info-modal-root .srv-panel__scroll-track {
+  margin-inline-start: var(--panel-h-pad);
+}
+
+.info-modal-root .srv-panel__scroll-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: max(40px, calc(100% * 0.44));
+  background: var(--im-primary);
+  border-radius: 7px;
+  transform: translateY(
+    calc(var(--scroll-progress, 0) * (100% - max(40px, calc(100% * 0.44))))
+  );
+  transition: transform 0.1s linear;
+}
+
+/* ── Scrollable body ── */
+.info-modal-root .srv-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  padding-inline-start: 38px;
+  padding-inline-end: var(--panel-h-pad);
+  padding-top: 0;
+  padding-bottom: 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.info-modal-root .srv-panel__body::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Content text — matches services exactly ── */
+.info-modal-root .srv-panel__cta-desc {
+  font-family: var(--im-font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
+  color: var(--im-muted);
+  margin: 0;
+}
+
+.info-modal-root .srv-panel__section-body {
+  padding-inline-start: 0;
+  border-inline-start: none;
+}
+
+.info-modal-root .srv-panel__section {
+  animation: im-fade-up 0.3s var(--im-ease-out) both;
+}
+
+@keyframes im-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .info-modal-root .srv-panel {
+    width: calc(100vw - 24px);
+    top: 12px;
+    right: 12px;
+    left: auto;
+    transform: scale(0.96) translateY(-6px);
+    transform-origin: top right;
+    max-height: calc(100dvh - 24px);
+  }
+
+  [dir="rtl"] .info-modal-root .srv-panel {
+    right: auto;
+    left: 12px;
+    transform-origin: top left;
+  }
+
+  .info-modal-root .srv-panel--open {
+    transform: scale(1) translateY(0);
+  }
+
+  .info-modal-root .srv-panel__tabs {
+    padding: 54px var(--panel-h-pad) 0;
+  }
+
+  .info-modal-root .srv-panel__meta {
+    padding: 52px var(--panel-h-pad) 0;
+  }
+
+  .info-modal-root .srv-panel__body-wrap {
+    height: 180px;
+    margin-top: 56px;
+  }
+
+  .info-modal-root .srv-panel__body {
+    padding-inline-start: 20px;
+  }
+}

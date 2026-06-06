@@ -1,0 +1,742 @@
+/* ============================================================
+   ServiceRequests.css
+   Scoped to src/pages/dashboard/services/requests/
+   All modal styles are now in dashboard-common.css.
+   This file only adds request-specific overrides that sit
+   on top of the shared CMS_SERVICES.css design system.
+============================================================ */
+
+/* ── Stats row ─────────────────────────────────────────────── */
+.cms-services-requests-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.cms-services-requests-stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(53,60,60,0.025);
+  border: 1px solid #E9ECEC;
+  border-radius: 12px;
+  padding: 8px 18px;
+  gap: 2px;
+  min-width: 64px;
+}
+.cms-services-requests-stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: #353C3C;
+  line-height: 1;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-services-requests-stat-label {
+  font-size: 10px;
+  color: #97A5A5;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* ── Search clear button ────────────────────────────────────── */
+.cms-services-search-clear {
+  position: absolute;
+  inset-inline-end: 8px;
+  background: none;
+  border: none;
+  padding: 3px;
+  color: #97A5A5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+.cms-services-search-clear:hover { color: #353C3C; }
+
+/* ── Error state ────────────────────────────────────────────── */
+.cms-services-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-services-error-state p { color: #EF4444; font-size: 14px; margin: 0; }
+
+/* ── Name cell ─────────────────────────────────────────────── */
+.cms-services-requests-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-services-requests-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #353C3C 0%, #7C8D8D 100%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* ── Request-specific status badge ─────────────────────────── */
+/* Extends .cms-services-status-badge from CMS_SERVICES.css  */
+.cms-services-status-badge--request {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid var(--status-border, rgba(107,114,128,0.25));
+  background: var(--status-bg,    rgba(107,114,128,0.10));
+  color: var(--status-color,      #6B7280);
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+/* Dot always inline-start */
+.cms-services-status-badge--request > span:first-child {
+  flex-shrink: 0;
+  order: 0; /* always first regardless of dir */
+}
+/* Text always centered */
+.cms-services-status-badge--request > span:last-child,
+.cms-services-status-badge--request > :not(:first-child) {
+  flex: 1;
+  text-align: center;
+}
+
+/* ── Modal content sections (body lives in dash-modal-body) ── */
+/* These classes are used by RequestDetailsModal content.      */
+.cms-request-services-modal-section-list { display: flex; flex-direction: column; gap: 0; }
+.cms-request-services-modal-section {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(233,236,236,0.8);
+}
+.cms-request-services-modal-section:last-child { border-bottom: none; }
+
+.cms-request-services-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #7C8D8D;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin: 0 0 14px;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+.cms-request-services-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.cms-request-services-info-field { display: flex; flex-direction: column; gap: 4px; }
+.cms-request-services-info-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #97A5A5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-info-value {
+  font-size: 14px;
+  color: #353C3C;
+  font-weight: 500;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+.cms-request-services-service-list  { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.cms-request-services-service-item  {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: #353C3C;
+  padding: 8px 12px;
+  background: rgba(53,60,60,0.025);
+  border: 1px solid #E9ECEC;
+  border-radius: 8px;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-service-item svg { color: #10B981; flex-shrink: 0; }
+
+.cms-request-services-message-box {
+  background: rgba(247,248,249,0.8);
+  border: 1px solid #E9ECEC;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #353C3C;
+  white-space: pre-wrap;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+.cms-request-services-audio { width: 100%; border-radius: 8px; }
+
+.cms-request-services-link {
+  color: #3B82F6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-link:hover { color: #1d4ed8; text-decoration: underline; }
+
+.cms-request-services-code {
+  background: rgba(53,60,60,0.06);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  color: #353C3C;
+  direction: ltr;
+  display: inline-block;
+}
+
+/* ── Snapshot grid ─────────────────────────────────────────── */
+.cms-request-services-snapshot-grid {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid #E9ECEC; border-radius: 8px; overflow: hidden;
+}
+/* Three fixed columns: key (160px) | value (flex, centered) | badge (80px) */
+.cms-request-services-snapshot-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 80px;
+  gap: 0;
+  padding: 9px 14px;
+  border-bottom: 1px solid rgba(233,236,236,0.7);
+  align-items: center;
+  transition: background 0.18s;
+  min-height: 38px;
+}
+.cms-request-services-snapshot-row:last-child { border-bottom: none; }
+.cms-request-services-snapshot-row:hover { background: rgba(53,60,60,0.025); }
+/* Key — always inline-start, never moves */
+.cms-request-services-snapshot-key {
+  font-size: 12px; font-weight: 700; color: #97A5A5;
+  font-family: "Noto Kufi Arabic", sans-serif;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  padding-inline-end: 10px;
+  flex-shrink: 0;
+}
+/* Value — always centered in its column, never changes column width */
+.cms-request-services-snapshot-val {
+  font-size: 13px; color: #353C3C; word-break: break-word;
+  font-family: "Noto Kufi Arabic", sans-serif;
+  text-align: center;
+  padding: 0 8px;
+}
+/* Badge column — always inline-end, right-aligned */
+.cms-request-services-snapshot-badge-col {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+}
+.cms-request-services-snapshot-editable-badge {
+  display: inline-flex; align-items: center;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #10B981; background: rgba(16,185,129,0.10);
+  border: 1px solid rgba(16,185,129,0.25);
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-snapshot-readonly-badge {
+  display: inline-flex; align-items: center;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #6B7280; background: rgba(107,114,128,0.10);
+  border: 1px solid rgba(107,114,128,0.20);
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* ── Admin edit form ───────────────────────────────────────── */
+.cms-request-services-admin-edit-form {
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 16px;
+  background: rgba(247,248,249,0.8);
+  border: 1px solid #E9ECEC; border-radius: 8px;
+}
+.cms-request-services-field-group { display: flex; flex-direction: column; gap: 6px; }
+.cms-request-services-field-label {
+  font-size: 11px; font-weight: 700; color: #7C8D8D;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-input {
+  padding: 9px 12px;
+  border: 1.5px solid #E9ECEC; border-radius: 8px;
+  font-size: 13px; color: #353C3C; background: #fff;
+  font-family: "Noto Kufi Arabic", sans-serif;
+  width: 100%; box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.cms-request-services-input:focus { outline: none; border-color: #353C3C; }
+
+/* ── Status actions tab ────────────────────────────────────── */
+.cms-request-services-status-actions {
+  display: flex; flex-direction: column; gap: 0; padding: 4px 0;
+}
+.cms-rs-status-section { margin-bottom: 24px; }
+.cms-rs-status-section:last-child { margin-bottom: 0; }
+.cms-rs-status-section-label {
+  display: block;
+  font-size: 11px; font-weight: 700; color: #7C8D8D;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin: 0 0 10px;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-rs-status-current-display {
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px 14px;
+  background: rgba(247,248,249,0.8);
+  border: 1px solid #E9ECEC; border-radius: 8px;
+}
+.cms-rs-status-update-row {
+  display: flex; gap: 10px; align-items: center;
+}
+.cms-rs-status-select {
+  flex: 1; max-width: 320px; height: 44px; background: #fff;
+}
+.cms-rs-status-hint {
+  font-size: 11px; color: #97A5A5; margin: 8px 0 0;
+  font-style: italic;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* Status action buttons grid */
+.cms-request-services-status-actions-grid {
+  display: grid;
+  /* equal-width columns — all buttons share the same width */
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.cms-request-services-status-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 9px 12px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; width: 100%; /* fill the grid cell */
+  border: 1.5px solid var(--status-border, rgba(107,114,128,0.25));
+  background: transparent; color: var(--status-color, #6B7280);
+  transition: background 0.2s; white-space: nowrap;
+  font-family: "Noto Kufi Arabic", sans-serif; box-shadow: none;
+}
+.cms-request-services-status-btn:not(:disabled):hover { background: var(--status-bg); }
+.cms-request-services-status-btn--active { background: var(--status-bg); font-weight: 700; cursor: default; }
+.cms-request-services-status-btn:disabled:not(.cms-request-services-status-btn--active) { opacity: 0.5; cursor: not-allowed; }
+.cms-request-services-status-saving {
+  display: flex; align-items: center; gap: 8px; font-size: 13px;
+  color: #7C8D8D; margin: 12px 0 0;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* ── Access / Logs / History panels ────────────────────────── */
+.cms-request-services-access-panel { display: flex; flex-direction: column; gap: 0; }
+.cms-request-services-panel-loading {
+  display: flex; align-items: center; gap: 10px; padding: 20px 0;
+  font-size: 13px; color: #7C8D8D;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-panel-error { font-size: 13px; color: #EF4444; padding: 10px 0; }
+.cms-request-services-access-empty {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 32px 16px; text-align: center; color: #7C8D8D;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-access-empty p { font-size: 14px; margin: 0; font-weight: 600; color: #353C3C; }
+.cms-request-services-access-empty-hint { font-size: 12px; color: #97A5A5 !important; font-weight: 400 !important; max-width: 340px; }
+
+/* Access panel header */
+.cms-request-services-panel-header {
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 16px; border-bottom: 1px solid #E9ECEC; margin-bottom: 16px;
+}
+.cms-request-services-panel-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.cms-request-services-panel-icon--blue   { background: rgba(59,130,246,0.09);  color: #3B82F6; }
+.cms-request-services-panel-icon--purple { background: rgba(139,92,246,0.09); color: #8B5CF6; }
+.cms-request-services-panel-title { font-size: 14px; font-weight: 700; color: #353C3C; margin: 0; flex: 1; font-family: "Noto Kufi Arabic", sans-serif; }
+.cms-request-services-count-pill {
+  background: rgba(53,60,60,0.07); color: #353C3C;
+  padding: 2px 9px; border-radius: 20px; font-size: 12px; font-weight: 700;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* Link list cards */
+.cms-request-services-link-list  { display: flex; flex-direction: column; gap: 10px; }
+.cms-request-services-link-card  {
+  border: 1.5px solid #E9ECEC; border-radius: 12px; overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cms-request-services-link-card:hover { border-color: rgba(53,60,60,0.2); box-shadow: 0 2px 8px rgba(53,60,60,0.06); }
+.cms-request-services-link-card--inactive { opacity: 0.72; }
+.cms-request-services-link-card--inactive:hover { opacity: 1; }
+.cms-request-services-link-card-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; background: rgba(247,248,249,0.7);
+  border-bottom: 1px solid #E9ECEC; flex-wrap: wrap;
+}
+.cms-request-services-link-badge {
+  display: inline-flex; align-items: center; padding: 2px 9px;
+  border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-link-badge--active  { background: rgba(16,185,129,0.09); color: #10B981; border: 1px solid rgba(16,185,129,0.25); }
+.cms-request-services-link-badge--revoked { background: rgba(239,68,68,0.09);  color: #EF4444; border: 1px solid rgba(239,68,68,0.25);  }
+.cms-request-services-link-badge--expired { background: rgba(107,114,128,0.10);color: #6B7280; border: 1px solid rgba(107,114,128,0.20);}
+.cms-request-services-link-form-label {
+  font-size: 11px; font-weight: 500; color: #7C8D8D;
+  background: rgba(107,114,128,0.08); border: 1px solid rgba(107,114,128,0.18);
+  border-radius: 4px; padding: 2px 8px; margin-inline-start: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-link-key {
+  font-family: 'Courier New', monospace; font-size: 11px; color: #97A5A5;
+  background: rgba(53,60,60,0.05); padding: 2px 6px; border-radius: 4px;
+  flex: 1; direction: ltr; display: inline-block;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cms-request-services-link-card-actions { display: flex; align-items: center; gap: 6px; margin-inline-start: auto; }
+.cms-request-services-link-meta-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px; padding: 12px 14px; border-bottom: 1px solid rgba(233,236,236,0.7);
+}
+.cms-request-services-link-meta-item { display: flex; flex-direction: column; gap: 3px; }
+.cms-request-services-link-meta-label { font-size: 10px; font-weight: 700; color: #97A5A5; text-transform: uppercase; letter-spacing: 0.05em; font-family: "Noto Kufi Arabic", sans-serif; }
+.cms-request-services-link-meta-value { font-size: 12px; color: #353C3C; font-weight: 500; font-family: "Noto Kufi Arabic", sans-serif; }
+.cms-request-services-link-url-row { display: flex; align-items: center; gap: 8px; padding: 10px 14px; }
+.cms-access-url-icon { color: #97A5A5; flex-shrink: 0; display: flex; align-items: center; }
+.cms-request-services-input--url {
+  font-family: 'Courier New', monospace; font-size: 11px; color: #7C8D8D;
+  flex: 1; min-width: 0;
+}
+
+/* Create link form */
+.cms-request-services-create-link-form {
+  background: rgba(247,248,249,0.6);
+  border: 1.5px solid #E9ECEC;
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  margin-bottom: 16px;
+  display: flex; flex-direction: column; gap: 16px;
+  animation: req-fade-in 0.2s ease both;
+  box-shadow: 0 1px 4px rgba(53,60,60,0.04);
+}
+@keyframes req-fade-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.cms-request-services-create-link-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.cms-request-services-create-link-actions { display: flex; align-items: center; gap: 10px; }
+
+/* Icon buttons for access panel */
+.cms-request-services-icon-btn {
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px; border: 1.5px solid transparent;
+  cursor: pointer; background: transparent; flex-shrink: 0;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.cms-request-services-icon-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.cms-request-services-icon-btn--copy  { color: #3B82F6; background: rgba(59,130,246,0.09); border-color: rgba(59,130,246,0.2); }
+.cms-request-services-icon-btn--copy:hover { background: #3B82F6; color: #fff; border-color: #3B82F6; }
+.cms-request-services-icon-btn--regen  { color: #F59E0B; background: rgba(245,158,11,0.09); border-color: rgba(245,158,11,0.2); }
+.cms-request-services-icon-btn--regen:not(:disabled):hover { background: #F59E0B; color: #fff; border-color: #F59E0B; }
+.cms-request-services-icon-btn--danger { color: #EF4444; background: rgba(239,68,68,0.09); border-color: rgba(239,68,68,0.2); }
+.cms-request-services-icon-btn--danger:not(:disabled):hover { background: #EF4444; color: #fff; border-color: #EF4444; }
+
+/* Copy-full button */
+.cms-request-services-btn-copy-full {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1.5px solid #E9ECEC;
+  background: rgba(247,248,249,0.8); color: #7C8D8D;
+  white-space: nowrap; flex-shrink: 0;
+  transition: color 0.18s, border-color 0.18s;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-btn-copy-full:hover { color: #353C3C; border-color: #353C3C; }
+
+/* Create-link button */
+.cms-request-services-btn-create-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1.5px solid rgba(59,130,246,0.25);
+  background: rgba(59,130,246,0.09); color: #3B82F6;
+  margin-inline-start: auto; white-space: nowrap;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-btn-create-link:not(:disabled):hover { background: #3B82F6; color: #fff; border-color: #3B82F6; }
+.cms-request-services-btn-create-link:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* History list */
+.cms-request-services-history-list { display: flex; flex-direction: column; gap: 12px; }
+.cms-request-services-history-card {
+  border: 1.5px solid #E9ECEC; border-radius: 12px; overflow: hidden;
+  background: #fff; transition: border-color 0.2s;
+}
+.cms-request-services-history-card:hover { border-color: rgba(53,60,60,0.2); }
+.cms-request-services-history-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; background: rgba(247,248,249,0.7);
+  border-bottom: 1px solid #E9ECEC; font-size: 13px; font-weight: 700; color: #353C3C;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-history-date { font-size: 12px; font-weight: 400; color: #97A5A5; }
+.cms-request-services-history-body {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 12px; align-items: start; padding: 14px;
+}
+.cms-request-services-history-column { display: flex; flex-direction: column; gap: 4px; }
+.cms-request-services-history-label { font-size: 10px; font-weight: 700; color: #97A5A5; text-transform: uppercase; letter-spacing: 0.05em; font-family: "Noto Kufi Arabic", sans-serif; }
+.cms-request-services-history-value { font-size: 13px; color: #353C3C; word-break: break-word; font-family: "Noto Kufi Arabic", sans-serif; }
+.cms-request-services-history-arrow { color: #97A5A5; font-size: 18px; padding-top: 18px; }
+.cms-request-services-history-footer {
+  padding: 8px 14px; border-top: 1px solid #E9ECEC;
+  font-size: 12px; color: #7C8D8D; background: rgba(247,248,249,0.5);
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-request-services-log-metadata {
+  font-size: 11px; color: #7C8D8D; background: rgba(247,248,249,0.8);
+  border-top: 1px solid #E9ECEC; padding: 10px 14px; margin: 0;
+  overflow-x: auto; font-family: 'Courier New', monospace;
+}
+
+/* ── Spinner (if not imported from _shared) ─────────────────── */
+.cms-request-services-spinner {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid rgba(53,60,60,0.15); border-top-color: #353C3C;
+  border-radius: 50%; animation: req-spin 0.7s linear infinite; flex-shrink: 0;
+}
+@keyframes req-spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .cms-request-services-create-link-row { grid-template-columns: 1fr; }
+  .cms-request-services-link-meta-grid  { grid-template-columns: 1fr 1fr; }
+  .cms-request-services-link-url-row    { flex-direction: column; }
+  .cms-request-services-btn-copy-full   { width: 100%; justify-content: center; }
+  .cms-request-services-history-body    { grid-template-columns: 1fr; }
+  .cms-request-services-history-arrow   { display: none; }
+  .cms-request-services-snapshot-row    { grid-template-columns: 1fr; gap: 4px; }
+  .cms-rs-status-update-row             { flex-direction: column; align-items: stretch; }
+  .cms-rs-status-select                 { max-width: 100%; }
+  .cms-request-services-status-actions-grid { flex-direction: column; }
+  .cms-request-services-status-btn      { width: 100%; justify-content: center; }
+  .cms-services-requests-stats-row      { display: none; }
+}
+
+/* ── Save btn spinner animation ────────────────────────────── */
+@keyframes cms-svc-spin { to { transform: rotate(360deg); } }
+.cms-svc-btn-spin {
+  animation: cms-svc-spin 0.7s linear infinite;
+  display: block;
+}
+
+/* ── Small ghost btn variant (used in snapshot heading) ─────── */
+.cms-services-btn--sm {
+  padding: 5px 12px !important;
+  font-size: 12px !important;
+}
+
+/* ── Download / file button ─────────────────────────────────── */
+.cms-request-services-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(59,130,246,0.25);
+  background: rgba(59,130,246,0.09);
+  color: #3B82F6;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: "Noto Kufi Arabic", sans-serif;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  box-shadow: none;
+  width: fit-content;
+}
+.cms-request-services-download-btn:hover {
+  background: #3B82F6;
+  color: #fff;
+  border-color: #3B82F6;
+}
+
+/* ── Snapshot responsive override ──────────────────────────── */
+@media (max-width: 600px) {
+  .cms-request-services-snapshot-row {
+    grid-template-columns: 120px 1fr 70px;
+  }
+}
+@media (max-width: 400px) {
+  .cms-request-services-snapshot-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .cms-request-services-snapshot-badge-col {
+    justify-content: flex-start;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   ACCESS PANEL — new form & divider styles
+════════════════════════════════════════════════════════════ */
+
+/* Form heading */
+.cms-access-form-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #353C3C;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(233,236,236,0.9);
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-access-form-heading svg { color: #3B82F6; flex-shrink: 0; }
+
+/* Action buttons row */
+.cms-access-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+/* Create button — green/primary */
+.cms-access-btn-create {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  border-radius: 9px;
+  border: 1.5px solid rgba(16,185,129,0.3);
+  background: rgba(16,185,129,0.1);
+  color: #059669;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "Noto Kufi Arabic", sans-serif;
+  transition: background 0.18s, color 0.18s, border-color 0.18s, box-shadow 0.18s;
+  box-shadow: none;
+}
+.cms-access-btn-create:not(:disabled):hover {
+  background: #059669;
+  color: #fff;
+  border-color: #059669;
+  box-shadow: 0 2px 8px rgba(5,150,105,0.25);
+}
+.cms-access-btn-create:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Cancel button — neutral ghost */
+.cms-access-btn-cancel {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 9px;
+  border: 1.5px solid #E9ECEC;
+  background: transparent;
+  color: #7C8D8D;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "Noto Kufi Arabic", sans-serif;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  box-shadow: none;
+}
+.cms-access-btn-cancel:not(:disabled):hover {
+  background: rgba(239,68,68,0.07);
+  color: #EF4444;
+  border-color: rgba(239,68,68,0.3);
+}
+.cms-access-btn-cancel:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* New Link button — active (toggled) state */
+.cms-request-services-btn-create-link--active {
+  background: rgba(239,68,68,0.08) !important;
+  color: #EF4444 !important;
+  border-color: rgba(239,68,68,0.25) !important;
+}
+.cms-request-services-btn-create-link--active:hover {
+  background: #EF4444 !important;
+  color: #fff !important;
+  border-color: #EF4444 !important;
+}
+
+/* Section divider */
+.cms-access-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 6px;
+}
+.cms-access-divider-line {
+  flex: 1;
+  height: 1px;
+  background: #E9ECEC;
+}
+.cms-access-divider-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #97A5A5;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+.cms-access-divider-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: rgba(53,60,60,0.08);
+  color: #353C3C;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* Copy-full button — add icon support */
+.cms-request-services-btn-copy-full svg { flex-shrink: 0; }
+
+/* Responsive for 3-col form */
+@media (max-width: 767px) {
+  .cms-request-services-create-link-row { grid-template-columns: 1fr; }
+  .cms-access-form-actions { flex-wrap: wrap; }
+  .cms-access-btn-create,
+  .cms-access-btn-cancel { flex: 1; justify-content: center; }
+}

@@ -126,10 +126,10 @@ export const useBlogStore = create((set, get) => ({
   // ==========================
   posts: [],
 
-  fetchPosts: async (type) => {
-    const res = await getPosts(type);
-    set({ posts: res.data });
-  },
+fetchPosts: async () => {
+  const res = await getPosts();
+  set({ posts: res.data });
+},
 
   createPost: async (formData) => {
     try {

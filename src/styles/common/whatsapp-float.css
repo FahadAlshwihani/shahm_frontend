@@ -1,0 +1,242 @@
+/* ============================================================
+   WHATSAPP FLOATING BUTTON  —  whatsapp-float.css
+   .waf- prefix, fully scoped
+   ============================================================ */
+
+/* ── Shared base ── */
+.waf-btn {
+  position: fixed;
+  z-index: 800;
+
+  /* spec: 60×100 on desktop */
+  width: 46px;
+  height: 76px;
+  border-radius: 7px;
+
+  /* ── Liquid glass — magnifier lens effect ──
+     See-through base with heavy blur so content behind warps visibly.
+     Gradient gives the bright-top / dark-bottom lens curvature. */
+  background: linear-gradient(
+    175deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  backdrop-filter: blur(12px) brightness(1.15) contrast(0.85) saturate(1.8);
+  -webkit-backdrop-filter: blur(12px) brightness(1.15) contrast(0.85) saturate(1.8);
+
+  /* crisp bright rim — light catching the glass edge */
+  border: 1px solid rgba(255, 255, 255, 0.60);
+
+  /* layered shadows: outer depth + inner lens highlights */
+  box-shadow:
+    /* outer */
+    0 2px 12px rgba(0, 0, 0, 0.10),
+    0 8px 24px rgba(0, 0, 0, 0.07),
+    /* inner top specular — bright glass rim */
+    inset 0 2px 0   rgba(255, 255, 255, 0.85),
+    /* inner side catches */
+    inset 1px 0 0   rgba(255, 255, 255, 0.30),
+    inset -1px 0 0  rgba(255, 255, 255, 0.20),
+    /* inner bottom — thickness shadow */
+    inset 0 -2px 0  rgba(0, 0, 0, 0.06),
+    /* inner glow — lens depth */
+    inset 0 6px 14px rgba(255, 255, 255, 0.20);
+
+  /* refraction highlight bar — like lens flare inside glass */
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+
+  /* smooth vertical travel driven by JS --waf-top */
+  transition:
+    top 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.3s ease,
+    transform 0.3s ease,
+    background 0.3s ease;
+
+  /* entrance */
+  animation: waf-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Lens specular sweep — top bright arc ── */
+.waf-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.52) 0%,
+    rgba(255, 255, 255, 0.14) 32%,
+    transparent 58%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Inner refraction bar — horizontal light band inside lens ── */
+.waf-btn::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 8%;
+  height: 18%;
+  border-radius: 999px;
+  filter: blur(3px);
+  pointer-events: none;
+  z-index: 2;
+  mask-image: linear-gradient(90deg, transparent, white 25%, white 75%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, white 25%, white 75%, transparent);
+}
+
+/* ── Icon sits above pseudo-elements ── */
+.waf-icon-wrap {
+  z-index: 3;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DESKTOP (≥769px) — centered horizontally + vertically
+───────────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  .waf-btn {
+    left: 50%;
+    right: auto;
+    top: var(--waf-top, 50%);
+    transform: translateX(-50%);
+  }
+
+  .waf-btn:hover {
+    background: linear-gradient(
+      175deg,
+      rgba(255, 255, 255, 0.38) 0%,
+      rgba(255, 255, 255, 0.10) 45%,
+      rgba(255, 255, 255, 0.18) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.80);
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.12),
+      0 12px 32px rgba(0, 0, 0, 0.09),
+      inset 0 2px 0   rgba(255, 255, 255, 0.95),
+      inset 1px 0 0   rgba(255, 255, 255, 0.40),
+      inset -1px 0 0  rgba(255, 255, 255, 0.28),
+      inset 0 -2px 0  rgba(0, 0, 0, 0.08),
+      inset 0 6px 18px rgba(255, 255, 255, 0.28);
+    transform: translateX(-50%) translateY(-3px) scale(1.04);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE (≤768px) — right edge (LTR) or left edge (RTL)
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .waf-btn {
+    width: 40px;
+    height: 66px;
+    right: 10px;
+    left: auto;
+    top: var(--waf-top, 80px);
+    transform: none;
+  }
+
+  [dir="rtl"] .waf-btn {
+    left: 10px;
+    right: auto;
+  }
+
+  .waf-btn:hover {
+    background: linear-gradient(
+      175deg,
+      rgba(255, 255, 255, 0.38) 0%,
+      rgba(255, 255, 255, 0.10) 45%,
+      rgba(255, 255, 255, 0.18) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.80);
+    transform: translateY(-3px) scale(1.04);
+  }
+}
+
+/* ── Entrance keyframes ── */
+@keyframes waf-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-12px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  @keyframes waf-enter {
+    from {
+      opacity: 0;
+      transform: translateX(16px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  [dir="rtl"] .waf-btn {
+    animation: waf-enter-rtl 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes waf-enter-rtl {
+    from {
+      opacity: 0;
+      transform: translateX(-16px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+}
+
+/* ── Icon wrapper ── */
+.waf-icon-wrap {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+/* ── WhatsApp SVG ── */
+.waf-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  /* slight drop shadow on the icon so it reads on light backgrounds */
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+}
+
+/* ── Active dot ── */
+.waf-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #D0A165;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-sizing: border-box;
+  animation: waf-pulse 2.6s ease-in-out 0.8s infinite;
+}
+
+/* ── Dot pulse ── */
+@keyframes waf-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.5; transform: scale(1.35); }
+}

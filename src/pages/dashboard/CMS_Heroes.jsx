@@ -2,66 +2,157 @@ import React, { useEffect, useState } from "react";
 import { useCmsStore } from "../../store/useCmsStore";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useSweetAlert } from "../../components/common/SweetAlert";
 import "../../styles/CMS_HERO.css";
 
+/* ══════════════════════════════════════════════════════
+   ICONS
+══════════════════════════════════════════════════════ */
+const IconHero = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <rect x="2" y="3" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M2 7h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M6 11h8M6 14h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+const IconLeft = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <rect x="1" y="1" width="6" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+    <path d="M9 4h5M9 8h4M9 12h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+  </svg>
+);
+const IconRight = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <rect x="9" y="1" width="6" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+    <path d="M2 4h5M2 8h6M2 12h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+  </svg>
+);
+const IconSettings = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.3" />
+    <path d="M8 1.5v1M8 13.5v1M1.5 8h1M13.5 8h1M3.4 3.4l.7.7M11.9 11.9l.7.7M3.4 12.6l.7-.7M11.9 4.1l.7-.7"
+      stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+  </svg>
+);
+const IconMedia = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <rect x="1" y="2" width="14" height="12" rx="2" stroke="currentColor" strokeWidth="1.3" />
+    <circle cx="5.5" cy="6" r="1.5" stroke="currentColor" strokeWidth="1.3" />
+    <path d="M1 10.5l4-3.5 3 2.5 2-1.5 4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+const IconEdit = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+    <path d="M13.26 3.75L16.5 7M2.25 21.75l1.4-5.07L15.53 4.79a1.5 1.5 0 012.12 0l2.13 2.13a1.5 1.5 0 010 2.12L7.32 20.35 2.25 21.75z"
+      stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+const IconTrash = () => (
+  <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor">
+    <path d="M20 2C18.355 2 17 3.355 17 5v2H4a1 1 0 100 2h13.832a1 1 0 00.326 0h11.674a1 1 0 00.326 0H44a1 1 0 100-2H31V5c0-1.645-1.355-3-3-3h-8zm0 2h8c.565 0 1 .435 1 1v2H19V5c0-.565.435-1 1-1zM6.98 10.986a1 1 0 00-.986 1.108l2.67 28.369C8.9 43.03 11.061 45 13.64 45h20.72c2.579 0 4.74-1.97 4.976-4.538l2.67-28.369a1 1 0 10-1.992-.187L37.344 40.28C37.2 41.851 35.94 43 34.36 43H13.64c-1.58 0-2.84-1.149-2.984-2.72L7.986 11.906a1 1 0 00-1.006-.92z" />
+  </svg>
+);
+const IconSave = () => (
+  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+    <path d="M2 2H10.5L13 4.5V13H2V2Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4.5 2V5.5H10V2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3 8.5H12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+  </svg>
+);
+const IconX = () => (
+  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+    <path d="M11.5 1.5L1.5 11.5M1.5 1.5L11.5 11.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+  </svg>
+);
+const IconPlus = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M7 1.5v11M1.5 7h11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+const CmsHeroSpinner = () => (
+  <span className="cms-hero-spinner">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.5"
+        strokeDasharray="28" strokeDashoffset="10" strokeLinecap="round" />
+    </svg>
+  </span>
+);
+
+/* ══════════════════════════════════════════════════════
+   SECTION DIVIDER
+══════════════════════════════════════════════════════ */
+function CmsHeroDivider({ icon, label }) {
+  return (
+    <div className="cms-hero-divider">
+      <span className="cms-hero-divider-icon">{icon}</span>
+      <span className="cms-hero-divider-label">{label}</span>
+      <div className="cms-hero-divider-line" />
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════
+   TOGGLE
+══════════════════════════════════════════════════════ */
+function CmsHeroToggle({ checked, onChange, label }) {
+  return (
+    <label className="cms-hero-toggle">
+      <input type="checkbox" checked={checked} onChange={onChange} />
+      <span className="cms-hero-toggle-track">
+        <span className="cms-hero-toggle-thumb" />
+      </span>
+      <span className="cms-hero-toggle-label">{label}</span>
+    </label>
+  );
+}
+
+/* ══════════════════════════════════════════════════════
+   MAIN COMPONENT
+══════════════════════════════════════════════════════ */
 export default function CMS_Heroes() {
   const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+  const { alert: sweetAlertEl, show: showAlert } = useSweetAlert();
 
   const {
-    heroes,
-    loadingHeroes,
-    fetchAdminHeroes,
-    createHero,
-    updateHero,
-    deleteHero,
-
-    heroMedia,
-    fetchAdminHeroMedia,
-    createHeroMedia,
-    deleteHeroMedia,
-
-    pages,
-    fetchAdminPages,
+    heroes, loadingHeroes,
+    fetchAdminHeroes, createHero, updateHero, deleteHero,
+    heroMedia, fetchAdminHeroMedia, createHeroMedia, deleteHeroMedia,
+    pages, fetchAdminPages,
   } = useCmsStore();
 
-  /* =============================== HERO FORM =============================== */
+  /* ── Hero form ── */
   const emptyForm = {
-    slug: "",
-    is_active: true,
-    order: 0,
-    show_header: false,
+    slug: "", is_active: true, order: 0, show_header: false,
 
     left_title_ar: "",
     left_title_en: "",
     left_button_text_ar: "",
     left_button_text_en: "",
     left_button_page: "",
+    left_button_slug: "",
 
     right_title_ar: "",
     right_title_en: "",
     right_button_text_ar: "",
     right_button_text_en: "",
     right_button_page: "",
+    right_button_slug: "",
   };
-
   const [form, setForm] = useState(emptyForm);
   const [edit, setEdit] = useState(null);
   const [selectedHero, setSelectedHero] = useState(null);
 
-  /* =============================== MEDIA FORM =============================== */
-  const [mediaForm, setMediaForm] = useState({
-    media_type: "image",
-    file: null,
-    order: 0,
-    is_active: true,
-  });
+  /* ── Media form ── */
+  const [mediaForm, setMediaForm] = useState({ media_type: "image", file: null, order: 0, is_active: true });
+  const [mediaSaving, setMediaSaving] = useState(false);
 
   useEffect(() => {
     fetchAdminHeroes();
     fetchAdminPages();
   }, []);
 
-  /* =============================== HANDLERS =============================== */
+  /* ── Handlers — logic unchanged ── */
   const handleChange = (e) => {
     let { name, value, type, checked } = e.target;
     if (type === "checkbox") value = checked;
@@ -71,6 +162,7 @@ export default function CMS_Heroes() {
 
   const handleEditHero = (h) => {
     setEdit(h);
+
     setForm({
       slug: h.slug || "",
       is_active: h.is_active,
@@ -82,33 +174,39 @@ export default function CMS_Heroes() {
       left_button_text_ar: h.left_button_text_ar || "",
       left_button_text_en: h.left_button_text_en || "",
       left_button_page: h.left_button_page || "",
+      left_button_slug: h.left_button_slug || "",
 
       right_title_ar: h.right_title_ar || "",
       right_title_en: h.right_title_en || "",
       right_button_text_ar: h.right_button_text_ar || "",
       right_button_text_en: h.right_button_text_en || "",
       right_button_page: h.right_button_page || "",
+      right_button_slug: h.right_button_slug || "",
     });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
-  const resetForm = () => {
-    setEdit(null);
-    setForm(emptyForm);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const resetForm = () => { setEdit(null); setForm(emptyForm); };
 
-  /* =============================== SUBMIT HERO =============================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
       ...form,
-      left_button_page: form.left_button_page
-        ? parseInt(form.left_button_page, 10)
-        : null,
-      right_button_page: form.right_button_page
-        ? parseInt(form.right_button_page, 10)
-        : null,
+
+      left_button_page:
+        form.left_button_slug?.trim()
+          ? null
+          : form.left_button_page
+            ? parseInt(form.left_button_page, 10)
+            : null,
+
+      right_button_page:
+        form.right_button_slug?.trim()
+          ? null
+          : form.right_button_page
+            ? parseInt(form.right_button_page, 10)
+            : null,
     };
 
     const result = edit
@@ -123,7 +221,21 @@ export default function CMS_Heroes() {
     }
   };
 
-  /* =============================== MEDIA =============================== */
+  const handleDeleteHero = async (id) => {
+    const confirmed = await showAlert({
+      type: "confirm",
+      title: t("cms.heroes.confirm_delete_title"),
+      message: t("cms.heroes.confirm_delete"),
+      confirmText: t("cms.heroes.delete_button"),
+      cancelText: t("cms.heroes.cancel_button"),
+      showCancel: true, isRtl,
+    });
+    if (confirmed) {
+      const result = await deleteHero(id);
+      if (result?.success !== false) toast.success(t("cms.heroes.success.deleted"));
+    }
+  };
+
   const openMediaForHero = (hero) => {
     setSelectedHero(hero);
     fetchAdminHeroMedia(hero.id);
@@ -139,470 +251,399 @@ export default function CMS_Heroes() {
 
   const handleMediaSubmit = async (e) => {
     e.preventDefault();
+    setMediaSaving(true);
     const fd = new FormData();
     Object.entries(mediaForm).forEach(([k, v]) => fd.append(k, v));
-
     const result = await createHeroMedia(selectedHero.id, fd);
+    setMediaSaving(false);
     if (result.success) {
       toast.success(t("cms.media_added"));
       fetchAdminHeroMedia(selectedHero.id);
-      setMediaForm({
-        media_type: "image",
-        file: null,
-        order: 0,
-        is_active: true,
-      });
+      setMediaForm({ media_type: "image", file: null, order: 0, is_active: true });
     } else {
       toast.error(t("cms.media_failed"));
     }
   };
 
-  /* =============================== RENDER =============================== */
+  const handleDeleteMedia = async (mediaId) => {
+    const confirmed = await showAlert({
+      type: "confirm",
+      title: t("cms.heroes.confirm_delete_media_title"),
+      message: t("cms.heroes.confirm_delete_media"),
+      confirmText: t("cms.heroes.delete_button"),
+      cancelText: t("cms.heroes.cancel_button"),
+      showCancel: true, isRtl,
+    });
+    if (confirmed) {
+      await deleteHeroMedia(mediaId, selectedHero.id);
+      toast.success(t("cms.heroes.success.media_deleted"));
+    }
+  };
+
+  /* ══════════════════════════════════════════════════════
+     RENDER
+  ══════════════════════════════════════════════════════ */
   return (
-    <div className="dashboard-hero-container">
-      <div className="dashboard-hero-header">
-        <div className="dashboard-hero-header-content">
-          <h1 className="dashboard-hero-title">{t("cms.heroes.title")}</h1>
-          <p className="dashboard-hero-subtitle">{t("cms.heroes.subtitle")}</p>
+    <div className="cms-hero-root" dir={isRtl ? "rtl" : "ltr"}>
+      {sweetAlertEl}
+
+      {/* ── Page Header ── */}
+      <div className="cms-hero-page-header">
+        <div className="cms-hero-page-header-left">
+          <div className="cms-hero-page-header-icon"><IconHero /></div>
+          <div>
+            <h1 className="cms-hero-page-title">{t("cms.heroes.title")}</h1>
+            <p className="cms-hero-page-subtitle">{t("cms.heroes.subtitle")}</p>
+          </div>
         </div>
       </div>
 
-      {/* HERO FORM */}
-      <div className="dashboard-hero-form-card">
-        <div className="dashboard-hero-form-header">
-          <div className="dashboard-hero-form-header-left">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19Z" fill="currentColor"/>
-              <path d="M7 10H17V12H7V10ZM7 14H14V16H7V14Z" fill="currentColor"/>
-            </svg>
-            <h2>{edit ? t("cms.edit") : t("cms.create")}</h2>
+      {/* ════════ HERO FORM CARD ════════ */}
+      <div className="cms-hero-card">
+        <div className="cms-hero-card-header">
+          <div className="cms-hero-card-header-left">
+            <span className="cms-hero-card-header-icon cms-hero-card-header-icon--blue"><IconHero /></span>
+            <h2 className="cms-hero-card-title">
+              {edit ? t("cms.heroes.form_title_edit") : t("cms.heroes.form_title_create")}
+            </h2>
           </div>
           {edit && (
-            <button className="dashboard-hero-btn-cancel" onClick={resetForm}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              {t("cms.actions.cancel")}
+            <button className="cms-hero-icon-btn cms-hero-icon-btn--ghost" onClick={resetForm} type="button">
+              <IconX />
             </button>
           )}
         </div>
 
-        <form onSubmit={handleSubmit} className="dashboard-hero-form">
+        <form onSubmit={handleSubmit} className="cms-hero-form">
+
           {/* Basic Settings */}
-          <div className="dashboard-hero-form-section">
-            <h3 className="dashboard-hero-section-title">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M9 1.5L2.25 5.25V10.5C2.25 13.8825 4.8825 17.0625 9 18C13.1175 17.0625 15.75 13.8825 15.75 10.5V5.25L9 1.5Z" fill="currentColor"/>
-              </svg>
-              {t("cms.heroes.basic_settings")}
-            </h3>
-            <div className="dashboard-hero-form-grid">
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.slug")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="slug"
-                  placeholder={t("cms.heroes.slug_placeholder")}
-                  value={form.slug}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.order")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="order"
-                  type="number"
-                  placeholder="0"
-                  value={form.order}
-                  onChange={handleChange}
-                />
-              </div>
+          <CmsHeroDivider icon={<IconSettings />} label={t("cms.heroes.basic_settings")} />
+          <div className="cms-hero-form-row">
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.slug")}</label>
+              <input className="cms-hero-input" dir="ltr" name="slug"
+                placeholder={t("cms.heroes.slug_placeholder")}
+                value={form.slug} onChange={handleChange} required />
             </div>
-
-            <div className="dashboard-hero-checkbox-group">
-              <label className="dashboard-hero-checkbox-label">
-                <input
-                  type="checkbox"
-                  className="dashboard-hero-checkbox"
-                  name="is_active"
-                  checked={form.is_active}
-                  onChange={handleChange}
-                />
-                <span className="dashboard-hero-checkbox-text">{t("cms.active")}</span>
-              </label>
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.order")}</label>
+              <input className="cms-hero-input" type="number" name="order"
+                placeholder="0" value={form.order} onChange={handleChange} />
             </div>
+          </div>
+          <div className="cms-hero-form-row">
+            <CmsHeroToggle
+              checked={form.is_active}
+              onChange={(e) => setForm((p) => ({ ...p, is_active: e.target.checked }))}
+              label={t("cms.active")}
+            />
+            <CmsHeroToggle
+              checked={form.show_header}
+              onChange={(e) => setForm((p) => ({ ...p, show_header: e.target.checked }))}
+              label={t("cms.heroes.show_header")}
+            />
           </div>
 
           {/* Left Side */}
-          <div className="dashboard-hero-form-section">
-            <h3 className="dashboard-hero-section-title">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M2.25 2.25H8.25V8.25H2.25V2.25ZM9.75 2.25H15.75V8.25H9.75V2.25ZM2.25 9.75H8.25V15.75H2.25V9.75Z" fill="currentColor"/>
-              </svg>
-              {t("cms.left_side")}
-            </h3>
-            <div className="dashboard-hero-form-grid-row">
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.title_ar")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="left_title_ar"
-                  placeholder={t("cms.heroes.title_ar_placeholder")}
-                  value={form.left_title_ar}
-                  onChange={handleChange}
-                  dir="rtl"
-                />
-              </div>
-
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.title_en")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="left_title_en"
-                  placeholder={t("cms.heroes.title_en_placeholder")}
-                  value={form.left_title_en}
-                  onChange={handleChange}
-                />
-              </div>
+          <CmsHeroDivider icon={<IconLeft />} label={t("cms.left_side")} />
+          <div className="cms-hero-form-row">
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.title_ar")}</label>
+              <input className="cms-hero-input" dir="rtl" name="left_title_ar"
+                placeholder={t("cms.heroes.title_ar_placeholder")}
+                value={form.left_title_ar} onChange={handleChange} />
             </div>
-
-            <div className="dashboard-hero-form-grid-row">
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.button_ar")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="left_button_text_ar"
-                  placeholder={t("cms.heroes.button_ar_placeholder")}
-                  value={form.left_button_text_ar}
-                  onChange={handleChange}
-                  dir="rtl"
-                />
-              </div>
-
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.button_en")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="left_button_text_en"
-                  placeholder={t("cms.heroes.button_en_placeholder")}
-                  value={form.left_button_text_en}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.title_en")}</label>
+              <input className="cms-hero-input" dir="ltr" name="left_title_en"
+                placeholder={t("cms.heroes.title_en_placeholder")}
+                value={form.left_title_en} onChange={handleChange} />
             </div>
-
-            <div className="dashboard-hero-form-group">
-              <label className="dashboard-hero-label">{t("cms.heroes.button_page")}</label>
-              <select
-                className="dashboard-hero-select"
-                name="left_button_page"
-                value={form.left_button_page}
-                onChange={handleChange}
-              >
+          </div>
+          <div className="cms-hero-form-row">
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.button_ar")}</label>
+              <input className="cms-hero-input" dir="rtl" name="left_button_text_ar"
+                placeholder={t("cms.heroes.button_ar_placeholder")}
+                value={form.left_button_text_ar} onChange={handleChange} />
+            </div>
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.button_en")}</label>
+              <input className="cms-hero-input" dir="ltr" name="left_button_text_en"
+                placeholder={t("cms.heroes.button_en_placeholder")}
+                value={form.left_button_text_en} onChange={handleChange} />
+            </div>
+          </div>
+          <div className="cms-hero-form-row">
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.heroes.button_page")}</label>
+              {/* <select className="cms-hero-select" name="left_button_page"
+                value={form.left_button_page} onChange={handleChange}>
                 <option value="">{t("cms.none")}</option>
                 {pages.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {i18n.language === 'ar' ? p.title_ar : p.title_en} ({p.slug})
+                    {isRtl ? p.title_ar : p.title_en} ({p.slug})
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <div className="cms-hero-form-group">
+                <label className="cms-hero-label">
+                  Internal Route
+                </label>
+
+                <input
+                  className="cms-hero-input"
+                  dir="ltr"
+                  name="left_button_slug"
+                  placeholder="/contact"
+                  value={form.left_button_slug}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
+            <div className="cms-hero-form-spacer" aria-hidden="true" />
           </div>
 
           {/* Right Side */}
-          <div className="dashboard-hero-form-section">
-            <h3 className="dashboard-hero-section-title">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M9.75 9.75H15.75V15.75H9.75V9.75ZM2.25 2.25H8.25V8.25H2.25V2.25ZM9.75 2.25H15.75V8.25H9.75V2.25Z" fill="currentColor"/>
-              </svg>
-              {t("cms.right_side")}
-            </h3>
-            <div className="dashboard-hero-form-grid-row">
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.title_ar")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="right_title_ar"
-                  placeholder={t("cms.heroes.title_ar_placeholder")}
-                  value={form.right_title_ar}
-                  onChange={handleChange}
-                  dir="rtl"
-                />
-              </div>
-
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.title_en")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="right_title_en"
-                  placeholder={t("cms.heroes.title_en_placeholder")}
-                  value={form.right_title_en}
-                  onChange={handleChange}
-                />
-              </div>
+          <CmsHeroDivider icon={<IconRight />} label={t("cms.right_side")} />
+          <div className="cms-hero-form-row">
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.title_ar")}</label>
+              <input className="cms-hero-input" dir="rtl" name="right_title_ar"
+                placeholder={t("cms.heroes.title_ar_placeholder")}
+                value={form.right_title_ar} onChange={handleChange} />
             </div>
-
-            <div className="dashboard-hero-form-grid-row">
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.button_ar")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="right_button_text_ar"
-                  placeholder={t("cms.heroes.button_ar_placeholder")}
-                  value={form.right_button_text_ar}
-                  onChange={handleChange}
-                  dir="rtl"
-                />
-              </div>
-
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.button_en")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  name="right_button_text_en"
-                  placeholder={t("cms.heroes.button_en_placeholder")}
-                  value={form.right_button_text_en}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.title_en")}</label>
+              <input className="cms-hero-input" dir="ltr" name="right_title_en"
+                placeholder={t("cms.heroes.title_en_placeholder")}
+                value={form.right_title_en} onChange={handleChange} />
             </div>
-
-            <div className="dashboard-hero-form-group">
-              <label className="dashboard-hero-label">{t("cms.heroes.button_page")}</label>
-              <select
-                className="dashboard-hero-select"
-                name="right_button_page"
-                value={form.right_button_page}
-                onChange={handleChange}
-              >
+          </div>
+          <div className="cms-hero-form-row">
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.button_ar")}</label>
+              <input className="cms-hero-input" dir="rtl" name="right_button_text_ar"
+                placeholder={t("cms.heroes.button_ar_placeholder")}
+                value={form.right_button_text_ar} onChange={handleChange} />
+            </div>
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.button_en")}</label>
+              <input className="cms-hero-input" dir="ltr" name="right_button_text_en"
+                placeholder={t("cms.heroes.button_en_placeholder")}
+                value={form.right_button_text_en} onChange={handleChange} />
+            </div>
+          </div>
+          <div className="cms-hero-form-row">
+            <div className="cms-hero-form-group">
+              <label className="cms-hero-label">{t("cms.heroes.button_page")}</label>
+              {/* <select className="cms-hero-select" name="right_button_page"
+                value={form.right_button_page} onChange={handleChange}>
                 <option value="">{t("cms.none")}</option>
                 {pages.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {i18n.language === 'ar' ? p.title_ar : p.title_en} ({p.slug})
+                    {isRtl ? p.title_ar : p.title_en} ({p.slug})
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <div className="cms-hero-form-group">
+                <label className="cms-hero-label">
+                  Internal Route
+                </label>
+
+                <input
+                  className="cms-hero-input"
+                  dir="ltr"
+                  name="right_button_slug"
+                  placeholder="/contact"
+                  value={form.right_button_slug}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
+            <div className="cms-hero-form-spacer" aria-hidden="true" />
           </div>
 
-          <div className="dashboard-hero-form-actions">
-            <button type="submit" className="dashboard-hero-btn-primary" disabled={loadingHeroes}>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M15.75 8.0625V15.1875C15.75 15.4361 15.6512 15.6746 15.4754 15.8504C15.2996 16.0262 15.0611 16.125 14.8125 16.125H3.1875C2.93886 16.125 2.70041 16.0262 2.52459 15.8504C2.34878 15.6746 2.25 15.4361 2.25 15.1875V3.5625C2.25 3.31386 2.34878 3.07541 2.52459 2.89959C2.70041 2.72378 2.93886 2.625 3.1875 2.625H10.3125" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M13.5 1.5L16.5 4.5L8.25 12.75H5.25V9.75L13.5 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+          {/* Actions */}
+          <div className="cms-hero-form-actions">
+            <button type="submit" className="cms-hero-btn cms-hero-btn--primary" disabled={loadingHeroes}>
+              {loadingHeroes ? <CmsHeroSpinner /> : <IconSave />}
               {loadingHeroes ? t("cms.saving") : edit ? t("cms.update") : t("cms.create")}
             </button>
             {edit && (
-              <button type="button" className="dashboard-hero-btn-secondary" onClick={resetForm}>
-                Cancel
+              <button type="button" className="cms-hero-btn cms-hero-btn--ghost" onClick={resetForm}>
+                <IconX />
+                {t("cms.actions.cancel")}
               </button>
             )}
           </div>
         </form>
       </div>
 
-      {/* HERO LIST */}
-      <div className="dashboard-hero-list-card">
-        <div className="dashboard-hero-list-header">
-          <div className="dashboard-hero-list-title-wrapper">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M3 3H17V7H3V3ZM3 9H17V13H3V9ZM3 15H17V17H3V15Z" fill="currentColor"/>
-            </svg>
-            <h2 className="dashboard-hero-list-title">{t("cms.heroes.list_title")}</h2>
+      {/* ════════ HEROES LIST CARD ════════ */}
+      <div className="cms-hero-card">
+        <div className="cms-hero-card-header">
+          <div className="cms-hero-card-header-left">
+            <span className="cms-hero-card-header-icon cms-hero-card-header-icon--purple"><IconHero /></span>
+            <h2 className="cms-hero-card-title">{t("cms.heroes.list_title")}</h2>
           </div>
-          <span className="dashboard-hero-count-badge">{heroes.length}</span>
+          <span className="cms-hero-count-badge">{heroes.length}</span>
         </div>
-        <div className="dashboard-hero-table-wrapper">
-          <table className="dashboard-hero-table">
-            <thead>
-              <tr>
-                <th>{t("cms.heroes.table.id")}</th>
-                <th>{t("cms.slug")}</th>
-                <th>{t("cms.order")}</th>
-                <th>{t("cms.heroes.table.status")}</th>
-                <th>{t("cms.media")}</th>
-                <th>{t("cms.actions.actions")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {heroes.map((h) => (
-                <tr key={h.id}>
-                  <td className="dashboard-hero-table-id">#{h.id}</td>
-                  <td className="dashboard-hero-table-slug">{h.slug}</td>
-                  <td className="dashboard-hero-table-order">{h.order}</td>
-                  <td>
-                    <span className={`dashboard-hero-status-badge ${h.is_active ? 'dashboard-hero-status-active' : 'dashboard-hero-status-inactive'}`}>
-                      {h.is_active ? t("cms.heroes.status.active") : t("cms.heroes.status.inactive")}
-                    </span>
-                  </td>
-                  <td>
-                    <button
-                      className="dashboard-hero-btn-media"
-                      onClick={() => openMediaForHero(h)}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M14 2H2C1.46957 2 0.960859 2.21071 0.585786 2.58579C0.210714 2.96086 0 3.46957 0 4V12C0 12.5304 0.210714 13.0391 0.585786 13.4142C0.960859 13.7893 1.46957 14 2 14H14C14.5304 14 15.0391 13.7893 15.4142 13.4142C15.7893 13.0391 16 12.5304 16 12V4C16 3.46957 15.7893 2.96086 15.4142 2.58579C15.0391 2.21071 14.5304 2 14 2ZM5 10L7 8L9 10.5L12 7L14 10V12H2V10Z" fill="currentColor"/>
-                      </svg>
-                      {t("cms.media")}
-                    </button>
-                  </td>
-                  <td className="dashboard-hero-table-actions">
-                    <button
-                      className="dashboard-hero-btn-edit"
-                      onClick={() => handleEditHero(h)}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M11.333 2L14 4.667L5.333 13.333H2.667V10.667L11.333 2Z" fill="currentColor"/>
-                      </svg>
-                      {t("cms.edit")}
-                    </button>
-                    <button
-                      className="dashboard-hero-btn-delete"
-                      onClick={() => {
-                        if (window.confirm(t("cms.heroes.confirm_delete"))) {
-                          deleteHero(h.id);
-                        }
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M4 6V14H12V6H4ZM10.5 2L9.5 1H6.5L5.5 2H2V4H14V2H10.5Z" fill="currentColor"/>
-                      </svg>
-                      {t("cms.delete")}
-                    </button>
-                  </td>
+
+        {heroes.length === 0 ? (
+          <div className="cms-hero-empty">
+            <IconHero />
+            <p>{t("cms.heroes.empty")}</p>
+          </div>
+        ) : (
+          <div className="cms-hero-table-wrapper">
+            <table className="cms-hero-table">
+              <thead>
+                <tr>
+                  <th>{t("cms.heroes.table.id")}</th>
+                  <th>{t("cms.slug")}</th>
+                  <th>{t("cms.order")}</th>
+                  <th>{t("cms.heroes.table.status")}</th>
+                  <th>{t("cms.media")}</th>
+                  <th>{t("cms.actions.actions")}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {heroes.map((h) => (
+                  <tr key={h.id} className="cms-hero-table-row">
+                    <td><span className="cms-hero-id-chip">#{h.id}</span></td>
+                    <td><code className="cms-hero-slug-code">{h.slug}</code></td>
+                    <td><span className="cms-hero-order-chip">{h.order}</span></td>
+                    <td>
+                      <span className={`cms-hero-status-badge ${h.is_active ? "cms-hero-status-badge--active" : "cms-hero-status-badge--inactive"}`}>
+                        <span className="cms-hero-status-dot" />
+                        {h.is_active ? t("cms.heroes.status.active") : t("cms.heroes.status.inactive")}
+                      </span>
+                    </td>
+                    <td>
+                      <button className="cms-hero-icon-btn cms-hero-icon-btn--media"
+                        onClick={() => openMediaForHero(h)} title={t("cms.media")}>
+                        <IconMedia />
+                      </button>
+                    </td>
+                    <td>
+                      <div className="cms-hero-actions-cell">
+                        <button className="cms-hero-icon-btn cms-hero-icon-btn--edit"
+                          onClick={() => handleEditHero(h)} title={t("cms.edit")}>
+                          <IconEdit />
+                        </button>
+                        <button className="cms-hero-icon-btn cms-hero-icon-btn--delete"
+                          onClick={() => handleDeleteHero(h.id)} title={t("cms.delete")}>
+                          <IconTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
-      {/* MEDIA MANAGER */}
+      {/* ════════ MEDIA MANAGER CARD ════════ */}
       {selectedHero && (
-        <div className="dashboard-hero-media-card">
-          <div className="dashboard-hero-media-header">
-            <div className="dashboard-hero-media-title-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M21 3H3C1.89 3 1 3.9 1 5V19C1 20.1 1.89 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM21 19H3V5H21V19ZM8.5 13.5L11 16.51L14.5 12L19 18H5L8.5 13.5Z" fill="currentColor"/>
-              </svg>
-              <h2 className="dashboard-hero-media-title">
-                {t("cms.media_for")} <span className="dashboard-hero-media-slug">{selectedHero.slug}</span>
-              </h2>
+        <div className="cms-hero-card cms-hero-card--media">
+          <div className="cms-hero-card-header">
+            <div className="cms-hero-card-header-left">
+              <span className="cms-hero-card-header-icon cms-hero-card-header-icon--amber"><IconMedia /></span>
+              <div>
+                <h2 className="cms-hero-card-title">{t("cms.media_for")}</h2>
+                <code className="cms-hero-slug-code cms-hero-slug-code--sm">{selectedHero.slug}</code>
+              </div>
             </div>
-            <button
-              className="dashboard-hero-btn-close"
-              onClick={() => setSelectedHero(null)}
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
+            <button className="cms-hero-btn cms-hero-btn--ghost cms-hero-btn--sm"
+              onClick={() => setSelectedHero(null)} type="button">
+              <IconX />
               {t("cms.heroes.close")}
             </button>
           </div>
 
-          <form onSubmit={handleMediaSubmit} className="dashboard-hero-media-form">
-            <div className="dashboard-hero-media-form-grid">
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.heroes.media_type")}</label>
-                <select
-                  className="dashboard-hero-select"
-                  name="media_type"
-                  value={mediaForm.media_type}
-                  onChange={handleMediaChange}
-                >
+          {/* Media upload form */}
+          <form onSubmit={handleMediaSubmit} className="cms-hero-media-form">
+            <CmsHeroDivider icon={<IconPlus />} label={t("cms.heroes.add_media_label")} />
+            <div className="cms-hero-form-row">
+              <div className="cms-hero-form-group">
+                <label className="cms-hero-label">{t("cms.heroes.media_type")}</label>
+                <select className="cms-hero-select" name="media_type"
+                  value={mediaForm.media_type} onChange={handleMediaChange}>
                   <option value="logo_desktop">{t("cms.media_logo_desktop")}</option>
                   <option value="logo_mobile">{t("cms.media_logo_mobile")}</option>
                   <option value="image">{t("cms.media_image")}</option>
                   <option value="video">{t("cms.media_video")}</option>
                 </select>
               </div>
-
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.order")}</label>
-                <input
-                  className="dashboard-hero-input"
-                  type="number"
-                  name="order"
-                  value={mediaForm.order}
-                  onChange={handleMediaChange}
-                />
-              </div>
-
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-label">{t("cms.heroes.file")}</label>
-                <input
-                  className="dashboard-hero-input-file"
-                  type="file"
-                  name="file"
-                  onChange={handleMediaChange}
-                  required
-                />
-              </div>
-
-              <div className="dashboard-hero-form-group">
-                <label className="dashboard-hero-checkbox-label">
-                  <input
-                    type="checkbox"
-                    className="dashboard-hero-checkbox-v2"
-                    name="is_active"
-                    checked={mediaForm.is_active}
-                    onChange={handleMediaChange}
-                  />
-                  <span className="dashboard-hero-checkbox-text">{t("cms.active")}</span>
-                </label>
+              <div className="cms-hero-form-group">
+                <label className="cms-hero-label">{t("cms.order")}</label>
+                <input className="cms-hero-input" type="number" name="order"
+                  value={mediaForm.order} onChange={handleMediaChange} />
               </div>
             </div>
-
-            <button type="submit" className="dashboard-hero-btn-primary">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8 2V14M2 8H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              {t("cms.add_media")}
-            </button>
+            <div className="cms-hero-form-row">
+              <div className="cms-hero-form-group">
+                <label className="cms-hero-label">{t("cms.heroes.file")}</label>
+                <input className="cms-hero-input-file" type="file" name="file"
+                  onChange={handleMediaChange} required />
+              </div>
+              <div className="cms-hero-form-group cms-hero-form-group--center">
+                <label className="cms-hero-label">{t("cms.active")}</label>
+                <CmsHeroToggle
+                  checked={mediaForm.is_active}
+                  onChange={(e) => setMediaForm((p) => ({ ...p, is_active: e.target.checked }))}
+                  label={mediaForm.is_active ? t("cms.heroes.status.active") : t("cms.heroes.status.inactive")}
+                />
+              </div>
+            </div>
+            <div className="cms-hero-form-actions">
+              <button type="submit" className="cms-hero-btn cms-hero-btn--primary" disabled={mediaSaving}>
+                {mediaSaving ? <CmsHeroSpinner /> : <IconPlus />}
+                {t("cms.add_media")}
+              </button>
+            </div>
           </form>
 
-          <div className="dashboard-hero-media-grid">
-            {heroMedia.map((m) => (
-              <div key={m.id} className="dashboard-hero-media-item">
-                <div className="dashboard-hero-media-preview">
-                  {m.media_type !== "video" ? (
-                    <img src={m.file_url} alt={m.media_type} />
-                  ) : (
-                    <video src={m.file_url} controls />
-                  )}
-                  <div className="dashboard-hero-media-overlay">
-                    <span className="dashboard-hero-media-type-badge">{m.media_type}</span>
+          {/* Media grid */}
+          {heroMedia.length > 0 ? (
+            <div className="cms-hero-media-grid">
+              {heroMedia.map((m) => (
+                <div key={m.id} className="cms-hero-media-item">
+                  <div className="cms-hero-media-preview">
+                    {m.media_type !== "video" ? (
+                      <img src={m.file_url} alt={m.media_type} />
+                    ) : (
+                      <video src={m.file_url} controls />
+                    )}
+                    <span className="cms-hero-media-type-badge">{m.media_type}</span>
                   </div>
-                </div>
-                <div className="dashboard-hero-media-info">
-                  <div className="dashboard-hero-media-details">
-                    <span className="dashboard-hero-media-id">{t("cms.heroes.media_id")}: {m.id}</span>
-                    <span className="dashboard-hero-media-order">{t("cms.heroes.media_order")}: {m.order}</span>
+                  <div className="cms-hero-media-footer">
+                    <div className="cms-hero-media-meta">
+                      <span>#{m.id}</span>
+                      <span>{t("cms.heroes.media_order")}: {m.order}</span>
+                    </div>
+                    <span className={`cms-hero-status-badge cms-hero-status-badge--sm ${m.is_active ? "cms-hero-status-badge--active" : "cms-hero-status-badge--inactive"}`}>
+                      <span className="cms-hero-status-dot" />
+                      {m.is_active ? t("cms.heroes.status.active") : t("cms.heroes.status.inactive")}
+                    </span>
                   </div>
-                  <span className={`dashboard-hero-media-status ${m.is_active ? 'active' : 'inactive'}`}>
-                    {m.is_active ? t("cms.heroes.status.active") : t("cms.heroes.status.inactive")}
-                  </span>
+                  <button className="cms-hero-media-delete-btn"
+                    onClick={() => handleDeleteMedia(m.id)} type="button">
+                    <IconTrash />
+                    {t("cms.delete")}
+                  </button>
                 </div>
-                <button
-                  className="dashboard-hero-media-delete"
-                  onClick={() => {
-                    if (window.confirm(t("cms.heroes.confirm_delete_media"))) {
-                      deleteHeroMedia(m.id, selectedHero.id);
-                    }
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M4 6V14H12V6H4ZM10.5 2L9.5 1H6.5L5.5 2H2V4H14V2H10.5Z" fill="currentColor"/>
-                  </svg>
-                  {t("cms.delete")}
-                </button>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="cms-hero-empty cms-hero-empty--sm">
+              <IconMedia />
+              <p>{t("cms.heroes.no_media")}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
