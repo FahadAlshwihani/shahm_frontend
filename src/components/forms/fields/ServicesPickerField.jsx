@@ -145,7 +145,7 @@ function ServicesPickerField({
             <div key={idx} className="services-picker-group">
               <div className={`services-picker-selects-row${!isFirst ? " has-remove" : ""}`}>
 
-                {/* X button for additional groups */}
+                {/* Col 1: X button — only on additional groups */}
                 {!isFirst && (
                   <button
                     type="button"
@@ -153,13 +153,17 @@ function ServicesPickerField({
                     aria-label={isEn ? "Remove" : "حذف"}
                     onClick={() => removeGroup(idx)}
                   >
-                    <svg viewBox="0 0 10 10" fill="none" aria-hidden="true" width="12" height="12">
-                      <path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                    <svg
+                      viewBox="0 0 51.123 51.123"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path d="M45.123,0H6C2.691,0,0,2.691,0,6v39.123c0,3.309,2.691,6,6,6h39.123c3.309,0,6-2.691,6-6V6C51.123,2.691,48.431,0,45.123,0z M49.123,45.123c0,2.206-1.794,4-4,4H6c-2.206,0-4-1.794-4-4V6c0-2.206,1.794-4,4-4h39.123c2.206,0,4,1.794,4,4V45.123z M36.791,15.746l-9.815,9.815l9.815,9.815c0.391,0.391,0.391,1.023,0,1.414c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293l-9.815-9.815l-9.815,9.815c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293c-0.391-0.391-0.391-1.023,0-1.414l9.815-9.815l-9.815-9.815c-0.391-0.391-0.391-1.023,0-1.414s1.023-0.391,1.414,0l9.815,9.815l9.815-9.815c0.391-0.391,1.023-0.391,1.414,0S37.181,15.355,36.791,15.746z"/>
                     </svg>
                   </button>
                 )}
 
-                {/* Category select */}
+                {/* Col 2: Category select */}
                 <CategorySelect
                   label={catLabel}
                   options={mainServices}
@@ -174,7 +178,7 @@ function ServicesPickerField({
                   onChange={(catId) => handleCategory(idx, catId)}
                 />
 
-                {/* Service select — fully disabled until category chosen */}
+                {/* Col 3: Service select */}
                 <ServiceSelect
                   label={svcLabel}
                   options={subServices}
@@ -203,8 +207,10 @@ function ServicesPickerField({
             aria-label={isEn ? "Add an additional service" : "إضافة خدمة إضافية"}
             onClick={addGroup}
           >
-            <svg viewBox="0 0 16 16" fill="none" width="18" height="18" aria-hidden="true">
-              <path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="48" height="48" fill="none"/>
+              <path d="M34,22H26V14a2,2,0,0,0-4,0v8H14a2,2,0,0,0,0,4h8v8a2,2,0,0,0,4,0V26h8a2,2,0,0,0,0-4Z"/>
+              <path d="M40,8V40H8V8H40m2-4H6A2,2,0,0,0,4,6V42a2,2,0,0,0,2,2H42a2,2,0,0,0,2-2V6a2,2,0,0,0-2-2Z"/>
             </svg>
           </button>
           <span className="services-add-label">
