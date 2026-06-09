@@ -1,6 +1,7 @@
 // src/pages/dashboard/forms/components/FormSettingsPanel.jsx
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import Modal from "../../../../components/common/dashboard/Modal";
 
 const SectionDivider = ({ icon, label }) => (
   <div className="fb-divider">
