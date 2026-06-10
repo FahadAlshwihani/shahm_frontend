@@ -6,18 +6,18 @@ import {
 } from "../../../api/servicesApi";
 
 function getText(
-    obj,
-    field,
-    isEn,
-    fallback = ""
+  obj,
+  field,
+  isEn,
+  fallback = ""
 ) {
-    return isEn
-        ? obj?.[`${field}_en`] ||
-              obj?.[`${field}_ar`] ||
-              fallback
-        : obj?.[`${field}_ar`] ||
-              obj?.[`${field}_en`] ||
-              fallback;
+  return isEn
+    ? obj?.[`${field}_en`] ||
+    obj?.[`${field}_ar`] ||
+    fallback
+    : obj?.[`${field}_ar`] ||
+    obj?.[`${field}_en`] ||
+    fallback;
 }
 
 function ServicesPickerField({
@@ -26,11 +26,11 @@ function ServicesPickerField({
   onValueChange,
   isEn,
 }) {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
   const fieldLabel = getText(field, "label", isEn);
 
   const [mainServices, setMainServices] = useState([]);
-  const [servicesMap,  setServicesMap]  = useState({});
+  const [servicesMap, setServicesMap] = useState({});
 
   // Always start with one required group
   const groups = Array.isArray(value) && value.length
@@ -41,7 +41,7 @@ function ServicesPickerField({
   useEffect(() => {
     async function load() {
       try {
-        const res   = await getPublicMainServices();
+        const res = await getPublicMainServices();
         const items = res?.data?.results || res?.data || [];
         setMainServices(items);
       } catch (err) { console.error(err); }
@@ -53,7 +53,7 @@ function ServicesPickerField({
   const ensureServices = async (mainServiceId) => {
     if (!mainServiceId || servicesMap[mainServiceId]) return;
     try {
-      const res   = await getPublicServices({ main_service: mainServiceId });
+      const res = await getPublicServices({ main_service: mainServiceId });
       const items = res?.data?.results || res?.data || [];
       setServicesMap((prev) => ({ ...prev, [mainServiceId]: items }));
     } catch (err) { console.error(err); }
@@ -64,13 +64,17 @@ function ServicesPickerField({
   const handleCategory = async (idx, catId) => {
     await ensureServices(catId);
     const next = [...groups];
-    next[idx]  = { main_service: catId, service: "" };
+    next[idx] = { main_service: catId, service: "" };
     push(next);
   };
 
   const handleService = (idx, svcId) => {
     const next = [...groups];
-    next[idx]  = { ...next[idx], service: svcId };
+    next[idx] = {
+      ...next[idx],
+      services: [svcId],
+    };
+    delete next[idx].service;
     push(next);
   };
 
@@ -95,8 +99,8 @@ function ServicesPickerField({
   const floatLabelStyle = (floated, isRTL) => ({
     position: "absolute",
     top: floated ? "0px" : "14px",
-    left:  isRTL ? "auto" : 0,
-    right: isRTL ? 0      : "auto",
+    left: isRTL ? "auto" : 0,
+    right: isRTL ? 0 : "auto",
     fontSize: floated ? "10px" : "12px",
     color: "#7C8D8D",
     fontFamily: "var(--font-content)",
@@ -123,21 +127,28 @@ function ServicesPickerField({
       <div className="services-picker-wrapper">
 
         {groups.map((group, idx) => {
-          const isFirst      = idx === 0;
-          const subServices  = servicesMap[group.main_service] || [];
-          const catSelected  = !!group.main_service;
-          const svcSelected  = !!group.service;
+          const isFirst = idx === 0;
+          const subServices = servicesMap[group.main_service] || [];
+          const catSelected = !!group.main_service;
+          const svcSelected =
+            Array.isArray(group.services) &&
+            group.services.length > 0;
 
           const catLabel = isEn ? "Main Category" : "التصنيف الرئيسي";
-          const svcLabel = isEn ? "Service Type"  : "نوع الخدمة";
+          const svcLabel = isEn ? "Service Type" : "نوع الخدمة";
 
           const catOption = mainServices.find(
             (m) => String(m.id) === String(group.main_service)
           );
           const catDisplay = catOption ? getText(catOption, "title", isEn) : null;
 
+          const selectedServiceId =
+            Array.isArray(group.services) && group.services.length
+              ? group.services[0]
+              : null;
+
           const svcOption = subServices.find(
-            (s) => String(s.id) === String(group.service)
+            (s) => String(s.id) === String(selectedServiceId)
           );
           const svcDisplay = svcOption ? getText(svcOption, "title", isEn) : null;
 
@@ -158,7 +169,7 @@ function ServicesPickerField({
                       xmlns="http://www.w3.org/2000/svg"
                       aria-hidden="true"
                     >
-                      <path d="M45.123,0H6C2.691,0,0,2.691,0,6v39.123c0,3.309,2.691,6,6,6h39.123c3.309,0,6-2.691,6-6V6C51.123,2.691,48.431,0,45.123,0z M49.123,45.123c0,2.206-1.794,4-4,4H6c-2.206,0-4-1.794-4-4V6c0-2.206,1.794-4,4-4h39.123c2.206,0,4,1.794,4,4V45.123z M36.791,15.746l-9.815,9.815l9.815,9.815c0.391,0.391,0.391,1.023,0,1.414c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293l-9.815-9.815l-9.815,9.815c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293c-0.391-0.391-0.391-1.023,0-1.414l9.815-9.815l-9.815-9.815c-0.391-0.391-0.391-1.023,0-1.414s1.023-0.391,1.414,0l9.815,9.815l9.815-9.815c0.391-0.391,1.023-0.391,1.414,0S37.181,15.355,36.791,15.746z"/>
+                      <path d="M45.123,0H6C2.691,0,0,2.691,0,6v39.123c0,3.309,2.691,6,6,6h39.123c3.309,0,6-2.691,6-6V6C51.123,2.691,48.431,0,45.123,0z M49.123,45.123c0,2.206-1.794,4-4,4H6c-2.206,0-4-1.794-4-4V6c0-2.206,1.794-4,4-4h39.123c2.206,0,4,1.794,4,4V45.123z M36.791,15.746l-9.815,9.815l9.815,9.815c0.391,0.391,0.391,1.023,0,1.414c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293l-9.815-9.815l-9.815,9.815c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293c-0.391-0.391-0.391-1.023,0-1.414l9.815-9.815l-9.815-9.815c-0.391-0.391-0.391-1.023,0-1.414s1.023-0.391,1.414,0l9.815,9.815l9.815-9.815c0.391-0.391,1.023-0.391,1.414,0S37.181,15.355,36.791,15.746z" />
                     </svg>
                   </button>
                 )}
@@ -182,7 +193,7 @@ function ServicesPickerField({
                 <ServiceSelect
                   label={svcLabel}
                   options={subServices}
-                  value={group.service}
+                  value={selectedServiceId}
                   display={svcDisplay}
                   isEn={isEn}
                   isRTL={isRTL}
@@ -208,9 +219,9 @@ function ServicesPickerField({
             onClick={addGroup}
           >
             <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect width="48" height="48" fill="none"/>
-              <path d="M34,22H26V14a2,2,0,0,0-4,0v8H14a2,2,0,0,0,0,4h8v8a2,2,0,0,0,4,0V26h8a2,2,0,0,0,0-4Z"/>
-              <path d="M40,8V40H8V8H40m2-4H6A2,2,0,0,0,4,6V42a2,2,0,0,0,2,2H42a2,2,0,0,0,2-2V6a2,2,0,0,0-2-2Z"/>
+              <rect width="48" height="48" fill="none" />
+              <path d="M34,22H26V14a2,2,0,0,0-4,0v8H14a2,2,0,0,0,0,4h8v8a2,2,0,0,0,4,0V26h8a2,2,0,0,0,0-4Z" />
+              <path d="M40,8V40H8V8H40m2-4H6A2,2,0,0,0,4,6V42a2,2,0,0,0,2,2H42a2,2,0,0,0,2-2V6a2,2,0,0,0-2-2Z" />
             </svg>
           </button>
           <span className="services-add-label">
@@ -254,7 +265,7 @@ function CategorySelect({ label, options, value, display, isEn, isRTL, required,
           </span>
           <span style={{ display: "inline-flex", alignItems: "center", flexShrink: 0 }}>
             <svg className={`srm-dropdown-arrow${open ? " open" : ""}`} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M4 6L8 10L12 6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M4 6L8 10L12 6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
         </div>
@@ -317,7 +328,7 @@ function ServiceSelect({ label, options, value, display, isEn, isRTL, disabled, 
           </span>
           <span style={{ display: "inline-flex", alignItems: "center", flexShrink: 0 }}>
             <svg className={`srm-dropdown-arrow${open ? " open" : ""}`} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M4 6L8 10L12 6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M4 6L8 10L12 6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
         </div>

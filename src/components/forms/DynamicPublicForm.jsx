@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { getPublicForm, submitPublicForm } from "../../api/formBuilderApi";
 import DynamicSection from "./DynamicSection";
+import PublicSuccessCard from "./PublicSuccessCard";
 import { useSearchParams } from "react-router-dom";
 import { useFormAccessStore } from "../../store/useFormAccessStore";
 import "../../styles/pages/ServiceRequestModal.css"
@@ -250,11 +251,16 @@ export default function DynamicPublicForm({
 
     try {
       setSubmitting(true);
-      console.log("VALUES", values);
+
+      console.log(
+        "VALUES JSON",
+        JSON.stringify(values, null, 2)
+      );
 
       const payload = buildPayload();
 
       console.log("PAYLOAD", payload);
+
       const res = await submitPublicForm(slug, payload, { accessKey, accessToken });
 
       setSubmitResult(res.data);
@@ -315,68 +321,16 @@ export default function DynamicPublicForm({
         </div>
       )}
 
-      {/* Thank-you screen */}
+      {/* Thank-you screen — rendered outside the card, over the overlay */}
       {!loading && formSchema && submitted && (
-        <div className="srm-thankyou">
-
-          {(successResponse?.logo_url || logoSrc) && (
-            <div className="srm-thankyou-logo">
-              <img
-                src={successResponse?.logo_url || logoSrc}
-                alt=""
-              />
-            </div>
-          )}
-
-          <h2 className="srm-thankyou-title">
-            {getText(successResponse, "title", isEn) ||
-              t("forms.submit_success", "Form submitted successfully")}
-          </h2>
-
-          {getText(successResponse, "subtitle", isEn) && (
-            <p className="srm-thankyou-subtitle">
-              {getText(successResponse, "subtitle", isEn)}
-            </p>
-          )}
-
-          {getText(successResponse, "description", isEn) && (
-            <p className="srm-thankyou-description">
-              {getText(successResponse, "description", isEn)}
-            </p>
-          )}
-
-          {successResponse?.reference_number && (
-            <div className="srm-reference-number">
-              <span className="srm-reference-label">
-                {isEn ? "Reference Number" : "رقم الطلب"}
-              </span>
-
-              <strong>
-                {successResponse.reference_number}
-              </strong>
-            </div>
-          )}
-
-          {successResponse?.button_action_type === "url" ? (
-            <a
-              href={successResponse.button_url}
-              className="srm-thankyou-button"
-            >
-              {getText(successResponse, "button_label", isEn) ||
-                t("forms.continue", "Continue")}
-            </a>
-          ) : successResponse?.button_action_type !== "none" ? (
-            <button
-              type="button"
-              className="srm-thankyou-button"
-              onClick={onClose}
-            >
-              {getText(successResponse, "button_label", isEn) ||
-                t("forms.close", "Close")}
-            </button>
-          ) : null}
-
-        </div>
+        <PublicSuccessCard
+          data={{
+            ...successResponse,
+            logo_url: successResponse?.logo_url || logoSrc || null,
+          }}
+          isEn={isEn}
+          onClose={onClose}
+        />
       )}
 
       {/* Main form */}
@@ -485,12 +439,32 @@ export default function DynamicPublicForm({
 
   // ── render modes ───────────────────────────────────────────────────────────
   if (mode === "page") {
-    return <div className="srm-overlay" style={{ position: "relative", background: "none", padding: "40px 20px" }}>{content}</div>;
+    return (
+      <>
+        <div className="srm-overlay" style={{ position: "relative", background: "none", padding: "40px 20px" }}>
+          {content}
+        </div>
+        {!loading && formSchema && submitted && (
+          <PublicSuccessCard
+            data={{ ...successResponse, logo_url: successResponse?.logo_url || logoSrc || null }}
+            isEn={isEn}
+            onClose={onClose}
+          />
+        )}
+      </>
+    );
   }
 
   return (
     <div className="srm-overlay">
-      <div>{content}</div>
+      {!submitted && <div>{content}</div>}
+      {submitted && (
+        <PublicSuccessCard
+          data={{ ...successResponse, logo_url: successResponse?.logo_url || logoSrc || null }}
+          isEn={isEn}
+          onClose={onClose}
+        />
+      )}
     </div>
   );
 }

@@ -1134,65 +1134,6 @@ body:has(.srm-overlay) {
   color: white;
 }
 
-/* ===== THANK YOU SCREEN ===== */
-.srm-thankyou {
-  max-width: 600px;
-  padding: 60px 40px;
-  text-align: center;
-}
-
-.srm-thankyou-logo {
-  margin-bottom: 32px;
-  display: flex;
-  justify-content: center;
-}
-
-.srm-thankyou-logo img {
-  width: 551.8px;
-  height: 45px;
-  object-fit: contain;
-}
-
-.srm-thankyou-title {
-  font-family: var(--font-en-heading);
-  font-weight: 300;
-  font-size: 32px;
-  line-height: 1.4;
-  color: #353C3C;
-  margin: 0 0 16px 0;
-}
-
-[dir="rtl"] .srm-thankyou-title {
-  font-family: var(--font-ar-heading);
-}
-
-.srm-thankyou-message {
-  font-family: var(--font-content);
-  font-size: 16px;
-  line-height: 1.6;
-  color: #7D8D8D;
-  margin: 0 0 40px 0;
-}
-
-.srm-thankyou-button {
-  width: 100%;
-  max-width: 300px;
-  height: 50px;
-  background: #353C3C;
-  border: none;
-  border-radius: 6px;
-  color: var(--color-white);
-  font-family: var(--font-content);
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.srm-thankyou-button:hover {
-  background: #000000;
-}
-
 /* ===== PHONE FIELD — fits grid like any other field ===== */
 .srm-phone-row {
   display: flex;
@@ -1592,33 +1533,32 @@ body:has(.srm-overlay) {
   width: 100%;
 }
 
-/* Additional row:
-   Column 1 = X button (50px)
-   Column 2 = first select (1fr, same as half of first row minus X+gap)
-   Column 3 = second select (exactly same width as column 2 of first row)
-   
-   To make col2+col3 end at same points as the two selects in row 1:
-   Total = X(50px) + gap(16px) + col2(1fr) + gap(32px) + col3(1fr)
-   The two selects in row 1 span: col1(1fr) + gap(32px) + col2(1fr)
-   col3 must equal col2 of row 1 → use subgrid alignment via padding trick */
-/* Additional row desktop: X(50px) | Category(1fr) | Service(1fr) */
+/* Additional row desktop:
+   X is absolute so both selects sit in the exact same 1fr 1fr grid
+   as the first row — their right edges are pixel-perfect aligned.
+   padding-inline-start = X width (50px) + gap to first select (16px) */
 .services-picker-selects-row.has-remove {
   display: grid;
-  grid-template-columns: 50px 1fr 1fr;
-  gap: 0 16px;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
   align-items: flex-start;
   width: 100%;
+  position: relative;
+  padding-inline-start: 66px;
+  box-sizing: border-box;
 }
 
-/* on has-remove rows the gap between col2 and col3 matches first row */
 .services-picker-selects-row.has-remove > :nth-child(2) {
-  padding-inline-end: 8px;
+  padding-inline-end: 0;
 }
 
 .services-picker-selects-row.has-remove .services-remove-btn {
-  margin-top: 28px;
+  position: absolute;
+  inset-inline-start: 0;
+  top: 28px;
   width: 50px;
   height: 47px;
+  margin-top: 0;
 }
 
 /* X remove button */
@@ -1722,53 +1662,61 @@ body:has(.srm-overlay) {
 }
 
 @media (max-width: 768px) {
-  /* First row: category + service col stacked */
+  /* First row: both selects stack full-width */
   .services-picker-selects-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
 
   /* Additional row mobile:
-     X button (62px wide) spans full height on inline-start
-     Category + Service stack as a single column on inline-end */
+     X spans both stacked rows on inline-start (grid approach),
+     category + service each take full remaining width */
   .services-picker-selects-row.has-remove {
     display: grid;
-    grid-template-columns: 62px 1fr;
+    grid-template-columns: 50px 1fr;
     grid-template-rows: auto auto;
     gap: 0 12px;
     align-items: stretch;
+    padding-inline-start: 0;
+    position: static;
   }
 
-  /* X button: tall, spans both rows, centered vertically */
+  /* X button: left column, spans both rows, full height */
   .services-picker-selects-row.has-remove .services-remove-btn {
+    position: static;
+    inset-inline-start: unset;
+    top: unset;
     grid-column: 1;
     grid-row: 1 / 3;
-    width: 62px;
-    height: 100%;
-    min-height: 120px;
+    width: 50px;
+    height: auto;
+    min-height: 136px;
     margin-top: 0;
     align-self: stretch;
     border-radius: 6px;
+    align-items: center;
   }
 
-  /* X icon rotated 90deg on mobile as per spec */
+  /* No rotation on mobile */
   .services-picker-selects-row.has-remove .services-remove-btn svg {
-    transform: rotate(90deg);
+    transform: none;
   }
 
-  /* Category: row 1 of right column */
+  /* Category: right column, row 1, full width */
   .services-picker-selects-row.has-remove > :nth-child(2) {
     grid-column: 2;
     grid-row: 1;
-    padding-inline-end: 0;
     width: 100%;
+    min-width: 0;
+    padding-inline-end: 0;
   }
 
-  /* Service wrapper: row 2 of right column */
+  /* Service: right column, row 2, full width */
   .services-picker-selects-row.has-remove > :nth-child(3) {
     grid-column: 2;
     grid-row: 2;
     width: 100%;
+    min-width: 0;
   }
 }
 
@@ -2101,6 +2049,159 @@ body:has(.srm-overlay) {
   font-family: var(--font-content);
   font-size: 14px;
   color: #7D8D8D;
+}
+
+.psc-card {
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  min-height: 400px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 52px 48px 48px;
+  box-sizing: border-box;
+  animation: slideUp 0.4s ease-out;
+  text-align: center;
+  gap: 0;
+}
+
+.psc-logo-wrap {
+  margin-bottom: 32px;
+}
+
+.psc-logo {
+  width: 44.94px;
+  height: 61.44px;
+  object-fit: contain;
+}
+
+.psc-title {
+  font-family: var(--font-en-heading);
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 29px;
+  letter-spacing: 0;
+  color: #1C1B1F;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+[dir="rtl"] .psc-title {
+  font-family: var(--font-ar-heading);
+}
+
+.psc-text-block {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 16px;
+}
+
+.psc-subtitle {
+  font-family: var(--font-content);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 25px;
+  text-align: center;
+  color: #1C1B1F;
+  margin: 0 0 6px 0;
+}
+
+.psc-description {
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  color: #7C8D8D;
+  margin: 0;
+}
+
+.psc-ref-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 28px;
+}
+
+.psc-ref-text {
+  font-family: var(--font-content);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 25px;
+  color: #343C3C;
+}
+
+.psc-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: #1C1B1F;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.psc-copy-btn:hover {
+  opacity: 0.55;
+}
+
+.psc-copy-btn.copied {
+  color: #12A0A3;
+  opacity: 1;
+}
+
+.psc-copy-btn.copied:hover {
+  opacity: 0.7;
+}
+
+/* Identical to .hero-btn — underline shrinks on hover */
+.psc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 27px;
+  width: auto;
+  font-family: var(--font-content);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 25px;
+  color: #343C3C;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  margin-top: 0;
+  transition: all 0.3s ease;
+}
+
+.psc-btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+.psc-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 1.5px;
+  width: 100%;
+  background: #343C3C;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.psc-btn:hover::after {
+  width: 0%;
 }
 
 /* ===== APPOINTMENT INTRO SECTION ===== */
