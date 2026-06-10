@@ -1134,65 +1134,6 @@ body:has(.srm-overlay) {
   color: white;
 }
 
-/* ===== THANK YOU SCREEN ===== */
-.srm-thankyou {
-  max-width: 600px;
-  padding: 60px 40px;
-  text-align: center;
-}
-
-.srm-thankyou-logo {
-  margin-bottom: 32px;
-  display: flex;
-  justify-content: center;
-}
-
-.srm-thankyou-logo img {
-  width: 551.8px;
-  height: 45px;
-  object-fit: contain;
-}
-
-.srm-thankyou-title {
-  font-family: var(--font-en-heading);
-  font-weight: 300;
-  font-size: 32px;
-  line-height: 1.4;
-  color: #353C3C;
-  margin: 0 0 16px 0;
-}
-
-[dir="rtl"] .srm-thankyou-title {
-  font-family: var(--font-ar-heading);
-}
-
-.srm-thankyou-message {
-  font-family: var(--font-content);
-  font-size: 16px;
-  line-height: 1.6;
-  color: #7D8D8D;
-  margin: 0 0 40px 0;
-}
-
-.srm-thankyou-button {
-  width: 100%;
-  max-width: 300px;
-  height: 50px;
-  background: #353C3C;
-  border: none;
-  border-radius: 6px;
-  color: var(--color-white);
-  font-family: var(--font-content);
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.srm-thankyou-button:hover {
-  background: #000000;
-}
-
 /* ===== PHONE FIELD — fits grid like any other field ===== */
 .srm-phone-row {
   display: flex;
@@ -1722,56 +1663,43 @@ body:has(.srm-overlay) {
 
 /* Mobile */
 @media (max-width: 768px) {
-  .services-picker-selects-row {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
 
-  /* Additional row mobile: X spans full height as left col */
   .services-picker-selects-row.has-remove {
     display: grid;
-    grid-template-columns: 62px 1fr;
-    grid-template-rows: auto auto;
-    gap: 0 12px;
+    grid-template-columns: 60px 1fr;
+    gap: 16px;
     align-items: stretch;
   }
 
-  /* col1-wrap on mobile: takes grid rows 1+2, full height */
-  .services-picker-selects-row.has-remove .services-picker-col1-wrap {
-    grid-column: 1;
-    grid-row: 1 / 3;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
+  .services-picker-col1-wrap {
+    display: contents;
   }
 
-  /* X button: fills the full height of the col1-wrap */
-  .services-picker-selects-row.has-remove .services-remove-btn {
-    width: 62px;
-    height: 100%;
-    min-height: 136px;
-    margin-top: 0;
-    align-self: stretch;
-    flex: 1;
-  }
-
-  /* hide the category inside col1-wrap on mobile — it moves to col2 row1 */
-  .services-picker-selects-row.has-remove .services-picker-col1-wrap > div {
-    display: none;
-  }
-
-  /* category select: col2 row1 */
-  .services-picker-selects-row.has-remove > :nth-child(2) {
+  .services-picker-col1-wrap > div:first-child {
     grid-column: 2;
     grid-row: 1;
-    width: 100%;
   }
 
-  /* service select: col2 row2 */
-  .services-picker-selects-row.has-remove > :nth-child(3) {
+  .services-picker-selects-row.has-remove > div:last-child {
     grid-column: 2;
     grid-row: 2;
+  }
+
+  .services-remove-btn {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+
     width: 100%;
+    height: 100%;
+
+    min-height: 140px;
+
+    margin-top: 0;
+    border-radius: 8px;
+  }
+
+  .services-add-row {
+    flex-wrap: wrap;
   }
 }
 
@@ -2104,6 +2032,159 @@ body:has(.srm-overlay) {
   font-family: var(--font-content);
   font-size: 14px;
   color: #7D8D8D;
+}
+
+.psc-card {
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  min-height: 400px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 52px 48px 48px;
+  box-sizing: border-box;
+  animation: slideUp 0.4s ease-out;
+  text-align: center;
+  gap: 0;
+}
+
+.psc-logo-wrap {
+  margin-bottom: 32px;
+}
+
+.psc-logo {
+  width: 44.94px;
+  height: 61.44px;
+  object-fit: contain;
+}
+
+.psc-title {
+  font-family: var(--font-en-heading);
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 29px;
+  letter-spacing: 0;
+  color: #1C1B1F;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+[dir="rtl"] .psc-title {
+  font-family: var(--font-ar-heading);
+}
+
+.psc-text-block {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 16px;
+}
+
+.psc-subtitle {
+  font-family: var(--font-content);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 25px;
+  text-align: center;
+  color: #1C1B1F;
+  margin: 0 0 6px 0;
+}
+
+.psc-description {
+  font-family: var(--font-content);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  color: #7C8D8D;
+  margin: 0;
+}
+
+.psc-ref-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 28px;
+}
+
+.psc-ref-text {
+  font-family: var(--font-content);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 25px;
+  color: #343C3C;
+}
+
+.psc-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: #1C1B1F;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.psc-copy-btn:hover {
+  opacity: 0.55;
+}
+
+.psc-copy-btn.copied {
+  color: #12A0A3;
+  opacity: 1;
+}
+
+.psc-copy-btn.copied:hover {
+  opacity: 0.7;
+}
+
+/* Identical to .hero-btn — underline shrinks on hover */
+.psc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 27px;
+  width: auto;
+  font-family: var(--font-content);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 25px;
+  color: #343C3C;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  margin-top: 0;
+  transition: all 0.3s ease;
+}
+
+.psc-btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+.psc-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 1.5px;
+  width: 100%;
+  background: #343C3C;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.psc-btn:hover::after {
+  width: 0%;
 }
 
 /* ===== APPOINTMENT INTRO SECTION ===== */

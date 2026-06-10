@@ -4,6 +4,8 @@ import { useFaqCmsStore } from "../../store/useFaqCmsStore";
 import toast from "react-hot-toast";
 import { useSweetAlert } from "../../components/common/SweetAlert";
 import "../../styles/CMS_FAQ.css";
+import Deletebtn from "../../components/common/dashboard/Deletebtn";
+import Editbtn from "../../components/common/dashboard/Editbtn";
 
 // ─── Icon Components ─────────────────────────────────────────────────────────
 const Icon = {
@@ -505,8 +507,12 @@ export default function CMS_FAQ() {
                           <td><StatusBadge active={c.is_active} t={t} /></td>
                           <td>
                             <div className="faq-actions-cell">
-                              <button className="faq-icon-btn faq-icon-btn--edit" onClick={() => handleCatEdit(c)} title={t("cms.faq.actions.edit")}><Icon.Edit /></button>
-                              <button className="faq-icon-btn faq-icon-btn--delete" onClick={() => handleCatDelete(c.id)} title={t("cms.faq.actions.delete")}><Icon.Trash /></button>
+                              <Editbtn
+                                onClick={() => handleCatEdit(c)}
+                              />
+                              <Deletebtn
+                                onConfirm={() => handleCatDelete(c.id)}
+                              />
                             </div>
                           </td>
                         </tr>
@@ -609,8 +615,12 @@ export default function CMS_FAQ() {
                           </p>
                         </div>
                         <div className="faq-question-card-actions">
-                          <button className="faq-icon-btn faq-icon-btn--edit" onClick={() => handleFaqEdit(f)} title={t("cms.faq.actions.edit")}><Icon.Edit /></button>
-                          <button className="faq-icon-btn faq-icon-btn--delete" onClick={() => handleFaqDelete(f.id)} title={t("cms.faq.actions.delete")}><Icon.Trash /></button>
+                          <Editbtn
+                            onClick={() => handleFaqEdit(f)}
+                          />
+                          <Deletebtn
+                            onConfirm={() => handleFaqDelete(f.id)}
+                          />
                         </div>
                       </div>
                       <div className="faq-question-card-footer">

@@ -64,7 +64,6 @@ const IcoSpinner = () => (
 export default function AppointmentSlots() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
-  const { alert: sweetEl, show: showAlert } = useSweetAlert();
 
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
@@ -131,16 +130,6 @@ export default function AppointmentSlots() {
 
   /* ── Delete with useSweetAlert ── */
   const handleDeleteSlot = async (id) => {
-    const confirmed = await showAlert({
-      type: "confirm",
-      title: t("cms.appointments.slots.confirm_delete_title"),
-      message: t("cms.appointments.slots.confirm_delete_text"),
-      confirmText: t("cms.appointments.slots.delete_button"),
-      cancelText: t("cms.appointments.slots.cancel_button"),
-      showCancel: true,
-      isRtl,
-    });
-    if (!confirmed) return;
     try {
       await deleteSlot(id);
       setSlots(slots.filter((s) => s.id !== id));
@@ -200,7 +189,6 @@ const getSlotsForDate = (date) => {
 
   return (
     <div className="appt-section-content">
-      {sweetEl}
 
       {/* ── Section header ── */}
       <div className="appt-section-header">

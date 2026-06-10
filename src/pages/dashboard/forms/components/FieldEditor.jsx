@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
+import Deletebtn from "../../../../components/common/dashboard/Deletebtn";
 
 // ── Country codes for phone field ─────────────────────────────────────────────
 const COUNTRY_CODES = [
@@ -282,9 +283,13 @@ function OptionRow({ option, onUpdate, onDelete, onMoveUp, onMoveDown, isFirst, 
         value={option.value || ""}
         disabled
       />
-      <button type="button" className="fb-micro-btn fb-micro-btn--danger" onClick={onDelete} disabled={saving}>
-        <IconTrash />
-      </button>
+      <Deletebtn
+        onConfirm={onDelete}
+        className="fb-micro-btn fb-micro-btn--danger"
+        iconOnly
+        title={t("cms.forms.actions.delete")}
+        disabled={saving}
+      />
     </div>
   );
 }
@@ -517,7 +522,13 @@ function FieldEditor({
         </div>
         <div className="fb-field-header-actions">
           <button type="button" className="fb-micro-btn" onClick={onDuplicate} title={t("cms.forms.actions.duplicate")}><IconCopy /></button>
-          <button type="button" className="fb-micro-btn fb-micro-btn--danger" onClick={onDelete} title={t("cms.forms.actions.delete")} disabled={saving || isSaving}><IconTrash /></button>
+          <Deletebtn
+            onConfirm={onDelete}
+            className="fb-micro-btn fb-micro-btn--danger"
+            iconOnly
+            title={t("cms.forms.actions.delete")}
+            disabled={saving}
+          />
           <button type="button" className="fb-micro-btn" onClick={() => setCollapsed(!collapsed)} title={collapsed ? t("cms.forms.actions.expand") : t("cms.forms.actions.collapse")}>
             <IconChevron open={!collapsed} />
           </button>

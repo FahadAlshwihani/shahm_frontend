@@ -2,7 +2,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import "../../../../styles/forms/dynamic-form.css";
-
+import Deletebtn from "../../../../components/common/dashboard/Deletebtn";
 // ─── Icons ────────────────────────────────────────────────────────────────────
 const IcoPlus = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -83,14 +83,12 @@ export default function InfoSectionsEditor({ form, onAddSection, onUpdateSection
                 <span className="dfi-section-index-label">
                   {t("cms.info.section_number")} {idx + 1}
                 </span>
-                <button
-                  type="button"
-                  className="dfi-icon-btn dfi-icon-btn--delete"
-                  onClick={() => onDeleteSection(section.id)}
-                  title={t("cms.info.actions.delete_section")}
-                >
-                  <IcoTrash />
-                </button>
+                <Deletebtn
+  onConfirm={() => onDeleteSection(section.id)}
+  className="dfi-icon-btn dfi-icon-btn--delete"
+  iconOnly
+  title={t("cms.info.actions.delete_section")}
+/>
               </div>
 
               {/* Titles */}

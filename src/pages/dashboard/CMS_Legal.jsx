@@ -11,7 +11,8 @@ import {
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import "../../styles/CMS_LEGAL.css";
-
+import Editbtn from "../../components/common/dashboard/Editbtn";
+import Deletebtn from "../../components/common/dashboard/Deletebtn";
 /* ══════════════════════════════════════════════════════
    ICONS
 ══════════════════════════════════════════════════════ */
@@ -38,19 +39,6 @@ const IconSubsection = () => (
 const IconPlus = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
     <path d="M7 2v10M2 7h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-  </svg>
-);
-const IconEdit = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      d="M13.2583 3.75L16.5 7.00001M2.25 21.75L3.64706 16.6765L15.5294 4.79412C15.7347 4.58881 16.0128 4.47354 16.3029 4.47354C16.5931 4.47354 16.8712 4.58881 17.0765 4.79412L19.2059 6.92353C19.4112 7.12882 19.5265 7.40693 19.5265 7.69706C19.5265 7.98719 19.4112 8.2653 19.2059 8.47059L7.32353 20.3529L2.25 21.75Z"
-      stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-    />
-  </svg>
-);
-const IconTrash = () => (
-  <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
-    <path d="M 20 2 C 18.35503 2 17 3.3550302 17 5 L 17 7 L 4 7 A 1.0001 1.0001 0 1 0 4 9 L 17.832031 9 A 1.0001 1.0001 0 0 0 18.158203 9 L 29.832031 9 A 1.0001 1.0001 0 0 0 30.158203 9 L 44 9 A 1.0001 1.0001 0 1 0 44 7 L 31 7 L 31 5 C 31 3.3550302 29.64497 2 28 2 L 20 2 z M 20 4 L 28 4 C 28.56503 4 29 4.4349698 29 5 L 29 7 L 19 7 L 19 5 C 19 4.4349698 19.43497 4 20 4 z M 6.9804688 10.986328 A 1.0001 1.0001 0 0 0 5.9941406 12.09375 L 8.6640625 40.462891 C 8.900709 43.030242 11.061274 45 13.640625 45 L 34.359375 45 C 36.938726 45 39.099291 43.030242 39.335938 40.462891 L 39.335938 40.460938 L 42.005859 12.09375 A 1.0004955 1.0004955 0 1 0 40.013672 11.90625 L 37.34375 40.275391 A 1.0001 1.0001 0 0 0 37.34375 40.279297 C 37.199488 41.851004 35.939375 43 34.359375 43 L 13.640625 43 C 12.060625 43 10.800512 41.850998 10.65625 40.279297 A 1.0001 1.0001 0 0 0 10.65625 40.275391 L 7.9863281 11.90625 A 1.0001 1.0001 0 0 0 6.9804688 10.986328 z" />
   </svg>
 );
 const IconSave = () => (
@@ -142,10 +130,10 @@ export default function CMS_Legal() {
   const isRtl = i18n.language === "ar";
   const { alert: sweetAlertEl, show: showAlert } = useSweetAlert();
 
-  const [pages, setPages]       = useState([]);
+  const [pages, setPages] = useState([]);
   const [editingId, setEditingId] = useState(null);
-  const [form, setForm]         = useState(emptyForm());
-  const [saving, setSaving]     = useState(false);
+  const [form, setForm] = useState(emptyForm());
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => { loadPages(); }, []);
 
@@ -370,11 +358,10 @@ export default function CMS_Legal() {
                     title={t("cms.legal.actions.move_down")}>
                     <IconDown />
                   </button>
-                  <button type="button" className="cl-icon-btn cl-icon-btn--delete"
-                    onClick={() => removeSection(si)}
-                    title={t("cms.legal.actions.remove_section")}>
-                    <IconTrash />
-                  </button>
+                  <Deletebtn
+                    onConfirm={() => removeSection(si)}
+                    iconOnly
+                  />
                 </div>
               </div>
 
@@ -414,11 +401,10 @@ export default function CMS_Legal() {
                         <span className="cl-subsection-label-text">
                           {t("cms.legal.subsection_label")} {subi + 1}
                         </span>
-                        <button type="button" className="cl-icon-btn cl-icon-btn--delete cl-icon-btn--sm"
-                          onClick={() => removeSubsection(si, subi)}
-                          title={t("cms.legal.actions.remove_subsection")}>
-                          <IconTrash />
-                        </button>
+                        <Deletebtn
+                          onConfirm={() => removeSubsection(si, subi)}
+                          iconOnly
+                        />
                       </div>
 
                       <div className="cl-subsection-body">
@@ -551,16 +537,18 @@ export default function CMS_Legal() {
                     </td>
                     <td>
                       <div className="cl-actions-cell">
-                        <button className="cl-icon-btn cl-icon-btn--edit"
+                        <Editbtn
                           onClick={() => handleEdit(page)}
-                          title={t("cms.legal.actions.edit")}>
-                          <IconEdit />
-                        </button>
-                        <button className="cl-icon-btn cl-icon-btn--delete"
-                          onClick={() => handleDelete(page.id)}
-                          title={t("cms.legal.actions.delete")}>
-                          <IconTrash />
-                        </button>
+                          iconOnly
+                          className="cl-icon-btn cl-icon-btn--edit"
+                          label={t("cms.legal.actions.edit")}
+                        />
+                        <Deletebtn
+                          onConfirm={() => handleDelete(page.id)}
+                          iconOnly
+                          className="cl-icon-btn cl-icon-btn--delete"
+                          label={t("cms.legal.actions.delete")}
+                        />
                       </div>
                     </td>
                   </tr>

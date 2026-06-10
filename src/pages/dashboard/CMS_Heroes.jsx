@@ -4,6 +4,9 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSweetAlert } from "../../components/common/SweetAlert";
 import "../../styles/CMS_HERO.css";
+import Editbtn from "../../components/common/dashboard/Editbtn";
+import Deletebtn from "../../components/common/dashboard/Deletebtn";
+import Modal from "../../components/common/dashboard/Modal";
 
 /* ══════════════════════════════════════════════════════
    ICONS
@@ -39,17 +42,6 @@ const IconMedia = () => (
     <rect x="1" y="2" width="14" height="12" rx="2" stroke="currentColor" strokeWidth="1.3" />
     <circle cx="5.5" cy="6" r="1.5" stroke="currentColor" strokeWidth="1.3" />
     <path d="M1 10.5l4-3.5 3 2.5 2-1.5 4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-const IconEdit = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-    <path d="M13.26 3.75L16.5 7M2.25 21.75l1.4-5.07L15.53 4.79a1.5 1.5 0 012.12 0l2.13 2.13a1.5 1.5 0 010 2.12L7.32 20.35 2.25 21.75z"
-      stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-const IconTrash = () => (
-  <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor">
-    <path d="M20 2C18.355 2 17 3.355 17 5v2H4a1 1 0 100 2h13.832a1 1 0 00.326 0h11.674a1 1 0 00.326 0H44a1 1 0 100-2H31V5c0-1.645-1.355-3-3-3h-8zm0 2h8c.565 0 1 .435 1 1v2H19V5c0-.565.435-1 1-1zM6.98 10.986a1 1 0 00-.986 1.108l2.67 28.369C8.9 43.03 11.061 45 13.64 45h20.72c2.579 0 4.74-1.97 4.976-4.538l2.67-28.369a1 1 0 10-1.992-.187L37.344 40.28C37.2 41.851 35.94 43 34.36 43H13.64c-1.58 0-2.84-1.149-2.984-2.72L7.986 11.906a1 1 0 00-1.006-.92z" />
   </svg>
 );
 const IconSave = () => (
@@ -528,14 +520,18 @@ export default function CMS_Heroes() {
                     </td>
                     <td>
                       <div className="cms-hero-actions-cell">
-                        <button className="cms-hero-icon-btn cms-hero-icon-btn--edit"
-                          onClick={() => handleEditHero(h)} title={t("cms.edit")}>
-                          <IconEdit />
-                        </button>
-                        <button className="cms-hero-icon-btn cms-hero-icon-btn--delete"
-                          onClick={() => handleDeleteHero(h.id)} title={t("cms.delete")}>
-                          <IconTrash />
-                        </button>
+                        <Editbtn
+                          onClick={() => handleEditHero(h)}
+                          iconOnly
+                          className="cms-hero-icon-btn cms-hero-icon-btn--edit"
+                          label={t("cms.edit")}
+                        />
+                        <Deletebtn
+                          onConfirm={() => handleDeleteHero(h.id)}
+                          iconOnly
+                          className="cms-hero-icon-btn cms-hero-icon-btn--delete"
+                          label={t("cms.delete")}
+                        />
                       </div>
                     </td>
                   </tr>
@@ -548,7 +544,10 @@ export default function CMS_Heroes() {
 
       {/* ════════ MEDIA MANAGER CARD ════════ */}
       {selectedHero && (
-        <div className="cms-hero-card cms-hero-card--media">
+        <Modal
+          isOpen={!!selectedHero}
+          onClose={() => setSelectedHero(null)}
+        >
           <div className="cms-hero-card-header">
             <div className="cms-hero-card-header-left">
               <span className="cms-hero-card-header-icon cms-hero-card-header-icon--amber"><IconMedia /></span>
@@ -630,11 +629,11 @@ export default function CMS_Heroes() {
                       {m.is_active ? t("cms.heroes.status.active") : t("cms.heroes.status.inactive")}
                     </span>
                   </div>
-                  <button className="cms-hero-media-delete-btn"
-                    onClick={() => handleDeleteMedia(m.id)} type="button">
-                    <IconTrash />
-                    {t("cms.delete")}
-                  </button>
+                  <Deletebtn
+                    onConfirm={() => handleDeleteMedia(m.id)}
+                    iconOnly
+                    label={t("cms.delete")}
+                  />
                 </div>
               ))}
             </div>
@@ -644,7 +643,7 @@ export default function CMS_Heroes() {
               <p>{t("cms.heroes.no_media")}</p>
             </div>
           )}
-        </div>
+        </Modal>
       )}
     </div>
   );

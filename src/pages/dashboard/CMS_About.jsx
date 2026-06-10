@@ -22,6 +22,7 @@ import {
   deletePartner,
 } from "../../api/aboutApi";
 import "../../styles/CMS_About.css";
+import Deletebtn from "../../components/common/dashboard/Deletebtn";
 
 /* ═══════════════════════════════════════════════════
    ICONS
@@ -198,9 +199,9 @@ function FileUploadZone({ accept, onChange, preview, previewType = "image", labe
 ═══════════════════════════════════════════════════ */
 function GeneralTab({ data, reload }) {
   const { t } = useTranslation();
-const [logoFile, setLogoFile] = useState(null);
-const [mobileLogoFile, setMobileLogoFile] = useState(null);
-const [mediaFile, setMediaFile] = useState(null);
+  const [logoFile, setLogoFile] = useState(null);
+  const [mobileLogoFile, setMobileLogoFile] = useState(null);
+  const [mediaFile, setMediaFile] = useState(null);
   const [isActive, setIsActive] = useState(data.is_active ?? true);
   const [saving, setSaving] = useState(false);
 
@@ -208,15 +209,15 @@ const [mediaFile, setMediaFile] = useState(null);
     setSaving(true);
     try {
       const fd = new FormData();
-if (logoFile) fd.append("logo", logoFile);
-if (mobileLogoFile) fd.append("mobile_logo", mobileLogoFile);
-if (mediaFile) fd.append("media", mediaFile);
+      if (logoFile) fd.append("logo", logoFile);
+      if (mobileLogoFile) fd.append("mobile_logo", mobileLogoFile);
+      if (mediaFile) fd.append("media", mediaFile);
       fd.append("is_active", isActive);
       await updateAdminAbout(fd);
       toast.success(t("cms.about.general.saveSuccess"));
-setLogoFile(null);
-setMobileLogoFile(null);
-setMediaFile(null);
+      setLogoFile(null);
+      setMobileLogoFile(null);
+      setMediaFile(null);
       await reload();
     } catch (err) {
       console.error(err);
@@ -270,27 +271,27 @@ setMediaFile(null);
               </Field>
 
               <Field label="شعار الجوال" hint="يظهر بدل الشعار الأساسي على الشاشات الصغيرة">
-  <FileUploadZone
-    accept=".png,.jpg,.jpeg,.webp,.svg"
-    preview={
-      mobileLogoFile
-        ? URL.createObjectURL(mobileLogoFile)
-        : data.mobile_logo_url
-    }
-    previewType="image"
-    label={mobileLogoFile ? t("cms.about.general.changeFile") : "رفع شعار الجوال"}
-    onChange={(e) => {
-      const f = e.target.files[0];
-      if (f) setMobileLogoFile(f);
-    }}
-  />
+                <FileUploadZone
+                  accept=".png,.jpg,.jpeg,.webp,.svg"
+                  preview={
+                    mobileLogoFile
+                      ? URL.createObjectURL(mobileLogoFile)
+                      : data.mobile_logo_url
+                  }
+                  previewType="image"
+                  label={mobileLogoFile ? t("cms.about.general.changeFile") : "رفع شعار الجوال"}
+                  onChange={(e) => {
+                    const f = e.target.files[0];
+                    if (f) setMobileLogoFile(f);
+                  }}
+                />
 
-  {mobileLogoFile && (
-    <p className="ca-file-selected">
-      <IconCheck /> {mobileLogoFile.name}
-    </p>
-  )}
-</Field>
+                {mobileLogoFile && (
+                  <p className="ca-file-selected">
+                    <IconCheck /> {mobileLogoFile.name}
+                  </p>
+                )}
+              </Field>
             </div>
 
             <div className="ca-form-group">
@@ -568,14 +569,9 @@ function StatsTab({ data, reload }) {
                         {savingId === s.id ? <Spinner /> : <IconSave />}
                         {t("cms.about.saveBtn")}
                       </button>
-                      <button
-                        type="button"
-                        className="ca-btn ca-btn--delete"
-                        onClick={() => handleDelete(s.id)}
-                      >
-                        <IconTrash />
-                        {t("cms.about.deleteBtn")}
-                      </button>
+                      <Deletebtn
+                        onConfirm={() => handleDelete(s.id)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -899,10 +895,9 @@ function PostsTab({ data, reload }) {
                         {savingId === p.id ? <Spinner /> : <IconSave />}
                         {t("cms.about.saveBtn")}
                       </button>
-                      <button type="button" className="ca-btn ca-btn--delete" onClick={() => handleDelete(p.id)}>
-                        <IconTrash />
-                        {t("cms.about.deleteBtn")}
-                      </button>
+                      <Deletebtn
+                        onConfirm={() => handleDelete(p.id)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -958,9 +953,9 @@ function IconRow({ icon, onSave, onDelete, saving }) {
           onClick={() => onSave(icon.id, form, iconFile)} disabled={saving}>
           {saving ? <Spinner /> : <IconSave />}
         </button>
-        <button type="button" className="ca-icon-btn ca-icon-btn--delete" onClick={() => onDelete(icon.id)}>
-          <IconTrash />
-        </button>
+        <Deletebtn
+          onConfirm={() => onDelete(icon.id)}
+        />
       </div>
     </div>
   );
@@ -1228,11 +1223,9 @@ function SectionsTab({ data, reload }) {
                       {savingId === sec.id ? <Spinner /> : <IconSave />}
                       {t("cms.about.saveBtn")}
                     </button>
-                    <button type="button" className="ca-btn ca-btn--delete ca-btn--sm"
-                      onClick={() => handleDeleteSection(sec.id)}>
-                      <IconTrash />
-                      {t("cms.about.deleteBtn")}
-                    </button>
+                    <Deletebtn
+                      onConfirm={() => handleDeleteSection(sec.id)}
+                    />
                   </div>
                 </div>
 
@@ -1596,10 +1589,9 @@ function PartnersTab({ data, reload }) {
                       onClick={() => handleSavePartner(p.id)} disabled={savingId === p.id}>
                       {savingId === p.id ? <Spinner /> : <IconSave />}
                     </button>
-                    <button type="button" className="ca-icon-btn ca-icon-btn--delete"
-                      onClick={() => handleDeletePartner(p.id)}>
-                      <IconTrash />
-                    </button>
+                    <Deletebtn
+                      onConfirm={() => handleDeletePartner(p.id)}
+                    />
                   </div>
                 </div>
               ))}
@@ -1723,9 +1715,9 @@ function PreviewPanel({ data }) {
    MAIN COMPONENT
 ═══════════════════════════════════════════════════ */
 const TABS = [
-  { key: "general",  icon: <IconAbout /> },
-  { key: "stats",    icon: <IconStat /> },
-  { key: "posts",    icon: <IconPost /> },
+  { key: "general", icon: <IconAbout /> },
+  { key: "stats", icon: <IconStat /> },
+  { key: "posts", icon: <IconPost /> },
   { key: "sections", icon: <IconSection /> },
   { key: "partners", icon: <IconPartner /> },
 ];
@@ -1822,9 +1814,9 @@ export default function CMSAbout() {
       {/* Main layout: content + optional preview */}
       <div className={`ca-layout ${showPreview ? "ca-layout--with-preview" : ""}`}>
         <div className="ca-content">
-          {activeTab === "general"  && <GeneralTab data={data} reload={load} />}
-          {activeTab === "stats"    && <StatsTab data={data} reload={load} />}
-          {activeTab === "posts"    && <PostsTab data={data} reload={load} />}
+          {activeTab === "general" && <GeneralTab data={data} reload={load} />}
+          {activeTab === "stats" && <StatsTab data={data} reload={load} />}
+          {activeTab === "posts" && <PostsTab data={data} reload={load} />}
           {activeTab === "sections" && <SectionsTab data={data} reload={load} />}
           {activeTab === "partners" && <PartnersTab data={data} reload={load} />}
         </div>

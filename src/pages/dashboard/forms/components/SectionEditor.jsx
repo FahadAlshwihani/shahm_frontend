@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import FieldEditor from "./FieldEditor";
+import Deletebtn from "../../../../components/common/dashboard/Deletebtn";
 
 const FIELD_TYPES = [
     "text", "textarea", "email", "phone", "number",
@@ -122,8 +123,13 @@ function SectionEditor({
                         disabled={sectionIndex === totalSections - 1} title={t("cms.forms.actions.move_down")}><IconDown /></button>
                     <button type="button" className="fb-micro-btn" onClick={onDuplicateSection}
                         title={t("cms.forms.actions.duplicate")}><IconCopy /></button>
-                    <button type="button" className="fb-micro-btn fb-micro-btn--danger" onClick={onDeleteSection}
-                        disabled={saving} title={t("cms.forms.actions.delete_section")}><IconTrash /></button>
+                    <Deletebtn
+                        onConfirm={onDeleteSection}
+                        className="fb-micro-btn fb-micro-btn--danger"
+                        iconOnly
+                        title={t("cms.forms.actions.delete_section")}
+                        disabled={saving}
+                    />
                     <button type="button" className="fb-micro-btn fb-section-collapse-btn"
                         onClick={() => setCollapsed((p) => !p)}>
                         <IconChevron open={!collapsed} />

@@ -1,6 +1,7 @@
 // src/pages/dashboard/forms/components/CreateFormModal.jsx
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import Modal from "../../../../components/common/dashboard/Modal";
 
 const IconX = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -69,7 +70,11 @@ export default function CreateFormModal({ onClose, onCreate, saving }) {
   };
 
   return (
-    <div className="fb-modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <Modal
+      isOpen
+      title={t("cms.forms.modal.create_title")} 
+      onClick={(e) => e.target === e.currentTarget && 
+      onClose()}>
       <div className="fb-modal">
 
         {/* Header */}
@@ -184,6 +189,6 @@ export default function CreateFormModal({ onClose, onCreate, saving }) {
           </div>
         </form>
       </div>
-    </div>
+    </Modal>
   );
 }

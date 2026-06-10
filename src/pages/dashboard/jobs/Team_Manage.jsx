@@ -12,7 +12,8 @@ import {
   adminSaveTeamPage,
 } from "../../../api/teamApi";
 import "../../../styles/CMS_TEAM.css";
-
+import Editbtn   from "../../../components/common/dashboard/Editbtn";
+import Deletebtn from "../../../components/common/dashboard/Deletebtn";
 /* ======================================================
    QUILL EDITOR COMPONENT
 ====================================================== */
@@ -253,10 +254,10 @@ export default function Team_Manage() {
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               {tab.id === "page" && (
-                <path d="M14 2H6C4.9 2 4 2.9 4 4V16C4 17.1 4.9 18 6 18H14C15.1 18 16 17.1 16 16V4C16 2.9 15.1 2 14 2Z" fill="currentColor"/>
+                <path d="M14 2H6C4.9 2 4 2.9 4 4V16C4 17.1 4.9 18 6 18H14C15.1 18 16 17.1 16 16V4C16 2.9 15.1 2 14 2Z" fill="currentColor" />
               )}
               {tab.id === "members" && (
-                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor" />
               )}
             </svg>
             <span>{tab.label}</span>
@@ -270,7 +271,7 @@ export default function Team_Manage() {
             <div className="dashboard-team-content-header">
               <div className="dashboard-team-content-header-left">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" fill="currentColor"/>
+                  <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" fill="currentColor" />
                 </svg>
                 <h2>{t("cms.team.page.title")}</h2>
               </div>
@@ -281,7 +282,7 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-section">
                 <h3 className="dashboard-team-section-title">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M9 1.5C4.86 1.5 1.5 4.86 1.5 9C1.5 13.14 4.86 16.5 9 16.5C13.14 16.5 16.5 13.14 16.5 9C16.5 4.86 13.14 1.5 9 1.5Z" fill="currentColor"/>
+                    <path d="M9 1.5C4.86 1.5 1.5 4.86 1.5 9C1.5 13.14 4.86 16.5 9 16.5C13.14 16.5 16.5 13.14 16.5 9C16.5 4.86 13.14 1.5 9 1.5Z" fill="currentColor" />
                   </svg>
                   {t("cms.team.page.section_basic")}
                 </h3>
@@ -330,7 +331,7 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-section">
                 <h3 className="dashboard-team-section-title">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M16.5 2.25H1.5C0.675 2.25 0 2.925 0 3.75V14.25C0 15.075 0.675 15.75 1.5 15.75H16.5C17.325 15.75 18 15.075 18 14.25V3.75C18 2.925 17.325 2.25 16.5 2.25Z" fill="currentColor"/>
+                    <path d="M16.5 2.25H1.5C0.675 2.25 0 2.925 0 3.75V14.25C0 15.075 0.675 15.75 1.5 15.75H16.5C17.325 15.75 18 15.075 18 14.25V3.75C18 2.925 17.325 2.25 16.5 2.25Z" fill="currentColor" />
                   </svg>
                   {t("cms.team.page.section_hero")}
                 </h3>
@@ -366,7 +367,7 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-section">
                 <h3 className="dashboard-team-section-title">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M14 2H4C2.9 2 2 2.9 2 4V14C2 15.1 2.9 16 4 16H14C15.1 16 16 15.1 16 14V4C16 2.9 15.1 2 14 2Z" fill="currentColor"/>
+                    <path d="M14 2H4C2.9 2 2 2.9 2 4V14C2 15.1 2.9 16 4 16H14C15.1 16 16 15.1 16 14V4C16 2.9 15.1 2 14 2Z" fill="currentColor" />
                   </svg>
                   {t("cms.team.page.section_content")}
                 </h3>
@@ -393,7 +394,7 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-section">
                 <h3 className="dashboard-team-section-title">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M16.5 2.25H1.5C0.675 2.25 0 2.925 0 3.75V14.25C0 15.075 0.675 15.75 1.5 15.75H16.5C17.325 15.75 18 15.075 18 14.25V3.75C18 2.925 17.325 2.25 16.5 2.25Z" fill="currentColor"/>
+                    <path d="M16.5 2.25H1.5C0.675 2.25 0 2.925 0 3.75V14.25C0 15.075 0.675 15.75 1.5 15.75H16.5C17.325 15.75 18 15.075 18 14.25V3.75C18 2.925 17.325 2.25 16.5 2.25Z" fill="currentColor" />
                   </svg>
                   {t("cms.team.page.section_bottom")}
                 </h3>
@@ -527,8 +528,8 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-actions">
                 <button className="dashboard-team-btn-primary" onClick={savePage}>
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M15.75 8.0625V15.1875C15.75 15.4361 15.6512 15.6746 15.4754 15.8504C15.2996 16.0262 15.0611 16.125 14.8125 16.125H3.1875C2.93886 16.125 2.70041 16.0262 2.52459 15.8504C2.34878 15.6746 2.25 15.4361 2.25 15.1875V3.5625C2.25 3.31386 2.34878 3.07541 2.52459 2.89959C2.70041 2.72378 2.93886 2.625 3.1875 2.625H10.3125" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M13.5 1.5L16.5 4.5L8.25 12.75H5.25V9.75L13.5 1.5Z" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M15.75 8.0625V15.1875C15.75 15.4361 15.6512 15.6746 15.4754 15.8504C15.2996 16.0262 15.0611 16.125 14.8125 16.125H3.1875C2.93886 16.125 2.70041 16.0262 2.52459 15.8504C2.34878 15.6746 2.25 15.4361 2.25 15.1875V3.5625C2.25 3.31386 2.34878 3.07541 2.52459 2.89959C2.70041 2.72378 2.93886 2.625 3.1875 2.625H10.3125" stroke="currentColor" strokeWidth="1.5" />
+                    <path d="M13.5 1.5L16.5 4.5L8.25 12.75H5.25V9.75L13.5 1.5Z" stroke="currentColor" strokeWidth="1.5" />
                   </svg>
                   {t("cms.team.page.actions.save")}
                 </button>
@@ -542,7 +543,7 @@ export default function Team_Manage() {
             <div className="dashboard-team-content-header">
               <div className="dashboard-team-content-header-left">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor" />
                 </svg>
                 <h2>{editing ? t("cms.team.edit_member") : t("cms.team.create_member")}</h2>
               </div>
@@ -553,7 +554,7 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-section">
                 <h3 className="dashboard-team-section-title">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M9 1.5C4.86 1.5 1.5 4.86 1.5 9C1.5 13.14 4.86 16.5 9 16.5C13.14 16.5 16.5 13.14 16.5 9C16.5 4.86 13.14 1.5 9 1.5Z" fill="currentColor"/>
+                    <path d="M9 1.5C4.86 1.5 1.5 4.86 1.5 9C1.5 13.14 4.86 16.5 9 16.5C13.14 16.5 16.5 13.14 16.5 9C16.5 4.86 13.14 1.5 9 1.5Z" fill="currentColor" />
                   </svg>
                   {t("cms.team.sections.basic_info")}
                 </h3>
@@ -648,7 +649,7 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-section">
                 <h3 className="dashboard-team-section-title">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M14 2H4C2.9 2 2 2.9 2 4V14C2 15.1 2.9 16 4 16H14C15.1 16 16 15.1 16 14V4C16 2.9 15.1 2 14 2Z" fill="currentColor"/>
+                    <path d="M14 2H4C2.9 2 2 2.9 2 4V14C2 15.1 2.9 16 4 16H14C15.1 16 16 15.1 16 14V4C16 2.9 15.1 2 14 2Z" fill="currentColor" />
                   </svg>
                   {t("cms.team.sections.experience")}
                 </h3>
@@ -677,7 +678,7 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-section">
                 <h3 className="dashboard-team-section-title">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M9 2C6.79 2 5 3.79 5 6C5 8.21 6.79 10 9 10C11.21 10 13 8.21 13 6C13 3.79 11.21 2 9 2Z" fill="currentColor"/>
+                    <path d="M9 2C6.79 2 5 3.79 5 6C5 8.21 6.79 10 9 10C11.21 10 13 8.21 13 6C13 3.79 11.21 2 9 2Z" fill="currentColor" />
                   </svg>
                   {t("cms.team.sections.settings")}
                 </h3>
@@ -697,8 +698,8 @@ export default function Team_Manage() {
               <div className="dashboard-team-form-actions">
                 <button className="dashboard-team-btn-primary" onClick={saveMember}>
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M15.75 8.0625V15.1875C15.75 15.4361 15.6512 15.6746 15.4754 15.8504C15.2996 16.0262 15.0611 16.125 14.8125 16.125H3.1875C2.93886 16.125 2.70041 16.0262 2.52459 15.8504C2.34878 15.6746 2.25 15.4361 2.25 15.1875V3.5625C2.25 3.31386 2.34878 3.07541 2.52459 2.89959C2.70041 2.72378 2.93886 2.625 3.1875 2.625H10.3125" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M13.5 1.5L16.5 4.5L8.25 12.75H5.25V9.75L13.5 1.5Z" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M15.75 8.0625V15.1875C15.75 15.4361 15.6512 15.6746 15.4754 15.8504C15.2996 16.0262 15.0611 16.125 14.8125 16.125H3.1875C2.93886 16.125 2.70041 16.0262 2.52459 15.8504C2.34878 15.6746 2.25 15.4361 2.25 15.1875V3.5625C2.25 3.31386 2.34878 3.07541 2.52459 2.89959C2.70041 2.72378 2.93886 2.625 3.1875 2.625H10.3125" stroke="currentColor" strokeWidth="1.5" />
+                    <path d="M13.5 1.5L16.5 4.5L8.25 12.75H5.25V9.75L13.5 1.5Z" stroke="currentColor" strokeWidth="1.5" />
                   </svg>
                   {editing ? t("cms.team.actions.update") : t("cms.team.actions.create")}
                 </button>
@@ -732,7 +733,7 @@ export default function Team_Manage() {
               <div className="dashboard-team-list-header">
                 <div className="dashboard-team-list-title-wrapper">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M3 3H17V7H3V3ZM3 9H17V13H3V9ZM3 15H17V17H3V15Z" fill="currentColor"/>
+                    <path d="M3 3H17V7H3V3ZM3 9H17V13H3V9ZM3 15H17V17H3V15Z" fill="currentColor" />
                   </svg>
                   <h3>{t("cms.team.list_title")}</h3>
                 </div>
@@ -776,24 +777,12 @@ export default function Team_Manage() {
                           </td>
                           <td>
                             <div className="dashboard-team-table-actions">
-                              <button
-                                className="dashboard-team-btn-edit"
+                              <Editbtn
                                 onClick={() => loadMemberIntoForm(m)}
-                              >
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                  <path d="M11.333 2L14 4.667L5.333 13.333H2.667V10.667L11.333 2Z" fill="currentColor"/>
-                                </svg>
-                                {t("cms.team.actions.edit")}
-                              </button>
-                              <button
-                                className="dashboard-team-btn-delete"
-                                onClick={() => handleDeleteMember(m.id)}
-                              >
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                  <path d="M4 6V14H12V6H4ZM10.5 2L9.5 1H6.5L5.5 2H2V4H14V2H10.5Z" fill="currentColor"/>
-                                </svg>
-                                {t("cms.team.actions.delete")}
-                              </button>
+                              />
+                              <Deletebtn
+                                onConfirm={() => handleDeleteMember(m.id)}
+                              />
                             </div>
                           </td>
                         </tr>
@@ -804,7 +793,7 @@ export default function Team_Manage() {
               ) : (
                 <div className="dashboard-team-empty">
                   <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <path d="M24 4C16.83 4 11 9.83 11 17C11 24.17 16.83 30 24 30C31.17 30 37 24.17 37 17C37 9.83 31.17 4 24 4ZM24 34C16.67 34 2 37.67 2 45V48H46V45C46 37.67 31.33 34 24 34Z" fill="currentColor"/>
+                    <path d="M24 4C16.83 4 11 9.83 11 17C11 24.17 16.83 30 24 30C31.17 30 37 24.17 37 17C37 9.83 31.17 4 24 4ZM24 34C16.67 34 2 37.67 2 45V48H46V45C46 37.67 31.33 34 24 34Z" fill="currentColor" />
                   </svg>
                   <p>{t("cms.team.empty")}</p>
                 </div>

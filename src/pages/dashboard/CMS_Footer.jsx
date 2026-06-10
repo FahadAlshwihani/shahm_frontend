@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSweetAlert } from "../../components/common/SweetAlert";
 import "../../styles/CMS_FOOTER.css";
+import Deletebtn from "../../components/common/dashboard/Deletebtn";
+import Editbtn from "../../components/common/dashboard/Editbtn";
 
 /* ── slug normalizer ── */
 function normalizeSlug(val) {
@@ -462,14 +464,10 @@ export default function CMS_Footer() {
           </button>
 
           {/* Delete */}
-          <button
-            className="cms-footer-btn-delete"
-            onClick={() => handleDeleteLink(item.id)}
+          <Deletebtn
+            onConfirm={() => handleDeleteLink(item.id)}
             disabled={isDeleting}
-          >
-            {isDeleting ? <Spinner /> : <IconTrash />}
-            {t("cms.footer.delete")}
-          </button>
+          />
         </div>
 
         {/* Children */}
@@ -687,9 +685,9 @@ export default function CMS_Footer() {
 
   /* ══ Tabs ══ */
   const tabs = [
-    { key: "columns",  label: t("cms.footer.tab_columns"),  icon: <IconColumns /> },
-    { key: "cta",      label: t("cms.footer.tab_cta"),       icon: <IconStar /> },
-    { key: "settings", label: t("cms.footer.tab_settings"),  icon: <IconSettings /> },
+    { key: "columns", label: t("cms.footer.tab_columns"), icon: <IconColumns /> },
+    { key: "cta", label: t("cms.footer.tab_cta"), icon: <IconStar /> },
+    { key: "settings", label: t("cms.footer.tab_settings"), icon: <IconSettings /> },
   ];
 
   /* ══ Column form validity ══ */
@@ -862,26 +860,27 @@ export default function CMS_Footer() {
                         }
                       }}
                     />
-                    <button
-                      className="cms-footer-btn-edit"
+                    <Editbtn
                       onClick={() => {
                         setEditColumnId(col.id);
-                        setColForm({ title_ar: col.title_ar, title_en: col.title_en, order: col.order, is_active: col.is_active });
-                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        setColForm({
+                          title_ar: col.title_ar,
+                          title_en: col.title_en,
+                          order: col.order,
+                          is_active: col.is_active,
+                        });
+
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
                       }}
-                    >
-                      <IconEdit />
-                      {t("cms.footer.edit")}
-                    </button>
+                    />
                     {!isSystem && (
-                      <button
-                        className="cms-footer-btn-delete"
-                        onClick={() => handleDeleteColumn(col.id)}
+                      <Deletebtn
+                        onConfirm={() => handleDeleteColumn(col.id)}
                         disabled={isDeleting}
-                      >
-                        {isDeleting ? <Spinner /> : <IconTrash />}
-                        {t("cms.footer.delete")}
-                      </button>
+                      />
                     )}
                   </div>
                 </div>
@@ -1091,9 +1090,9 @@ export default function CMS_Footer() {
                     <span className="cms-footer-cta-url">
                       {cta.resolved_url || cta.url || ""}
                     </span>
-                    <button
-                      className="cms-footer-btn-edit"
+                    <Editbtn
                       onClick={() => {
+
                         setEditCtaId(cta.id);
                         setCtaForm({
                           title_ar: cta.title_ar,
@@ -1107,18 +1106,11 @@ export default function CMS_Footer() {
                         });
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                    >
-                      <IconEdit />
-                      {t("cms.footer.edit")}
-                    </button>
-                    <button
-                      className="cms-footer-btn-delete"
-                      onClick={() => handleDeleteCta(cta.id)}
+                    />
+                    <Deletebtn
+                      onConfirm={() => handleDeleteCta(cta.id)}
                       disabled={isDeleting}
-                    >
-                      {isDeleting ? <Spinner /> : <IconTrash />}
-                      {t("cms.footer.delete")}
-                    </button>
+                    />
                   </div>
                 </div>
 

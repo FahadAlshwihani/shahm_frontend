@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSweetAlert } from "../../../components/common/SweetAlert";
 import "../../../styles/Messages.css";
+import Deletebtn from "../../../components/common/dashboard/Deletebtn";
 
 // ─── Icon Components ──────────────────────────────────────────
 const Icon = {
@@ -270,15 +271,15 @@ export default function Messages_Dashboard() {
     updateMessage,
   } = useMessagesStore();
 
-  const [subject, setSubject]                       = useState("");
-  const [content, setContent]                       = useState("");
+  const [subject, setSubject] = useState("");
+  const [content, setContent] = useState("");
   const [selectedSubscriberIds, setSelectedSubscriberIds] = useState([]);
-  const [selectAll, setSelectAll]                   = useState(false);
-  const [subscriberSearch, setSubscriberSearch]     = useState("");
-  const [messagesPage, setMessagesPage]             = useState(1);
-  const [subscribersPage, setSubscribersPage]       = useState(1);
-  const [logsPage, setLogsPage]                     = useState(1);
-  const [activeModal, setActiveModal]               = useState(null); // message object | null
+  const [selectAll, setSelectAll] = useState(false);
+  const [subscriberSearch, setSubscriberSearch] = useState("");
+  const [messagesPage, setMessagesPage] = useState(1);
+  const [subscribersPage, setSubscribersPage] = useState(1);
+  const [logsPage, setLogsPage] = useState(1);
+  const [activeModal, setActiveModal] = useState(null); // message object | null
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -292,12 +293,12 @@ export default function Messages_Dashboard() {
     s.email.toLowerCase().includes(subscriberSearch.toLowerCase())
   );
 
-  const paginate   = (data, page) => data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
-  const totalPages = (len)        => Math.ceil(len / itemsPerPage);
+  const paginate = (data, page) => data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const totalPages = (len) => Math.ceil(len / itemsPerPage);
 
-  const paginatedMessages    = paginate(messages, messagesPage);
+  const paginatedMessages = paginate(messages, messagesPage);
   const paginatedSubscribers = paginate(filteredSubscribers, subscribersPage);
-  const paginatedLogs        = paginate(broadcastLogs, logsPage);
+  const paginatedLogs = paginate(broadcastLogs, logsPage);
 
   /* ─── Select all ───────────────────────────────────────────── */
   const toggleSelectAll = () => {
@@ -576,13 +577,9 @@ export default function Messages_Dashboard() {
                   </td>
                   <td>
                     <div className="msg-actions-cell">
-                      <button
-                        className="msg-icon-btn msg-icon-btn--delete"
-                        title={t("messages.delete")}
+                      <Deletebtn
                         onClick={() => handleDeleteSubscriber(s.id)}
-                      >
-                        <Icon.Trash />
-                      </button>
+                      />
                     </div>
                   </td>
                 </tr>
