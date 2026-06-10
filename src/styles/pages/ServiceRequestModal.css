@@ -1569,74 +1569,75 @@ body:has(.srm-overlay) {
 
 /* ===== SERVICES PICKER ===== */
 
-.services-picker-wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
+/* ===== SERVICES PICKER ===== */
 
-/* Each group row — first is required, additional have X */
-.services-picker-group {
+/* Wrapper: simple flex column, each group is its own row */
+.services-picker-wrapper {
   display: flex;
   flex-direction: column;
   gap: 0;
+  width: 100%;
 }
 
-/* First row — two equal selects */
+/* Each group row */
+.services-picker-group {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* First row — two equal selects, same as srm-form-row */
 .services-picker-selects-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   align-items: flex-start;
   width: 100%;
+  margin-bottom: 24px;
 }
 
-/* Additional row:
-   Column 1 = X button (50px)
-   Column 2 = first select (1fr, same as half of first row minus X+gap)
-   Column 3 = second select (exactly same width as column 2 of first row)
-   
-   To make col2+col3 end at same points as the two selects in row 1:
-   Total = X(50px) + gap(16px) + col2(1fr) + gap(32px) + col3(1fr)
-   The two selects in row 1 span: col1(1fr) + gap(32px) + col2(1fr)
-   col3 must equal col2 of row 1 → use subgrid alignment via padding trick */
-/* Additional row desktop: X(50px) | Category(1fr) | Service(1fr) */
+/* Additional row: X inside col1 alongside category
+   col1 = flex(X + category shrunk), col2 = 1fr same end as first row col2 */
 .services-picker-selects-row.has-remove {
   display: grid;
-  grid-template-columns: 50px 1fr 1fr;
-  gap: 0 16px;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
   align-items: flex-start;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+/* col1 wrapper for has-remove: X + category flex row */
+.services-picker-col1-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
   width: 100%;
 }
 
-/* on has-remove rows the gap between col2 and col3 matches first row */
-.services-picker-selects-row.has-remove > :nth-child(2) {
-  padding-inline-end: 8px;
-}
-
-.services-picker-selects-row.has-remove .services-remove-btn {
-  margin-top: 28px;
-  width: 50px;
-  height: 47px;
+/* category select shrinks to fill col1 minus X */
+.services-picker-col1-wrap > div {
+  flex: 1;
+  min-width: 0;
 }
 
 /* X remove button */
 .services-remove-btn {
   width: 50px;
   height: 47px;
+  min-width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: 1px solid #EF5D5F;
   border-radius: 6px;
-  color: #EF5D5F;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease;
   padding: 0;
   box-sizing: border-box;
+  margin-top: 28px; /* align with trigger baseline */
 }
 
 .services-remove-btn svg {
@@ -1655,12 +1656,12 @@ body:has(.srm-overlay) {
   fill: #ffffff;
 }
 
-/* Add additional service button row */
+/* Add row */
 .services-add-row {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 8px;
 }
 
 /* Add button */
@@ -1693,7 +1694,6 @@ body:has(.srm-overlay) {
   border-color: #4C5757;
 }
 
-/* Add label text */
 .services-add-label {
   font-family: var(--font-content);
   font-weight: 600;
@@ -1702,10 +1702,9 @@ body:has(.srm-overlay) {
   color: #353C3C;
 }
 
-/* Disabled service select — no hover, no cursor */
+/* Disabled service select */
 .services-service-disabled {
   pointer-events: none !important;
-  cursor: default !important;
 }
 
 .services-service-disabled .srm-custom-select-trigger {
@@ -1721,16 +1720,14 @@ body:has(.srm-overlay) {
   opacity: 0.35;
 }
 
+/* Mobile */
 @media (max-width: 768px) {
-  /* First row: category + service col stacked */
   .services-picker-selects-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
 
-  /* Additional row mobile:
-     X button (62px wide) spans full height on inline-start
-     Category + Service stack as a single column on inline-end */
+  /* Additional row mobile: X spans full height as left col */
   .services-picker-selects-row.has-remove {
     display: grid;
     grid-template-columns: 62px 1fr;
@@ -1739,32 +1736,38 @@ body:has(.srm-overlay) {
     align-items: stretch;
   }
 
-  /* X button: tall, spans both rows, centered vertically */
-  .services-picker-selects-row.has-remove .services-remove-btn {
+  /* col1-wrap on mobile: takes grid rows 1+2, full height */
+  .services-picker-selects-row.has-remove .services-picker-col1-wrap {
     grid-column: 1;
     grid-row: 1 / 3;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  /* X button: fills the full height of the col1-wrap */
+  .services-picker-selects-row.has-remove .services-remove-btn {
     width: 62px;
     height: 100%;
-    min-height: 120px;
+    min-height: 136px;
     margin-top: 0;
     align-self: stretch;
-    border-radius: 6px;
+    flex: 1;
   }
 
-  /* X icon rotated 90deg on mobile as per spec */
-  .services-picker-selects-row.has-remove .services-remove-btn svg {
-    transform: rotate(90deg);
+  /* hide the category inside col1-wrap on mobile — it moves to col2 row1 */
+  .services-picker-selects-row.has-remove .services-picker-col1-wrap > div {
+    display: none;
   }
 
-  /* Category: row 1 of right column */
+  /* category select: col2 row1 */
   .services-picker-selects-row.has-remove > :nth-child(2) {
     grid-column: 2;
     grid-row: 1;
-    padding-inline-end: 0;
     width: 100%;
   }
 
-  /* Service wrapper: row 2 of right column */
+  /* service select: col2 row2 */
   .services-picker-selects-row.has-remove > :nth-child(3) {
     grid-column: 2;
     grid-row: 2;

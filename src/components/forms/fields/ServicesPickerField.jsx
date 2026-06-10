@@ -120,8 +120,7 @@ function ServicesPickerField({
         </h3>
       )}
 
-      <div className="services-picker-wrapper">
-
+<div className="services-picker-wrapper">
         {groups.map((group, idx) => {
           const isFirst      = idx === 0;
           const subServices  = servicesMap[group.main_service] || [];
@@ -141,44 +140,60 @@ function ServicesPickerField({
           );
           const svcDisplay = svcOption ? getText(svcOption, "title", isEn) : null;
 
-          return (
+return (
             <div key={idx} className="services-picker-group">
               <div className={`services-picker-selects-row${!isFirst ? " has-remove" : ""}`}>
 
-                {/* Col 1: X button — only on additional groups */}
-                {!isFirst && (
-                  <button
-                    type="button"
-                    className="services-remove-btn"
-                    aria-label={isEn ? "Remove" : "حذف"}
-                    onClick={() => removeGroup(idx)}
-                  >
-                    <svg
-                      viewBox="0 0 51.123 51.123"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
+                {/* Col 1: for has-remove rows — X button + category wrapped together */}
+                {!isFirst ? (
+                  <div className="services-picker-col1-wrap">
+                    {/* X button */}
+                    <button
+                      type="button"
+                      className="services-remove-btn"
+                      aria-label={isEn ? "Remove" : "حذف"}
+                      onClick={() => removeGroup(idx)}
                     >
-                      <path d="M45.123,0H6C2.691,0,0,2.691,0,6v39.123c0,3.309,2.691,6,6,6h39.123c3.309,0,6-2.691,6-6V6C51.123,2.691,48.431,0,45.123,0z M49.123,45.123c0,2.206-1.794,4-4,4H6c-2.206,0-4-1.794-4-4V6c0-2.206,1.794-4,4-4h39.123c2.206,0,4,1.794,4,4V45.123z M36.791,15.746l-9.815,9.815l9.815,9.815c0.391,0.391,0.391,1.023,0,1.414c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293l-9.815-9.815l-9.815,9.815c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293c-0.391-0.391-0.391-1.023,0-1.414l9.815-9.815l-9.815-9.815c-0.391-0.391-0.391-1.023,0-1.414s1.023-0.391,1.414,0l9.815,9.815l9.815-9.815c0.391-0.391,1.023-0.391,1.414,0S37.181,15.355,36.791,15.746z"/>
-                    </svg>
-                  </button>
+                      <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <polygon points="82.4,40 64,58.3 45.6,40 40,45.6 58.3,64 40,82.4 45.6,88 64,69.7 82.4,88 88,82.4 69.7,64 88,45.6" />
+                        <path d="M1,127h126V1H1V127z M9,9h110v110H9V9z" />
+                      </svg>
+                    </button>
+                    {/* Category inside col1-wrap (desktop) */}
+                    <div>
+                      <CategorySelect
+                        label={catLabel}
+                        options={mainServices}
+                        value={group.main_service}
+                        display={catDisplay}
+                        isEn={isEn}
+                        isRTL={isRTL}
+                        required={false}
+                        floatWrapStyle={floatWrapStyle}
+                        floatLabelStyle={floatLabelStyle}
+                        getText={getText}
+                        onChange={(catId) => handleCategory(idx, catId)}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  /* Col 1 for first row: category alone */
+                  <CategorySelect
+                    label={catLabel}
+                    options={mainServices}
+                    value={group.main_service}
+                    display={catDisplay}
+                    isEn={isEn}
+                    isRTL={isRTL}
+                    required={field.required}
+                    floatWrapStyle={floatWrapStyle}
+                    floatLabelStyle={floatLabelStyle}
+                    getText={getText}
+                    onChange={(catId) => handleCategory(idx, catId)}
+                  />
                 )}
 
-                {/* Col 2: Category select */}
-                <CategorySelect
-                  label={catLabel}
-                  options={mainServices}
-                  value={group.main_service}
-                  display={catDisplay}
-                  isEn={isEn}
-                  isRTL={isRTL}
-                  required={isFirst && field.required}
-                  floatWrapStyle={floatWrapStyle}
-                  floatLabelStyle={floatLabelStyle}
-                  getText={getText}
-                  onChange={(catId) => handleCategory(idx, catId)}
-                />
-
-                {/* Col 3: Service select */}
+                {/* Col 2: Service select — always second grid child */}
                 <ServiceSelect
                   label={svcLabel}
                   options={subServices}
