@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
 const pendingRequests = new Map();
 const axiosClient = axios.create({
-  baseURL: "https://api.shem.boats/api",
+  baseURL: "http://127.0.0.1:8000/api",
   timeout: 15000,
 });
 
@@ -98,8 +98,8 @@ axiosClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const res = await axiosClient.post(
-          "/accounts/refresh/",
+        const res = await axios.post(
+          `${axiosClient.defaults.baseURL}/accounts/refresh/`,
           { refresh: refreshToken }
         );
 

@@ -545,8 +545,10 @@ export default function CMS_Heroes() {
       {/* ════════ MEDIA MANAGER CARD ════════ */}
       {selectedHero && (
         <Modal
-          isOpen={!!selectedHero}
+          open={!!selectedHero}
           onClose={() => setSelectedHero(null)}
+          title={t("cms.media_for")}
+          width={700}
         >
           <div className="cms-hero-card-header">
             <div className="cms-hero-card-header-left">

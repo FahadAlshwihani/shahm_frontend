@@ -47,7 +47,7 @@
   height: auto;
 
   inset-inline-start: var(--ds-inset-side);
-  overflow-y: auto;
+  overflow: hidden;
   overflow-x: hidden;
 
   /* Same z-index tier as navbar/footer — no overlapping */
@@ -117,15 +117,21 @@
    NAVIGATION
 ========================================== */
 .dashboard-sidebar-nav {
-  flex: 1;
+  flex: 1 1 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: 14px 8px 8px;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.12) transparent;
 }
-
+.dashboard-sidebar-nav::-webkit-scrollbar { width: 3px; }
+.dashboard-sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.dashboard-sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+.dashboard-sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 /* Section */
 .dashboard-sidebar-nav-section {
   animation: sectionFadeIn 0.38s ease both;
@@ -287,6 +293,7 @@
   border-top: 1px solid var(--ds-divider);
   animation: fadeSlideUp 0.4s ease 0.3s both;
   overflow: hidden;
+  flex-shrink: 0;                /* always visible — never squeezed by nav content */
 }
 
 /* Both footer buttons — always centred text + icon */
@@ -467,10 +474,8 @@
   border: var(--ds-border-spec);
   border-radius: var(--ds-radius);
   padding: 16px 0;
-  display: flex;
-  flex-direction: column;
+  display: block;                /* plain block — children stack normally and overflow */
 
-  /* Vertically: start below navbar, end above footer */
   position: fixed;
   top: calc(var(--ds-navbar-height) + var(--ds-gap));
   bottom: calc(var(--ds-footer-height) + var(--ds-gap));
@@ -480,14 +485,19 @@
   overflow-y: auto;
   overflow-x: hidden;
 
-  /* Same z-index tier as navbar/footer — no overlapping */
   z-index: 200;
-
   color: var(--ds-text);
   opacity: 1;
   transition: width var(--ds-transition), transform var(--ds-transition);
   animation: sidebarSlideIn 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.25) rgba(255,255,255,0.06);
 }
+
+.dashboard-sidebar::-webkit-scrollbar { width: 5px; }
+.dashboard-sidebar::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 4px; margin: 4px 0; }
+.dashboard-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 4px; }
+.dashboard-sidebar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.45); }
 
 .dashboard-sidebar-collapsed { width: var(--ds-collapsed-width); }
 
@@ -547,15 +557,12 @@
    NAVIGATION
 ========================================== */
 .dashboard-sidebar-nav {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: 14px 8px 8px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible;
 }
-
 /* Section */
 .dashboard-sidebar-nav-section {
   animation: sectionFadeIn 0.38s ease both;
@@ -717,6 +724,7 @@
   border-top: 1px solid var(--ds-divider);
   animation: fadeSlideUp 0.4s ease 0.3s both;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 /* Both footer buttons — always centred text + icon */

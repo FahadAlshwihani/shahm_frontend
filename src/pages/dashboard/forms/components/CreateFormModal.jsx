@@ -71,21 +71,24 @@ export default function CreateFormModal({ onClose, onCreate, saving }) {
 
   return (
     <Modal
-      isOpen
-      title={t("cms.forms.modal.create_title")} 
-      onClick={(e) => e.target === e.currentTarget && 
-      onClose()}>
-      <div className="fb-modal">
-
-        {/* Header */}
-        <div className="fb-modal-header">
-          <h2 className="fb-modal-title">{t("cms.forms.modal.create_title")}</h2>
-          <button className="fb-icon-btn fb-icon-btn--ghost" onClick={onClose} type="button">
+      open
+      onClose={onClose}
+      title={t("cms.forms.modal.create_title")}
+      width={700}
+      footer={
+        <div style={{ display: "flex", gap: 10 }}>
+          <button type="button" className="fb-btn fb-btn--ghost" onClick={onClose}>
             <IconX />
+            {t("cms.forms.actions.cancel")}
+          </button>
+          <button type="submit" form="create-form-modal-form" className="fb-btn fb-btn--primary" disabled={saving}>
+            {saving ? <Spinner /> : <IconSave />}
+            {t("cms.forms.actions.create")}
           </button>
         </div>
-
-        <form onSubmit={handleSubmit} className="fb-modal-body">
+      }
+    >
+      <form id="create-form-modal-form" onSubmit={handleSubmit}>
 
           {/* Titles */}
           <div className="fb-form-row">
@@ -176,19 +179,7 @@ export default function CreateFormModal({ onClose, onCreate, saving }) {
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="fb-modal-footer">
-            <button type="button" className="fb-btn fb-btn--ghost" onClick={onClose}>
-              <IconX />
-              {t("cms.forms.actions.cancel")}
-            </button>
-            <button type="submit" className="fb-btn fb-btn--primary" disabled={saving}>
-              {saving ? <Spinner /> : <IconSave />}
-              {t("cms.forms.actions.create")}
-            </button>
-          </div>
-        </form>
-      </div>
+          </form>
     </Modal>
   );
 }

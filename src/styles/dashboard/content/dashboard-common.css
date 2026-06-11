@@ -19,6 +19,8 @@
   --dash-red-bg:         rgba(239, 68, 68, 0.09);
   --dash-blue:           #3B82F6;
   --dash-blue-bg:        rgba(59, 130, 246, 0.09);
+  --dash-green:          #16A34A;
+  --dash-green-bg:       rgba(22, 163, 74, 0.09);
   --dash-shadow-modal:
     0 8px 40px rgba(28, 33, 33, 0.16),
     0 2px 8px  rgba(28, 33, 33, 0.08),
@@ -49,17 +51,17 @@ body.dash-modal-open {
 .dash-modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 1200;                         /* above everything */
+  z-index: 1200;
   display: flex;
-  align-items: center;                   /* vertical center */
-  justify-content: center;              /* horizontal center */
+  align-items: center;
+  justify-content: center;
   padding: 24px;
   background: rgba(28, 33, 33, 0.32);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   animation: dash-modal-fade-in 0.22s ease both;
-  /* inert — pointer events only reach children */
   pointer-events: all;
+  overflow-y: auto;                      /* lets modal scroll into view on tiny screens */
 }
 
 /* Dialog box */
@@ -72,12 +74,12 @@ body.dash-modal-open {
   border-radius: var(--dash-radius-modal);
   box-shadow: var(--dash-shadow-modal);
 
-  /* sizing — fixed height so every tab sees the same modal size */
+  /* sizing — adapts to content, capped at viewport */
   width: 100%;
   /* max-width set via inline style (default 858px) */
-  height: 82dvh;
-  max-height: 82dvh;
+  max-height: min(82dvh, 82vh);
   min-height: 0;
+  height: auto;
 
   /* flex column so only body scrolls; header/tabs/footer fixed */
   display: flex;
@@ -257,10 +259,10 @@ body.dash-modal-open {
 
 /* ── Responsive ── */
 @media (max-width: 767px) {
-  .dash-modal-backdrop { padding: 12px; align-items: center; }
+  .dash-modal-backdrop { padding: 12px; align-items: flex-start; padding-top: 24px; }
   .dash-modal {
     border-radius: 14px;
-    max-height: 92dvh;
+    max-height: min(92dvh, 92vh);
   }
   .dash-modal-header { padding: 16px 18px 14px; }
   .dash-modal-body   { padding: 16px 18px; }
@@ -268,6 +270,11 @@ body.dash-modal-open {
   .dash-modal-tabs   { padding: 4px 12px; }
 }
 @media (max-width: 479px) {
+  .dash-modal-backdrop { padding: 8px; padding-top: 16px; }
+  .dash-modal {
+    border-radius: 12px;
+    max-height: min(96dvh, 96vh);
+  }
   .dash-modal-title { font-size: 15px; }
   .dash-modal-tab   { padding: 8px 12px; font-size: 12px; }
 }
@@ -277,4 +284,93 @@ body.dash-modal-open {
   .dash-modal-backdrop, .dash-modal {
     animation: none !important;
   }
+}
+
+/* ════════════════════════════════════════════════════════════
+   ACTION BUTTONS — Delete, Edit, Open
+   Shared base: .dash-icon-btn
+   Variants:    .dash-icon-btn--delete  (red)
+                .dash-icon-btn--edit    (neutral → primary)
+                .dash-icon-btn--open    (green)
+════════════════════════════════════════════════════════════ */
+
+.dash-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: var(--dash-radius-sm);
+  border: 1.5px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background var(--dash-transition),
+    color var(--dash-transition),
+    border-color var(--dash-transition);
+  flex-shrink: 0;
+}
+
+.dash-icon-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Delete ── red resting, deeper red on hover */
+.dash-icon-btn--delete {
+  color: var(--dash-red);
+  border-color: rgba(239, 68, 68, 0.22);
+  background: var(--dash-red-bg);
+}
+.dash-icon-btn--delete:hover {
+  color: #fff;
+  background: var(--dash-red);
+  border-color: var(--dash-red);
+}
+.dash-icon-btn--delete:active {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+/* ── Edit ── muted resting, primary on hover */
+.dash-icon-btn--edit {
+  color: var(--dash-secondary);
+  border-color: var(--dash-border);
+  background: var(--dash-bg);
+}
+.dash-icon-btn--edit:hover {
+  color: var(--dash-primary);
+  background: #eef0f0;
+  border-color: #c8cdcd;
+}
+.dash-icon-btn--edit:active {
+  background: #e4e7e7;
+}
+
+/* ── Open / View ── green resting, deeper green on hover */
+.dash-icon-btn--open {
+  color: var(--dash-green);
+  border-color: rgba(22, 163, 74, 0.22);
+  background: var(--dash-green-bg);
+}
+.dash-icon-btn--open:hover {
+  color: #fff;
+  background: var(--dash-green);
+  border-color: var(--dash-green);
+}
+.dash-icon-btn--open:active {
+  background: #15803d;
+  border-color: #15803d;
+}
+
+/* with label (iconOnly=false) */
+.dash-icon-btn--with-label {
+  width: auto;
+  padding: 0 12px;
+  gap: 6px;
+  font-family: var(--dash-font);
+  font-size: 13px;
+  font-weight: 500;
 }

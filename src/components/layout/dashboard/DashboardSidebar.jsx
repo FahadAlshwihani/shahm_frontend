@@ -138,6 +138,7 @@ export default function DashboardSidebar({
 
       {/* ── Navigation ── */}
       <nav className="dashboard-sidebar-nav">
+        <div className="dashboard-sidebar-nav-scroll">
         {sections.map((section, idx) => {
           const isExpanded = openSections[idx] !== false;
           return (
@@ -190,6 +191,7 @@ export default function DashboardSidebar({
             </div>
           );
         })}
+      </div>
       </nav>
 
       {/* ── Footer: language + logout — always last, icon-only when collapsed ── */}

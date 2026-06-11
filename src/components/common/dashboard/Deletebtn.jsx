@@ -38,7 +38,7 @@ export default function MessageDeleteBtn({ onConfirm }) {
     <>
       {alert}
       <button
-        className="msg-icon-btn msg-icon-btn--delete"
+        className="dash-icon-btn dash-icon-btn--delete"
         title={t("messages.delete")}
         onClick={handleClick}
       >

@@ -35,7 +35,7 @@ export default function Editbtn({
   style,
 }) {
   const { t } = useTranslation();
-  const resolvedClass = className ?? "cms-services-icon-btn cms-services-icon-btn--edit";
+  const resolvedClass = className ?? "dash-icon-btn dash-icon-btn--edit";
   const resolvedTitle = title ?? t("common.edit", "Edit");
 
   return (
