@@ -1,0 +1,27 @@
+RewriteEngine On
+RewriteBase /
+
+# Force HTTPS
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ [https://shem.boats%{REQUEST_URI}](https://shem.boats%{REQUEST_URI}) [L,R=301]
+
+# Remove www
+
+RewriteCond %{HTTP_HOST} ^[www.shem.boats$](http://www.shem.boats$) [NC]
+RewriteRule ^(.*)$ https://shem.boats/$1 [L,R=301]
+
+# Existing files/folders
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Allow robots & sitemap
+
+RewriteRule ^robots.txt$ - [L]
+RewriteRule ^sitemap.xml$ - [L]
+
+# React Router
+
+RewriteRule ^ index.html [L]
