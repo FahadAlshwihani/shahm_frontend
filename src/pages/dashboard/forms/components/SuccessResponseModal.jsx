@@ -47,8 +47,15 @@ export default function SuccessResponseModal({ initialData, onClose, onSubmit, s
   const [preview, setPreview] = useState("");
 
   useEffect(() => {
+
     if (initialData) {
-      setForm({ ...EMPTY_FORM, ...initialData });
+      const data = {
+        ...EMPTY_FORM,
+        ...initialData,
+        logo: null,
+      };
+
+      setForm(data);
       setPreview(initialData.logo_url || "");
     }
   }, [initialData]);
@@ -65,8 +72,17 @@ export default function SuccessResponseModal({ initialData, onClose, onSubmit, s
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fd = new FormData();
+
     Object.entries(form).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) fd.append(key, value);
+      if (value === null || value === undefined) {
+        return;
+      }
+
+      if (key === "logo" && !(value instanceof File)) {
+        return;
+      }
+
+      fd.append(key, value);
     });
     await onSubmit(fd);
   };

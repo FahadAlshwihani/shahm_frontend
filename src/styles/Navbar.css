@@ -109,12 +109,15 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: opacity 0.2s ease;
   padding: 0;
 }
 
-.top-navbar-search:hover {
-  opacity: 0.6;
+.top-navbar-search svg {
+  transition: color 0.2s ease;
+}
+
+.top-navbar-search:hover svg {
+  color: #7C8D8D;
 }
 
 .top-navbar-search svg {
@@ -135,11 +138,10 @@
   gap: 6px;
   cursor: pointer;
   padding: 0;
-  transition: opacity 0.3s ease;
 }
 
-.navbar-toggle:hover {
-  opacity: 0.6;
+.navbar-toggle:hover span {
+  background: #7C8D8D;
 }
 
 .navbar-toggle span {
@@ -170,12 +172,11 @@
   justify-content: center;
   width: 48px;
   height: 65px;
-  transition: opacity 0.2s ease;
   flex-shrink: 0;
 }
 
-.top-navbar-person-btn:hover {
-  opacity: 0.6;
+.top-navbar-person-btn:hover svg {
+  color: #7C8D8D;
 }
 
 .top-navbar-person {
@@ -334,8 +335,8 @@
   animation: navFadeIn 0.4s ease 0.1s both;
 }
 
-.navbar-close-btn:hover {
-  opacity: 0.5;
+.navbar-close-btn:hover svg path {
+  stroke: #7C8D8D;
 }
 
 /* ─── PANEL BODY ────────────────────────────────── */
@@ -471,7 +472,7 @@
 }
 
 .menu-back-button:hover {
-  opacity: 0.6;
+  color: #7C8D8D;
 }
 
 /* ═══════════════════════════════════════════════════
