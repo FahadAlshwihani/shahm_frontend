@@ -1,8 +1,6 @@
 // src/components/common/dashboard/DeleteBtn.jsx
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSweetAlert } from "../SweetAlert";
-import toast from "react-hot-toast";
 import "../../../styles/dashboard/content/dashboard-common.css"
 
 const IconTrash = () => (
@@ -18,32 +16,14 @@ const IconTrash = () => (
  */
 export default function MessageDeleteBtn({ onConfirm }) {
   const { t } = useTranslation();
-  const { alert, show } = useSweetAlert();
-
-  const handleClick = async () => {
-    const confirmed = await show({
-      type: "confirm",
-      title: t("messages.delete_confirm_title"),
-      message: t("messages.delete_confirm_text"),
-      confirmText: t("messages.delete"),
-      cancelText: t("messages.cancel"),
-      showCancel: true,
-    });
-    if (confirmed) {
-      await onConfirm();
-    }
-  };
 
   return (
-    <>
-      {alert}
-      <button
-        className="dash-icon-btn dash-icon-btn--delete"
-        title={t("messages.delete")}
-        onClick={handleClick}
-      >
-        <IconTrash />
-      </button>
-    </>
+    <button
+      className="dash-icon-btn dash-icon-btn--delete"
+      title={t("messages.delete")}
+      onClick={onConfirm}
+    >
+      <IconTrash />
+    </button>
   );
 }

@@ -113,7 +113,13 @@ export default function CMS_Footer() {
   const [loading, setLoading] = useState({});
 
   /* ── Column form ── */
-  const [colForm, setColForm] = useState({ title_ar: "", title_en: "", order: 0, is_active: true });
+  const [colForm, setColForm] = useState({
+    key: "",
+    title_ar: "",
+    title_en: "",
+    order: 0,
+    is_active: true
+  });
   const [editColumnId, setEditColumnId] = useState(null);
 
   /* ── Per-column link forms ── */
@@ -205,7 +211,14 @@ export default function CMS_Footer() {
   };
 
   const resetColumnForm = () => {
-    setColForm({ title_ar: "", title_en: "", order: 0, is_active: true });
+    setColForm({
+      key: "",
+      title_ar: "",
+      title_en: "",
+      order: 0,
+      is_active: true
+    });
+
     setEditColumnId(null);
   };
 
@@ -691,7 +704,10 @@ export default function CMS_Footer() {
   ];
 
   /* ══ Column form validity ══ */
-  const colFormValid = colForm.title_ar.trim() && colForm.title_en.trim();
+  const colFormValid =
+    colForm.key.trim() &&
+    colForm.title_ar.trim() &&
+    colForm.title_en.trim();
   const colSaving = loading[editColumnId ? `col-update-${editColumnId}` : "col-create"];
 
   /* ══════════════════════════════════════════════════════
@@ -747,6 +763,29 @@ export default function CMS_Footer() {
 
             <form onSubmit={submitColumn}>
               <div className="cms-footer-form-section">
+                {/* Column Key */}
+                <div className="cms-footer-form-row">
+                  <div className="cms-footer-form-group">
+                    <label className="cms-footer-label">
+                      Key
+                    </label>
+
+                    <input
+                      className="cms-footer-input"
+                      required
+                      placeholder="company_links"
+                      value={colForm.key}
+                      onChange={(e) =>
+                        setColForm({
+                          ...colForm,
+                          key: e.target.value
+                            .toLowerCase()
+                            .replace(/\s+/g, "_")
+                        })
+                      }
+                    />
+                  </div>
+                </div>
                 {/* Row 1: AR + EN titles */}
                 <div className="cms-footer-form-row">
                   <div className="cms-footer-form-group">
@@ -864,6 +903,7 @@ export default function CMS_Footer() {
                       onClick={() => {
                         setEditColumnId(col.id);
                         setColForm({
+                          key: col.key || "",
                           title_ar: col.title_ar,
                           title_en: col.title_en,
                           order: col.order,
