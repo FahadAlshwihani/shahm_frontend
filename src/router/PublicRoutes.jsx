@@ -7,15 +7,6 @@
 import { Navigate, Route } from "react-router-dom";
 import MainLayout from "../components/layout/dashboard/MainLayout";
 
-// ── SOON Pages ──────────────────────────────────────────────────────────────────
-// import ServiceDetails from "../../soon/ServiceDetail";
-// import ServiceAdvisory from "../../soon/ServiceAdvisory";
-// import AppointmentBooking from "../../soon/AppointmentBooking";
-// import Payment from "../../soon/Payment";
-// import Careers from "../../soon/Team/Careers";
-// import Team from "../pages/public/Team/Team";
-// import Page from "../../soon/Page";
-
 // ── Pages ──────────────────────────────────────────────────────────────────
 import Home from "../pages/public/Home";
 import Services from "../pages/public/Services/Services";
@@ -48,10 +39,6 @@ export default function PublicRoutes() {
 
       {/* ---------------- Services ---------------- */}
       <Route path="/services" element={<PL><Services /></PL>} />
-      {/* <Route path="/services/:slug" element={<PL><ServiceDetails /></PL>} /> */}
-      {/* <Route path="/service-advisory" element={<PL><ServiceAdvisory /></PL>} /> */}
-      {/* Redirect: /page/service-advisory → /service-advisory */}
-      {/* <Route path="/page/service-advisory" element={<Navigate to="/service-advisory" replace />} /> */}
 
 
       {/* ---------------- About ---------------- */}
@@ -80,19 +67,6 @@ export default function PublicRoutes() {
 
 
 
-
-      {/* ---------------- Appointments & Payment ---------------- */}
-      {/* <Route path="/appointments" element={<PL><AppointmentBooking /></PL>} />
-      <Route path="/payment" element={<PL><Payment /></PL>} /> */}
-
-      {/* ---------------- Careers ---------------- */}
-      {/* <Route path="/careers" element={<PL><Careers /></PL>} /> */}
-
-      {/* ---------------- Team ---------------- */}
-      {/* <Route path="/team" element={<PL><Team /></PL>} /> */}
-
-      {/* ---------------- Dynamic CMS Pages ---------------- */}
-      {/* <Route path="/page/:slug" element={<PL><Page /></PL>} /> */}
 
     </>
 

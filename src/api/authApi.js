@@ -1,13 +1,13 @@
 import api from "./axiosClient";
+import { API_PATHS } from "./routes";
 
-export const login = (data) => api.post("accounts/login/", data);
+export const login = (data) => api.post(API_PATHS.auth.login, data);
 
-export const getUsers = () => api.get("accounts/users/");
-export const getUserById = (id) => api.get(`accounts/users/${id}/`);
-export const createUser = (data) => api.post("accounts/users/create/", data);
+export const getUsers = () => api.get(API_PATHS.auth.users);
+export const createUser = (data) => api.post(API_PATHS.auth.createUser, data);
 
 export const updateUser = (id, data) =>
-  api.patch(`accounts/users/${id}/`, data);
+  api.patch(API_PATHS.auth.user(id), data);
 
 export const deleteUser = (id) =>
-  api.delete(`accounts/users/${id}/`);
+  api.delete(API_PATHS.auth.user(id));

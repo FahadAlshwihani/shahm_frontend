@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { login as loginApi } from "../api/authApi";
-import { startIdleTimer, stopIdleTimer } from "../utils/idleSessionManager";
+import { stopIdleTimer } from "../utils/idleSessionManager";
 
 export const useAuthStore = create((set, get) => ({
 

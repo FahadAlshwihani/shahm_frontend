@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { importServicesExcel } from "../../../api/servicesApi";
 import {
-  IconCheck, IconAlert, IconUpload, IconInfo,
+  IconCheck, IconAlert, IconUpload,
   SvcSpinner, SvcDivider, SvcContentHeader, SvcCardHeader,
 } from "./_shared";
 

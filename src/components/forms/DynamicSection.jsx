@@ -63,8 +63,6 @@ function groupFieldsIntoRows(fields) {
       return;
     }
 
-    const slots = maxSlots[width] || 2;
-
     // Different column type → start a new row
     if (currentType && currentType !== width) {
       flush();

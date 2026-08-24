@@ -1,30 +1,20 @@
 // src/pages/public/BlogDetails.jsx
 import React, { useEffect, useState, useRef } from "react";
 import {
-  getPublicPostDetails,
-  getPublicPosts
+  getPublicPostDetails
 } from "../../../api/publicApi";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../../../styles/pages/blogdetails.css";
+import { sanitizeCmsHtml } from "../../../utils/sanitizeHtml";
 
 
 export default function BlogDetails() {
   const { slug } = useParams();
   const { i18n, t } = useTranslation();
   const isEnglish = i18n.language === "en";
-  const isRTL = i18n.dir() === "rtl";
 
   const [post, setPost] = useState(null);
-  const [relatedPosts, setRelatedPosts] = useState([]);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [showPreferencesModal, setShowPreferencesModal] = useState(false);
-  const [preferenceStep, setPreferenceStep] = useState(0);
-  const [preferences, setPreferences] = useState({
-    article: null,
-    news: null,
-    insight: null
-  });
 
   // Smart navbar: track if user has scrolled past the hero image
   const heroRef = useRef(null);
@@ -32,6 +22,7 @@ export default function BlogDetails() {
 
   useEffect(() => {
     load();
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- reload only when the route slug changes.
   }, [slug]);
 
   // Intersection observer to detect when hero is out of view
@@ -65,96 +56,8 @@ export default function BlogDetails() {
 
   async function load() {
     const res = await getPublicPostDetails(slug);
-    const postData = res.data;
-    setPost(postData);
-
-    const relatedRes = await getPublicPosts({
-      category_id: postData?.category?.id,
-    });
-    const filtered = (relatedRes.data || [])
-      .filter(p => p.slug !== slug)
-      .slice(0, 6);
-    setRelatedPosts(filtered);
+    setPost(res.data);
   }
-
-  const nextSlide = () => {
-    setCurrentSlide(prev =>
-      prev === relatedPosts.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide(prev =>
-      prev === 0 ? relatedPosts.length - 1 : prev - 1
-    );
-  };
-
-  const handlePreferenceSelect = (type, interested) => {
-    setPreferences(prev => ({ ...prev, [type]: interested }));
-    if (preferenceStep < 2) {
-      setPreferenceStep(prev => prev + 1);
-    } else {
-      setShowPreferencesModal(false);
-      setPreferenceStep(0);
-    }
-  };
-
-  const openPreferencesModal = () => {
-    setShowPreferencesModal(true);
-    setPreferenceStep(0);
-  };
-
-  const closePreferencesModal = () => {
-    setShowPreferencesModal(false);
-    setPreferenceStep(0);
-  };
-
-  const filteredRelatedPosts = relatedPosts.filter(p => {
-    if (preferences.article === false && p.type === 'article') return false;
-    if (preferences.news === false && p.type === 'news') return false;
-    if (preferences.insight === false && p.type === 'insight') return false;
-    return true;
-  });
-
-  const renderArrows = () => {
-    const prevButton = (
-      <button
-        key="prev"
-        className="blogdetails-slider-arrow blogdetails-slider-arrow-left"
-        onClick={prevSlide}
-        aria-label="Previous"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M20 12H4M10 6L4 12L10 18"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-    );
-    const nextButton = (
-      <button
-        key="next"
-        className="blogdetails-slider-arrow blogdetails-slider-arrow-right"
-        onClick={nextSlide}
-        aria-label="Next"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M4 12H20M14 6L20 12L14 18"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-    );
-    return isRTL ? [nextButton, prevButton] : [prevButton, nextButton];
-  };
 
   const handlePrint = () => {
     window.print();
@@ -173,10 +76,6 @@ export default function BlogDetails() {
 
   const title = isEnglish && post.title_en ? post.title_en : post.title_ar;
   const content = isEnglish ? post.intro_en : post.intro_ar;
-
-  const CARD_WIDTH = 440;
-  const offset = currentSlide * CARD_WIDTH;
-  const translateValue = isRTL ? offset : -offset;
 
   return (
     <div className="blogdetails-wrapper">
@@ -280,7 +179,9 @@ export default function BlogDetails() {
               <div
                 className="blogdetails-main-content"
                 dangerouslySetInnerHTML={{
-                  __html: isEnglish ? section.content_en : section.content_ar,
+                  __html: sanitizeCmsHtml(
+                    isEnglish ? section.content_en : section.content_ar
+                  ),
                 }}
               />
             </div>
@@ -289,7 +190,7 @@ export default function BlogDetails() {
           content && (
             <div
               className="blogdetails-main-content"
-              dangerouslySetInnerHTML={{ __html: content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(content) }}
             />
           )
         )}

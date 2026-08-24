@@ -7,7 +7,7 @@ import Services from "./Services";
 import ServiceSections from "./ServiceSections";
 import ServiceRequests from "./requests/ServiceRequests";
 import ImportServices from "./ImportServices";
-import "../../../styles/CMS_SERVICES.css";
+import "../../../styles/dashboard/services.css";
 import "../../../styles/dashboard/content/dashboard-common.css";
 
 /* ── Tab icons ── */

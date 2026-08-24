@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import "../../styles/pages/legalpage.css";
+import { sanitizeCmsHtml } from "../../utils/sanitizeHtml";
 import LogoImage from "../../assets/images/logo/About&Legal.png";
 
 export default function LegalPage() {
@@ -27,6 +28,7 @@ export default function LegalPage() {
 
   useEffect(() => {
     loadPage();
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- reload only when the route slug changes.
   }, [slug]);
 
   // Open first clause by default once page loads
@@ -298,7 +300,7 @@ export default function LegalPage() {
                         {subContent && (
                           <div
                             className="legalpage-subsection-content"
-                            dangerouslySetInnerHTML={{ __html: subContent }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(subContent) }}
                           />
                         )}
                       </div>

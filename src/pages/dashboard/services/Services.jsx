@@ -77,6 +77,7 @@ export default function Services() {
     finally  { setLoading(false); }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- reload only when explicit filters change.
   useEffect(() => { loadData(); }, [filterMain, filterActive]);
 
   const resetForm = () => { setForm(emptyForm); setEditing(null); };

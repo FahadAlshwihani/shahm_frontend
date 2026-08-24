@@ -1848,7 +1848,7 @@
 
 /* ─── CSS Variables — declared both at :root fallback AND on
        .dfi-dashboard so they work whether the component is
-       standalone (InfoModalsManager) or embedded (InfoSectionsEditor
+       embedded (InfoSectionsEditor
        inside FormBuilder which has no .dfi-dashboard wrapper)     ── */
 :root {
   --dfi-primary: #353C3C;

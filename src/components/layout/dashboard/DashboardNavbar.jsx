@@ -3,7 +3,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { useTranslation } from "react-i18next";
-import "../../../styles/DashboardNavbar.css";
+import "../../../styles/layout/dashboard/navbar.css";
 
 import enLogo from "../../../assets/images/logo/en-logo.png";
 import arLogo from "../../../assets/images/logo/ar-logo.png";

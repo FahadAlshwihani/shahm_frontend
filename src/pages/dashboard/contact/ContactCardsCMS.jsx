@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import api from "../../../api/axiosClient";
+import { API_PATHS } from "../../../api/routes";
 import toast from "react-hot-toast";
 import { useSweetAlert } from "../../../components/common/SweetAlert";
 import Editbtn   from "../../../components/common/dashboard/Editbtn";
@@ -79,7 +80,7 @@ const EMPTY_FORM = {
 export default function ContactCardsCMS() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
-  const { alert: sweetEl, show: showAlert } = useSweetAlert();
+  const { alert: sweetEl } = useSweetAlert();
 
   const [cards,      setCards]      = useState([]);
   const [forms,      setForms]      = useState([]);
@@ -91,9 +92,9 @@ export default function ContactCardsCMS() {
   const loadCards = async () => {
     try {
       const [cardsRes, formsRes, infoModalsRes] = await Promise.all([
-        api.get("cms/admin/contact/cards/"),
-        api.get("admin/forms/"),
-        api.get("admin/info-modals/"),
+        api.get(API_PATHS.cms.contactCards),
+        api.get(API_PATHS.forms.admin),
+        api.get(API_PATHS.forms.infoModals),
       ]);
       setCards(Array.isArray(cardsRes.data)      ? cardsRes.data      : []);
       setForms(Array.isArray(formsRes.data)      ? formsRes.data      : []);
@@ -101,6 +102,7 @@ export default function ContactCardsCMS() {
     } catch { toast.error(t("cms.contact.error.load_failed")); }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- local loader is intentionally mount-only.
   useEffect(() => { loadCards(); }, []);
 
   const submit = async (e) => {
@@ -109,10 +111,10 @@ export default function ContactCardsCMS() {
     setSaving(true);
     try {
       if (editingId) {
-        await api.patch(`cms/admin/contact/cards/${editingId}/`, form);
+        await api.patch(API_PATHS.cms.contactCard(editingId), form);
         toast.success(t("cms.contact.cards.success.card_updated"));
       } else {
-        await api.post("cms/admin/contact/cards/", form);
+        await api.post(API_PATHS.cms.contactCards, form);
         toast.success(t("cms.contact.cards.success.card_created"));
       }
       setForm(EMPTY_FORM);
@@ -126,7 +128,7 @@ export default function ContactCardsCMS() {
 
   const toggleActive = async (id, is_active) => {
     try {
-      await api.patch(`cms/admin/contact/cards/${id}/`, { is_active: !is_active });
+      await api.patch(API_PATHS.cms.contactCard(id), { is_active: !is_active });
       toast.success(t("cms.contact.cards.success.status_updated"));
       loadCards();
     } catch { toast.error(t("cms.contact.error.save_failed")); }
@@ -158,7 +160,7 @@ export default function ContactCardsCMS() {
   };
 
   const remove = async (id) => {
-    await api.delete(`cms/admin/contact/cards/${id}/`);
+    await api.delete(API_PATHS.cms.contactCard(id));
     toast.success(t("cms.contact.cards.success.card_deleted"));
     loadCards();
   };

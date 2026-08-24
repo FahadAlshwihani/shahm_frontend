@@ -1,36 +1,19 @@
 import axiosClient from "./axiosClient";
-
-/* ========= PUBLIC ========= */
-
-export const getCareerJobs = () =>
-  axiosClient.get("/services/public/careers/jobs/");
-
-export const submitCareerApplication = (data) =>
-  axiosClient.post(
-    "/services/public/careers/apply/",
-    data,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-
-
+import { API_PATHS } from "./routes";
 
 /* ========= ADMIN ========= */
 
 export const getAdminJobs = () =>
-  axiosClient.get("/services/admin/careers/jobs/");
+  axiosClient.get(API_PATHS.careers.jobs);
 
 export const createJob = (data) =>
-  axiosClient.post("/services/admin/careers/jobs/", data);
+  axiosClient.post(API_PATHS.careers.jobs, data);
 
 export const updateJob = (id, data) =>
-  axiosClient.patch(`/services/admin/careers/jobs/${id}/`, data);
+  axiosClient.patch(API_PATHS.careers.job(id), data);
 
 export const deleteJob = (id) =>
-  axiosClient.delete(`/services/admin/careers/jobs/${id}/`);
+  axiosClient.delete(API_PATHS.careers.job(id));
 
 export const getApplications = () =>
-  axiosClient.get("/services/admin/careers/applications/");
+  axiosClient.get(API_PATHS.careers.applications);

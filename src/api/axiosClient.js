@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
+import { API_PATHS } from "./routes";
 const pendingRequests = new Map();
 const axiosClient = axios.create({
-  baseURL: "https://api.shem.boats/api",
+  baseURL: process.env.REACT_APP_API_BASE_URL || "/api",
   timeout: 15000,
 });
 
@@ -10,19 +11,43 @@ let isRefreshing = false;
 let refreshSubscribers = [];
 
 function onRefreshed(newAccessToken) {
-  refreshSubscribers.forEach((callback) => callback(newAccessToken));
+  refreshSubscribers.forEach(({ resolve }) => resolve(newAccessToken));
   refreshSubscribers = [];
 }
 
-function addRefreshSubscriber(callback) {
-  refreshSubscribers.push(callback);
+function onRefreshFailed(error) {
+  refreshSubscribers.forEach(({ reject }) => reject(error));
+  refreshSubscribers = [];
+}
+
+function addRefreshSubscriber(resolve, reject) {
+  refreshSubscribers.push({ resolve, reject });
+}
+
+function isIntendedApiRequest(url) {
+  if (!url || !/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url)) {
+    return true;
+  }
+
+  try {
+    const apiBase = new URL(axiosClient.defaults.baseURL, window.location.origin);
+    const target = new URL(url, apiBase);
+    const basePath = apiBase.pathname.replace(/\/$/, "");
+
+    return (
+      target.origin === apiBase.origin &&
+      (target.pathname === basePath || target.pathname.startsWith(`${basePath}/`))
+    );
+  } catch {
+    return false;
+  }
 }
 
 axiosClient.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().accessToken;
 
-    if (token) {
+    if (token && isIntendedApiRequest(config.url)) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
@@ -74,8 +99,8 @@ axiosClient.interceptors.response.use(
     if (
       error.response.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes("/accounts/login/") &&
-      !originalRequest.url?.includes("/accounts/refresh/")
+      !originalRequest.url?.includes(API_PATHS.auth.login) &&
+      !originalRequest.url?.includes(API_PATHS.auth.refresh)
     ) {
       originalRequest._retry = true;
 
@@ -87,11 +112,11 @@ axiosClient.interceptors.response.use(
       }
 
       if (isRefreshing) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           addRefreshSubscriber((newAccessToken) => {
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
             resolve(axiosClient(originalRequest));
-          });
+          }, reject);
         });
       }
 
@@ -99,7 +124,7 @@ axiosClient.interceptors.response.use(
 
       try {
         const res = await axiosClient.post(
-          "/accounts/refresh/",
+          API_PATHS.auth.refresh,
           { refresh: refreshToken }
         );
 
@@ -117,6 +142,7 @@ axiosClient.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccess}`;
         return axiosClient(originalRequest);
       } catch (refreshError) {
+        onRefreshFailed(refreshError);
         auth.logout();
         return Promise.reject(refreshError);
       } finally {

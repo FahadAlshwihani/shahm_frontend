@@ -51,7 +51,7 @@ export default function About() {
 
   /* ── Partners marquee pause on hover ── */
   const [partnersPaused, setPartnersPaused] = useState(false);
-  const [hoveredPartner, setHoveredPartner] = useState(null);
+  const [, setHoveredPartner] = useState(null);
 
   useEffect(() => { fetchAbout(); }, [fetchAbout]);
 
@@ -91,9 +91,12 @@ const toggleMedia = (e) => {
 
   /* ── Posts slider ── */
   const maxPost = Math.max(0, posts.length - 1);
-  const clampPost = (v) => Math.max(0, Math.min(maxPost, v));
+  const clampPost = useCallback(
+    (v) => Math.max(0, Math.min(maxPost, v)),
+    [maxPost]
+  );
 
-  const goToPost = (idx) => {
+  const goToPost = useCallback((idx) => {
     const target = clampPost(idx);
     if (target === currentPost) return;
     setPostFading(true);
@@ -101,7 +104,7 @@ const toggleMedia = (e) => {
       setCurrentPost(target);
       setPostFading(false);
     }, 280);
-  };
+  }, [clampPost, currentPost]);
 
   const prevPost = () => goToPost(currentPost - 1);
   const nextPost = () => goToPost(currentPost + 1);
@@ -124,13 +127,13 @@ const toggleMedia = (e) => {
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     goToPost(getPostFromPointer(clientX));
     e.preventDefault();
-  }, [getPostFromPointer]);
+  }, [getPostFromPointer, goToPost]);
 
   const onProgressMove = useCallback((e) => {
     if (!isDraggingProgress.current) return;
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     goToPost(getPostFromPointer(clientX));
-  }, [getPostFromPointer]);
+  }, [getPostFromPointer, goToPost]);
 
   const onProgressUp = useCallback(() => {
     isDraggingProgress.current = false;
@@ -169,7 +172,7 @@ const toggleMedia = (e) => {
       goToPost(sectionTouchStartPost.current + rtlDir);
     }
     sectionTouchStartX.current = null;
-  }, [isRTL, currentPost]);
+  }, [isRTL, goToPost]);
 
   const progressPercent = posts.length > 1 && maxPost > 0
     ? Math.max(4, (currentPost / maxPost) * 100)

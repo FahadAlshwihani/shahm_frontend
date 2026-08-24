@@ -4,7 +4,7 @@ import "suneditor/dist/css/suneditor.min.css";
 import { getEmailTemplates, updateEmailTemplate } from "../../../api/emailApi";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import "../../../styles/CMS_EMAILTEMPLATES.css";
+import "../../../styles/dashboard/email-templates.css";
 
 /* ══════════════════════════════════════════════════════
    ICONS
@@ -94,21 +94,25 @@ const EDITOR_OPTIONS = {
    TAB CONFIG
 ══════════════════════════════════════════════════════ */
 const TAB_ICONS = {
-  admin_alert:           <IconBell />,
-  auto_reply:            <IconReply />,
-  subscription_welcome:  <IconStar />,
+  admin_alert: <IconBell />,
+  auto_reply: <IconReply />,
+  subscription_welcome: <IconStar />,
+  service_request_otp: <IconMail />,
 };
 
 /* ══════════════════════════════════════════════════════
    VARIABLE LIST
 ══════════════════════════════════════════════════════ */
 const VARIABLES = [
-  { var: "{{name}}",      key: "name" },
-  { var: "{{email}}",     key: "email" },
-  { var: "{{phone}}",     key: "phone" },
-  { var: "{{subject}}",   key: "subject" },
-  { var: "{{message}}",   key: "message" },
+  { var: "{{name}}", key: "name" },
+  { var: "{{email}}", key: "email" },
+  { var: "{{phone}}", key: "phone" },
+  { var: "{{subject}}", key: "subject" },
+  { var: "{{message}}", key: "message" },
   { var: "{{site_name}}", key: "site_name" },
+
+  { var: "{{otp_code}}", key: "otp_code" },
+  { var: "{{expiry_minutes}}", key: "expiry_minutes" },
 ];
 
 /* ══════════════════════════════════════════════════════
@@ -119,28 +123,29 @@ export default function EmailTemplates() {
   const isRtl = i18n.language === "ar";
 
   const [templates, setTemplates] = useState({
-    admin_alert:          { subject: "", html: "" },
-    auto_reply:           { subject: "", html: "" },
+    admin_alert: { subject: "", html: "" },
+    auto_reply: { subject: "", html: "" },
     subscription_welcome: { subject: "", html: "" },
   });
   const [activeTab, setActiveTab] = useState("admin_alert");
-  const [saving, setSaving]       = useState(false);
+  const [saving, setSaving] = useState(false);
 
   /* ── Load templates — logic unchanged ── */
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- local loader is intentionally mount-only.
   useEffect(() => { loadTemplates(); }, []);
 
   async function loadTemplates() {
     try {
       const res = await getEmailTemplates();
       const mapped = {
-        admin_alert:          { subject: "", html: "" },
-        auto_reply:           { subject: "", html: "" },
+        admin_alert: { subject: "", html: "" },
+        auto_reply: { subject: "", html: "" },
         subscription_welcome: { subject: "", html: "" },
       };
       res.data.forEach((tItem) => {
         mapped[tItem.template_type] = {
           subject: tItem.subject || "",
-          html:    tItem.html_content || "",
+          html: tItem.html_content || "",
         };
       });
       setTemplates(mapped);
@@ -159,7 +164,7 @@ export default function EmailTemplates() {
     try {
       await updateEmailTemplate({
         template_type: activeTab,
-        subject:      templates[activeTab].subject,
+        subject: templates[activeTab].subject,
         html_content: templates[activeTab].html,
       });
       toast.success(t("cms.email_templates.success.saved"));
@@ -181,8 +186,12 @@ export default function EmailTemplates() {
     }));
   }
 
-  const tabs = ["admin_alert", "auto_reply", "subscription_welcome"];
-
+  const tabs = [
+    "admin_alert",
+    "auto_reply",
+    "subscription_welcome",
+    "service_request_otp",
+  ];
   /* ══════════════════════════════════════════════════════
      RENDER
   ══════════════════════════════════════════════════════ */
@@ -221,10 +230,9 @@ export default function EmailTemplates() {
       <div className="et-card">
         <div className="et-card-header">
           <div className="et-card-header-left">
-            <span className={`et-card-header-icon et-card-header-icon--${
-              activeTab === "admin_alert" ? "amber" :
-              activeTab === "auto_reply"  ? "blue"  : "green"
-            }`}>
+            <span className={`et-card-header-icon et-card-header-icon--${activeTab === "admin_alert" ? "amber" :
+                activeTab === "auto_reply" ? "blue" : "green"
+              }`}>
               {TAB_ICONS[activeTab]}
             </span>
             <h2 className="et-card-title">

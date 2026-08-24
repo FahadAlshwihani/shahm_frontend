@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSweetAlert } from "../../../components/common/SweetAlert";
-import "../../../styles/Messages.css";
+import "../../../styles/dashboard/messages.css";
 
 // ─── Icon Components ──────────────────────────────────────────
 const Icon = {
@@ -63,7 +63,7 @@ export default function Message_View() {
   const { selectedMessage, loadSingle, updateMessage } = useMessagesStore();
   const [status, setStatus] = useState("");
 
-  useEffect(() => { loadSingle(id); }, [id]);
+  useEffect(() => { loadSingle(id); }, [id, loadSingle]);
   useEffect(() => { if (selectedMessage) setStatus(selectedMessage.status); }, [selectedMessage]);
 
   const handleSave = async () => {

@@ -1,21 +1,20 @@
 import axios from "./axiosClient";
-
-const BASE = "";
+import { API_PATHS } from "./routes";
 
 export const getAdminForms = () =>
-  axios.get(`${BASE}/admin/forms/`);
+  axios.get(API_PATHS.forms.admin);
 
 export const getAdminForm = (id) =>
-  axios.get(`${BASE}/admin/forms/${id}/`);
+  axios.get(API_PATHS.forms.adminForm(id));
 
 export const createAdminForm = (data) =>
-  axios.post(`${BASE}/admin/forms/`, data);
+  axios.post(API_PATHS.forms.admin, data);
 
 export const updateAdminForm = (id, data) =>
-  axios.patch(`${BASE}/admin/forms/${id}/`, data);
+  axios.patch(API_PATHS.forms.adminForm(id), data);
 
 export const deleteAdminForm = (id) =>
-  axios.delete(`${BASE}/admin/forms/${id}/`);
+  axios.delete(API_PATHS.forms.adminForm(id));
 
 export const getFormSubmissions = (
   formId,
@@ -32,7 +31,7 @@ export const getFormSubmissions = (
   }
 
   return axios.get(
-    `${BASE}/admin/form-submissions/`,
+    API_PATHS.forms.submissions,
     {
       params,
     },
@@ -40,7 +39,7 @@ export const getFormSubmissions = (
 };
 
 export const getPublicForm = (slug) =>
-  axios.get(`${BASE}/public/forms/${slug}/`);
+  axios.get(API_PATHS.forms.publicForm(slug));
 
 export const submitPublicForm = (
   slug,
@@ -54,7 +53,7 @@ export const submitPublicForm = (
   } = options;
 
   return axios.post(
-    `${BASE}/public/forms/${slug}/submit/`,
+    API_PATHS.forms.submit(slug),
     data,
     {
       params: accessKey
@@ -78,14 +77,14 @@ export const submitPublicForm = (
 // =========================
 
 export const getSuccessResponses = () =>
-  axios.get(`${BASE}/admin/success-responses/`);
+  axios.get(API_PATHS.forms.successResponses);
 
 export const getSuccessResponse = (id) =>
-  axios.get(`${BASE}/admin/success-responses/${id}/`);
+  axios.get(API_PATHS.forms.successResponse(id));
 
 export const createSuccessResponse = (data) =>
   axios.post(
-    `${BASE}/admin/success-responses/`,
+    API_PATHS.forms.successResponses,
     data,
     {
       headers: {
@@ -99,7 +98,7 @@ export const updateSuccessResponse = (
   data,
 ) =>
   axios.patch(
-    `${BASE}/admin/success-responses/${id}/`,
+    API_PATHS.forms.successResponse(id),
     data,
     {
       headers: {
@@ -110,19 +109,5 @@ export const updateSuccessResponse = (
 
 export const deleteSuccessResponse = (id) =>
   axios.delete(
-    `${BASE}/admin/success-responses/${id}/`,
-  );
-
-
-
-  export const sendFormOTP = (data) =>
-  axios.post(
-    `${BASE}/public/forms/access/send-otp/`,
-    data,
-  );
-
-export const verifyFormOTP = (data) =>
-  axios.post(
-    `${BASE}/public/forms/access/verify-otp/`,
-    data,
+    API_PATHS.forms.successResponse(id),
   );

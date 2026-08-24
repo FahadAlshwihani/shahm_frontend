@@ -1,7 +1,6 @@
 // src/pages/dashboard/CMSForms.jsx
 import React, { useEffect, useState, useCallback } from "react";
 import toast from "react-hot-toast";
-import axios from "../../../api/axiosClient";
 import { useTranslation } from "react-i18next";
 import { useSweetAlert } from "../../../components/common/SweetAlert";
 import { useFormBuilderStore } from "../../../store/useFormBuilderStore";

@@ -3,7 +3,7 @@ import { useEmailSettingsStore } from "../../../store/useEmailSettingsStore";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSweetAlert } from "../../../components/common/SweetAlert";
-import "../../../styles/CMS_EMAILSETTINGS.css";
+import "../../../styles/dashboard/email-settings.css";
 
 /* ══════════════════════════════════════════════════════
    ICONS
@@ -104,7 +104,7 @@ export default function Email_Settings() {
   const [loadingTest, setLoadingTest] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
 
-  useEffect(() => { fetchSettings(); }, []);
+  useEffect(() => { fetchSettings(); }, [fetchSettings]);
   useEffect(() => { if (settings) setForm(settings); }, [settings]);
 
   /* ── Loading state ── */

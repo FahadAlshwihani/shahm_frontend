@@ -1,6 +1,7 @@
 // src/components/forms/PublicSuccessCard.jsx
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { openExternalUrl } from "../../utils/safeNavigation";
 
 const IconCopy = () => (
   <svg width="11.5" height="13.5" viewBox="0 0 12 14" fill="none" aria-hidden="true">
@@ -41,7 +42,7 @@ export default function PublicSuccessCard({ data, onClose, isEn }) {
   const handleBtn = () => {
     if (data.button_action_type === "close") { onClose?.(); return; }
     if (data.button_action_type === "url" && data.button_url) {
-      window.open(data.button_url, "_blank");
+      openExternalUrl(data.button_url);
     }
   };
 

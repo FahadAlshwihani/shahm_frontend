@@ -8,29 +8,29 @@
 
 /* ── Design tokens (mirrors Messages + Services system) ────── */
 :root {
-  --dash-primary:        #353C3C;
-  --dash-secondary:      #7C8D8D;
-  --dash-muted:          #97A5A5;
-  --dash-border:         #E9ECEC;
-  --dash-bg:             #F7F8F9;
-  --dash-surface:        #ffffff;
-  --dash-surface-glass:  rgba(255, 255, 255, 0.86);
-  --dash-red:            #EF4444;
-  --dash-red-bg:         rgba(239, 68, 68, 0.09);
-  --dash-blue:           #3B82F6;
-  --dash-blue-bg:        rgba(59, 130, 246, 0.09);
-  --dash-green:          #16A34A;
-  --dash-green-bg:       rgba(22, 163, 74, 0.09);
+  --dash-primary: #353C3C;
+  --dash-secondary: #7C8D8D;
+  --dash-muted: #97A5A5;
+  --dash-border: #E9ECEC;
+  --dash-bg: #F7F8F9;
+  --dash-surface: #ffffff;
+  --dash-surface-glass: rgba(255, 255, 255, 0.86);
+  --dash-red: #EF4444;
+  --dash-red-bg: rgba(239, 68, 68, 0.09);
+  --dash-blue: #3B82F6;
+  --dash-blue-bg: rgba(59, 130, 246, 0.09);
+  --dash-green: #16A34A;
+  --dash-green-bg: rgba(22, 163, 74, 0.09);
   --dash-shadow-modal:
     0 8px 40px rgba(28, 33, 33, 0.16),
-    0 2px 8px  rgba(28, 33, 33, 0.08),
+    0 2px 8px rgba(28, 33, 33, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  --dash-radius-modal:   18px;
-  --dash-radius-sm:      8px;
-  --dash-transition:     0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  --dash-font:           "Noto Kufi Arabic", sans-serif;
-  --dash-font-display-en:"Ciclo Display", serif;
-  --dash-font-display-ar:"HT Sonata", serif;
+  --dash-radius-modal: 18px;
+  --dash-radius-sm: 8px;
+  --dash-transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --dash-font: "Noto Kufi Arabic", sans-serif;
+  --dash-font-display-en: "Ciclo Display", serif;
+  --dash-font-display-ar: "HT Sonata", serif;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -44,14 +44,13 @@
 /* Scroll-lock — added to <body> when modal is open */
 body.dash-modal-open {
   overflow: hidden !important;
-  touch-action: none;
 }
 
 /* Backdrop */
 .dash-modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 1200;
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +60,8 @@ body.dash-modal-open {
   -webkit-backdrop-filter: blur(6px);
   animation: dash-modal-fade-in 0.22s ease both;
   pointer-events: all;
-  overflow-y: auto;                      /* lets modal scroll into view on tiny screens */
+  overflow-y: auto;
+  /* lets modal scroll into view on tiny screens */
 }
 
 /* Dialog box */
@@ -98,20 +98,24 @@ body.dash-modal-open {
   padding: 20px 24px 16px;
   border-bottom: 1px solid rgba(233, 236, 236, 0.85);
   background: rgba(247, 248, 249, 0.65);
-  flex-shrink: 0;                        /* never compress */
+  flex-shrink: 0;
+  /* never compress */
 }
+
 .dash-modal-header-left {
   display: flex;
   flex-direction: column;
   gap: 6px;
   min-width: 0;
 }
+
 .dash-modal-header-right {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
 }
+
 .dash-modal-title {
   font-size: 17px;
   font-weight: 700;
@@ -120,9 +124,11 @@ body.dash-modal-open {
   line-height: 1.3;
   font-family: var(--dash-font-display-ar);
 }
+
 [dir="ltr"] .dash-modal-title {
   font-family: var(--dash-font-display-en);
 }
+
 .dash-modal-subtitle {
   display: flex;
   align-items: center;
@@ -144,14 +150,16 @@ body.dash-modal-open {
   color: var(--dash-secondary);
   cursor: pointer;
   transition: background var(--dash-transition), color var(--dash-transition),
-              border-color var(--dash-transition);
+    border-color var(--dash-transition);
   box-shadow: none;
 }
+
 .dash-modal-close:hover {
   background: var(--dash-red-bg);
   color: var(--dash-red);
   border-color: rgba(239, 68, 68, 0.3);
 }
+
 .dash-modal-close:focus-visible {
   outline: 2px solid var(--dash-primary);
   outline-offset: 2px;
@@ -173,7 +181,10 @@ body.dash-modal-open {
   overflow-x: auto;
   scrollbar-width: none;
 }
-.dash-modal-tabs-bar::-webkit-scrollbar { display: none; }
+
+.dash-modal-tabs-bar::-webkit-scrollbar {
+  display: none;
+}
 
 /* Individual tab — mirrors srv-panel__tab exactly */
 .dash-modal-tab {
@@ -188,15 +199,23 @@ body.dash-modal-open {
   font-size: 14px;
   font-weight: 500;
   line-height: 22px;
-  color: var(--dash-secondary);        /* #7C8D8D muted */
+  color: var(--dash-secondary);
+  /* #7C8D8D muted */
   transition: color 0.2s ease;
   white-space: nowrap;
   position: relative;
   box-shadow: none;
   flex-shrink: 0;
 }
-.dash-modal-tab:hover  { color: var(--dash-primary); }
-.dash-modal-tab--active { color: var(--dash-primary); font-weight: 600; }
+
+.dash-modal-tab:hover {
+  color: var(--dash-primary);
+}
+
+.dash-modal-tab--active {
+  color: var(--dash-primary);
+  font-weight: 600;
+}
 
 /* Full-width divider track — mirrors srv-panel__tabs-track */
 .dash-modal-tabs-track {
@@ -212,11 +231,13 @@ body.dash-modal-open {
 .dash-modal-tabs-indicator {
   position: absolute;
   bottom: 0;
-  height: 2px;                         /* slightly heavier for the modal context */
-  background: var(--dash-primary);     /* #353C3C */
+  height: 2px;
+  /* slightly heavier for the modal context */
+  background: var(--dash-primary);
+  /* #353C3C */
   border-radius: 7px;
   transition:
-    left  0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.3s cubic-bezier(0.22, 1, 0.36, 1),
     right 0.3s cubic-bezier(0.22, 1, 0.36, 1),
     width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -230,11 +251,21 @@ body.dash-modal-open {
   font-family: var(--dash-font);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: rgba(53,60,60,0.15) transparent;
+  scrollbar-color: rgba(53, 60, 60, 0.15) transparent;
 }
-.dash-modal-body::-webkit-scrollbar { width: 5px; }
-.dash-modal-body::-webkit-scrollbar-track { background: transparent; }
-.dash-modal-body::-webkit-scrollbar-thumb { background: rgba(53,60,60,0.15); border-radius: 4px; }
+
+.dash-modal-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dash-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dash-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(53, 60, 60, 0.15);
+  border-radius: 4px;
+}
 
 /* ── Footer ── */
 .dash-modal-footer {
@@ -249,34 +280,77 @@ body.dash-modal-open {
 
 /* ── Animations ── */
 @keyframes dash-modal-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
+
 @keyframes dash-modal-slide-up {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* ── Responsive ── */
 @media (max-width: 767px) {
-  .dash-modal-backdrop { padding: 12px; align-items: flex-start; padding-top: 24px; }
+  .dash-modal-backdrop {
+    padding: 12px;
+    align-items: flex-start;
+    padding-top: 24px;
+  }
+
   .dash-modal {
     border-radius: 14px;
     max-height: min(92dvh, 92vh);
   }
-  .dash-modal-header { padding: 16px 18px 14px; }
-  .dash-modal-body   { padding: 16px 18px; }
-  .dash-modal-footer { padding: 12px 18px; flex-direction: column-reverse; }
-  .dash-modal-tabs   { padding: 4px 12px; }
+
+  .dash-modal-header {
+    padding: 16px 18px 14px;
+  }
+
+  .dash-modal-body {
+    padding: 16px 18px;
+  }
+
+  .dash-modal-footer {
+    padding: 12px 18px;
+    flex-direction: column-reverse;
+  }
+
+  .dash-modal-tabs {
+    padding: 4px 12px;
+  }
 }
+
 @media (max-width: 479px) {
-  .dash-modal-backdrop { padding: 8px; padding-top: 16px; }
+  .dash-modal-backdrop {
+    padding: 8px;
+    padding-top: 16px;
+  }
+
   .dash-modal {
     border-radius: 12px;
     max-height: min(96dvh, 96vh);
   }
-  .dash-modal-title { font-size: 15px; }
-  .dash-modal-tab   { padding: 8px 12px; font-size: 12px; }
+
+  .dash-modal-title {
+    font-size: 15px;
+  }
+
+  .dash-modal-tab {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
 }
 
 /* Reduced motion */
@@ -324,11 +398,13 @@ body.dash-modal-open {
   border-color: rgba(239, 68, 68, 0.22);
   background: var(--dash-red-bg);
 }
+
 .dash-icon-btn--delete:hover {
   color: #fff;
   background: var(--dash-red);
   border-color: var(--dash-red);
 }
+
 .dash-icon-btn--delete:active {
   background: #dc2626;
   border-color: #dc2626;
@@ -340,11 +416,13 @@ body.dash-modal-open {
   border-color: var(--dash-border);
   background: var(--dash-bg);
 }
+
 .dash-icon-btn--edit:hover {
   color: var(--dash-primary);
   background: #eef0f0;
   border-color: #c8cdcd;
 }
+
 .dash-icon-btn--edit:active {
   background: #e4e7e7;
 }
@@ -355,11 +433,13 @@ body.dash-modal-open {
   border-color: rgba(22, 163, 74, 0.22);
   background: var(--dash-green-bg);
 }
+
 .dash-icon-btn--open:hover {
   color: #fff;
   background: var(--dash-green);
   border-color: var(--dash-green);
 }
+
 .dash-icon-btn--open:active {
   background: #15803d;
   border-color: #15803d;

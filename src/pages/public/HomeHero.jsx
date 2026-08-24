@@ -1,8 +1,9 @@
 // src/pages/public/HomeHero.jsx
 import React, { useRef, useState, useEffect } from "react";
-import "../../styles/home.css";
+import "../../styles/pages/home.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { navigateToConfiguredUrl } from "../../utils/safeNavigation";
 
 /* ===== Play Icon SVG ===== */
 const PlayIcon = () => (
@@ -112,16 +113,7 @@ const leftHref = hero.left_resolved_url || "#";
 const rightHref = hero.right_resolved_url || "#";
 
 const handleNavigate = (href) => {
-  if (!href || href === "#") return;
-
-  // external
-  if (href.startsWith("http")) {
-    window.open(href, "_blank");
-    return;
-  }
-
-  // internal SPA route
-  navigate(href);
+  navigateToConfiguredUrl(href, navigate);
 };
 
   // ===== PLAY/PAUSE TOGGLE HANDLERS =====

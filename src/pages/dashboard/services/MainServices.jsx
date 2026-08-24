@@ -51,6 +51,7 @@ export default function MainServices() {
     finally  { setLoading(false); }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- local loader is intentionally mount-only.
   useEffect(() => { load(); }, []);
 
   const handleIconChange = (e) => {

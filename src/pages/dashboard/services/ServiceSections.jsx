@@ -74,6 +74,7 @@ export default function ServiceSections() {
     finally  { setLoading(false); }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- reload only when the selected service changes.
   useEffect(() => { loadData(); }, [filterService]);
 
   const resetForm = () => { setForm(emptyForm); setEditing(null); };

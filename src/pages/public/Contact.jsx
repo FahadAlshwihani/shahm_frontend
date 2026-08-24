@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useContactStore } from "../../store/useContactStore";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
-import { getPublicSettings } from "../../api/publicApi";
 import "../../styles/pages/contact.css";
 import DynamicPublicForm from "../../components/forms/DynamicPublicForm";
 import InfoModal from "../../components/forms/InfoModal";
+import { openExternalUrl } from "../../utils/safeNavigation";
 
 export default function Contact() {
 
@@ -37,17 +37,12 @@ export default function Contact() {
      States
   ========================== */
 
-  const [settings, setSettings] = useState(null);
   const [form, setForm] = useState({ phone: "" });
   const [openIndex, setOpenIndex] = useState(null);
-  const [serviceModalOpen, setServiceModalOpen] = useState(false);
-  const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const [activeFormSlug, setActiveFormSlug] = useState(null);
 
   /* Mobile accordion open states per card order */
   const [mobileOpenCard, setMobileOpenCard] = useState({});
-  /* Mobile accordion for two-in-one sections */
-  const [mobileTwoInOneOpen, setMobileTwoInOneOpen] = useState({});
   const [activeInfoModalSlug, setActiveInfoModalSlug] = useState(null);
 
 
@@ -59,18 +54,7 @@ export default function Contact() {
 
     fetchContactPage();
 
-    async function loadSettings() {
-      try {
-        const res = await getPublicSettings();
-        setSettings(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    loadSettings();
-
-  }, []);
+  }, [fetchContactPage]);
 
 
   /* =========================
@@ -101,23 +85,8 @@ export default function Contact() {
      Helpers
   ========================== */
 
-  const getCards = (order) =>
-    cards.filter((c) => Number(c.order) === order);
-
   const toggleMobileCard = (order) =>
     setMobileOpenCard((prev) => ({ ...prev, [order]: !prev[order] }));
-
-  const toggleMobileTwoInOne = (idx) =>
-    setMobileTwoInOneOpen((prev) => ({ ...prev, [idx]: !prev[idx] }));
-
-
-  /* =========================
-     Reusable Note Component
-  ========================== */
-
-  const CardNote = ({ children }) => (
-    <p className="contact-card-note">{children}</p>
-  );
 
 
   const handleAction = (
@@ -127,7 +96,7 @@ export default function Contact() {
     infoModalSlug,
   ) => {
     if (type === "url" && url) {
-      window.open(url, "_blank");
+      openExternalUrl(url);
       return;
     }
 

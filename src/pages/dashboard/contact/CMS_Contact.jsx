@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import ContactPageHeaderCMS from "./ContactPageHeaderCMS";
 import ContactCardsCMS      from "./ContactCardsCMS";
 import ContactFAQPreview    from "./ContactFAQPreview";
-import "../../../styles/CMS_CONTACT.css";
+import "../../../styles/dashboard/contact.css";
 
 /* ── Tab icons ──────────────────────────────────────────────── */
 const IcoHeader = () => (

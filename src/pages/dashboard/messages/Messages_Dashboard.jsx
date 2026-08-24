@@ -6,7 +6,7 @@ import "suneditor/dist/css/suneditor.min.css";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSweetAlert } from "../../../components/common/SweetAlert";
-import "../../../styles/Messages.css";
+import "../../../styles/dashboard/messages.css";
 import Deletebtn from "../../../components/common/dashboard/Deletebtn";
 
 // ─── Icon Components ──────────────────────────────────────────
@@ -286,7 +286,7 @@ export default function Messages_Dashboard() {
     loadMessages();
     loadSubscribers();
     loadBroadcastLogs();
-  }, []);
+  }, [loadMessages, loadSubscribers, loadBroadcastLogs]);
 
   /* ─── Search & Pagination ──────────────────────────────────── */
   const filteredSubscribers = subscribers.filter((s) =>

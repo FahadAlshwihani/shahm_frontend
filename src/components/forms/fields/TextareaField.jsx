@@ -36,7 +36,6 @@ function TextareaField({ field, value, error, onValueChange, isEn }) {
 
   const hasValue  = !!(value && value.toString().trim().length > 0);
   const showError = touched && !focused && field.required && !hasValue;
-  const showValid = touched && hasValue && !error;
   const isTyping  = focused && hasValue;
 
   // ── measure dot position after every value change ─────────────────────────

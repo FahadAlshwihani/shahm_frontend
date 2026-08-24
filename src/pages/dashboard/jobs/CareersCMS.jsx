@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { getAdminJobs, createJob, updateJob, deleteJob } from "../../../api/careersApi";
-import "../../../styles/CMS_TEAM.css";
+import "../../../styles/dashboard/jobs.css";
 import usePagination from "../../../hooks/usePagination";
 import Pagination from "../../../components/common/dashboard/Pagination";
 import Editbtn from "../../../components/common/dashboard/Editbtn";
@@ -131,6 +131,7 @@ export default function CareersCMS() {
   const { currentPage, totalPages, paginatedData, goToPage } =
     usePagination(jobs, 15);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- local loader is intentionally mount-only.
   useEffect(() => { load(); }, []);
 
   const load = async () => {

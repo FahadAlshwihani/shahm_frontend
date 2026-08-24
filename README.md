@@ -1,70 +1,174 @@
-# Getting Started with Create React App
+# Shahm Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+The Shahm frontend is the bilingual React public website and JWT-protected management dashboard. It consumes the Shahm Django API and renders CMS pages, services, dynamic forms, request-access workflows, appointments, careers, messaging, and administration.
 
-In the project directory, you can run:
+## Tech Stack
 
-### `npm start`
+- React 19 and Create React App (`react-scripts` 5)
+- React Router 6, Zustand, Axios
+- i18next / react-i18next
+- SunEditor, SweetAlert2, react-hot-toast
+- DOMPurify for CMS rich text
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Application Architecture
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+`src/index.js` initializes i18n and `BrowserRouter`, then renders `App`. `AppRouter` composes public, authentication, and protected dashboard routes. Domain API modules share one Axios client; Zustand stores coordinate shared remote/session state.
 
-### `npm test`
+## Repository Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```text
+src/
+├── api/                    Axios client, route constants, domain APIs
+├── assets/                 Fonts and source images/icons
+├── components/
+│   ├── common/
+│   ├── forms/
+│   └── layout/
+├── pages/
+│   ├── auth/
+│   ├── dashboard/          Domain-grouped management pages
+│   └── public/
+├── router/
+├── store/
+├── styles/                 Domain-organized CSS
+└── utils/
+```
 
-### `npm run build`
+## Public Application
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Public routes provide home, services, about, blog, legal content, contact, FAQ, and temporary request-access pages. CMS navigation may link directly to stable URLs.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Dashboard
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Protected domains include users, CMS, forms, services, appointments, careers/applications, blog, messages, SEO, site settings, SMTP settings, and email templates.
 
-### `npm run eject`
+## Dynamic Forms
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- `DynamicPublicForm` manages schema loading, values, validation, multipart payloads, and submission results.
+- `DynamicFieldRenderer` selects field components from API-provided types.
+- `components/forms/fields/` contains field implementations.
+- Sections, keys, options, validation, dynamic sources, and success responses come from Django and are runtime contracts.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## State Management
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Zustand stores cover authentication, public initialization, CMS/about/blog/contact/FAQ data, dashboard statistics, users/settings/email, messaging, form building, and request-access workflows. Page-local UI state remains in components.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## API Layer
 
-## Learn More
+`src/api/axiosClient.js` owns base URL configuration, JWT attachment, refresh/retry, multipart handling, and duplicate-request cancellation. `src/api/routes.js` is the single source of API paths; domain modules contain request functions but no embedded endpoint literals. The backend repository publishes the exhaustive machine-readable mapping in `docs/API_CONTRACT_MATRIX.json`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Internationalization
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`src/i18n.js` loads `public/translation/ar.json` and `en.json`. `App` synchronizes document language, RTL/LTR direction, and body classes.
 
-### Code Splitting
+## Styling Architecture
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```text
+src/styles/
+├── auth/
+├── common/
+├── dashboard/
+│   ├── cms/
+│   └── content/
+├── forms/
+├── layout/
+│   ├── dashboard/
+│   └── public/
+└── pages/
+```
 
-### Analyzing the Bundle Size
+Selectors were preserved during organization. Component imports retain the existing cascade.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Environment Variables
 
-### Making a Progressive Web App
+Copy `.env.example` to `.env.local`:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```env
+REACT_APP_API_BASE_URL=http://localhost:8000/api
+```
 
-### Advanced Configuration
+The fallback is same-origin `/api`; separate-host deployments must set this at build time.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Local Development
 
-### Deployment
+```bash
+npm ci
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The committed `.npmrc` selects the legacy peer resolver required by CRA 5's optional TypeScript range and i18next's modern optional peer. This keeps a plain `npm ci` reproducible.
 
-### `npm run build` fails to minify
+## Production Build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+npm run build
+```
+
+`build/` is generated and ignored.
+
+## Testing
+
+```bash
+npm test -- --watchAll=false
+```
+
+The smoke suite verifies router/login/public rendering, protected-route behavior, centralized API paths, Axios authentication behavior, dynamic option and phone values, safe navigation, and HTML sanitization. Network and editor packages are mocked only at external boundaries.
+
+## Linting
+
+```bash
+npm run lint
+```
+
+## Backend Integration
+
+Requests use `REACT_APP_API_BASE_URL`. Login and refresh use `/accounts/login/` and `/accounts/refresh/`; search uses `/cms/public/search/`.
+
+## Routing
+
+- `PublicRoutes.jsx`: anonymous pages and compatibility redirects
+- `AuthRoutes.jsx`: login
+- `DashboardRoutes.jsx`: routes nested beneath `ProtectedRoute`
+- `ProtectedRoute.jsx`: auth gate and dashboard layout outlet
+
+Route URLs are contracts and are independent of page file locations.
+
+## Deployment
+
+The SPA requires history fallback to `index.html`. `public/.htaccess` contains Apache HTTPS/canonical-host redirects and React Router fallback for `shahmlaw.sa`. Set the API variable before building and deploy generated `build/` output through the hosting pipeline, not Git.
+
+## Security Considerations
+
+- CMS HTML is sanitized before `dangerouslySetInnerHTML`.
+- CMS-configured links are validated by `src/utils/safeNavigation.js`; new-window links use `noopener,noreferrer`.
+- JWTs are currently persisted in browser `localStorage`. This increases the impact of a successful XSS attack. The application therefore relies on strict HTML sanitization, safe URL handling, minimizing script-injection surfaces, and a restrictive Content Security Policy at the deployment proxy. Moving tokens to HttpOnly cookies is a separate authentication-architecture change.
+- The API client sends Bearer credentials only to relative API requests or absolute URLs beneath the configured API origin/path. Tokens are cleared on logout and unrecoverable refresh failure, are never logged or placed in URLs, and failed refreshes reject all queued requests.
+- Do not commit environment files or build output.
+- Treat external links and uploads as untrusted.
+
+## Handoff Notes
+
+- This frontend remains on Create React App 5. After non-breaking transitive updates, `npm audit` reports 30 advisories (9 low, 7 moderate, 14 high, 0 critical). Most are inherited through CRA's build, development-server, Jest/jsdom, Workbox, and webpack chains; React Router v6 also has direct runtime advisories whose offered remediation is the forbidden v7 major upgrade. These findings must not be represented as zero known frontend vulnerabilities.
+- Plan a separately tested Vite/current-router migration. Do not use `npm audit fix --force` as a release shortcut; it replaces React Router v6 with v7 and changes the supported toolchain.
+- Keep React Router on the compatible v6 line while CRA/Jest 27 remains.
+- Update backend API docs and frontend modules together.
+- Run build, tests, lint, and API-path scans before releases.
+
+## Troubleshooting
+
+- A cross-origin request failure usually means the build-time API base and backend CORS/CSRF origins do not agree.
+- A direct SPA route returning 404 requires the web server to fall back to `index.html`.
+- Use `npm ci`, not a partially updated `node_modules`, when reproducing lockfile behavior.
+- Browser compatibility database notices are toolchain maintenance notices; they do not replace lint, tests, or a production build.
+
+## Project Attribution
+
+Project source developed by **ENG. FAHAD ALSHWIHANI**.
+
+- Portfolio: [https://fyaa.io](https://fyaa.io)
+- GitHub: [https://github.com/FahadAlshwihani](https://github.com/FahadAlshwihani)
+- LinkedIn: [https://www.linkedin.com/in/fahad-alshwihani/](https://www.linkedin.com/in/fahad-alshwihani/)
+
+Copyright © 2026 ENG. FAHAD ALSHWIHANI. No open-source license is granted by this repository unless a separate `LICENSE` file is supplied.

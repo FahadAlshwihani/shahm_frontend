@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/common/SocialMedia.css";
+import { getSafeExternalUrl } from "../../utils/safeNavigation";
 
 /* ── X (Twitter) ── */
 const XIcon = () => (
@@ -70,17 +71,20 @@ const PLATFORMS = [
  * @param {boolean} isMobile  — switches desktop / mobile sizing via CSS class
  */
 export default function SocialMedia({ settings, isMobile = false }) {
-  const activeLinks = PLATFORMS.filter(({ key }) => settings?.[key]);
+  const activeLinks = PLATFORMS.map((platform) => ({
+    ...platform,
+    href: getSafeExternalUrl(settings?.[platform.key]),
+  })).filter(({ href }) => href);
   if (!activeLinks.length) return null;
 
   return (
     <div className={`social-media${isMobile ? " social-media--mobile" : ""}`}>
-      {activeLinks.map(({ key, label, Icon }) => (
+      {activeLinks.map(({ key, label, Icon, href }) => (
         <a
           key={key}
-          href={settings[key]}
+          href={href}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label={label}
           className="social-media__link"
         >

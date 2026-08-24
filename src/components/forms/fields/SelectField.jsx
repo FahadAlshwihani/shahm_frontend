@@ -9,7 +9,6 @@ function getText(obj, field, isEn, fallback = "") {
 
 function SelectField({ field, value, error, onValueChange, isEn }) {
     const label = getText(field, "label", isEn);
-  const placeholder = getText(field, "placeholder", isEn) || (isEn ? "Select..." : "اختر...");
   const help = getText(field, "help_text", isEn);
 
   const [open, setOpen] = useState(false);
@@ -44,15 +43,13 @@ function SelectField({ field, value, error, onValueChange, isEn }) {
     ? getText(selectedOption, "label", isEn, selectedOption.value)
     : null;
 
-  const [touched,  setTouched]  = useState(false);
+  const [, setTouched] = useState(false);
   const [wasOpen,  setWasOpen]  = useState(false);
   const { t } = useTranslation();
 
   const hasValue  = !!value;
   // error only after: user opened the dropdown AND closed it AND made no selection
   const showError = wasOpen && !open && !hasValue && field.required;
-  const showValid = hasValue && !error;
-
   const handleSelect = (optionValue) => {
     onValueChange(field.key, optionValue);
     setTouched(true);
@@ -89,6 +86,7 @@ function SelectField({ field, value, error, onValueChange, isEn }) {
         role="combobox"
         aria-expanded={open}
         aria-haspopup="listbox"
+        aria-controls={`${field.key}-options`}
         aria-labelledby={`${field.key}-label`}
         aria-invalid={!!error}
         tabIndex={0}
@@ -138,6 +136,7 @@ function SelectField({ field, value, error, onValueChange, isEn }) {
         {open && (
           <ul
             className="srm-custom-select-dropdown"
+            id={`${field.key}-options`}
             role="listbox"
             aria-labelledby={`${field.key}-label`}
           >

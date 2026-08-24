@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import api from "../../../api/axiosClient";
+import { API_PATHS } from "../../../api/routes";
 import toast from "react-hot-toast";
 
 const IcoFAQ = () => (
@@ -17,17 +18,18 @@ export default function ContactFAQPreview() {
 
   const loadData = async () => {
     try {
-      const res = await api.get("cms/admin/contact/faq-preview/");
+      const res = await api.get(API_PATHS.cms.contactFaqPreview);
       setFaqs(res.data?.all_faqs || []);
       setSelected(res.data?.selected_ids || []);
     } catch { toast.error(t("cms.contact.error.load_failed")); }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- local loader is intentionally mount-only.
   useEffect(() => { loadData(); }, []);
 
   const toggleFaq = async (id) => {
     try {
-      await api.post("cms/admin/contact/faq-preview/toggle/", { faq_id: id });
+      await api.post(API_PATHS.cms.contactFaqToggle, { faq_id: id });
       loadData();
       toast.success(t("cms.contact.faq.success.updated"));
     } catch { toast.error(t("cms.contact.error.save_failed")); }

@@ -1,47 +1,51 @@
 // src/api/blogApi.js
 import api from "./axiosClient";
+import { API_PATHS } from "./routes";
+
+export const getBlogSettings = () => api.get(API_PATHS.blog.publicSettings);
+export const updateBlogSettings = (data) =>
+  api.patch(API_PATHS.blog.adminSettings, data);
 
 // ================================
 // Categories
 // ================================
-export const getCategories = () => api.get("blog/admin/categories/");
+export const getCategories = () => api.get(API_PATHS.blog.categories);
 export const createCategory = (data) =>
-  api.post("blog/admin/categories/", data, {
+  api.post(API_PATHS.blog.categories, data, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
 export const updateCategory = (id, data) =>
-  api.patch(`blog/admin/categories/${id}/`, data, {
+  api.patch(API_PATHS.blog.category(id), data, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 export const deleteCategory = (id) =>
-  api.delete(`blog/admin/categories/${id}/`);
+  api.delete(API_PATHS.blog.category(id));
 
 // ================================
 // Tags
 // ================================
-export const getTags = () => api.get("blog/admin/tags/");
-export const createTag = (data) => api.post("blog/admin/tags/", data);
+export const getTags = () => api.get(API_PATHS.blog.tags);
+export const createTag = (data) => api.post(API_PATHS.blog.tags, data);
 export const updateTag = (id, data) =>
-  api.patch(`blog/admin/tags/${id}/`, data);
-export const deleteTag = (id) => api.delete(`blog/admin/tags/${id}/`);
+  api.patch(API_PATHS.blog.tag(id), data);
+export const deleteTag = (id) => api.delete(API_PATHS.blog.tag(id));
 
 // ================================
 // Blog Posts
 // ================================
 export const getPosts = () =>
-  api.get("blog/admin/posts/");
+  api.get(API_PATHS.blog.posts);
 
 export const createPost = (formData) =>
-  api.post("blog/admin/posts/", formData, {
+  api.post(API_PATHS.blog.posts, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
 export const updatePost = (id, formData) =>
-  api.patch(`blog/admin/posts/${id}/`, formData, {
+  api.patch(API_PATHS.blog.post(id), formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
 export const deletePost = (id) =>
-  api.delete(`blog/admin/posts/${id}/`);
-
+  api.delete(API_PATHS.blog.post(id));

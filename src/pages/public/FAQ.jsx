@@ -11,7 +11,7 @@ export default function FAQ() {
 
   useEffect(() => {
     fetchFaqs();
-  }, []);
+  }, [fetchFaqs]);
 
   const isEn = i18n.language === "en";
   const isRTL = i18n.dir() === "rtl";
@@ -84,10 +84,6 @@ export default function FAQ() {
               </button>
 
               {categories.map((cat, idx) => {
-                // Every pair of items sits in the same row
-                // Divider between items (horizontal) handled by grid
-                // Divider between rows (horizontal full-width) added after every even index
-                const isEvenIdx = idx % 2 === 1; // after 2nd, 4th, etc.
                 return (
                   <React.Fragment key={cat.id}>
                     {/* Vertical divider between each pair */}

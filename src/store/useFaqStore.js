@@ -1,17 +1,6 @@
 import { create } from "zustand";
 import { getPublicFAQ } from "../api/publicApi";
 
-const normalizeFaq = (f) => ({
-  id: f.id,
-  category: f.category ?? null,
-  question_ar: f.question_ar || f.question?.ar || "",
-  question_en: f.question_en || f.question?.en || "",
-  answer_ar: f.answer_ar || f.answer?.ar || "",
-  answer_en: f.answer_en || f.answer?.en || "",
-  order: f.order ?? 0,
-  is_active: f.is_active ?? true,
-});
-
 export const useFaqStore = create((set) => ({
   faqs: [],
   categories: [], // ✅ أضف هذا

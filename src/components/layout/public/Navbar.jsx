@@ -2,9 +2,8 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
   searchPublic,
 } from "../../../api/publicApi";
-import { useAuthStore } from "../../../store/useAuthStore";
 import { useTranslation } from "react-i18next";
-import "../../../styles/Navbar.css";
+import "../../../styles/layout/public/navbar.css";
 import { usePublicStore } from "../../../store/usePublicStore";
 
 /* ─── Verified Badge Icon ───────────────────────── */
@@ -44,7 +43,6 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
-  const { user } = useAuthStore();
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
   const panelRef = useRef(null);
@@ -248,21 +246,6 @@ useEffect(() => {
     if (item.page) return `/page/${item.page}`;
     return "#";
   };
-
-  /* ═══════════════════════════════════════════════════
-     PERSON ICON
-  ═══════════════════════════════════════════════════ */
-  const PersonIcon = () => (
-    <div className="top-navbar-person">
-      <span className="top-navbar-person-dot" />
-      <svg width="23.08" height="21.81" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
-        aria-label={t("navbar.user")}>
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-    </div>
-  );
 
   /* ═══════════════════════════════════════════════════
      LOGO PAIR
@@ -603,15 +586,6 @@ useEffect(() => {
           <LogoImages lang={isAr ? "ar" : "en"} />
         </div>
 
-        {/* LOGIN BUTTON — kept for future use
-        <button
-          className="top-navbar-person-btn"
-          onClick={() => (window.location.href = user ? "/dashboard" : "/login")}
-          aria-label={t("navbar.user")}
-        >
-          <PersonIcon />
-        </button>
-        */}
         <button
           className="top-navbar-search"
           onClick={() => setShowSearch(true)}
@@ -676,7 +650,6 @@ useEffect(() => {
         className={`menu-panel${isOpen ? " menu-panel-open" : ""}${isExpanded ? " menu-panel--expanded" : ""}`}
         dir={isAr ? "rtl" : "ltr"}
         aria-label={t("navbar.menu.open")}
-        aria-modal={isOpen}
       >
         {/* PANEL HEADER */}
         <div className="panel-header">

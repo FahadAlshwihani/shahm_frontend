@@ -1,66 +1,44 @@
 import api from "./axiosClient";
+import { API_PATHS } from "./routes";
 
 /* ================= PUBLIC ================= */
 
-// صفحة الحجز (النصوص)
-export const getAppointmentPage = () =>
-  api.get("/services/public/appointments/page/");
-
-// الإعدادات (السعر)
-export const getAppointmentSettings = () =>
-  api.get("/services/public/appointments/settings/");
-
 // المواعيد المتاحة
 export const getAvailableSlots = (params = {}) =>
-  api.get("/services/public/appointments/slots/", { params });
-
-// إنشاء حجز (قبل الدفع)
-export const bookAppointment = (data) =>
-  api.post("/services/public/appointments/book/", data);
-
+  api.get(API_PATHS.appointments.publicSlots, { params });
 
 /* ================= ADMIN (CMS) ================= */
 
 // صفحة CMS
 export const getAdminAppointmentPage = () =>
-  api.get("/services/admin/appointments/page/");
+  api.get(API_PATHS.appointments.page);
 
 export const updateAdminAppointmentPage = (data) =>
-  api.patch("/services/admin/appointments/page/", data);
+  api.patch(API_PATHS.appointments.page, data);
 
 // الإعدادات
 export const getAdminAppointmentSettings = () =>
-  api.get("/services/admin/appointments/settings/");
+  api.get(API_PATHS.appointments.settings);
 
 export const updateAdminAppointmentSettings = (data) =>
-  api.patch("/services/admin/appointments/settings/", data);
+  api.patch(API_PATHS.appointments.settings, data);
 
 // Slots
 export const getAdminSlots = () =>
-  api.get("/services/admin/appointments/slots/");
-
-export const createSlot = (data) =>
-  api.post("/services/admin/appointments/slots/", data);
+  api.get(API_PATHS.appointments.slots);
 
 export const updateSlot = (id, data) =>
-  api.patch(`/services/admin/appointments/slots/${id}/`, data);
+  api.patch(API_PATHS.appointments.slot(id), data);
 
 export const deleteSlot = (id) =>
-  api.delete(`/services/admin/appointments/slots/${id}/`);
+  api.delete(API_PATHS.appointments.slot(id));
 
 // Bookings
 export const getAdminBookings = () =>
-  api.get("/services/admin/appointments/bookings/");
+  api.get(API_PATHS.appointments.bookings);
 
 export const generateSlots = (data) =>
-  api.post("/services/admin/appointments/slots/generate/", data);
+  api.post(API_PATHS.appointments.generateSlots, data);
 
 export const updateBookingStatus = (id, data) =>
-  api.patch(`/services/admin/appointments/bookings/${id}/status/`, data);
-
-
-export const getPublicAppointments =
-  () =>
-    api.get(
-      "/services/public/appointments/slots/"
-    );
+  api.patch(API_PATHS.appointments.bookingStatus(id), data);

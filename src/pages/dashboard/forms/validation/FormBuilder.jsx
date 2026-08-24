@@ -84,13 +84,13 @@ export default function FormBuilder({
     saving,
     successResponses,
 }) {
-    const { t, i18n } = useTranslation();
-    const isRtl = i18n.language === "ar";
+    const { t } = useTranslation();
 
     // Local copy of the entire form tree
     const [formData, setFormData] = useState(() => clone(initialForm));
     useEffect(() => {
         setFormData(clone(initialForm));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- reset only when the persisted form version changes.
     }, [initialForm?.id, initialForm?.updated_at]);
 
     const [activeView, setActiveView] = useState("builder");
@@ -297,16 +297,13 @@ export default function FormBuilder({
         if (!field.field_type) {
             errors.field_type = t("cms.forms.errors.field_type_required");
         }
+
         if (
-            ["select", "radio", "checkbox"].includes(field.field_type) &&
-            field.option_source !== "dynamic" &&
-            (!field.options || field.options.length === 0)
+            !field.system_key &&
+            !field.key?.trim() &&
+            !field.label_en?.trim() &&
+            !field.label_ar?.trim()
         ) {
-            errors.options = t(
-                "cms.forms.errors.options_required"
-            );
-        }
-        if (!field.system_key && !field.key?.trim() && !field.label_en?.trim() && !field.label_ar?.trim()) {
             errors.key = t("cms.forms.errors.key_required");
         }
 
@@ -511,8 +508,13 @@ export default function FormBuilder({
             updateLocalForm((f) => {
                 const sec = f.sections.find((s) => s.id === section.id);
                 if (sec) {
-                    const existing = sec.fields[fieldIdx];
-                    if (existing) existing.is_active = false;
+                    const existing = sec.fields.find(
+                        (f) => f.id === field.id
+                    );
+
+                    if (existing) {
+                        existing.is_active = false;
+                    }
                 }
             });
             toast.success(t("cms.forms.success.field_deleted"));
@@ -751,17 +753,18 @@ export default function FormBuilder({
                                                 reordered[sIdx],
                                             ];
 
-                                            reordered.forEach((sec, idx) => {
-                                                sec.order = idx;
-                                            });
+                                            const normalized = reordered.map((sec, idx) => ({
+                                                ...sec,
+                                                order: idx,
+                                            }));
 
                                             updateLocalForm((f) => {
-                                                f.sections = reordered;
+                                                f.sections = normalized;
                                             });
 
                                             try {
                                                 await Promise.all(
-                                                    reordered
+                                                    normalized
                                                         .filter((sec) => sec.id)
                                                         .map((sec) =>
                                                             updateSection(sec.id, {
@@ -788,17 +791,18 @@ export default function FormBuilder({
                                                 reordered[sIdx],
                                             ];
 
-                                            reordered.forEach((sec, idx) => {
-                                                sec.order = idx;
-                                            });
+                                            const normalized = reordered.map((sec, idx) => ({
+                                                ...sec,
+                                                order: idx,
+                                            }));
 
                                             updateLocalForm((f) => {
-                                                f.sections = reordered;
+                                                f.sections = normalized;
                                             });
 
                                             try {
                                                 await Promise.all(
-                                                    reordered
+                                                    normalized
                                                         .filter((sec) => sec.id)
                                                         .map((sec) =>
                                                             updateSection(sec.id, {

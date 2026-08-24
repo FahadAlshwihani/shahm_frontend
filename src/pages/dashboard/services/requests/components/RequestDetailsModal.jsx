@@ -310,36 +310,36 @@ export default function RequestDetailsModal({ request, onClose, onStatusChange, 
                     className="cms-services-btn cms-services-btn--ghost cms-services-btn--sm"
                     type="button"
                     onClick={() => {
-  const PROTECTED = [
-    "service_ids",
-    "job_id",
-    "slot_id",
-  ];
+                      const PROTECTED = [
+                        "service_ids",
+                        "job_id",
+                        "slot_id",
+                      ];
 
-  const seed = {};
+                      const seed = {};
 
-  Object.entries(snapshot).forEach(([k, v]) => {
-    const isRich =
-      v !== null &&
-      typeof v === "object" &&
-      !Array.isArray(v) &&
-      "value" in v;
+                      Object.entries(snapshot).forEach(([k, v]) => {
+                        const isRich =
+                          v !== null &&
+                          typeof v === "object" &&
+                          !Array.isArray(v) &&
+                          "value" in v;
 
-    if (!isRich) return;
+                        if (!isRich) return;
 
-    const systemKey = v.system_key || k;
+                        const systemKey = v.system_key || k;
 
-    if (PROTECTED.includes(systemKey)) return;
-    if (v.settings?.hidden || v.settings?.internal) return;
-    if (v.field_type === "hidden") return;
-    if (v.editable === false) return;
+                        if (PROTECTED.includes(systemKey)) return;
+                        if (v.settings?.hidden || v.settings?.internal) return;
+                        if (v.field_type === "hidden") return;
+                        if (v.editable === false) return;
 
-    seed[k] = v.value ?? "";
-  });
+                        seed[k] = v.value ?? "";
+                      });
 
-  setEditValues(seed);
-  setEditMode(true);
-}}
+                      setEditValues(seed);
+                      setEditMode(true);
+                    }}
                   >
                     {t("cms.requestservices.modal.edit_submission", "Edit submission")}
                   </button>

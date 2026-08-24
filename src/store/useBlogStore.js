@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import api from "../api/axiosClient"; // 🔥 مهم جداً
-
 import {
+  getBlogSettings,
+  updateBlogSettings as apiUpdateBlogSettings,
   getCategories,
   createCategory as apiCreateCategory,
   updateCategory as apiUpdateCategory,
@@ -25,7 +25,7 @@ export const useBlogStore = create((set, get) => ({
   // ==========================
   fetchBlogSettings: async () => {
     try {
-      const res = await api.get("/blog/public/settings/");
+      const res = await getBlogSettings();
       return res.data;
     } catch (err) {
       return null;
@@ -34,7 +34,7 @@ export const useBlogStore = create((set, get) => ({
 
   updateBlogSettings: async (data) => {
     try {
-      const res = await api.patch("/blog/admin/settings/", data);
+      const res = await apiUpdateBlogSettings(data);
       return { success: true, data: res.data };
     } catch (err) {
       return { success: false, message: err.response?.data };

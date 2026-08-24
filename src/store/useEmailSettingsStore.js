@@ -24,7 +24,7 @@ export const useEmailSettingsStore = create((set) => ({
 
   testSMTP: async (config) => {
     try {
-      const res = await api.post("settings/email/test/", config);
+      await api.post("settings/email/test/", config);
       return { success: true };
     } catch (err) {
       return {

@@ -55,9 +55,9 @@ export default function Blog() {
   const [categories, setCategories] = useState([]);
   const [pageSettings, setPageSettings] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [type, setType] = useState("");
+  const [type] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedTag, setSelectedTag] = useState("");
+  const [selectedTag] = useState("");
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -78,10 +78,6 @@ export default function Blog() {
   const touchStartY = useRef(null);
   const touchStartSlide = useRef(0);
   const isDraggingProgress = useRef(false);
-  const isTrackDragging = useRef(false);
-  const dragStartX = useRef(0);
-  const dragStartSlide = useRef(0);
-
   // ── Measure real card dimensions from DOM ──────────────────────────────────
   const measureCards = useCallback(() => {
     if (!trackRef.current) return;
@@ -153,7 +149,10 @@ export default function Blog() {
   const visibleCount = isMobile ? 1 : VISIBLE_CARDS;
   const maxSlide = Math.max(0, featuredPosts.length - visibleCount);
 
-  const clampSlide = (v) => Math.max(0, Math.min(maxSlide, v));
+  const clampSlide = useCallback(
+    (v) => Math.max(0, Math.min(maxSlide, v)),
+    [maxSlide]
+  );
 
   const prevSlide = () => setCurrentSlide((prev) => clampSlide(prev - 1));
   const nextSlide = () => setCurrentSlide((prev) => clampSlide(prev + 1));
@@ -286,7 +285,7 @@ export default function Blog() {
     }
     touchStartX.current = null;
     touchStartY.current = null;
-  }, [isRTL, clampSlide]);
+  }, [clampSlide]);
 
   // ── Progress bar position ──────────────────────────────────────────────────
   const progressPercent = featuredPosts.length > 1 && maxSlide > 0

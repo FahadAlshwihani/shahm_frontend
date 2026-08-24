@@ -4,6 +4,8 @@
 // Tabs: sliding underline indicator — identical to srv-panel__tabs pattern.
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { createPortal } from "react-dom";
+
 
 const IconClose = () => (
   <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
@@ -31,6 +33,13 @@ const IconClose = () => (
  *  width         {number}       max dialog width in px (default 858)
  *  className     {string}       extra class on .dash-modal dialog
  *  headerRight   {ReactNode}    extra content in header alongside close btn
+ *
+ *  theme         {string}       OPTIONAL — page-theme class (e.g. "cms-hero-theme")
+ *                                that defines the CSS custom properties consumed by
+ *                                this page's design system. Required any time Modal
+ *                                content uses page-scoped tokens, because Portal
+ *                                detaches the dialog from the page's DOM ancestry,
+ *                                so it can no longer inherit those tokens otherwise.
  */
 export default function Modal({
   open,
@@ -46,9 +55,10 @@ export default function Modal({
   width = 858,
   className = "",
   headerRight,
+  theme = "",
 }) {
   const tabsBarRef = useRef(null);
-  const tabRefs    = useRef([]);
+  const tabRefs = useRef([]);
   const [indicator, setIndicator] = useState({ left: "auto", right: "auto", width: 0 });
 
   // ── Body scroll-lock ───────────────────────────────────────
@@ -70,13 +80,13 @@ export default function Modal({
   const measureIndicator = useCallback(() => {
     if (!tabDefs || !tabsBarRef.current) return;
     const activeIdx = tabDefs.findIndex((t) => t.id === activeTab);
-    const bar       = tabsBarRef.current;
-    const activeEl  = tabRefs.current[activeIdx];
+    const bar = tabsBarRef.current;
+    const activeEl = tabRefs.current[activeIdx];
     if (!bar || !activeEl) return;
 
     const barRect = bar.getBoundingClientRect();
     const tabRect = activeEl.getBoundingClientRect();
-    const isRTL   = dir === "rtl";
+    const isRTL = dir === "rtl";
 
     if (isRTL) {
       const right = barRect.right - tabRect.right;
@@ -89,12 +99,10 @@ export default function Modal({
 
   useEffect(() => {
     if (!open) return;
-    // Small delay so the modal has painted before measuring
     const id = requestAnimationFrame(() => measureIndicator());
     return () => cancelAnimationFrame(id);
   }, [open, measureIndicator]);
 
-  // Re-measure on window resize
   useEffect(() => {
     if (!open) return;
     window.addEventListener("resize", measureIndicator);
@@ -105,17 +113,17 @@ export default function Modal({
 
   const hasTabs = Array.isArray(tabDefs) && tabDefs.length > 0;
 
-  return (
+  return createPortal(
     <div className="dash-modal-backdrop" dir={dir} aria-modal="true" role="dialog">
       <div
-        className={`dash-modal ${className}`}
+        className={`dash-modal ${theme} ${className}`}
         style={{ maxWidth: width }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* ── Header ── */}
         <div className="dash-modal-header">
           <div className="dash-modal-header-left">
-            {title    && <h2 className="dash-modal-title">{title}</h2>}
+            {title && <h2 className="dash-modal-title">{title}</h2>}
             {subtitle && <div className="dash-modal-subtitle">{subtitle}</div>}
           </div>
           <div className="dash-modal-header-right">
@@ -134,7 +142,6 @@ export default function Modal({
         {/* ── Tabs — srv-panel__tabs pattern ── */}
         {hasTabs && (
           <div className="dash-modal-tabs">
-            {/* Tab buttons row */}
             <div className="dash-modal-tabs-bar" ref={tabsBarRef}>
               {tabDefs.map((tab, idx) => (
                 <button
@@ -149,12 +156,11 @@ export default function Modal({
               ))}
             </div>
 
-            {/* Full-width track + sliding indicator */}
             <div className="dash-modal-tabs-track">
               <div
                 className="dash-modal-tabs-indicator"
                 style={{
-                  left:  indicator.left,
+                  left: indicator.left,
                   right: indicator.right,
                   width: indicator.width,
                 }}
@@ -169,6 +175,7 @@ export default function Modal({
         {/* ── Footer ── */}
         {footer && <div className="dash-modal-footer">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

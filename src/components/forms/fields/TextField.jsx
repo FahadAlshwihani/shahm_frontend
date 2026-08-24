@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 // ─── Custom Date Picker ───────────────────────────────────────────
@@ -124,7 +124,6 @@ function getText(obj, field, isEn, fallback = "") {
 function TextField({ field, value, error, onValueChange, isEn }) {
   const { t } = useTranslation();
   const label       = getText(field, "label",       isEn);
-  const placeholder = getText(field, "placeholder", isEn);
   const help        = getText(field, "help_text",   isEn);
 
   const isDate = field.field_type === "date";

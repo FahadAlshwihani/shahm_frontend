@@ -4,7 +4,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import "../../styles/Login.css";
+import "../../styles/auth/login.css";
 import LogoForLogin from "../../assets/images/logo/Vector (2).png";
 
 /* ── SVG Icons ───────────────────────────────────────────────── */

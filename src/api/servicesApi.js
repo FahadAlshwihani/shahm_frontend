@@ -1,4 +1,5 @@
 import api from "./axiosClient";
+import { API_PATHS } from "./routes";
 
 /* ======================================================
    MAIN SERVICES
@@ -6,18 +7,13 @@ import api from "./axiosClient";
 
 export const getMainServices = (params = {}) =>
   api.get(
-    "/services/admin/main-services/",
+    API_PATHS.services.mainServices,
     { params }
-  );
-
-export const getMainService = (id) =>
-  api.get(
-    `/services/admin/main-services/${id}/`
   );
 
 export const createMainService = (data) =>
   api.post(
-    "/services/admin/main-services/",
+    API_PATHS.services.mainServices,
     data,
     {
       headers: {
@@ -31,7 +27,7 @@ export const updateMainService = (
   data
 ) =>
   api.patch(
-    `/services/admin/main-services/${id}/`,
+    API_PATHS.services.mainService(id),
     data,
     {
       headers: {
@@ -42,7 +38,7 @@ export const updateMainService = (
 
 export const deleteMainService = (id) =>
   api.delete(
-    `/services/admin/main-services/${id}/`
+    API_PATHS.services.mainService(id)
   );
 
 
@@ -52,18 +48,13 @@ export const deleteMainService = (id) =>
 
 export const getServices = (params = {}) =>
   api.get(
-    "/services/admin/services/",
+    API_PATHS.services.services,
     { params }
-  );
-
-export const getService = (id) =>
-  api.get(
-    `/services/admin/services/${id}/`
   );
 
 export const createService = (data) =>
   api.post(
-    "/services/admin/services/",
+    API_PATHS.services.services,
     data,
     {
       headers: {
@@ -77,7 +68,7 @@ export const updateService = (
   data
 ) =>
   api.patch(
-    `/services/admin/services/${id}/`,
+    API_PATHS.services.service(id),
     data,
     {
       headers: {
@@ -88,7 +79,7 @@ export const updateService = (
 
 export const deleteService = (id) =>
   api.delete(
-    `/services/admin/services/${id}/`
+    API_PATHS.services.service(id)
   );
 
 
@@ -100,22 +91,15 @@ export const getServiceSections = (
   params = {}
 ) =>
   api.get(
-    "/services/admin/service-sections/",
+    API_PATHS.services.sections,
     { params }
-  );
-
-export const getServiceSection = (
-  id
-) =>
-  api.get(
-    `/services/admin/service-sections/${id}/`
   );
 
 export const createServiceSection = (
   data
 ) =>
   api.post(
-    "/services/admin/service-sections/",
+    API_PATHS.services.sections,
     data
   );
 
@@ -124,7 +108,7 @@ export const updateServiceSection = (
   data
 ) =>
   api.patch(
-    `/services/admin/service-sections/${id}/`,
+    API_PATHS.services.section(id),
     data
   );
 
@@ -132,7 +116,7 @@ export const deleteServiceSection = (
   id
 ) =>
   api.delete(
-    `/services/admin/service-sections/${id}/`
+    API_PATHS.services.section(id)
   );
 
 
@@ -142,21 +126,14 @@ export const deleteServiceSection = (
 
 export const getServicesPageCMS = () =>
   api.get(
-    "/services/admin/services-page/"
-  );
-
-export const getServicesPageCMSById = (
-  id
-) =>
-  api.get(
-    `/services/admin/services-page/${id}/`
+    API_PATHS.services.page
   );
 
 export const createServicesPageCMS = (
   data
 ) =>
   api.post(
-    "/services/admin/services-page/",
+    API_PATHS.services.page,
     data,
     {
       headers: {
@@ -170,7 +147,7 @@ export const updateServicesPageCMS = (
   data
 ) =>
   api.patch(
-    `/services/admin/services-page/${id}/`,
+    API_PATHS.services.pageItem(id),
     data,
     {
       headers: {
@@ -184,33 +161,6 @@ export const updateServicesPageCMS = (
    SERVICE ADVISORY PAGE
 ====================================================== */
 
-export const getServiceAdvisoryPage =
-  () =>
-    api.get(
-      "/services/admin/service-advisory-page/"
-    );
-
-export const getServiceAdvisoryPageById =
-  (id) =>
-    api.get(
-      `/services/admin/service-advisory-page/${id}/`
-    );
-
-export const createServiceAdvisoryPage =
-  (data) =>
-    api.post(
-      "/services/admin/service-advisory-page/",
-      data
-    );
-
-export const updateServiceAdvisoryPage =
-  (id, data) =>
-    api.patch(
-      `/services/admin/service-advisory-page/${id}/`,
-      data
-    );
-
-
 /* ======================================================
    SERVICE ADVISORY REQUESTS
 ====================================================== */
@@ -218,27 +168,27 @@ export const updateServiceAdvisoryPage =
 export const getServiceAdvisoryRequests =
   (params = {}) =>
     api.get(
-      "/services/admin/service-advisory-requests/",
+      API_PATHS.services.requests,
       { params }
     );
 
 export const getServiceAdvisoryRequest =
   (id) =>
     api.get(
-      `/services/admin/service-advisory-requests/${id}/`
+      API_PATHS.services.request(id)
     );
 
 export const updateServiceAdvisoryRequest =
   (id, data) =>
     api.patch(
-      `/services/admin/service-advisory-requests/${id}/`,
+      API_PATHS.services.request(id),
       data
     );
 
 export const deleteServiceAdvisoryRequest =
   (id) =>
     api.delete(
-      `/services/admin/service-advisory-requests/${id}/`
+      API_PATHS.services.request(id)
     );
 
 
@@ -254,7 +204,7 @@ export const importServicesExcel = (
   formData.append("file", file);
 
   return api.post(
-    "/services/admin/import-services/",
+    API_PATHS.services.import,
     formData,
     {
       headers: {
@@ -273,16 +223,9 @@ export const importServicesExcel = (
 export const getPublicMainServices =
   (params = {}) =>
     api.get(
-      "/services/public/main-services/",
+      API_PATHS.services.publicMainServices,
       { params }
     );
-
-export const getPublicMainServiceBySlug =
-  (slug) =>
-    api.get(
-      `/services/public/main-services/${slug}/`
-    );
-
 
 /* ======================================================
    PUBLIC SERVICES
@@ -292,17 +235,9 @@ export const getPublicServices = (
   params = {}
 ) =>
   api.get(
-    "/services/public/services/",
+    API_PATHS.services.publicServices,
     { params }
   );
-
-export const getPublicServiceBySlug = (
-  slug
-) =>
-  api.get(
-    `/services/public/services/${slug}/`
-  );
-
 
 /* ======================================================
    PUBLIC SERVICES PAGE CMS
@@ -311,7 +246,7 @@ export const getPublicServiceBySlug = (
 export const getPublicServicesPage =
   () =>
     api.get(
-      "/services/public/services-page/"
+      API_PATHS.services.publicPage
     );
 
 
@@ -322,14 +257,14 @@ export const getPublicServicesPage =
 export const getPublicCareers =
   () =>
     api.get(
-      "/services/public/careers/jobs/"
+      API_PATHS.services.publicCareers
     );
 
 
 // ── Access links (canonical – deduplicated) ──────────────────────────────────
 export const getServiceRequestAccessLinks = (requestId) =>
   api.get(
-    `/services/admin/service-advisory-requests/${requestId}/access-links/`
+    API_PATHS.services.requestLinks(requestId)
   );
 
 export const createServiceRequestAccessLink = (
@@ -337,7 +272,7 @@ export const createServiceRequestAccessLink = (
   payload
 ) =>
   api.post(
-    `/services/admin/service-advisory-requests/${requestId}/access-links/create/`,
+    API_PATHS.services.createRequestLink(requestId),
     payload
   );
 
@@ -345,14 +280,14 @@ export const revokeServiceRequestAccessLink = (
   linkId
 ) =>
   api.post(
-    `/services/admin/request-access-links/${linkId}/revoke/`
+    API_PATHS.services.revokeLink(linkId)
   );
 
 export const regenerateServiceRequestAccessLink = (
   linkId
 ) =>
   api.post(
-    `/services/admin/request-access-links/${linkId}/regenerate/`
+    API_PATHS.services.regenerateLink(linkId)
   );
 
 export const updateAdminSubmission = (
@@ -360,7 +295,7 @@ export const updateAdminSubmission = (
   data
 ) =>
   api.patch(
-    `/services/admin/submissions/${submissionId}/update/`,
+    API_PATHS.services.updateSubmission(submissionId),
     data
   );
 
@@ -368,42 +303,15 @@ export const getSubmissionEditHistory = (
   submissionId
 ) =>
   api.get(
-    `/services/admin/submissions/${submissionId}/history/`
+    API_PATHS.services.submissionHistory(submissionId)
   );
 
 export const getRequestAccessLogs = (
   requestId
 ) =>
   api.get(
-    `/services/admin/service-advisory-requests/${requestId}/logs/`
+    API_PATHS.services.requestLogs(requestId)
   );
-
-// Legacy aliases kept so old call-sites don't crash during migration
-
-/** @deprecated use getServiceRequestAccessLinks */
-export const getRequestAccessLinks = (
-  requestId
-) =>
-  getServiceRequestAccessLinks(requestId);
-
-/** @deprecated use createServiceRequestAccessLink */
-export const createRequestAccessLink = (
-  requestId,
-  payload
-) =>
-  createServiceRequestAccessLink(
-    requestId,
-    payload
-  );
-
-/** @deprecated use revokeServiceRequestAccessLink */
-export const revokeRequestAccessLink = (
-  linkId
-) =>
-  revokeServiceRequestAccessLink(
-    linkId
-  );
-
 
 /* ======================================================
    PUBLIC ACCESS
@@ -413,7 +321,7 @@ export const sendRequestOTP = (
   publicKey
 ) =>
   api.post(
-    "/services/public/request-access/send-otp/",
+    API_PATHS.services.sendOtp,
     {
       public_key: publicKey,
     }
@@ -424,7 +332,7 @@ export const verifyRequestOTP = (
   otp
 ) =>
   api.post(
-    "/services/public/request-access/verify-otp/",
+    API_PATHS.services.verifyOtp,
     {
       public_key: publicKey,
       code: otp,
@@ -436,7 +344,7 @@ export const getEditableRequestSnapshot = (
   token
 ) =>
   api.get(
-    `/services/public/request-access/${publicKey}/`,
+    API_PATHS.services.editableRequest(publicKey),
     {
       headers: {
         "X-Access-Token": token,
@@ -450,7 +358,7 @@ export const updateEditableRequest = (
   data
 ) => {
   return api.patch(
-    `/services/public/request-access/${publicKey}/update/`,
+    API_PATHS.services.updateEditableRequest(publicKey),
     data,
     {
       headers: {
@@ -472,23 +380,3 @@ export const getServiceRequests =
 
 export const deleteServiceRequest =
   deleteServiceAdvisoryRequest;
-
-/**
- * Update request status only
- */
-export const updateServiceRequestStatus = (
-  id,
-  status
-) =>
-  updateServiceAdvisoryRequest(id, {
-    status,
-  });
-
-/**
- * Access Links
- */
-export const revokeAccessLink =
-  revokeRequestAccessLink;
-
-export const regenerateAccessLink =
-  regenerateServiceRequestAccessLink;

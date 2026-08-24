@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardNavbar from "./DashboardNavbar";
-import "../../../styles/DashboardLayout.css";
+import "../../../styles/layout/dashboard/layout.css";
 
 const QUICK_LINKS = [
   { href: "/",             key: "sidebar.footer_link_home" },

@@ -52,12 +52,6 @@ const IcoLink = () => (
     <path d="M8.5 5.5a3.5 3.5 0 00-5 0L2 7a3.5 3.5 0 005 5L8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
-const IcoInfo = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-    <circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.3" />
-    <path d="M7 5v-.5M7 7v3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-  </svg>
-);
 const IcoSpinner = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="cms-svc-btn-spin">
     <circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.5"

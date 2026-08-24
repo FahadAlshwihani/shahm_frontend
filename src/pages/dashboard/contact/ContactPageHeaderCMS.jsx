@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import api from "../../../api/axiosClient";
+import { API_PATHS } from "../../../api/routes";
 import toast from "react-hot-toast";
 
 const IcoPage = () => (
@@ -37,7 +38,7 @@ export default function ContactPageHeaderCMS() {
   });
 
   useEffect(() => {
-    api.get("cms/admin/contact/page/")
+    api.get(API_PATHS.cms.contactPage)
       .then((res) => { if (res.data) setForm(res.data); })
       .catch(() => {});
   }, []);
@@ -46,7 +47,7 @@ export default function ContactPageHeaderCMS() {
     e.preventDefault();
     setSaving(true);
     try {
-      await api.post("cms/admin/contact/page/", form);
+      await api.post(API_PATHS.cms.contactPage, form);
       toast.success(t("cms.contact.page_header.success.saved"));
     } catch {
       toast.error(t("cms.contact.error.save_failed"));

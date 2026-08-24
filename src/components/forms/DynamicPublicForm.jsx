@@ -252,14 +252,7 @@ export default function DynamicPublicForm({
     try {
       setSubmitting(true);
 
-      console.log(
-        "VALUES JSON",
-        JSON.stringify(values, null, 2)
-      );
-
       const payload = buildPayload();
-
-      console.log("PAYLOAD", payload);
 
       const res = await submitPublicForm(slug, payload, { accessKey, accessToken });
 

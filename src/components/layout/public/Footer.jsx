@@ -2,9 +2,11 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getPublicSettings } from "../../../api/publicApi";
 import api from "../../../api/axiosClient";
-import "../../../styles/footer.css";
+import { API_PATHS } from "../../../api/routes";
+import "../../../styles/layout/public/footer.css";
 import { useTranslation } from "react-i18next";
 import SocialMedia from "../../common/SocialMedia";
+import { navigateToConfiguredUrl } from "../../../utils/safeNavigation";
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
@@ -23,7 +25,7 @@ export default function Footer() {
 
   const loadData = useCallback(async () => {
     try {
-      const res = await api.get("cms/public/home/");
+      const res = await api.get(API_PATHS.cms.publicHome);
       if (res.data?.footer) setFooterData(res.data.footer);
     } catch (err) {
       console.error("Footer load error:", err);
@@ -38,7 +40,7 @@ export default function Footer() {
     loadData();
   }, [loadData]);
 
-  const columns = footerData?.columns || [];
+  const columns = useMemo(() => footerData?.columns || [], [footerData?.columns]);
   const ctaButtons = useMemo(() => (footerData?.cta_buttons || []).filter((b) => b.is_active).slice(0, 3), [footerData]);
   const settings = footerData?.settings || null;
   const footerLogo = isAr ? settings?.logo_ar : settings?.logo_en;
@@ -52,7 +54,7 @@ export default function Footer() {
     e.preventDefault();
     if (!email.trim()) return;
     try {
-      await api.post("messaging/subscribe/", { email });
+      await api.post(API_PATHS.messaging.subscribe, { email });
       setEmail("");
       alert(isAr ? "تم الاشتراك ✅" : "Subscribed ✅");
     } catch (err) {
@@ -113,7 +115,7 @@ export default function Footer() {
       }
       if (item.resolved_url) {
         e.preventDefault();
-        navigate(item.resolved_url);
+        navigateToConfiguredUrl(item.resolved_url, navigate);
       }
     };
 
@@ -173,7 +175,7 @@ export default function Footer() {
               return (
                 <React.Fragment key={cta.id}>
                   {idx > 0 && <div className="footer-cta-divider" aria-hidden="true" />}
-                  <button className="footer-cta-item" onClick={() => cta.resolved_url && navigate(cta.resolved_url)} disabled={!cta.resolved_url}>
+                  <button className="footer-cta-item" onClick={() => navigateToConfiguredUrl(cta.resolved_url, navigate)} disabled={!cta.resolved_url}>
                     <div className="footer-cta-text">
                       <span className="footer-cta-title">{title}</span>
                       <span className="footer-cta-desc">{desc}</span>

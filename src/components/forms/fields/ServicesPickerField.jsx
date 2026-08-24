@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 import {
   getPublicMainServices,
   getPublicServices,
@@ -26,9 +25,6 @@ function ServicesPickerField({
   onValueChange,
   isEn,
 }) {
-  const { t } = useTranslation();
-  const fieldLabel = getText(field, "label", isEn);
-
   const [mainServices, setMainServices] = useState([]);
   const [servicesMap, setServicesMap] = useState({});
 
@@ -117,22 +113,18 @@ function ServicesPickerField({
     <div className="srm-form-field" style={{ gridColumn: "1 / -1" }}>
 
       {/* field label */}
-      {fieldLabel && (
+      {/* {fieldLabel && (
         <h3 className="srm-section-title" style={{ marginBottom: "16px" }}>
           {fieldLabel}
           {field.required && <span aria-hidden="true"> *</span>}
         </h3>
-      )}
+      )} */}
 
 <div className="services-picker-wrapper">
         {groups.map((group, idx) => {
           const isFirst = idx === 0;
           const subServices = servicesMap[group.main_service] || [];
           const catSelected = !!group.main_service;
-          const svcSelected =
-            Array.isArray(group.services) &&
-            group.services.length > 0;
-
           const catLabel = isEn ? "Main Category" : "التصنيف الرئيسي";
           const svcLabel = isEn ? "Service Type" : "نوع الخدمة";
 

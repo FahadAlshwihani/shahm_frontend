@@ -51,8 +51,6 @@ function PhoneField({ field, value, error, onValueChange, isEn }) {
   const updatePhone = (patch) =>
     onValueChange(field.key, { ...phoneValue, ...patch });
 
-  const selectedCode = options.find((o) => o.value === phoneValue.country_code);
-
   /* ── column state classes ── */
   const codeColClass = [
     "srm-phone-code-col",
@@ -86,6 +84,7 @@ function PhoneField({ field, value, error, onValueChange, isEn }) {
             role="combobox"
             aria-expanded={codeOpen}
             aria-haspopup="listbox"
+            aria-controls={`${field.key}-country-code-options`}
             tabIndex={0}
             onFocus={() => setCodeFocused(true)}
             onBlur={() => { if (!codeOpen) setCodeFocused(false); setTouched(true); }}
@@ -111,7 +110,11 @@ function PhoneField({ field, value, error, onValueChange, isEn }) {
             </div>
 
             {codeOpen && (
-              <ul className="srm-custom-select-dropdown" role="listbox">
+              <ul
+                id={`${field.key}-country-code-options`}
+                className="srm-custom-select-dropdown"
+                role="listbox"
+              >
                 <li
                   className="srm-custom-select-option"
                   role="option"

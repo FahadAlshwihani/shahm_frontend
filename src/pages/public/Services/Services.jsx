@@ -7,7 +7,6 @@ import React, {
   useEffect,
   useState,
   useRef,
-  useCallback,
   useMemo,
 } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,6 +19,8 @@ import {
 import "../../../styles/pages/services.css";
 import EnterpriseIcon from "../../../assets/images/icons/enterprise.svg";
 import ExpandIcon from "../../../assets/images/icons/expand_content.svg";
+import DynamicPublicForm from "../../../components/forms/DynamicPublicForm";
+import { openExternalUrl } from "../../../utils/safeNavigation";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ZUSTAND STORE
@@ -78,16 +79,6 @@ const useServicesStore = create((set, get) => ({
 // ─────────────────────────────────────────────────────────────────────────────
 // SERVICE ICON — single deterministic SVG per service (no external deps)
 // ─────────────────────────────────────────────────────────────────────────────
-function ServiceIcon() {
-  return (
-    <img
-      src={EnterpriseIcon}
-      alt=""
-      className="srv-card__icon-img"
-    />
-  );
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // HERO SECTION
 // [REFERENCE: About.jsx — about-hero-media-section, about-hero-media-wrap, video handling]
@@ -103,7 +94,7 @@ function ServicesHero({ cms, isEn }) {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
+      videoRef.current.play().catch(() => { });
       setPlaying(true);
     }
   }, [mediaSrc]);
@@ -246,8 +237,6 @@ function ServicesSearch({ value, onChange, placeholder }) {
 // Clone: hover states, active state, divider logic, icon behavior, RTL handling
 // ─────────────────────────────────────────────────────────────────────────────
 function MainServiceFilters({ mainServices, selected, onSelect, isEn }) {
-  const { t } = useTranslation();
-
   return (
     // [REFERENCE: Blog.jsx — .blog-categories]
     <div className="srv-categories">
@@ -389,7 +378,14 @@ function ServiceCard({ service, isEn, onExpand, isActive, onActivate }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // SERVICE PANEL (corner modal)
 // ─────────────────────────────────────────────────────────────────────────────
-function ServicePanel({ service, visible, onClose, isEn, cms }) {
+function ServicePanel({
+  service,
+  visible,
+  onClose,
+  isEn,
+  cms,
+  onOpenForm,
+}) {
   const { t } = useTranslation();
   const panelRef = useRef(null);
   const scrollRef = useRef(null);
@@ -461,12 +457,13 @@ function ServicePanel({ service, visible, onClose, isEn, cms }) {
     if (!cms) return;
     const actionType = cms.primary_action_type;
     if (actionType === "url" && cms.primary_url) {
-      window.open(cms.primary_url, "_blank", "noopener,noreferrer");
-    } else if (actionType === "form_modal" && cms.primary_form) {
-      window.dispatchEvent(
-        new CustomEvent("open-form-modal", {
-          detail: { formId: cms.primary_form },
-        })
+      openExternalUrl(cms.primary_url);
+    } else if (
+      actionType === "form_modal" &&
+      cms.primary_form_data?.slug
+    ) {
+      onOpenForm?.(
+        cms.primary_form_data.slug
       );
     }
   };
@@ -483,9 +480,6 @@ function ServicePanel({ service, visible, onClose, isEn, cms }) {
     : cms?.primary_button_label_ar || "إرسال الطلب";
 
   const activeSection = sections[activeTab] ?? null;
-  const sSubtitle = isEn
-    ? activeSection?.subtitle_en
-    : activeSection?.subtitle_ar;
   const sContent = isEn
     ? activeSection?.content_en
     : activeSection?.content_ar;
@@ -510,7 +504,7 @@ function ServicePanel({ service, visible, onClose, isEn, cms }) {
         aria-label={title}
         dir={isEn ? "ltr" : "rtl"}
       >
-{/* ── Close button ─────────────────────────────────────────── */}
+        {/* ── Close button ─────────────────────────────────────────── */}
         <button
           className="srv-panel__close"
           onClick={onClose}
@@ -536,9 +530,8 @@ function ServicePanel({ service, visible, onClose, isEn, cms }) {
                   <button
                     key={section.id}
                     ref={(el) => { tabRefs.current[idx] = el; }}
-                    className={`srv-panel__tab${
-                      activeTab === idx ? " srv-panel__tab--active" : ""
-                    }`}
+                    className={`srv-panel__tab${activeTab === idx ? " srv-panel__tab--active" : ""
+                      }`}
                     onClick={() => {
                       setActiveTab(idx);
                       setScrollProgress(0);
@@ -701,7 +694,7 @@ function LoadingState() {
 // MAIN PAGE COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
 export default function Services() {
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
   const isEn = i18n.language === "en";
   const isRTL = i18n.dir() === "rtl";
 
@@ -711,7 +704,6 @@ export default function Services() {
     loading,
     selectedMain,
     search,
-    debouncedSearch,
     openService,
     panelVisible,
     setCms,
@@ -727,17 +719,18 @@ export default function Services() {
   } = useServicesStore();
 
   const [activeCardId, setActiveCardId] = useState(null);
+  const [activeFormSlug, setActiveFormSlug] = useState(null);
 
   const handleCardActivate = (id) => {
     setActiveCardId((prev) => (prev === id ? null : id));
   };
 
-// Body class + scroll-based navbar transparency
+  // Body class + scroll-based navbar transparency
   useEffect(() => {
     document.body.classList.add("services-page-active");
     document.body.classList.add("srv-at-top");
 
-const handleScroll = () => {
+    const handleScroll = () => {
       const hero = document.querySelector(".srv-hero__media-wrap");
       if (!hero) return;
       const heroBottom = hero.getBoundingClientRect().bottom;
@@ -782,20 +775,16 @@ const handleScroll = () => {
       }
     };
     fetchAll();
-  }, []);
+  }, [setCms, setLoading, setMainServices, setServices]);
 
   // ── Debounce search [REFERENCE: Blog.jsx — 400ms debounce] ───────────────
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 400);
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [search, setDebouncedSearch]);
 
   // ── Memoized filtered list ────────────────────────────────────────────────
-  const filteredServices = useMemo(() => getFiltered(), [
-    useServicesStore.getState().services,
-    selectedMain,
-    debouncedSearch,
-  ]);
+  const filteredServices = getFiltered();
 
   // ── Dynamic section title ─────────────────────────────────────────────────
   const sectionTitle = useMemo(() => {
@@ -887,7 +876,15 @@ const handleScroll = () => {
         onClose={closePanel}
         isEn={isEn}
         cms={cms}
+        onOpenForm={setActiveFormSlug}
       />
+      {activeFormSlug && (
+        <DynamicPublicForm
+          slug={activeFormSlug}
+          open={!!activeFormSlug}
+          onClose={() => setActiveFormSlug(null)}
+        />
+      )}
     </main>
   );
 }

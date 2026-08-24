@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import api from "../../../api/axiosClient";
 import { getServicesPageCMS, createServicesPageCMS, updateServicesPageCMS } from "../../../api/servicesApi";
 import {
-  IconSave, IconImage, IconUpload,
+  IconSave, IconUpload,
   SvcSpinner, SvcDivider, SvcToggle,
   SvcContentHeader, SvcCardHeader, SvcLoading,
 } from "./_shared";

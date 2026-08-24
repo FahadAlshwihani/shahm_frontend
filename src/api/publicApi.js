@@ -1,85 +1,40 @@
 import api from "./axiosClient";
+import { API_PATHS } from "./routes";
 
 // ================================
 // HOME (Hero + Footer + Sections)
 // ================================
-export const getPublicHome = () => api.get("public/home/");
-
-// ================================
-// CMS PAGES
-// ================================
-export const getPublicPage = (slug) => api.get(`public/page/${slug}/`);
-
-// ================================
-// LEGAL PAGES
-// ================================
-export const getPublicLegal = (slug) => api.get(`public/legal/${slug}/`);
-
-// ================================
-// TEAM
-// ================================
-export const getPublicTeam = () => api.get("public/team/");
+export const getPublicHome = () => api.get(API_PATHS.public.home);
 
 // ================================
 // BLOG
 // ================================
 export const getPublicPosts = (params = {}) =>
-  api.get("blog/posts/", { params });
+  api.get(API_PATHS.blog.publicPosts, { params });
 
 export const getPublicPostDetails = (slug) =>
-  api.get(`blog/posts/${slug}/`);
+  api.get(API_PATHS.blog.publicPost(slug));
 
 export const getPublicCategories = () =>
-  api.get("blog/categories/");
-
-export const getPublicTags = () =>
-  api.get("blog/tags/");
+  api.get(API_PATHS.blog.publicCategories);
 
 export const getPublicBlogSettings = () =>
-  api.get("blog/settings/");
+  api.get(API_PATHS.blog.publicSettings);
 
-
-// ================================
-// SERVICES
-// ================================
-
-// جميع المجالات
-export const getPublicAreas = () =>
-  api.get("services/public/");
-
-// جميع الخدمات
-export const getPublicServices = () =>
-  api.get("services/public/services/");
-
-// تفاصيل خدمة
-export const getPublicServiceDetail = (slug) =>
-  api.get(`services/public/service/${slug}/`);
-
-// تفاصيل مجال مع خدماته
-export const getPublicServiceArea = (slug) =>
-  api.get(`services/public/${slug}/`);
-
-
-// ================================
-// SEO
-// ================================
-export const getPublicSEO = (slug = null) =>
-  slug ? api.get(`public/seo/${slug}/`) : api.get("public/seo/");
-
-export const getPublicHeader = () => api.get("public/header/");
-export const getPublicFooter = () => api.get("public/footer/");
-export const getPublicSettings = () => api.get("public/settings/");
+export const getPublicHeader = () => api.get(API_PATHS.public.header);
+export const getPublicFooter = () => api.get(API_PATHS.public.footer);
+export const getPublicSettings = () => api.get(API_PATHS.public.settings);
 
 
 // ================================
 // Public Search
 // ================================
 export const searchPublic = (q, lang) =>
-  api.get("public/search/", {
+  api.get(API_PATHS.cms.publicSearch, {
     params: { q, lang },
   });
 
 // ================================
 // FAQ
 // ================================
-export const getPublicFAQ = () => api.get("cms/public/faq/");
+export const getPublicFAQ = () => api.get(API_PATHS.cms.publicFaq);

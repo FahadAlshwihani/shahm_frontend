@@ -3,7 +3,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { useTranslation } from "react-i18next";
-import "../../../styles/DashboardSidebar.css";
+import "../../../styles/layout/dashboard/sidebar.css";
 
 const SectionIcons = {
   general: (
@@ -91,7 +91,6 @@ export default function DashboardSidebar({
         { to: "/dashboard/services", label: t("sidebar.services") },
         { to: "/dashboard/appointments", label: t("sidebar.appointments") },
         { to: "/dashboard/blog", label: t("sidebar.blog") },
-        // { to: "/dashboard/team", label: t("sidebar.team") },
         { to: "/dashboard/careers", label: t("sidebar.careers") },
         { to: "/dashboard/careers/applications", label: t("sidebar.applications") },
         { to: "/dashboard/users", label: t("sidebar.users") },

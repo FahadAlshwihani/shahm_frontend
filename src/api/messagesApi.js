@@ -1,32 +1,31 @@
 import api from "./axiosClient";
+import { API_PATHS } from "./routes";
 
 // Public
-export const sendContact = (data) => api.post("messaging/contact/", data);
-export const subscribeNewsletter = (data) =>
-  api.post("messaging/subscribe/", data);
+export const sendContact = (data) => api.post(API_PATHS.messaging.contact, data);
 
 // Admin
-export const adminGetMessages = () => api.get("messaging/admin/messages/");
+export const adminGetMessages = () => api.get(API_PATHS.messaging.messages);
 export const adminGetSingleMessage = (id) =>
-  api.get(`messaging/admin/messages/${id}/`);
+  api.get(API_PATHS.messaging.message(id));
 export const adminUpdateMessage = (id, data) =>
-  api.patch(`messaging/admin/messages/${id}/`, data);
+  api.patch(API_PATHS.messaging.message(id), data);
 
 export const adminGetSubscribers = () =>
-  api.get("messaging/admin/subscribers/");
+  api.get(API_PATHS.messaging.subscribers);
 
 export const adminDeleteSubscriber = (id) =>
-  api.delete(`messaging/admin/subscribers/${id}/`);
+  api.delete(API_PATHS.messaging.subscriber(id));
 
 export const adminBroadcast = (data) =>
-  api.post("messaging/admin/broadcast/", data);
+  api.post(API_PATHS.messaging.broadcast, data);
 
 // ✅ تصدير المشتركين إلى CSV (Excel)
 export const adminExportSubscribers = () =>
-  api.get("messaging/admin/subscribers/export/", {
+  api.get(API_PATHS.messaging.subscriberExport, {
     responseType: "blob",
   });
 
 // ✅ جلب سجل الرسائل المرسلة
 export const adminGetBroadcastLogs = () =>
-  api.get("messaging/admin/broadcast/logs/");
+  api.get(API_PATHS.messaging.broadcastLogs);
