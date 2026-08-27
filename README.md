@@ -150,7 +150,7 @@ The SPA requires history fallback to `index.html`. `public/.htaccess` contains A
 
 ## Handoff Notes
 
-- This frontend remains on Create React App 5. After non-breaking transitive updates, `npm audit` reports 30 advisories (9 low, 7 moderate, 14 high, 0 critical). Most are inherited through CRA's build, development-server, Jest/jsdom, Workbox, and webpack chains; React Router v6 also has direct runtime advisories whose offered remediation is the forbidden v7 major upgrade. These findings must not be represented as zero known frontend vulnerabilities.
+- This frontend remains on Create React App 5. As of August 27, 2026, `npm audit` reports 31 advisories (9 low, 7 moderate, 15 high, 0 critical). Most are inherited through CRA's build, development-server, Jest/jsdom, Workbox, and webpack chains. React Router v6 has direct runtime advisories whose offered remediation is the forbidden v7 major upgrade, and SunEditor has a direct high-severity embed-plugin DOM-XSS advisory whose offered remediation is a semver-major upgrade. These findings must not be represented as zero known frontend vulnerabilities.
 - Plan a separately tested Vite/current-router migration. Do not use `npm audit fix --force` as a release shortcut; it replaces React Router v6 with v7 and changes the supported toolchain.
 - Keep React Router on the compatible v6 line while CRA/Jest 27 remains.
 - Update backend API docs and frontend modules together.
