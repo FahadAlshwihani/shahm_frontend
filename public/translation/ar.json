@@ -2957,5 +2957,20 @@
     "save_changes": "حفظ التغييرات",
     "updated": "تم حفظ معلوماتك وتحديثها بنجاح",
     "update_failed": "فشل التحديث"
+  },
+  "form_layer": {
+    "arabic": "عربي",
+    "english": "English",
+    "missing": "لم تعبأ بعد",
+    "rejected": "رفضه الخادم",
+    "copy_from_arabic": "انسخ النص العربي",
+    "unsaved": "تعديل غير محفوظ",
+    "saved": "لا تعديل معلق",
+    "save": "حفظ",
+    "saving": "جار الحفظ",
+    "cancel": "إلغاء",
+    "draft_found": "لديك تعديل لم يحفظ",
+    "draft_restore": "استعده",
+    "draft_discard": "احذفه"
   }
 }
