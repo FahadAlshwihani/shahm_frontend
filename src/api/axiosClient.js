@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
+import { saveAccessToken } from "../utils/tokenStorage";
 import { API_PATHS } from "./routes";
+
+// Requests that opt in with `dedupe: true` replace an identical request that is
+// still in flight. Typeahead search is the case that needs it.
 const pendingRequests = new Map();
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL || "/api",
@@ -22,6 +26,12 @@ function onRefreshFailed(error) {
 
 function addRefreshSubscriber(resolve, reject) {
   refreshSubscribers.push({ resolve, reject });
+}
+
+function releaseDedupeKey(config) {
+  if (config?.dedupeKey) {
+    pendingRequests.delete(config.dedupeKey);
+  }
 }
 
 function isIntendedApiRequest(url) {
@@ -58,18 +68,23 @@ axiosClient.interceptors.request.use(
       config.headers["Content-Type"] = "application/json";
     }
 
-    const requestKey = `${config.method}:${config.url}`;
+    if (!config.signal) {
+      const controller = new AbortController();
 
-    if (pendingRequests.has(requestKey)) {
-      const controller = pendingRequests.get(requestKey);
-      controller.abort();
+      config.signal = controller.signal;
+
+      // Cancelling by method and URL for every request aborted legitimate
+      // parallel calls: two panels loading the same resource left one of them
+      // empty. Only requests that ask for it replace their predecessor now.
+      if (config.dedupe) {
+        const requestKey = `${config.method}:${config.url}`;
+
+        pendingRequests.get(requestKey)?.abort();
+        pendingRequests.set(requestKey, controller);
+
+        config.dedupeKey = requestKey;
+      }
     }
-
-    const controller = new AbortController();
-
-    config.signal = controller.signal;
-
-    pendingRequests.set(requestKey, controller);
 
     return config;
   },
@@ -78,8 +93,7 @@ axiosClient.interceptors.request.use(
 
 axiosClient.interceptors.response.use(
   (response) => {
-    const requestKey = `${response.config.method}:${response.config.url}`;
-    pendingRequests.delete(requestKey);
+    releaseDedupeKey(response.config);
     return response;
   },
   async (error) => {
@@ -87,12 +101,7 @@ axiosClient.interceptors.response.use(
     const auth = useAuthStore.getState();
 
     if (!error.response) {
-      if (error.config) {
-        const requestKey =
-          `${error.config.method}:${error.config.url}`;
-
-        pendingRequests.delete(requestKey);
-      }
+      releaseDedupeKey(error.config);
       return Promise.reject(error);
     }
 
@@ -130,7 +139,7 @@ axiosClient.interceptors.response.use(
 
         const newAccess = res.data.access;
 
-        localStorage.setItem("access_token", newAccess);
+        saveAccessToken(newAccess);
 
         useAuthStore.setState({
           accessToken: newAccess,
@@ -152,10 +161,7 @@ axiosClient.interceptors.response.use(
 
 
 
-    if (error.config) {
-      const requestKey = `${error.config.method}:${error.config.url}`;
-      pendingRequests.delete(requestKey);
-    }
+    releaseDedupeKey(error.config);
 
     return Promise.reject(error);
   }

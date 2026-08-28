@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap");
 @import "./assets/fonts/fonts.css";
+@import "./styles/theme.css";
+@import "./styles/theme-bridge.css";
 
 /* ===============================
    RESET & GLOBAL

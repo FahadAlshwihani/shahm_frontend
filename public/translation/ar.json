@@ -2957,5 +2957,37 @@
     "save_changes": "حفظ التغييرات",
     "updated": "تم حفظ معلوماتك وتحديثها بنجاح",
     "update_failed": "فشل التحديث"
+  },
+  "form_layer": {
+    "arabic": "عربي",
+    "english": "English",
+    "missing": "لم تعبأ بعد",
+    "rejected": "رفضه الخادم",
+    "copy_from_arabic": "انسخ النص العربي",
+    "unsaved": "تعديل غير محفوظ",
+    "saved": "لا تعديل معلق",
+    "save": "حفظ",
+    "saving": "جار الحفظ",
+    "cancel": "إلغاء",
+    "draft_found": "لديك تعديل لم يحفظ",
+    "draft_restore": "استعده",
+    "draft_discard": "احذفه"
+  },
+  "theme": {
+    "label": "المظهر",
+    "light": "نهار",
+    "dark": "مساء",
+    "system": "النظام",
+    "section_title": "المظهر",
+    "section_note": "يحفظ في هذا المتصفح وحده، ولا يرسل الى الخادم.",
+    "colours": {
+      "accent": "لون التمييز",
+      "ground_dark": "خلفية المساء",
+      "chrome_dark": "الشريط العلوي",
+      "sidebar_dark": "الشريط الجانبي",
+      "marking": "التاشير على الازرار",
+      "invalid": "الكود غير صحيح. اكتبه بصيغة #RRGGBB",
+      "reset": "اعد الالوان الافتراضية"
+    }
   }
 }
