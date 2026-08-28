@@ -25,6 +25,16 @@
   --ca-transition:      all 0.22s cubic-bezier(0.4,0,0.2,1);
   --ca-font:            var(--font-content, system-ui, sans-serif);
 
+  /* Hands the shared form layer this screen's palette. */
+  --sf-primary:         var(--ca-primary);
+  --sf-secondary:       var(--ca-secondary);
+  --sf-muted:           var(--ca-muted);
+  --sf-border:          var(--ca-border);
+  --sf-surface:         var(--ca-surface);
+  --sf-sunk:            var(--ca-bg);
+  --sf-radius:          var(--ca-radius-sm);
+  --sf-font:            var(--ca-font);
+
   /* Semantic colours */
   --ca-blue:            #3B82F6;
   --ca-blue-bg:         rgba(59,130,246,0.09);
@@ -280,6 +290,11 @@
 }
 .ca-form-row--4 {
   grid-template-columns: repeat(4, 1fr);
+}
+/* One bilingual field stands where an Arabic input and an English input
+   used to sit side by side, so it takes both columns. */
+.ca-form-group--wide {
+  grid-column: span 2;
 }
 .ca-form-group {
   display: flex;
@@ -839,6 +854,10 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  min-width: 0;
+}
+.ca-icon-fields > .sf-field {
+  flex: 1 1 220px;
   min-width: 0;
 }
 .ca-icon-actions {

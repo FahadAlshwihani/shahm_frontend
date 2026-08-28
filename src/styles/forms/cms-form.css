@@ -3,18 +3,17 @@
    ============================================================
 
    The shared field, save bar and draft notice used by dashboard content
-   screens. Every value is read from an --sf-* token, so a screen can hand the
-   layer its own palette with one rule instead of restyling the controls:
+   screens. Every value is read from an --sf-* token defined on :root, so a
+   screen hands the layer its own palette by redefining the tokens on its own
+   container instead of restyling the controls:
 
-     .cnt-section-content { --sf-border: var(--cnt-border); }
+     .ca-root { --sf-border: var(--ca-border); }
 
    The defaults below match the dashboard as it stands today, so a screen that
    maps nothing still looks native.
 ============================================================ */
 
-.sf-field,
-.sf-savebar,
-.sf-draft {
+:root {
   --sf-primary: #353c3c;
   --sf-secondary: #7c8d8d;
   --sf-muted: #97a5a5;
@@ -27,7 +26,11 @@
   --sf-radius: 10px;
   --sf-font: var(--font-content, "Noto Kufi Arabic", sans-serif);
   --sf-transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+.sf-field,
+.sf-savebar,
+.sf-draft {
   font-family: var(--sf-font);
 }
 
