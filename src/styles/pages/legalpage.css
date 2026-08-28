@@ -6,8 +6,8 @@
 
 /* ── Vars ─────────────────────────────────────────── */
 .legalpage-wrapper {
-  --lp-font-en-heading: "Ciclo Display", sans-serif;
-  --lp-font-ar-heading: "HT Sonata", serif;
+  --lp-font-en-heading: "Noto Kufi Arabic", sans-serif;
+  --lp-font-ar-heading: "Noto Kufi Arabic", sans-serif;
   --lp-font-body: "Noto Kufi Arabic", sans-serif;
   --lp-color-primary: #343C3C;
   --lp-color-muted: #7C8D8D;
@@ -391,7 +391,7 @@
   }
 }
 
-/* Section heading (large, Ciclo Display) */
+/* Section heading (large) */
 .legalpage-section-heading {
   font-family: var(--lp-font-en-heading);
   font-weight: 500;

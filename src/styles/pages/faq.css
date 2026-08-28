@@ -3,8 +3,8 @@
    Matches Figma design specs
    ============================================================ */
 :root {
-  --faq-font-display-en: "Ciclo Display", serif;
-  --faq-font-display-ar: "HT Sonata", serif;
+  --faq-font-display-en: "Noto Kufi Arabic", sans-serif;
+  --faq-font-display-ar: "Noto Kufi Arabic", sans-serif;
   --faq-font-body: "Noto Kufi Arabic", sans-serif;
   --faq-color-primary: #343C3C;
   --faq-color-secondary: #7C8D8D;
