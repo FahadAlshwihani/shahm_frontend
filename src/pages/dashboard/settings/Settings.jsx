@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSettingsStore } from "../../../store/useSettingsStore";
 import { useTranslation } from "react-i18next";
+import AppearanceSettings from "../../../components/common/AppearanceSettings";
 import "../../../styles/dashboard/cms/site-settings.css";
 
 /* ══════════════════════════════════════════════════════
@@ -138,10 +139,14 @@ export default function Settings() {
     }
   };
 
-  /* ── Loading state ── */
+  /* ── Loading state ──
+     The appearance panel is a preference of this browser and does not wait
+     for the site settings to arrive, so it stays reachable even when the
+     server is slow or unreachable. */
   if (!settings) {
     return (
-      <div className="ss-root">
+      <div className="ss-root" dir={isRtl ? "rtl" : "ltr"}>
+        <AppearanceSettings />
         <div className="ss-loading">
           <Spinner />
           <span>{t("common.loading")}</span>
@@ -166,6 +171,10 @@ export default function Settings() {
           </div>
         </div>
       </div>
+
+      {/* Reader preferences: kept in this browser, not part of the site
+          settings the form below saves. */}
+      <AppearanceSettings />
 
       <form onSubmit={submitHandler} className="ss-form">
 

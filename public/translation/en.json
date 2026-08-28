@@ -3012,5 +3012,24 @@
     "draft_found": "You have an unsaved edit",
     "draft_restore": "Restore it",
     "draft_discard": "Discard it"
+  },
+  "theme": {
+    "label": "Appearance",
+    "light": "Day",
+    "dark": "Evening",
+    "system": "System",
+    "section_title": "Appearance",
+    "section_note": "Kept in this browser only; never sent to the server.",
+    "accent": "Accent colour",
+    "accents": {
+      "blue": "Blue",
+      "purple": "Purple",
+      "pink": "Pink",
+      "red": "Red",
+      "orange": "Orange",
+      "yellow": "Yellow",
+      "green": "Green",
+      "graphite": "Graphite"
+    }
   }
 }

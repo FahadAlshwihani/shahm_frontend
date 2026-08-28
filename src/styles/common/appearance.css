@@ -1,0 +1,103 @@
+/* The appearance panel in settings. */
+
+.appearance {
+  background: var(--t-surface);
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-card);
+  box-shadow: var(--t-shadow-card);
+  padding: 20px 22px;
+  margin-block-end: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: var(--font-content, inherit);
+  color: var(--t-ink);
+}
+
+.appearance__head { display: flex; flex-direction: column; gap: 4px; }
+
+.appearance__title { margin: 0; font-size: 16px; font-weight: 600; }
+
+.appearance__note { margin: 0; font-size: 12.5px; color: var(--t-ink-muted); }
+
+.appearance__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.appearance__label { font-size: 13px; color: var(--t-ink-secondary); font-weight: 600; }
+
+/* ── theme ─────────────────────────────────────────────────── */
+
+.appearance__segmented {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  background: var(--t-hover);
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-pill);
+}
+
+.appearance__segment {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: var(--t-radius-pill);
+  background: transparent;
+  color: var(--t-ink-muted);
+  cursor: pointer;
+  transition: background var(--t-motion-fast), color var(--t-motion-fast);
+}
+
+.appearance__segment:hover { color: var(--t-ink); }
+
+.appearance__segment--on {
+  background: var(--t-surface);
+  color: var(--t-ink);
+  box-shadow: var(--t-shadow-card);
+}
+
+.appearance__segment:focus-visible,
+.appearance__swatch:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+/* ── accent ────────────────────────────────────────────────── */
+
+.appearance__swatches { display: inline-flex; gap: 10px; flex-wrap: wrap; }
+
+.appearance__swatch {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: var(--swatch);
+  cursor: pointer;
+  position: relative;
+  transition: transform var(--t-motion-fast);
+}
+
+.appearance__swatch:hover { transform: scale(1.08); }
+
+/* The chosen colour is ringed rather than ticked, so the swatch itself stays
+   readable at this size. */
+.appearance__swatch--on::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--t-ink-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appearance__swatch,
+  .appearance__segment { transition: none; }
+  .appearance__swatch:hover { transform: none; }
+}
