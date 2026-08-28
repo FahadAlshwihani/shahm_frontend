@@ -6,8 +6,8 @@
 
 /* ── CSS Variables ─────────────────────────────────────────── */
 .about-page {
-    --about-font-en: "Ciclo Display", serif;
-    --about-font-ar: "HT Sonata", serif;
+    --about-font-en: "Noto Kufi Arabic", sans-serif;
+    --about-font-ar: "Noto Kufi Arabic", sans-serif;
     --about-font-body: "Noto Kufi Arabic", sans-serif;
     --about-dark-bg: #1C2121;
     --about-light-bg: #ffffff;

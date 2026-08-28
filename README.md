@@ -11,6 +11,7 @@ The Shahm frontend is the bilingual React public website and JWT-protected manag
 - i18next / react-i18next
 - SunEditor, SweetAlert2, react-hot-toast
 - DOMPurify for CMS rich text
+- Noto Kufi Arabic as the single interface typeface, served from the build
 
 ## Application Architecture
 
@@ -80,6 +81,16 @@ src/styles/
 ```
 
 Selectors were preserved during organization. Component imports retain the existing cascade.
+
+### Typeface
+
+The interface is set in Noto Kufi Arabic alone. `src/assets/fonts/fonts.css`
+declares the variable font across weights 100 to 900 and is the only place a
+font file is referenced; no font host is contacted, so the site renders text
+without a third-party request. The three family variables
+(`--font-ar-heading`, `--font-en-heading`, `--font-content`) are kept so every
+existing selector still resolves, and they all point at that one family:
+headings separate from body text by weight and size, not by typeface.
 
 ## Environment Variables
 
