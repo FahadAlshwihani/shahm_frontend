@@ -57,7 +57,14 @@ Zustand stores cover authentication, public initialization, CMS/about/blog/conta
 
 ## API Layer
 
-`src/api/axiosClient.js` owns base URL configuration, JWT attachment, refresh/retry, multipart handling, and duplicate-request cancellation. `src/api/routes.js` is the single source of API paths; domain modules contain request functions but no embedded endpoint literals. The backend repository publishes the exhaustive machine-readable mapping in `docs/API_CONTRACT_MATRIX.json`.
+`src/api/axiosClient.js` owns base URL configuration, JWT attachment, refresh/retry, and multipart handling. `src/api/routes.js` is the single source of API paths; domain modules contain request functions but no embedded endpoint literals. The backend repository publishes the exhaustive machine-readable mapping in `docs/API_CONTRACT_MATRIX.json`.
+
+Duplicate-request cancellation is opt-in. A request passing `dedupe: true`
+replaces an identical request that is still in flight, which is what typeahead
+search needs; every other request runs to completion. Cancelling every request
+that shared a method and URL also aborted legitimate parallel calls, so two
+components loading the same resource left one of them empty. A caller that
+supplies its own `signal` keeps it.
 
 ## Internationalization
 
@@ -143,6 +150,7 @@ The SPA requires history fallback to `index.html`. `public/.htaccess` contains A
 
 - CMS HTML is sanitized before `dangerouslySetInnerHTML`.
 - CMS-configured links are validated by `src/utils/safeNavigation.js`; new-window links use `noopener,noreferrer`.
+- `src/utils/tokenStorage.js` is the only module that reads or writes the stored tokens, and it tolerates a browser that refuses storage. The Axios client and the authentication store both go through it, so a refresh cannot update one and miss the other.
 - JWTs are currently persisted in browser `localStorage`. This increases the impact of a successful XSS attack. The application therefore relies on strict HTML sanitization, safe URL handling, minimizing script-injection surfaces, and a restrictive Content Security Policy at the deployment proxy. Moving tokens to HttpOnly cookies is a separate authentication-architecture change.
 - The API client sends Bearer credentials only to relative API requests or absolute URLs beneath the configured API origin/path. Tokens are cleared on logout and unrecoverable refresh failure, are never logged or placed in URLs, and failed refreshes reject all queued requests.
 - Do not commit environment files or build output.
