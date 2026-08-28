@@ -85,3 +85,14 @@ describe("legibility", () => {
     });
   });
 });
+
+describe("white ink on the dark side", () => {
+  test("the bars carry pure white, and it clears the ratio", () => {
+    // The reference the firm picked sets text on a deep ground in pure white
+    // rather than an off-white tint of it.
+    expect(readableOn(DEFAULT_COLOURS.chromeDark, "#ffffff", 7)).toBe("#ffffff");
+    expect(contrastRatio(DEFAULT_COLOURS.chromeDark, "#ffffff")).toBeGreaterThanOrEqual(7);
+    expect(contrastRatio(DEFAULT_COLOURS.sidebarDark, "#ffffff")).toBeGreaterThanOrEqual(7);
+    expect(contrastRatio(DEFAULT_COLOURS.groundDark, "#ffffff")).toBeGreaterThanOrEqual(7);
+  });
+});

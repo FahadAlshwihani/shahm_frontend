@@ -257,7 +257,9 @@ export function applyColours(colours) {
   // against the darker of the two, whatever codes were entered.
   const barGround = luminance(chromeDark) < luminance(sidebarDark) ? chromeDark : sidebarDark;
 
-  set("--t-chrome-ink", readableOn(barGround, shade(barGround, 0.9), 7));
+  // The bars carry white, as the reference does: text on a deep ground is
+  // pure white, not an off-white tint of it.
+  set("--t-chrome-ink", readableOn(barGround, "#ffffff", 7));
   set("--t-chrome-ink-secondary", readableOn(barGround, shade(barGround, 0.75), 4.5));
   set("--t-chrome-ink-muted", readableOn(barGround, shade(barGround, 0.55), 3));
   set("--t-chrome-active", withAlpha(shade(chromeDark, 0.95), 0.12));
