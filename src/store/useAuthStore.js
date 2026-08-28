@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { login as loginApi } from "../api/authApi";
-import { stopIdleTimer } from "../utils/idleSessionManager";
 import {
   clearTokens,
   readAccessToken,
@@ -41,8 +40,6 @@ export const useAuthStore = create((set, get) => ({
   },
 
   logout: () => {
-
-    stopIdleTimer();
 
     clearTokens();
 

@@ -200,6 +200,7 @@ The SPA requires history fallback to `index.html`. `public/.htaccess` contains A
 - CMS HTML is sanitized before `dangerouslySetInnerHTML`.
 - CMS-configured links are validated by `src/utils/safeNavigation.js`; new-window links use `noopener,noreferrer`.
 - `src/utils/tokenStorage.js` is the only module that reads or writes the stored tokens, and it tolerates a browser that refuses storage. The Axios client and the authentication store both go through it, so a refresh cannot update one and miss the other.
+- There is no idle timeout. A session lasts until the editor signs out or the refresh token expires, which the JWT settings govern. The dashboard used to sign an editor out after ten idle minutes, which is shorter than the time it takes to write one page of content.
 - JWTs are currently persisted in browser `localStorage`. This increases the impact of a successful XSS attack. The application therefore relies on strict HTML sanitization, safe URL handling, minimizing script-injection surfaces, and a restrictive Content Security Policy at the deployment proxy. Moving tokens to HttpOnly cookies is a separate authentication-architecture change.
 - The API client sends Bearer credentials only to relative API requests or absolute URLs beneath the configured API origin/path. Tokens are cleared on logout and unrecoverable refresh failure, are never logged or placed in URLs, and failed refreshes reject all queued requests.
 - Do not commit environment files or build output.
