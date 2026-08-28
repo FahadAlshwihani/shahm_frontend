@@ -68,36 +68,103 @@
   outline-offset: 2px;
 }
 
-/* ── accent ────────────────────────────────────────────────── */
+/* ── colours, set by code ──────────────────────────────────── */
 
-.appearance__swatches { display: inline-flex; gap: 10px; flex-wrap: wrap; }
-
-.appearance__swatch {
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background: var(--swatch);
-  cursor: pointer;
-  position: relative;
-  transition: transform var(--t-motion-fast);
+.appearance__colours {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding-block-start: 4px;
+  border-block-start: 1px solid var(--t-divider);
 }
 
-.appearance__swatch:hover { transform: scale(1.08); }
+.appearance__colour { display: flex; flex-direction: column; gap: 7px; }
 
-/* The chosen colour is ringed rather than ticked, so the swatch itself stays
-   readable at this size. */
-.appearance__swatch--on::after {
-  content: "";
+.appearance__colour-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--t-ink-secondary);
+}
+
+.appearance__colour-controls { display: flex; align-items: center; gap: 8px; }
+
+/* The chip shows the colour and opens the system picker; the code beside it
+   stays the value of record. */
+.appearance__chip {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 8px;
+  border: 1px solid var(--t-border);
+  background: var(--chip);
+  overflow: hidden;
+}
+
+.appearance__picker {
   position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 2px solid var(--t-ink-secondary);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.appearance__chip:focus-within {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.appearance__code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-control);
+  background: var(--t-surface);
+  color: var(--t-ink);
+  text-transform: lowercase;
+}
+
+.appearance__code:focus {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 1px;
+  border-color: var(--t-focus);
+}
+
+.appearance__code--invalid {
+  border-color: var(--t-danger);
+  background: var(--t-danger-soft);
+}
+
+.appearance__colour-error { font-size: 11.5px; color: var(--t-danger); }
+
+.appearance__actions { display: flex; justify-content: flex-start; }
+
+.appearance__reset {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-control);
+  background: var(--t-surface);
+  color: var(--t-ink-secondary);
+  cursor: pointer;
+}
+
+.appearance__reset:hover { color: var(--t-ink); border-color: var(--t-border-strong); }
+
+.appearance__reset:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .appearance__swatch,
   .appearance__segment { transition: none; }
-  .appearance__swatch:hover { transform: none; }
 }
