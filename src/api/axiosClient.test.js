@@ -101,3 +101,68 @@ describe("axiosClient authentication contract", () => {
     ).resolves.toBe("rejected");
   });
 });
+
+describe("axiosClient request cancellation", () => {
+  const requestHandler = axiosClient.interceptors.request.use.mock.calls[0][0];
+  const responseHandler = axiosClient.interceptors.response.use.mock.calls[0][0];
+
+  test("parallel requests to the same endpoint are both allowed to finish", () => {
+    const first = requestHandler({ method: "get", url: "/stats/panel", headers: {} });
+    const second = requestHandler({ method: "get", url: "/stats/panel", headers: {} });
+
+    expect(first.signal.aborted).toBe(false);
+    expect(second.signal.aborted).toBe(false);
+  });
+
+  test("an opted-in request replaces the identical one still in flight", () => {
+    const first = requestHandler({
+      method: "get",
+      url: "/cms/public/search/",
+      headers: {},
+      dedupe: true,
+    });
+    const second = requestHandler({
+      method: "get",
+      url: "/cms/public/search/",
+      headers: {},
+      dedupe: true,
+    });
+
+    expect(first.signal.aborted).toBe(true);
+    expect(second.signal.aborted).toBe(false);
+  });
+
+  test("a finished request is no longer a cancellation target", () => {
+    const first = requestHandler({
+      method: "get",
+      url: "/cms/public/search/finished",
+      headers: {},
+      dedupe: true,
+    });
+
+    responseHandler({ config: first, data: {} });
+
+    requestHandler({
+      method: "get",
+      url: "/cms/public/search/finished",
+      headers: {},
+      dedupe: true,
+    });
+
+    expect(first.signal.aborted).toBe(false);
+  });
+
+  test("a caller supplied abort signal is left untouched", () => {
+    const controller = new AbortController();
+
+    const config = requestHandler({
+      method: "get",
+      url: "/reports/export",
+      headers: {},
+      signal: controller.signal,
+    });
+
+    expect(config.signal).toBe(controller.signal);
+    expect(config.dedupeKey).toBeUndefined();
+  });
+});

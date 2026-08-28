@@ -29,8 +29,8 @@
   --dash-radius-sm: 8px;
   --dash-transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   --dash-font: "Noto Kufi Arabic", sans-serif;
-  --dash-font-display-en: "Ciclo Display", serif;
-  --dash-font-display-ar: "HT Sonata", serif;
+  --dash-font-display-en: "Noto Kufi Arabic", sans-serif;
+  --dash-font-display-ar: "Noto Kufi Arabic", sans-serif;
 }
 
 /* ════════════════════════════════════════════════════════════

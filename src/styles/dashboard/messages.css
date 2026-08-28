@@ -1,7 +1,7 @@
 /* ================================================================
    MESSAGES DASHBOARD — Matches FAQ CMS Dashboard Design System
    Brand: primary #353C3C | secondary #7C8D8D | border #E9ECEC
-   Fonts: Ciclo Display (EN titles) | HT Sonata (AR titles) | Noto Kufi Arabic (body)
+   Fonts: Noto Kufi Arabic throughout
 ================================================================ */
 
 /* ─── CSS Variables ──────────────────────────────────────────── */
@@ -33,8 +33,8 @@
   --msg-teal-bg:   rgba(20,184,166,0.09);
 
   /* Typography */
-  --msg-font-display-en: "Ciclo Display", serif;
-  --msg-font-display-ar: "HT Sonata", serif;
+  --msg-font-display-en: "Noto Kufi Arabic", sans-serif;
+  --msg-font-display-ar: "Noto Kufi Arabic", sans-serif;
   --msg-font-body:       "Noto Kufi Arabic", sans-serif;
 }
 
