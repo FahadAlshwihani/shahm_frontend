@@ -56,11 +56,11 @@
 .dashboard-layout-footer {
   width: 100%;
   box-sizing: border-box;
-  background: var(--ds-bg, var(--t-glass));
+  background: var(--ds-bg, var(--t-chrome-glass));
   backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
   -webkit-backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
-  border-top: var(--ds-border-spec, 1px solid var(--t-glass-border));
-  color: var(--ds-text, var(--t-ink));
+  border-top: var(--ds-border-spec, 1px solid var(--t-chrome-border));
+  color: var(--ds-text, var(--t-chrome-ink));
   box-shadow: none;
   z-index: 100;
   animation: fadeSlideUp 0.45s ease 0.15s both;
@@ -109,7 +109,7 @@
 .dashboard-layout-footer-text {
   font-family: var(--font-content, inherit);
   font-size: 12px;
-  color: var(--ds-text-muted, var(--t-ink-muted));
+  color: var(--ds-text-muted, var(--t-chrome-ink-muted));
   margin: 0;
   white-space: nowrap;
 }
@@ -125,17 +125,17 @@
 .dashboard-layout-footer-link {
   font-family: var(--font-content, inherit);
   font-size: 12px;
-  color: var(--ds-text-muted, var(--t-ink-muted));
+  color: var(--ds-text-muted, var(--t-chrome-ink-muted));
   text-decoration: none;
   transition: color 0.2s ease;
   white-space: nowrap;
 }
 .dashboard-layout-footer-link:hover {
-  color: var(--ds-text, var(--t-ink));
+  color: var(--ds-text, var(--t-chrome-ink));
 }
 
 .dashboard-layout-footer-divider {
-  color: var(--ds-divider, var(--t-divider));
+  color: var(--ds-divider, var(--t-chrome-border));
   font-size: 11px;
   user-select: none;
 }
@@ -166,7 +166,7 @@
    ACCESSIBILITY
 ========================================== */
 .dashboard-layout-footer-link:focus-visible {
-  outline: 2px solid var(--t-focus);
+  outline: 2px solid var(--t-marking);
   outline-offset: 2px;
   border-radius: 4px;
 }

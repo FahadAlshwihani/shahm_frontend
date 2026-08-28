@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import useAccent from "../../hooks/useAccent";
+import useColours from "../../hooks/useColours";
 import useTheme from "../../hooks/useTheme";
-import { ACCENT_NAMES, ACCENTS } from "../../utils/accent";
+import { COLOUR_FIELDS, normaliseHex } from "../../utils/appearanceColors";
 import "../../styles/common/appearance.css";
 
 const THEME_OPTIONS = [
@@ -12,17 +12,83 @@ const THEME_OPTIONS = [
   { value: "system", labelKey: "theme.system", fallback: "النظام" },
 ];
 
+const COLOUR_LABELS = {
+  accent: ["theme.colours.accent", "لون التمييز"],
+  groundDark: ["theme.colours.ground_dark", "خلفية المساء"],
+  chromeDark: ["theme.colours.chrome_dark", "الشريط العلوي"],
+  sidebarDark: ["theme.colours.sidebar_dark", "الشريط الجانبي"],
+  marking: ["theme.colours.marking", "التاشير على الازرار"],
+};
+
 /**
- * The appearance panel: the theme, and the one colour that is not neutral.
+ * One colour, set by its code.
  *
- * Both are preferences of the person reading, not settings of the site, so
- * they are kept in this browser and never sent to the server. The panel says
- * so rather than leaving it to be guessed.
+ * The field holds what was typed rather than what was accepted, so a code can
+ * be edited a character at a time; the page follows as soon as the code is a
+ * colour, and the field says so when it is not.
+ */
+function ColourField({ field, value, label, onChange }) {
+  const { t } = useTranslation();
+  const [draft, setDraft] = useState(value);
+
+  useEffect(() => setDraft(value), [value]);
+
+  const valid = Boolean(normaliseHex(draft));
+
+  const commit = (next) => {
+    setDraft(next);
+    onChange(field, next);
+  };
+
+  return (
+    <div className="appearance__colour">
+      <label className="appearance__colour-label" htmlFor={`colour-${field}`}>
+        {label}
+      </label>
+
+      <div className="appearance__colour-controls">
+        <span className="appearance__chip" style={{ "--chip": value }}>
+          <input
+            type="color"
+            className="appearance__picker"
+            value={value}
+            aria-label={label}
+            onChange={(event) => commit(event.target.value)}
+          />
+        </span>
+
+        <input
+          id={`colour-${field}`}
+          className={`appearance__code${valid ? "" : " appearance__code--invalid"}`}
+          dir="ltr"
+          spellCheck="false"
+          autoComplete="off"
+          value={draft}
+          placeholder="#000000"
+          aria-invalid={!valid}
+          onChange={(event) => commit(event.target.value)}
+          onBlur={() => setDraft(value)}
+        />
+      </div>
+
+      {!valid && (
+        <span className="appearance__colour-error" role="alert">
+          {t("theme.colours.invalid", "الكود غير صحيح. اكتبه بصيغة ‎#RRGGBB")}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * The appearance panel: the theme, and the four colours that are not
+ * greyscale. Everything is a preference of the person reading, kept in this
+ * browser and never sent to the server, and the panel says so.
  */
 export default function AppearanceSettings() {
   const { t } = useTranslation();
   const [theme, setTheme] = useTheme();
-  const [accent, setAccent] = useAccent();
+  const { colours, setColour, resetColours } = useColours();
 
   return (
     <section className="appearance" aria-labelledby="appearance-title">
@@ -53,27 +119,26 @@ export default function AppearanceSettings() {
         </div>
       </div>
 
-      <div className="appearance__row">
-        <span className="appearance__label">{t("theme.accent", "لون التمييز")}</span>
-        <div className="appearance__swatches" role="radiogroup" aria-label={t("theme.accent", "لون التمييز")}>
-          {ACCENT_NAMES.map((name) => {
-            const label = t(`theme.accents.${name}`, name);
+      <div className="appearance__colours">
+        {COLOUR_FIELDS.map((field) => {
+          const [key, fallback] = COLOUR_LABELS[field];
 
-            return (
-              <button
-                key={name}
-                type="button"
-                role="radio"
-                aria-checked={accent === name}
-                aria-label={label}
-                title={label}
-                className={`appearance__swatch${accent === name ? " appearance__swatch--on" : ""}`}
-                style={{ "--swatch": ACCENTS[name].day }}
-                onClick={() => setAccent(name)}
-              />
-            );
-          })}
-        </div>
+          return (
+            <ColourField
+              key={field}
+              field={field}
+              value={colours[field]}
+              label={t(key, fallback)}
+              onChange={setColour}
+            />
+          );
+        })}
+      </div>
+
+      <div className="appearance__actions">
+        <button type="button" className="appearance__reset" onClick={resetColours}>
+          {t("theme.colours.reset", "اعد الالوان الافتراضية")}
+        </button>
       </div>
     </section>
   );

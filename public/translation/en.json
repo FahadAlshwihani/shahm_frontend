@@ -3020,16 +3020,14 @@
     "system": "System",
     "section_title": "Appearance",
     "section_note": "Kept in this browser only; never sent to the server.",
-    "accent": "Accent colour",
-    "accents": {
-      "blue": "Blue",
-      "purple": "Purple",
-      "pink": "Pink",
-      "red": "Red",
-      "orange": "Orange",
-      "yellow": "Yellow",
-      "green": "Green",
-      "graphite": "Graphite"
+    "colours": {
+      "accent": "Accent",
+      "ground_dark": "Evening background",
+      "chrome_dark": "Top bar",
+      "sidebar_dark": "Side bar",
+      "marking": "Selected marker",
+      "invalid": "Not a colour code. Use #RRGGBB.",
+      "reset": "Restore the default colours"
     }
   }
 }

@@ -1,6 +1,12 @@
 import { create } from "zustand";
 
-import { applyAccent, readAccent, saveAccent } from "../utils/accent";
+import {
+  DEFAULT_COLOURS,
+  applyColours,
+  normaliseHex,
+  readColours,
+  saveColours,
+} from "../utils/appearanceColors";
 import { applyTheme, readTheme, saveTheme } from "../utils/theme";
 
 /**
@@ -10,9 +16,9 @@ import { applyTheme, readTheme, saveTheme } from "../utils/theme";
  * when each kept its own state the one that was not clicked went on showing
  * the previous choice.
  */
-export const useAppearanceStore = create((set) => ({
+export const useAppearanceStore = create((set, get) => ({
   theme: readTheme(),
-  accent: readAccent(),
+  colours: readColours(),
 
   setTheme: (theme) => {
     applyTheme(theme);
@@ -20,9 +26,30 @@ export const useAppearanceStore = create((set) => ({
     set({ theme });
   },
 
-  setAccent: (accent) => {
-    applyAccent(accent);
-    saveAccent(accent);
-    set({ accent });
+  /**
+   * Sets one colour from a code. A code that is not a colour is ignored
+   * rather than clearing the value, so a half-typed `#12` leaves the page
+   * as it was until the code is complete.
+   */
+  setColour: (field, value) => {
+    const hex = normaliseHex(value);
+
+    if (!hex || !(field in DEFAULT_COLOURS)) return false;
+
+    const colours = { ...get().colours, [field]: hex };
+
+    applyColours(colours);
+    saveColours(colours);
+    set({ colours });
+
+    return true;
+  },
+
+  resetColours: () => {
+    const colours = { ...DEFAULT_COLOURS };
+
+    applyColours(colours);
+    saveColours(colours);
+    set({ colours });
   },
 }));
