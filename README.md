@@ -52,6 +52,44 @@ Protected domains include users, CMS, forms, services, appointments, careers/app
 - `components/forms/fields/` contains field implementations.
 - Sections, keys, options, validation, dynamic sources, and success responses come from Django and are runtime contracts.
 
+## CMS Form Layer
+
+Dashboard content screens share one set of form parts instead of rebuilding a
+form per screen.
+
+- `components/forms/cms/BilingualField` is a single labelled field holding both
+  languages, with a language switch, a marker when the second language is still
+  empty, a marker on the language the server rejected, and a copy-from-Arabic
+  action. It replaces the Arabic input beside an English input that every
+  translated value used to need.
+- `components/forms/cms/FieldRow` gives an untranslated control the same label,
+  hint and error placement.
+- `components/forms/cms/SaveBar` states whether an edit is pending and disables
+  the save when nothing changed.
+- `components/forms/cms/DraftNotice` offers back an interrupted edit.
+- `hooks/useResourceForm` holds values, tracks which fields changed, runs the
+  save, and puts the server's per-field messages back on the fields.
+- `hooks/useFormDraft` keeps an unsaved edit in `localStorage` and warns before
+  the window closes while one is pending. In-app navigation is not blocked:
+  the app uses `BrowserRouter`, whose router does not expose a navigation
+  blocker, so the draft is the safety net there.
+- `utils/apiErrors` parses the API failure envelope
+  (`{ success, message, errors: { field: [...] } }`, plain DRF serializer
+  errors, `detail`, `non_field_errors`) into a form message plus per-field
+  messages, and reports a cancelled request as cancelled rather than failed.
+
+`styles/forms/cms-form.css` styles them through `--sf-*` tokens whose defaults
+match the current dashboard. A screen hands the layer its own palette with one
+rule rather than restyling controls:
+
+```css
+.cnt-section-content { --sf-border: var(--cnt-border); }
+```
+
+`pages/dashboard/contact/ContactCardsCMS.jsx` is the screen migrated onto the
+layer. Screens still on the old pattern keep working; they are migrated one at
+a time.
+
 ## State Management
 
 Zustand stores cover authentication, public initialization, CMS/about/blog/contact/FAQ data, dashboard statistics, users/settings/email, messaging, form building, and request-access workflows. Page-local UI state remains in components.
