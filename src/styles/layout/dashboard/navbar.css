@@ -6,17 +6,17 @@
   /* Full width — sidebar overlays it via z-index */
   width: 100%;
   padding: 0 32px;
-  background: var(--ds-bg, rgba(10,10,12,0.82));
+  background: var(--ds-bg, var(--t-chrome-glass));
   backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
   -webkit-backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
-  border-bottom: var(--ds-border-spec, 1px solid rgba(233,236,236,0.1));
+  border-bottom: var(--ds-border-spec, 1px solid var(--t-chrome-border));
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;        /* sidebar z-index:1000 sits above */
-  color: var(--ds-text, rgba(255,255,255,0.88));
+  color: var(--ds-text, var(--t-chrome-ink));
   box-shadow: none;    /* no shadow */
   animation: glassIn 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) both;
   box-sizing: border-box;
@@ -70,7 +70,7 @@
   font-family: var(--font-ar-heading, inherit);
   font-size: 15px;
   font-weight: 700;
-  color: var(--ds-text, rgba(255,255,255,0.88));
+  color: var(--ds-text, var(--t-chrome-ink));
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
@@ -78,6 +78,7 @@
 [dir="ltr"] .dashboard-navbar-title { font-family: var(--font-en-heading, inherit); }
 
 /* ── End: user block ── */
+/* Appearance control sits beside the user block. */
 .dashboard-navbar-end {
   display: flex;
   align-items: center;
@@ -89,16 +90,16 @@
   align-items: center;
   gap: 10px;
   padding: 6px 14px 6px 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--ds-border, rgba(255,255,255,0.08));
+  background: var(--t-chrome-hover);
+  border: 1px solid var(--ds-border, var(--t-chrome-border));
   border-radius: 12px;
   cursor: default;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .dashboard-navbar-user:hover {
-  background: rgba(255,255,255,0.09);
-  border-color: rgba(255,255,255,0.14);
+  background: var(--t-chrome-active);
+  border-color: var(--t-chrome-border);
 }
 
 .dashboard-navbar-user-avatar {
@@ -107,9 +108,9 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: rgba(255,255,255,0.1);
+  background: var(--t-chrome-active);
   border-radius: 9px;
-  color: rgba(255,255,255,0.7);
+  color: var(--t-chrome-ink-secondary);
   flex-shrink: 0;
 }
 
@@ -122,7 +123,7 @@
 .dashboard-navbar-user-greeting {
   font-family: var(--font-content, inherit);
   font-size: 10px;
-  color: var(--ds-text-muted, rgba(255,255,255,0.38));
+  color: var(--ds-text-muted, var(--t-chrome-ink-muted));
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -131,7 +132,7 @@
 .dashboard-navbar-user-name {
   font-family: var(--font-content, inherit);
   font-size: 13px;
-  color: var(--ds-text, rgba(255,255,255,0.88));
+  color: var(--ds-text, var(--t-chrome-ink));
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
@@ -156,7 +157,7 @@
    ACCESSIBILITY
 ========================================== */
 .dashboard-navbar-user:focus-visible {
-  outline: 2px solid rgba(255,255,255,0.5);
+  outline: 2px solid var(--t-marking);
   outline-offset: 2px;
 }
 

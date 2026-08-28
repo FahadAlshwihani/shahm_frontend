@@ -29,9 +29,12 @@ export const getPublicSettings = () => api.get(API_PATHS.public.settings);
 // ================================
 // Public Search
 // ================================
+// Typed queries arrive faster than the answers, so a newer search replaces the
+// request still in flight.
 export const searchPublic = (q, lang) =>
   api.get(API_PATHS.cms.publicSearch, {
     params: { q, lang },
+    dedupe: true,
   });
 
 // ================================

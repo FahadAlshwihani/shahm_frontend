@@ -1,0 +1,170 @@
+/* The appearance panel in settings. */
+
+.appearance {
+  background: var(--t-surface);
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-card);
+  box-shadow: var(--t-shadow-card);
+  padding: 20px 22px;
+  margin-block-end: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: var(--font-content, inherit);
+  color: var(--t-ink);
+}
+
+.appearance__head { display: flex; flex-direction: column; gap: 4px; }
+
+.appearance__title { margin: 0; font-size: 16px; font-weight: 600; }
+
+.appearance__note { margin: 0; font-size: 12.5px; color: var(--t-ink-muted); }
+
+.appearance__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.appearance__label { font-size: 13px; color: var(--t-ink-secondary); font-weight: 600; }
+
+/* ── theme ─────────────────────────────────────────────────── */
+
+.appearance__segmented {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  background: var(--t-hover);
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-pill);
+}
+
+.appearance__segment {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: var(--t-radius-pill);
+  background: transparent;
+  color: var(--t-ink-muted);
+  cursor: pointer;
+  transition: background var(--t-motion-fast), color var(--t-motion-fast);
+}
+
+.appearance__segment:hover { color: var(--t-ink); }
+
+.appearance__segment--on {
+  background: var(--t-surface);
+  color: var(--t-ink);
+  box-shadow: var(--t-shadow-card);
+}
+
+.appearance__segment:focus-visible,
+.appearance__swatch:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+/* ── colours, set by code ──────────────────────────────────── */
+
+.appearance__colours {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding-block-start: 4px;
+  border-block-start: 1px solid var(--t-divider);
+}
+
+.appearance__colour { display: flex; flex-direction: column; gap: 7px; }
+
+.appearance__colour-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--t-ink-secondary);
+}
+
+.appearance__colour-controls { display: flex; align-items: center; gap: 8px; }
+
+/* The chip shows the colour and opens the system picker; the code beside it
+   stays the value of record. */
+.appearance__chip {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 8px;
+  border: 1px solid var(--t-border);
+  background: var(--chip);
+  overflow: hidden;
+}
+
+.appearance__picker {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.appearance__chip:focus-within {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+.appearance__code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-control);
+  background: var(--t-surface);
+  color: var(--t-ink);
+  text-transform: lowercase;
+}
+
+.appearance__code:focus {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 1px;
+  border-color: var(--t-focus);
+}
+
+.appearance__code--invalid {
+  border-color: var(--t-danger);
+  background: var(--t-danger-soft);
+}
+
+.appearance__colour-error { font-size: 11.5px; color: var(--t-danger); }
+
+.appearance__actions { display: flex; justify-content: flex-start; }
+
+.appearance__reset {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-control);
+  background: var(--t-surface);
+  color: var(--t-ink-secondary);
+  cursor: pointer;
+}
+
+.appearance__reset:hover { color: var(--t-ink); border-color: var(--t-border-strong); }
+
+.appearance__reset:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appearance__segment { transition: none; }
+}
