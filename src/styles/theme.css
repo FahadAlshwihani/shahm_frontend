@@ -84,9 +84,14 @@
      than a Latin face at the same size, so the steps sit lower than a
      Latin scale would.
 
-     Two rules hold everywhere: no letter-spacing, because Arabic is a
+     Two rules hold for Arabic: no letter-spacing, because Arabic is a
      joined script and spacing pulls the letters of a word apart; and no
-     uppercase, which does nothing to Arabic and shouts in Latin. */
+     uppercase, which does nothing to it.
+
+     Tracking is a Latin device, and a strong one — the reference the firm
+     picked sets its body at +0.5px and its labels at +2px with uppercase,
+     which is most of what makes it read as it does. It is available here as
+     two utilities that apply only to Latin text, never to Arabic. */
   --t-text-2xs: 10.5px;
   --t-text-xs: 11.5px;
   --t-text-sm: 12.5px;
@@ -148,9 +153,9 @@
     --t-glass-border: rgba(255, 255, 255, 0.10);
     --t-glass-highlight: rgba(255, 255, 255, 0.06);
 
-    --t-ink: #f5f5f7;
-    --t-ink-secondary: rgba(235, 245, 240, 0.80);
-    --t-ink-muted: rgba(232, 244, 238, 0.63);
+    --t-ink: #ffffff;
+    --t-ink-secondary: rgba(255, 255, 255, 0.78);
+    --t-ink-muted: rgba(255, 255, 255, 0.60);
     --t-ink-on-accent: var(--t-accent-ink-night, #ffffff);
 
     --t-border: rgba(255, 255, 255, 0.12);
@@ -198,9 +203,9 @@
   --t-glass-border: rgba(255, 255, 255, 0.10);
   --t-glass-highlight: rgba(255, 255, 255, 0.06);
 
-  --t-ink: #f5f5f7;
-  --t-ink-secondary: rgba(235, 245, 240, 0.80);
-  --t-ink-muted: rgba(232, 244, 238, 0.63);
+  --t-ink: #ffffff;
+  --t-ink-secondary: rgba(255, 255, 255, 0.78);
+  --t-ink-muted: rgba(255, 255, 255, 0.60);
   --t-ink-on-accent: var(--t-accent-ink-night, #ffffff);
 
   --t-border: rgba(255, 255, 255, 0.12);
@@ -232,6 +237,21 @@
   --t-media-pad: rgba(255, 255, 255, 0.92);
 
   color-scheme: dark;
+}
+
+/* ── Tracking, Latin only ────────────────────────────────────────
+   Applied by class, and guarded by the language of the element, so the same
+   class on an Arabic string does nothing. */
+
+:where([lang="en"], [lang^="en-"], [dir="ltr"]).t-track,
+:where([lang="en"], [lang^="en-"], [dir="ltr"]) .t-track {
+  letter-spacing: 0.5px;
+}
+
+:where([lang="en"], [lang^="en-"], [dir="ltr"]).t-label,
+:where([lang="en"], [lang^="en-"], [dir="ltr"]) .t-label {
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 /* ── A reader who asked for less transparency gets none ──────── */
