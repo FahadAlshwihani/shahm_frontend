@@ -2997,5 +2997,37 @@
     "save_changes": "Save Changes",
     "updated": "Your information has been saved and updated successfully",
     "update_failed": "Update failed"
+  },
+  "form_layer": {
+    "arabic": "عربي",
+    "english": "English",
+    "missing": "Not filled in yet",
+    "rejected": "Rejected by the server",
+    "copy_from_arabic": "Copy the Arabic text",
+    "unsaved": "Unsaved changes",
+    "saved": "Nothing to save",
+    "save": "Save",
+    "saving": "Saving",
+    "cancel": "Cancel",
+    "draft_found": "You have an unsaved edit",
+    "draft_restore": "Restore it",
+    "draft_discard": "Discard it"
+  },
+  "theme": {
+    "label": "Appearance",
+    "light": "Day",
+    "dark": "Evening",
+    "system": "System",
+    "section_title": "Appearance",
+    "section_note": "Kept in this browser only; never sent to the server.",
+    "colours": {
+      "accent": "Accent",
+      "ground_dark": "Evening background",
+      "chrome_dark": "Top bar",
+      "sidebar_dark": "Side bar",
+      "marking": "Selected marker",
+      "invalid": "Not a colour code. Use #RRGGBB.",
+      "reset": "Restore the default colours"
+    }
   }
 }

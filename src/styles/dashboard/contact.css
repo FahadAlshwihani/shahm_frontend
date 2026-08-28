@@ -1,7 +1,7 @@
 /* ============================================================
    CMS_CONTACT.css — scoped under .cnt-*
    Design system: matches FAQ / Services / Messages / Users / Appointments
-   Fonts: Ciclo Display EN | HT Sonata AR | Noto Kufi Arabic body
+   Fonts: Noto Kufi Arabic throughout
    Import dashboard-common.css for Modal styles.
 ============================================================ */
 
@@ -20,8 +20,8 @@
   --cnt-shadow-card:     0 1px 3px rgba(53,60,60,0.05), 0 2px 8px rgba(53,60,60,0.04);
   --cnt-shadow-hover:    0 2px 6px rgba(53,60,60,0.07), 0 4px 14px rgba(53,60,60,0.06);
   --cnt-transition:      0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  --cnt-font-display-en: "Ciclo Display", serif;
-  --cnt-font-display-ar: "HT Sonata", serif;
+  --cnt-font-display-en: "Noto Kufi Arabic", sans-serif;
+  --cnt-font-display-ar: "Noto Kufi Arabic", sans-serif;
   --cnt-font:            "Noto Kufi Arabic", sans-serif;
 
   /* Palette */

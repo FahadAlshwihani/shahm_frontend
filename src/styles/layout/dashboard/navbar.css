@@ -6,34 +6,22 @@
   /* Full width — sidebar overlays it via z-index */
   width: 100%;
   padding: 0 32px;
-  background: var(--ds-bg, rgba(10,10,12,0.82));
+  background: var(--ds-bg, var(--t-chrome-glass));
   backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
   -webkit-backdrop-filter: blur(var(--ds-blur, 28px)) saturate(160%);
-  border-bottom: var(--ds-border-spec, 1px solid rgba(233,236,236,0.1));
+  border-bottom: var(--ds-border-spec, 1px solid var(--t-chrome-border));
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;        /* sidebar z-index:1000 sits above */
-  color: var(--ds-text, rgba(255,255,255,0.88));
+  color: var(--ds-text, var(--t-chrome-ink));
   box-shadow: none;    /* no shadow */
-  animation: glassIn 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) both;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-/* Grain */
-.dashboard-navbar::after {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: 0.3;
-  mix-blend-mode: overlay;
-  z-index: 0;
-}
 .dashboard-navbar > * { position: relative; z-index: 1; }
 
 /* ── Start: logo ── */
@@ -68,16 +56,16 @@
 
 .dashboard-navbar-title {
   font-family: var(--font-ar-heading, inherit);
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--ds-text, rgba(255,255,255,0.88));
-  letter-spacing: 0.01em;
+  font-size: var(--t-text-md);
+  font-weight: var(--t-weight-semibold);
+  color: var(--ds-text, var(--t-chrome-ink));
   white-space: nowrap;
 }
 
 [dir="ltr"] .dashboard-navbar-title { font-family: var(--font-en-heading, inherit); }
 
 /* ── End: user block ── */
+/* Appearance control sits beside the user block. */
 .dashboard-navbar-end {
   display: flex;
   align-items: center;
@@ -89,16 +77,16 @@
   align-items: center;
   gap: 10px;
   padding: 6px 14px 6px 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--ds-border, rgba(255,255,255,0.08));
-  border-radius: 12px;
+  background: var(--t-chrome-hover);
+  border: 1px solid var(--ds-border, var(--t-chrome-border));
+  border-radius: var(--t-radius-panel);
   cursor: default;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .dashboard-navbar-user:hover {
-  background: rgba(255,255,255,0.09);
-  border-color: rgba(255,255,255,0.14);
+  background: var(--t-chrome-active);
+  border-color: var(--t-chrome-border);
 }
 
 .dashboard-navbar-user-avatar {
@@ -107,9 +95,9 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 9px;
-  color: rgba(255,255,255,0.7);
+  background: var(--t-chrome-active);
+  border-radius: var(--t-radius-control);
+  color: var(--t-chrome-ink-secondary);
   flex-shrink: 0;
 }
 
@@ -121,18 +109,16 @@
 
 .dashboard-navbar-user-greeting {
   font-family: var(--font-content, inherit);
-  font-size: 10px;
-  color: var(--ds-text-muted, rgba(255,255,255,0.38));
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-size: var(--t-text-2xs);
+  color: var(--ds-text-muted, var(--t-chrome-ink-muted));
+  font-weight: var(--t-weight-medium);
 }
 
 .dashboard-navbar-user-name {
   font-family: var(--font-content, inherit);
-  font-size: 13px;
-  color: var(--ds-text, rgba(255,255,255,0.88));
-  font-weight: 600;
+  font-size: var(--t-text-base);
+  color: var(--ds-text, var(--t-chrome-ink));
+  font-weight: var(--t-weight-semibold);
   line-height: 1;
   white-space: nowrap;
 }
@@ -149,14 +135,14 @@
 @media (max-width: 480px) {
   .dashboard-navbar { padding: 0 14px; height: 56px; }
   .dashboard-navbar-logo-img { height: 22px; }
-  .dashboard-navbar-title { font-size: 13px; }
+  .dashboard-navbar-title { font-size: var(--t-text-base); }
 }
 
 /* ==========================================
    ACCESSIBILITY
 ========================================== */
 .dashboard-navbar-user:focus-visible {
-  outline: 2px solid rgba(255,255,255,0.5);
+  outline: 2px solid var(--t-marking);
   outline-offset: 2px;
 }
 

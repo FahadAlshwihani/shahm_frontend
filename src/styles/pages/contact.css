@@ -3,8 +3,8 @@
    All tokens prefixed with --ct- to avoid global conflicts
    ============================================================ */
 .contact-page {
-  --ct-font-display-ar: "HT Sonata", serif;
-  --ct-font-display-en: "Ciclo Display", serif;
+  --ct-font-display-ar: "Noto Kufi Arabic", sans-serif;
+  --ct-font-display-en: "Noto Kufi Arabic", sans-serif;
   --ct-font-body:       "Noto Kufi Arabic", sans-serif;
 
   --ct-primary:         #343C3C;

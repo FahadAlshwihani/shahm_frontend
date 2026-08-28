@@ -5,8 +5,8 @@
    ============================================================ */
 
 .rap-page {
-  --rap-font-display-ar: "HT Sonata", serif;
-  --rap-font-display-en: "Ciclo Display", serif;
+  --rap-font-display-ar: "Noto Kufi Arabic", sans-serif;
+  --rap-font-display-en: "Noto Kufi Arabic", sans-serif;
   --rap-font-body:       "Noto Kufi Arabic", sans-serif;
   --rap-primary:         #343C3C;
   --rap-secondary:       #7C8D8D;

@@ -21,6 +21,9 @@ import {
   updatePartner,
   deletePartner,
 } from "../../../api/aboutApi";
+import { BilingualField } from "../../../components/forms/cms";
+import { parseApiError } from "../../../utils/apiErrors";
+import "../../../styles/forms/cms-form.css";
 import "../../../styles/dashboard/cms/about.css";
 import Deletebtn from "../../../components/common/dashboard/Deletebtn";
 
@@ -117,6 +120,22 @@ function isVideoUrl(url) {
   return url && /\.(mp4|webm|mov|avi)$/i.test(url);
 }
 
+/**
+ * Shows what the server actually said instead of one generic failure.
+ *
+ * Every handler on this screen used to answer a rejected write with
+ * `toast.error("save failed")` and drop the server's message, so an editor
+ * could not tell a too-long title from an expired session. The parsed field
+ * messages are returned so a caller can put them on the fields as well.
+ */
+function notifyError(error, fallback) {
+  const parsed = parseApiError(error);
+
+  if (!parsed.canceled) toast.error(parsed.message || fallback);
+
+  return parsed;
+}
+
 /* ═══════════════════════════════════════════════════
    SHARED FIELD / CARD PRIMITIVES
 ═══════════════════════════════════════════════════ */
@@ -209,8 +228,7 @@ function GeneralTab({ data, reload }) {
       setMediaFile(null);
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      notifyError(err, t("cms.about.error.saveFailed"));
     } finally {
       setSaving(false);
     }
@@ -337,6 +355,8 @@ function StatsTab({ data, reload }) {
   const [adding, setAdding] = useState(false);
   const [savingId, setSavingId] = useState(null);
   const [editForms, setEditForms] = useState({});
+  const [addErrors, setAddErrors] = useState({});
+  const [rowErrors, setRowErrors] = useState({});
 
   const stats = data.stats || [];
 
@@ -359,10 +379,10 @@ function StatsTab({ data, reload }) {
       await createStat({ ...newStat, order: stats.length });
       toast.success(t("cms.about.stats.addSuccess"));
       setNewStat(emptyStat());
+      setAddErrors({});
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      setAddErrors(notifyError(err, t("cms.about.error.saveFailed")).fields);
     } finally {
       setAdding(false);
     }
@@ -373,10 +393,11 @@ function StatsTab({ data, reload }) {
     try {
       await updateStat(id, editForms[id]);
       toast.success(t("cms.about.stats.updateSuccess"));
+      setRowErrors((prev) => ({ ...prev, [id]: {} }));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      const parsed = notifyError(err, t("cms.about.error.saveFailed"));
+      setRowErrors((prev) => ({ ...prev, [id]: parsed.fields }));
     } finally {
       setSavingId(null);
     }
@@ -398,8 +419,7 @@ function StatsTab({ data, reload }) {
       toast.success(t("cms.about.stats.deleteSuccess"));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.deleteFailed"));
+      notifyError(err, t("cms.about.error.deleteFailed"));
     }
   };
 
@@ -431,26 +451,16 @@ function StatsTab({ data, reload }) {
                 />
               </Field>
             </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.stats.labelAr")}>
-                <input
-                  className="ca-input"
-                  dir="rtl"
-                  value={newStat.label_ar}
-                  onChange={(e) => setNewStat({ ...newStat, label_ar: e.target.value })}
-                  placeholder={t("cms.about.stats.labelArPlaceholder")}
-                />
-              </Field>
-            </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.stats.labelEn")}>
-                <input
-                  className="ca-input"
-                  value={newStat.label_en}
-                  onChange={(e) => setNewStat({ ...newStat, label_en: e.target.value })}
-                  placeholder={t("cms.about.stats.labelEnPlaceholder")}
-                />
-              </Field>
+            <div className="ca-form-group ca-form-group--wide">
+              <BilingualField
+                label={t("cms.about.stats.labelAr")}
+                name="label"
+                values={newStat}
+                errors={addErrors}
+                onChange={(name, value) => setNewStat({ ...newStat, [name]: value })}
+                placeholder={t("cms.about.stats.labelArPlaceholder")}
+                placeholderEn={t("cms.about.stats.labelEnPlaceholder")}
+              />
             </div>
             <div className="ca-form-group">
               <Field label={t("cms.about.stats.orderLabel")}>
@@ -511,24 +521,14 @@ function StatsTab({ data, reload }) {
                           />
                         </Field>
                       </div>
-                      <div className="ca-form-group">
-                        <Field label={t("cms.about.stats.labelAr")}>
-                          <input
-                            className="ca-input ca-input--sm"
-                            dir="rtl"
-                            value={editForms[s.id]?.label_ar ?? s.label_ar}
-                            onChange={(e) => updateField(s.id, "label_ar", e.target.value)}
-                          />
-                        </Field>
-                      </div>
-                      <div className="ca-form-group">
-                        <Field label={t("cms.about.stats.labelEn")}>
-                          <input
-                            className="ca-input ca-input--sm"
-                            value={editForms[s.id]?.label_en ?? s.label_en}
-                            onChange={(e) => updateField(s.id, "label_en", e.target.value)}
-                          />
-                        </Field>
+                      <div className="ca-form-group ca-form-group--wide">
+                        <BilingualField
+                          label={t("cms.about.stats.labelAr")}
+                          name="label"
+                          values={editForms[s.id] ?? s}
+                          errors={rowErrors[s.id] ?? {}}
+                          onChange={(name, value) => updateField(s.id, name, value)}
+                        />
                       </div>
                       <div className="ca-form-group">
                         <Field label={t("cms.about.stats.orderLabel")}>
@@ -593,6 +593,8 @@ function PostsTab({ data, reload }) {
   const [savingId, setSavingId] = useState(null);
   const [editForms, setEditForms] = useState({});
   const [imageFiles, setImageFiles] = useState({});
+  const [addErrors, setAddErrors] = useState({});
+  const [rowErrors, setRowErrors] = useState({});
 
   const posts = data.posts || [];
 
@@ -626,10 +628,10 @@ function PostsTab({ data, reload }) {
       await createPost(fd);
       toast.success(t("cms.about.posts.addSuccess"));
       setNewPost(emptyPost());
+      setAddErrors({});
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      setAddErrors(notifyError(err, t("cms.about.error.saveFailed")).fields);
     } finally {
       setAdding(false);
     }
@@ -648,10 +650,11 @@ function PostsTab({ data, reload }) {
         await updatePost(id, form);
       }
       toast.success(t("cms.about.posts.updateSuccess"));
+      setRowErrors((prev) => ({ ...prev, [id]: {} }));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      const parsed = notifyError(err, t("cms.about.error.saveFailed"));
+      setRowErrors((prev) => ({ ...prev, [id]: parsed.fields }));
     } finally {
       setSavingId(null);
     }
@@ -673,8 +676,7 @@ function PostsTab({ data, reload }) {
       toast.success(t("cms.about.posts.deleteSuccess"));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.deleteFailed"));
+      notifyError(err, t("cms.about.error.deleteFailed"));
     }
   };
 
@@ -696,51 +698,44 @@ function PostsTab({ data, reload }) {
         </div>
         <div className="ca-card-body">
           <div className="ca-form-row">
-            <div className="ca-form-group">
-              <Field label={t("cms.about.posts.subtitleAr")}>
-                <input className="ca-input" dir="rtl" value={newPost.subtitle_ar}
-                  onChange={(e) => setNewPost({ ...newPost, subtitle_ar: e.target.value })}
-                  placeholder={t("cms.about.posts.subtitleArPlaceholder")} />
-              </Field>
-            </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.posts.subtitleEn")}>
-                <input className="ca-input" value={newPost.subtitle_en}
-                  onChange={(e) => setNewPost({ ...newPost, subtitle_en: e.target.value })}
-                  placeholder={t("cms.about.posts.subtitleEnPlaceholder")} />
-              </Field>
+            <div className="ca-form-group ca-form-group--wide">
+              <BilingualField
+                label={t("cms.about.posts.subtitleAr")}
+                name="subtitle"
+                values={newPost}
+                errors={addErrors}
+                onChange={(name, value) => setNewPost({ ...newPost, [name]: value })}
+                placeholder={t("cms.about.posts.subtitleArPlaceholder")}
+                placeholderEn={t("cms.about.posts.subtitleEnPlaceholder")}
+              />
             </div>
           </div>
           <div className="ca-form-row">
-            <div className="ca-form-group">
-              <Field label={t("cms.about.posts.titleAr")}>
-                <input className="ca-input" dir="rtl" value={newPost.title_ar}
-                  onChange={(e) => setNewPost({ ...newPost, title_ar: e.target.value })}
-                  placeholder={t("cms.about.posts.titleArPlaceholder")} />
-              </Field>
-            </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.posts.titleEn")}>
-                <input className="ca-input" value={newPost.title_en}
-                  onChange={(e) => setNewPost({ ...newPost, title_en: e.target.value })}
-                  placeholder={t("cms.about.posts.titleEnPlaceholder")} />
-              </Field>
+            <div className="ca-form-group ca-form-group--wide">
+              <BilingualField
+                label={t("cms.about.posts.titleAr")}
+                name="title"
+                values={newPost}
+                errors={addErrors}
+                onChange={(name, value) => setNewPost({ ...newPost, [name]: value })}
+                placeholder={t("cms.about.posts.titleArPlaceholder")}
+                placeholderEn={t("cms.about.posts.titleEnPlaceholder")}
+              />
             </div>
           </div>
           <div className="ca-form-row">
-            <div className="ca-form-group">
-              <Field label={t("cms.about.posts.bodyAr")}>
-                <textarea className="ca-textarea" dir="rtl" rows={3} value={newPost.body_ar}
-                  onChange={(e) => setNewPost({ ...newPost, body_ar: e.target.value })}
-                  placeholder={t("cms.about.posts.bodyArPlaceholder")} />
-              </Field>
-            </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.posts.bodyEn")}>
-                <textarea className="ca-textarea" rows={3} value={newPost.body_en}
-                  onChange={(e) => setNewPost({ ...newPost, body_en: e.target.value })}
-                  placeholder={t("cms.about.posts.bodyEnPlaceholder")} />
-              </Field>
+            <div className="ca-form-group ca-form-group--wide">
+              <BilingualField
+                label={t("cms.about.posts.bodyAr")}
+                name="body"
+                as="textarea"
+                rows={3}
+                values={newPost}
+                errors={addErrors}
+                onChange={(name, value) => setNewPost({ ...newPost, [name]: value })}
+                placeholder={t("cms.about.posts.bodyArPlaceholder")}
+                placeholderEn={t("cms.about.posts.bodyEnPlaceholder")}
+              />
             </div>
           </div>
           <div className="ca-form-row">
@@ -805,51 +800,38 @@ function PostsTab({ data, reload }) {
                   )}
                   <div className="ca-item-body ca-item-body--full">
                     <div className="ca-form-row">
-                      <div className="ca-form-group">
-                        <Field label={t("cms.about.posts.subtitleAr")}>
-                          <input className="ca-input ca-input--sm" dir="rtl"
-                            value={editForms[p.id]?.subtitle_ar ?? ""}
-                            onChange={(e) => updateField(p.id, "subtitle_ar", e.target.value)} />
-                        </Field>
-                      </div>
-                      <div className="ca-form-group">
-                        <Field label={t("cms.about.posts.subtitleEn")}>
-                          <input className="ca-input ca-input--sm"
-                            value={editForms[p.id]?.subtitle_en ?? ""}
-                            onChange={(e) => updateField(p.id, "subtitle_en", e.target.value)} />
-                        </Field>
+                      <div className="ca-form-group ca-form-group--wide">
+                        <BilingualField
+                          label={t("cms.about.posts.subtitleAr")}
+                          name="subtitle"
+                          values={editForms[p.id] ?? {}}
+                          errors={rowErrors[p.id] ?? {}}
+                          onChange={(field, value) => updateField(p.id, field, value)}
+                        />
                       </div>
                     </div>
                     <div className="ca-form-row">
-                      <div className="ca-form-group">
-                        <Field label={t("cms.about.posts.titleAr")}>
-                          <input className="ca-input ca-input--sm" dir="rtl"
-                            value={editForms[p.id]?.title_ar ?? ""}
-                            onChange={(e) => updateField(p.id, "title_ar", e.target.value)} />
-                        </Field>
-                      </div>
-                      <div className="ca-form-group">
-                        <Field label={t("cms.about.posts.titleEn")}>
-                          <input className="ca-input ca-input--sm"
-                            value={editForms[p.id]?.title_en ?? ""}
-                            onChange={(e) => updateField(p.id, "title_en", e.target.value)} />
-                        </Field>
+                      <div className="ca-form-group ca-form-group--wide">
+                        <BilingualField
+                          label={t("cms.about.posts.titleAr")}
+                          name="title"
+                          values={editForms[p.id] ?? {}}
+                          errors={rowErrors[p.id] ?? {}}
+                          onChange={(field, value) => updateField(p.id, field, value)}
+                        />
                       </div>
                     </div>
                     <div className="ca-form-row">
-                      <div className="ca-form-group">
-                        <Field label={t("cms.about.posts.bodyAr")}>
-                          <textarea className="ca-textarea ca-textarea--sm" dir="rtl" rows={2}
-                            value={editForms[p.id]?.body_ar ?? ""}
-                            onChange={(e) => updateField(p.id, "body_ar", e.target.value)} />
-                        </Field>
-                      </div>
-                      <div className="ca-form-group">
-                        <Field label={t("cms.about.posts.bodyEn")}>
-                          <textarea className="ca-textarea ca-textarea--sm" rows={2}
-                            value={editForms[p.id]?.body_en ?? ""}
-                            onChange={(e) => updateField(p.id, "body_en", e.target.value)} />
-                        </Field>
+                      <div className="ca-form-group ca-form-group--wide">
+                        <BilingualField
+                          label={t("cms.about.posts.bodyAr")}
+                          name="body"
+                          as="textarea"
+                          rows={2}
+                          values={editForms[p.id] ?? {}}
+                          errors={rowErrors[p.id] ?? {}}
+                          onChange={(field, value) => updateField(p.id, field, value)}
+                        />
                       </div>
                     </div>
                     <div className="ca-form-row">
@@ -930,12 +912,14 @@ function IconRow({ icon, onSave, onDelete, saving }) {
         </label>
       </div>
       <div className="ca-icon-fields">
-        <input className="ca-input ca-input--sm" dir="rtl" value={form.label_ar}
-          onChange={(e) => setForm({ ...form, label_ar: e.target.value })}
-          placeholder={t("cms.about.sections.iconLabelAr")} />
-        <input className="ca-input ca-input--sm" value={form.label_en}
-          onChange={(e) => setForm({ ...form, label_en: e.target.value })}
-          placeholder={t("cms.about.sections.iconLabelEn")} />
+        <BilingualField
+          label={t("cms.about.sections.iconLabelAr")}
+          name="label"
+          values={form}
+          onChange={(name, value) => setForm({ ...form, [name]: value })}
+          placeholder={t("cms.about.sections.iconLabelAr")}
+          placeholderEn={t("cms.about.sections.iconLabelEn")}
+        />
         <input className="ca-input ca-input--sm ca-input--tiny" type="number"
           value={form.order} onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })} />
       </div>
@@ -959,6 +943,8 @@ function SectionsTab({ data, reload }) {
   const isRtl = i18n.language === "ar";
 
   const [newSection, setNewSection] = useState(emptySection());
+  const [addErrors, setAddErrors] = useState({});
+  const [rowErrors, setRowErrors] = useState({});
   const [adding, setAdding] = useState(false);
   const [savingId, setSavingId] = useState(null);
   const [editForms, setEditForms] = useState({});
@@ -995,10 +981,10 @@ function SectionsTab({ data, reload }) {
       await createSection({ ...newSection, key: autoKey, order: sections.length });
       toast.success(t("cms.about.sections.addSuccess"));
       setNewSection(emptySection());
+      setAddErrors({});
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      setAddErrors(notifyError(err, t("cms.about.error.saveFailed")).fields);
     } finally {
       setAdding(false);
     }
@@ -1009,10 +995,11 @@ function SectionsTab({ data, reload }) {
     try {
       await updateSection(id, editForms[id]);
       toast.success(t("cms.about.sections.updateSuccess"));
+      setRowErrors((prev) => ({ ...prev, [id]: {} }));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      const parsed = notifyError(err, t("cms.about.error.saveFailed"));
+      setRowErrors((prev) => ({ ...prev, [id]: parsed.fields }));
     } finally {
       setSavingId(null);
     }
@@ -1034,8 +1021,7 @@ function SectionsTab({ data, reload }) {
       toast.success(t("cms.about.sections.deleteSuccess"));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.deleteFailed"));
+      notifyError(err, t("cms.about.error.deleteFailed"));
     }
   };
 
@@ -1058,8 +1044,7 @@ function SectionsTab({ data, reload }) {
       setNewIconForms((prev) => ({ ...prev, [sectionId]: emptyIcon() }));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      notifyError(err, t("cms.about.error.saveFailed"));
     } finally {
       setAddingIconId(null);
     }
@@ -1077,8 +1062,7 @@ function SectionsTab({ data, reload }) {
       toast.success(t("cms.about.sections.iconUpdateSuccess"));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      notifyError(err, t("cms.about.error.saveFailed"));
     } finally {
       setSavingIconId(null);
     }
@@ -1100,8 +1084,7 @@ function SectionsTab({ data, reload }) {
       toast.success(t("cms.about.sections.iconDeleteSuccess"));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.deleteFailed"));
+      notifyError(err, t("cms.about.error.deleteFailed"));
     }
   };
 
@@ -1138,45 +1121,38 @@ function SectionsTab({ data, reload }) {
             </div>
           </div>
           <div className="ca-form-row">
-            <div className="ca-form-group">
-              <Field label={t("cms.about.sections.subtitleAr")}>
-                <input className="ca-input" dir="rtl" value={newSection.subtitle_ar}
-                  onChange={(e) => setNewSection({ ...newSection, subtitle_ar: e.target.value })} />
-              </Field>
-            </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.sections.subtitleEn")}>
-                <input className="ca-input" value={newSection.subtitle_en}
-                  onChange={(e) => setNewSection({ ...newSection, subtitle_en: e.target.value })} />
-              </Field>
+            <div className="ca-form-group ca-form-group--wide">
+              <BilingualField
+                label={t("cms.about.sections.subtitleAr")}
+                name="subtitle"
+                values={newSection}
+                errors={addErrors}
+                onChange={(name, value) => setNewSection({ ...newSection, [name]: value })}
+              />
             </div>
           </div>
           <div className="ca-form-row">
-            <div className="ca-form-group">
-              <Field label={t("cms.about.sections.titleAr")}>
-                <input className="ca-input" dir="rtl" value={newSection.title_ar}
-                  onChange={(e) => setNewSection({ ...newSection, title_ar: e.target.value })} />
-              </Field>
-            </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.sections.titleEn")}>
-                <input className="ca-input" value={newSection.title_en}
-                  onChange={(e) => setNewSection({ ...newSection, title_en: e.target.value })} />
-              </Field>
+            <div className="ca-form-group ca-form-group--wide">
+              <BilingualField
+                label={t("cms.about.sections.titleAr")}
+                name="title"
+                values={newSection}
+                errors={addErrors}
+                onChange={(name, value) => setNewSection({ ...newSection, [name]: value })}
+              />
             </div>
           </div>
           <div className="ca-form-row">
-            <div className="ca-form-group">
-              <Field label={t("cms.about.sections.bodyAr")}>
-                <textarea className="ca-textarea" dir="rtl" rows={3} value={newSection.body_ar}
-                  onChange={(e) => setNewSection({ ...newSection, body_ar: e.target.value })} />
-              </Field>
-            </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.sections.bodyEn")}>
-                <textarea className="ca-textarea" rows={3} value={newSection.body_en}
-                  onChange={(e) => setNewSection({ ...newSection, body_en: e.target.value })} />
-              </Field>
+            <div className="ca-form-group ca-form-group--wide">
+              <BilingualField
+                label={t("cms.about.sections.bodyAr")}
+                name="body"
+                as="textarea"
+                rows={3}
+                values={newSection}
+                errors={addErrors}
+                onChange={(name, value) => setNewSection({ ...newSection, [name]: value })}
+              />
             </div>
           </div>
           <div className="ca-form-actions">
@@ -1238,51 +1214,38 @@ function SectionsTab({ data, reload }) {
                     </div>
                   </div>
                   <div className="ca-form-row">
-                    <div className="ca-form-group">
-                      <Field label={t("cms.about.sections.subtitleAr")}>
-                        <input className="ca-input ca-input--sm" dir="rtl"
-                          value={editForms[sec.id]?.subtitle_ar ?? ""}
-                          onChange={(e) => updateSectionField(sec.id, "subtitle_ar", e.target.value)} />
-                      </Field>
-                    </div>
-                    <div className="ca-form-group">
-                      <Field label={t("cms.about.sections.subtitleEn")}>
-                        <input className="ca-input ca-input--sm"
-                          value={editForms[sec.id]?.subtitle_en ?? ""}
-                          onChange={(e) => updateSectionField(sec.id, "subtitle_en", e.target.value)} />
-                      </Field>
+                    <div className="ca-form-group ca-form-group--wide">
+                      <BilingualField
+                        label={t("cms.about.sections.subtitleAr")}
+                        name="subtitle"
+                        values={editForms[sec.id] ?? {}}
+                        errors={rowErrors[sec.id] ?? {}}
+                        onChange={(field, value) => updateSectionField(sec.id, field, value)}
+                      />
                     </div>
                   </div>
                   <div className="ca-form-row">
-                    <div className="ca-form-group">
-                      <Field label={t("cms.about.sections.titleAr")}>
-                        <input className="ca-input ca-input--sm" dir="rtl"
-                          value={editForms[sec.id]?.title_ar ?? ""}
-                          onChange={(e) => updateSectionField(sec.id, "title_ar", e.target.value)} />
-                      </Field>
-                    </div>
-                    <div className="ca-form-group">
-                      <Field label={t("cms.about.sections.titleEn")}>
-                        <input className="ca-input ca-input--sm"
-                          value={editForms[sec.id]?.title_en ?? ""}
-                          onChange={(e) => updateSectionField(sec.id, "title_en", e.target.value)} />
-                      </Field>
+                    <div className="ca-form-group ca-form-group--wide">
+                      <BilingualField
+                        label={t("cms.about.sections.titleAr")}
+                        name="title"
+                        values={editForms[sec.id] ?? {}}
+                        errors={rowErrors[sec.id] ?? {}}
+                        onChange={(field, value) => updateSectionField(sec.id, field, value)}
+                      />
                     </div>
                   </div>
                   <div className="ca-form-row">
-                    <div className="ca-form-group">
-                      <Field label={t("cms.about.sections.bodyAr")}>
-                        <textarea className="ca-textarea ca-textarea--sm" dir="rtl" rows={2}
-                          value={editForms[sec.id]?.body_ar ?? ""}
-                          onChange={(e) => updateSectionField(sec.id, "body_ar", e.target.value)} />
-                      </Field>
-                    </div>
-                    <div className="ca-form-group">
-                      <Field label={t("cms.about.sections.bodyEn")}>
-                        <textarea className="ca-textarea ca-textarea--sm" rows={2}
-                          value={editForms[sec.id]?.body_en ?? ""}
-                          onChange={(e) => updateSectionField(sec.id, "body_en", e.target.value)} />
-                      </Field>
+                    <div className="ca-form-group ca-form-group--wide">
+                      <BilingualField
+                        label={t("cms.about.sections.bodyAr")}
+                        name="body"
+                        as="textarea"
+                        rows={2}
+                        values={editForms[sec.id] ?? {}}
+                        errors={rowErrors[sec.id] ?? {}}
+                        onChange={(field, value) => updateSectionField(sec.id, field, value)}
+                      />
                     </div>
                   </div>
 
@@ -1370,6 +1333,7 @@ function PartnersTab({ data, reload }) {
   const [savingId, setSavingId] = useState(null);
   const [editOrders, setEditOrders] = useState({});
   const [replaceFiles, setReplaceFiles] = useState({});
+  const [subtitleErrors, setSubtitleErrors] = useState({});
 
   const partners = data.partners || [];
 
@@ -1385,10 +1349,10 @@ function PartnersTab({ data, reload }) {
     try {
       await updateAdminAbout(subtitleForm);
       toast.success(t("cms.about.partners.subtitleSaved"));
+      setSubtitleErrors({});
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      setSubtitleErrors(notifyError(err, t("cms.about.error.saveFailed")).fields);
     } finally {
       setSavingSubtitle(false);
     }
@@ -1410,8 +1374,7 @@ function PartnersTab({ data, reload }) {
       setNewPartnerOrder(partners.length);
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      notifyError(err, t("cms.about.error.saveFailed"));
     } finally {
       setAdding(false);
     }
@@ -1433,8 +1396,7 @@ function PartnersTab({ data, reload }) {
       toast.success(t("cms.about.partners.updateSuccess"));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.saveFailed"));
+      notifyError(err, t("cms.about.error.saveFailed"));
     } finally {
       setSavingId(null);
     }
@@ -1456,8 +1418,7 @@ function PartnersTab({ data, reload }) {
       toast.success(t("cms.about.partners.deleteSuccess"));
       await reload();
     } catch (err) {
-      console.error(err);
-      toast.error(t("cms.about.error.deleteFailed"));
+      notifyError(err, t("cms.about.error.deleteFailed"));
     }
   };
 
@@ -1475,21 +1436,16 @@ function PartnersTab({ data, reload }) {
         </div>
         <div className="ca-card-body">
           <div className="ca-form-row">
-            <div className="ca-form-group">
-              <Field label={t("cms.about.partners.subtitleAr")}>
-                <input className="ca-input" dir="rtl"
-                  value={subtitleForm.partners_subtitle_ar}
-                  onChange={(e) => setSubtitleForm({ ...subtitleForm, partners_subtitle_ar: e.target.value })}
-                  placeholder={t("cms.about.partners.subtitleArPlaceholder")} />
-              </Field>
-            </div>
-            <div className="ca-form-group">
-              <Field label={t("cms.about.partners.subtitleEn")}>
-                <input className="ca-input"
-                  value={subtitleForm.partners_subtitle_en}
-                  onChange={(e) => setSubtitleForm({ ...subtitleForm, partners_subtitle_en: e.target.value })}
-                  placeholder={t("cms.about.partners.subtitleEnPlaceholder")} />
-              </Field>
+            <div className="ca-form-group ca-form-group--wide">
+              <BilingualField
+                label={t("cms.about.partners.subtitleAr")}
+                name="partners_subtitle"
+                values={subtitleForm}
+                errors={subtitleErrors}
+                onChange={(name, value) => setSubtitleForm({ ...subtitleForm, [name]: value })}
+                placeholder={t("cms.about.partners.subtitleArPlaceholder")}
+                placeholderEn={t("cms.about.partners.subtitleEnPlaceholder")}
+              />
             </div>
           </div>
           <div className="ca-form-actions">
@@ -1731,8 +1687,8 @@ export default function CMSAbout() {
       const res = await getAdminAbout();
       setData(res.data);
     } catch (err) {
-      console.error(err);
-      setError(t("cms.about.error.loadFailed"));
+      const parsed = parseApiError(err);
+      if (!parsed.canceled) setError(parsed.message || t("cms.about.error.loadFailed"));
     } finally {
       setLoading(false);
     }

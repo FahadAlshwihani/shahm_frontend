@@ -1,0 +1,327 @@
+/* =============================================================
+   SHAHM THEME — the one place a colour, a surface or a radius is
+   decided for the whole dashboard.
+   =============================================================
+
+   Three states, not two. An explicit choice stamps data-theme on
+   <html>; the default "system" setting stamps nothing, and only
+   prefers-color-scheme separates day from evening. Every token is
+   therefore declared three times: on bare :root for day, under the
+   media query guarded against an explicit light choice, and under
+   the explicit dark stamp.
+
+   Nothing here styles an element. Screens read the tokens.
+============================================================= */
+
+:root {
+  /* ── Ground and surfaces ─────────────────────────────────── */
+  --t-ground: var(--t-ground-day, #f4f6f5);
+  --t-ground-deep: var(--t-ground-deep-day, #e9ecea);
+  --t-surface: #ffffff;
+  --t-surface-sunk: var(--t-surface-sunk-day, #f6f8f7);
+  --t-surface-raised: #ffffff;
+
+  /* ── Glass: the chrome the content scrolls under ─────────── */
+  --t-glass: rgba(255, 255, 255, 0.72);
+  --t-glass-strong: rgba(255, 255, 255, 0.86);
+  --t-glass-blur: 28px;
+  --t-glass-saturate: 180%;
+  --t-glass-border: rgba(0, 0, 0, 0.08);
+  --t-glass-highlight: rgba(255, 255, 255, 0.7);
+
+  /* ── Ink ─────────────────────────────────────────────────── */
+  /* The three levels of ink all clear 4.5 against their ground, measured with
+     the alpha composited rather than ignored — a translucent ink measures far
+     better than it reads if the blend is left out. The system's own #86868b
+     comes to 3.6 on this ground and is reserved for larger type. */
+  --t-ink: #1d1d1f;
+  --t-ink-secondary: #5b5b60;
+  --t-ink-muted: #6e6e73;
+  --t-ink-on-accent: var(--t-accent-ink-day, #ffffff);
+
+  /* ── Lines ───────────────────────────────────────────────── */
+  --t-border: var(--t-border-day, rgba(20, 45, 34, 0.14));
+  --t-border-strong: var(--t-border-strong-day, rgba(20, 45, 34, 0.26));
+  --t-divider: var(--t-divider-day, rgba(20, 45, 34, 0.10));
+
+  /* ── Interaction ─────────────────────────────────────────── */
+  --t-hover: var(--t-hover-day, rgba(20, 45, 34, 0.05));
+  --t-active: var(--t-active-day, rgba(20, 45, 34, 0.09));
+  --t-selected: var(--t-accent-soft);
+  --t-focus: var(--t-accent);
+
+  /* ── The one colour the reader chooses ───────────────────────
+     Everything else on the page is neutral. The chosen accent is
+     written onto <html> as --t-accent-*-day / --t-accent-*-night by
+     utils/accent.js; the values below are the default, system blue. */
+  --t-accent: var(--t-accent-day, #007aff);
+  --t-accent-hover: var(--t-accent-hover-day, #0062d6);
+  --t-accent-soft: var(--t-accent-soft-day, rgba(0, 122, 255, 0.12));
+
+  /* ── Semantic ────────────────────────────────────────────── */
+  --t-success: #248a3d;
+  --t-success-soft: rgba(52, 199, 89, 0.16);
+  --t-warning: #b25000;
+  --t-warning-soft: rgba(255, 149, 0, 0.16);
+  --t-danger: #d70015;
+  --t-danger-soft: rgba(255, 59, 48, 0.10);
+  --t-danger-soft-strong: rgba(255, 59, 48, 0.18);
+  --t-danger-border: rgba(255, 59, 48, 0.28);
+  --t-danger-border-strong: rgba(255, 59, 48, 0.45);
+  --t-info: #0071e3;
+  --t-info-soft: rgba(0, 122, 255, 0.12);
+
+  /* ── Elevation ───────────────────────────────────────────────
+     There is no drop shadow anywhere. A surface is told apart from the
+     one behind it by a hairline and by the glass, not by a cast shadow.
+     The tokens stay so call sites keep working. */
+  --t-shadow-card: none;
+  --t-shadow-raised: none;
+  --t-shadow-chrome: none;
+
+  /* ── Type ────────────────────────────────────────────────────
+     One scale for the whole interface. Arabic in this face runs larger
+     than a Latin face at the same size, so the steps sit lower than a
+     Latin scale would.
+
+     Two rules hold everywhere: no letter-spacing, because Arabic is a
+     joined script and spacing pulls the letters of a word apart; and no
+     uppercase, which does nothing to Arabic and shouts in Latin. */
+  --t-text-2xs: 10.5px;
+  --t-text-xs: 11.5px;
+  --t-text-sm: 12.5px;
+  --t-text-base: 13.5px;
+  --t-text-md: 15px;
+  --t-text-lg: 17px;
+  --t-text-xl: 20px;
+
+  --t-weight-regular: 400;
+  --t-weight-medium: 500;
+  --t-weight-semibold: 600;
+
+  --t-leading-tight: 1.35;
+  --t-leading: 1.6;
+  --t-leading-loose: 1.8;
+
+  /* ── Shape ───────────────────────────────────────────────────
+     Four radii and three control heights, so a field, a button and a
+     pill in different corners of the dashboard are the same rectangle. */
+  --t-radius-panel: 22px;
+  --t-radius-card: 16px;
+  --t-radius-control: 10px;
+  --t-radius-small: 8px;
+  --t-radius-pill: 999px;
+
+  --t-control-h: 32px;
+  --t-control-h-sm: 26px;
+  --t-control-h-lg: 38px;
+
+  /* What marks a thing as chosen: a ring, not a wash. A filled tint changes
+     the surface and takes the text's contrast with it; a ring leaves the card
+     exactly as it was and still reads across the page. */
+  --t-ring: inset 0 0 0 2px var(--t-marking);
+  --t-ring-thin: inset 0 0 0 1px var(--t-marking);
+
+  /* ── Motion ──────────────────────────────────────────────── */
+  --t-motion: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --t-motion-fast: 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* A pad behind uploaded artwork. Logos and partner marks are
+     saved with white baked into them, so on the evening theme they
+     would otherwise show as bright rectangles. */
+  --t-media-pad: transparent;
+
+  color-scheme: light;
+}
+
+/* ── Evening, by system preference ───────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --t-ground: var(--t-ground-night, #122d22);
+    --t-ground-deep: var(--t-ground-deep-night, #0b1b14);
+    --t-surface: var(--t-surface-night, #1c3a2d);
+    --t-surface-sunk: var(--t-surface-sunk-night, #0f251c);
+    --t-surface-raised: var(--t-surface-raised-night, #244636);
+
+    --t-glass: var(--t-glass-night, rgba(18, 45, 34, 0.72));
+    --t-glass-strong: var(--t-glass-strong-night, rgba(18, 45, 34, 0.9));
+    --t-glass-border: rgba(255, 255, 255, 0.10);
+    --t-glass-highlight: rgba(255, 255, 255, 0.06);
+
+    --t-ink: #f5f5f7;
+    --t-ink-secondary: rgba(235, 245, 240, 0.80);
+    --t-ink-muted: rgba(232, 244, 238, 0.63);
+    --t-ink-on-accent: var(--t-accent-ink-night, #ffffff);
+
+    --t-border: rgba(255, 255, 255, 0.12);
+    --t-border-strong: rgba(255, 255, 255, 0.24);
+    --t-divider: rgba(255, 255, 255, 0.08);
+
+    --t-hover: rgba(255, 255, 255, 0.06);
+    --t-active: rgba(255, 255, 255, 0.10);
+    --t-selected: var(--t-accent-soft);
+    --t-focus: var(--t-accent);
+
+    --t-accent: var(--t-accent-night, #0a84ff);
+    --t-accent-hover: var(--t-accent-hover-night, #409cff);
+    --t-accent-soft: var(--t-accent-soft-night, rgba(10, 132, 255, 0.20));
+
+    --t-success: #30d158;
+    --t-success-soft: rgba(48, 209, 88, 0.18);
+    --t-warning: #ff9f0a;
+    --t-warning-soft: rgba(255, 159, 10, 0.18);
+    --t-danger: #ff453a;
+    --t-danger-soft: rgba(255, 69, 58, 0.16);
+    --t-danger-soft-strong: rgba(255, 69, 58, 0.26);
+    --t-danger-border: rgba(255, 69, 58, 0.38);
+    --t-danger-border-strong: rgba(255, 69, 58, 0.58);
+    --t-info: #0a84ff;
+    --t-info-soft: rgba(10, 132, 255, 0.18);
+
+
+    --t-media-pad: rgba(255, 255, 255, 0.92);
+
+    color-scheme: dark;
+  }
+}
+
+/* ── Evening, chosen explicitly ──────────────────────────────── */
+:root[data-theme="dark"] {
+  --t-ground: var(--t-ground-night, #122d22);
+  --t-ground-deep: var(--t-ground-deep-night, #0b1b14);
+  --t-surface: var(--t-surface-night, #1c3a2d);
+  --t-surface-sunk: var(--t-surface-sunk-night, #0f251c);
+  --t-surface-raised: var(--t-surface-raised-night, #244636);
+
+  --t-glass: var(--t-glass-night, rgba(18, 45, 34, 0.72));
+  --t-glass-strong: var(--t-glass-strong-night, rgba(18, 45, 34, 0.9));
+  --t-glass-border: rgba(255, 255, 255, 0.10);
+  --t-glass-highlight: rgba(255, 255, 255, 0.06);
+
+  --t-ink: #f5f5f7;
+  --t-ink-secondary: rgba(235, 245, 240, 0.80);
+  --t-ink-muted: rgba(232, 244, 238, 0.63);
+  --t-ink-on-accent: var(--t-accent-ink-night, #ffffff);
+
+  --t-border: rgba(255, 255, 255, 0.12);
+  --t-border-strong: rgba(255, 255, 255, 0.24);
+  --t-divider: rgba(255, 255, 255, 0.08);
+
+  --t-hover: rgba(255, 255, 255, 0.06);
+  --t-active: rgba(255, 255, 255, 0.10);
+  --t-selected: var(--t-accent-soft);
+  --t-focus: var(--t-accent);
+
+  --t-accent: var(--t-accent-night, #0a84ff);
+  --t-accent-hover: var(--t-accent-hover-night, #409cff);
+  --t-accent-soft: var(--t-accent-soft-night, rgba(10, 132, 255, 0.20));
+
+  --t-success: #30d158;
+  --t-success-soft: rgba(48, 209, 88, 0.18);
+  --t-warning: #ff9f0a;
+  --t-warning-soft: rgba(255, 159, 10, 0.18);
+  --t-danger: #ff453a;
+  --t-danger-soft: rgba(255, 69, 58, 0.16);
+  --t-danger-soft-strong: rgba(255, 69, 58, 0.26);
+  --t-danger-border: rgba(255, 69, 58, 0.38);
+  --t-danger-border-strong: rgba(255, 69, 58, 0.58);
+  --t-info: #0a84ff;
+  --t-info-soft: rgba(10, 132, 255, 0.18);
+
+
+  --t-media-pad: rgba(255, 255, 255, 0.92);
+
+  color-scheme: dark;
+}
+
+/* ── A reader who asked for less transparency gets none ──────── */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --t-glass: var(--t-surface);
+    --t-glass-strong: var(--t-surface);
+    --t-glass-blur: 0px;
+  }
+}
+
+/* =============================================================
+   THE SHELL
+   The sidebar, navbar and footer were written against --ds-*
+   tokens with a black glass palette. Those names are kept, so no
+   selector in the shell changes; they are derived from the theme
+   instead, which is what turns the chrome light by day.
+============================================================= */
+
+:root {
+  /* The chrome is the frame, not the page: it holds its colour in both
+     appearances, because the marking colour is chosen to read on it. All four
+     values below are set from the codes in settings. */
+  --t-chrome: #10281c;
+  --t-chrome-glass: rgba(16, 40, 28, 0.82);
+  --t-sidebar: #16382a;
+  --t-sidebar-glass: rgba(22, 56, 42, 0.82);
+  --t-chrome-glass-strong: rgba(16, 40, 28, 0.94);
+  --t-chrome-border: rgba(160, 190, 175, 0.20);
+  --t-chrome-hover: rgba(230, 240, 235, 0.09);
+  --t-chrome-active: rgba(240, 248, 244, 0.12);
+  --t-chrome-border-strong: rgba(180, 205, 192, 0.34);
+  --t-chrome-ink: rgba(243, 250, 246, 0.94);
+  --t-chrome-ink-secondary: rgba(238, 248, 243, 0.72);
+  --t-chrome-ink-muted: rgba(228, 240, 234, 0.48);
+
+  /* What marks a control as the chosen one. */
+  --t-marking: #ffffff;
+  --t-marking-soft: rgba(255, 255, 255, 0.16);
+  --t-marking-ink: #1d1d1f;
+
+  --ds-bg: var(--t-chrome-glass);
+  --ds-sidebar-bg: var(--t-sidebar-glass);
+  --ds-blur: var(--t-glass-blur);
+  --ds-border: var(--t-chrome-border);
+  --ds-border-spec: 1px solid var(--t-chrome-border);
+  --ds-shadow: none;
+  --ds-text: var(--t-chrome-ink);
+  --ds-text-muted: var(--t-chrome-ink-muted);
+  --ds-active-bg: var(--t-marking-soft);
+  --ds-active-border: var(--t-marking);
+  --ds-hover-bg: var(--t-chrome-hover);
+  --ds-divider: var(--t-chrome-border);
+  --ds-radius: var(--t-radius-panel);
+  --ds-transition: var(--t-motion);
+}
+
+/* =============================================================
+   THE FORM LAYER
+   Same idea for the shared fields, so a migrated screen follows
+   the theme without being touched again.
+============================================================= */
+
+:root {
+  --sf-primary: var(--t-ink);
+  --sf-secondary: var(--t-ink-secondary);
+  --sf-muted: var(--t-ink-muted);
+  --sf-border: var(--t-border);
+  --sf-surface: var(--t-surface);
+  --sf-sunk: var(--t-surface-sunk);
+  --sf-danger: var(--t-danger);
+  --sf-danger-bg: var(--t-danger-soft);
+  --sf-amber: var(--t-warning);
+  --sf-radius: var(--t-radius-control);
+}
+
+/* Artwork uploaded with a white background keeps a light pad under
+   it, so the evening theme does not turn every partner logo into a
+   glowing rectangle. */
+.t-media,
+.ca-preview-media,
+.ca-icon-img {
+  background: var(--t-media-pad);
+  border-radius: var(--t-radius-control);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-motion: 0s;
+    --t-motion-fast: 0s;
+    --ds-transition: 0s;
+  }
+}
