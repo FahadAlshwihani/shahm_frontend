@@ -5,14 +5,10 @@ import { useEffect } from "react";
 import AppRouter from "./router/AppRouter";
 import { Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useAuthStore } from "./store/useAuthStore";
-import { startIdleTimer, stopIdleTimer } from "./utils/idleSessionManager";
 import { usePublicStore } from "./store/usePublicStore";
 
 function App() {
   const { i18n } = useTranslation();
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const logout = useAuthStore((s) => s.logout);
   const initializePublicData = usePublicStore(
     (s) => s.initialize
   );
@@ -26,16 +22,6 @@ function App() {
     document.body.classList.remove("rtl", "ltr");
     document.body.classList.add(dir);
   }, [i18n.language]);
-
-  /* ================= Idle logout ================= */
-  useEffect(() => {
-    if (isAuthenticated) {
-      startIdleTimer(() => { logout(); });
-    } else {
-      stopIdleTimer();
-    }
-    return () => { stopIdleTimer(); };
-  }, [isAuthenticated, logout]);
 
   useEffect(() => {
     initializePublicData();
