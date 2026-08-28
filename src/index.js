@@ -4,7 +4,13 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import "./i18n";
+import { initAccent } from "./utils/accent";
+import { initTheme } from "./utils/theme";
 
+// Stamped before the first paint, so the page never shows one appearance and
+// then corrects itself.
+initTheme();
+initAccent();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -3,6 +3,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { useTranslation } from "react-i18next";
+import ThemeToggle from "../../common/ThemeToggle";
 import "../../../styles/layout/dashboard/navbar.css";
 
 import enLogo from "../../../assets/images/logo/en-logo.png";
@@ -67,8 +68,10 @@ export default function DashboardNavbar() {
         <span className="dashboard-navbar-title">{pageTitle}</span>
       </div>
 
-      {/* ── End: user block ── */}
+      {/* ── End: appearance + user block ── */}
       <div className="dashboard-navbar-end">
+        <ThemeToggle />
+
         <div className="dashboard-navbar-user">
           <div className="dashboard-navbar-user-avatar">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">

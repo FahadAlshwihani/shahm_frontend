@@ -2972,5 +2972,24 @@
     "draft_found": "لديك تعديل لم يحفظ",
     "draft_restore": "استعده",
     "draft_discard": "احذفه"
+  },
+  "theme": {
+    "label": "المظهر",
+    "light": "نهار",
+    "dark": "مساء",
+    "system": "النظام",
+    "section_title": "المظهر",
+    "section_note": "يحفظ في هذا المتصفح وحده، ولا يرسل الى الخادم.",
+    "accent": "لون التمييز",
+    "accents": {
+      "blue": "ازرق",
+      "purple": "بنفسجي",
+      "pink": "وردي",
+      "red": "احمر",
+      "orange": "برتقالي",
+      "yellow": "اصفر",
+      "green": "اخضر",
+      "graphite": "رصاصي"
+    }
   }
 }
