@@ -5,8 +5,8 @@
    ============================================================ */
 /* ── CSS Variables ─────────────────────────────────────────── */
 .blog-page {
-  --blog-font-display-en: "Ciclo Display", serif;
-  --blog-font-display-ar: "HT Sonata", serif;
+  --blog-font-display-en: "Noto Kufi Arabic", sans-serif;
+  --blog-font-display-ar: "Noto Kufi Arabic", sans-serif;
   --blog-font-body: "Noto Kufi Arabic", sans-serif;
   /* Hero palette */
   --blog-hero-bg: #1c2121;

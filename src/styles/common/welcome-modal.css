@@ -6,8 +6,8 @@
 
 .wlc-modal {
   /* Font tokens */
-  --wlc-font-display-ar: "HT Sonata", serif;
-  --wlc-font-display-en: "Ciclo Display", serif;
+  --wlc-font-display-ar: "Noto Kufi Arabic", sans-serif;
+  --wlc-font-display-en: "Noto Kufi Arabic", sans-serif;
   --wlc-font-body:       "Noto Kufi Arabic", sans-serif;
 
   /* Palette */

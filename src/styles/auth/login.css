@@ -136,7 +136,7 @@
 
 .sh-login-title {
   /* Same weight/size as .dashboard-navbar-title */
-  font-family: var(--font-en-heading, "Ciclo Display", serif);
+  font-family: var(--font-en-heading, "Noto Kufi Arabic", sans-serif);
   font-size: 22px;
   font-weight: 700;
   line-height: 32px;
@@ -146,7 +146,7 @@
 }
 
 [dir="rtl"] .sh-login-title {
-  font-family: var(--font-ar-heading, "HT Sonata", serif);
+  font-family: var(--font-ar-heading, "Noto Kufi Arabic", sans-serif);
 }
 
 .sh-login-desc {
