@@ -10,8 +10,8 @@
 /* ── CSS Variables ─────────────────────────────────────────── */
 .srv-page {
   /* Typography — matches project design system */
-  --srv-font-display-en: "Ciclo Display", serif;
-  --srv-font-display-ar: "HT Sonata", serif;
+  --srv-font-display-en: "Noto Kufi Arabic", sans-serif;
+  --srv-font-display-ar: "Noto Kufi Arabic", sans-serif;
   --srv-font-body: "Noto Kufi Arabic", sans-serif;
 
   /* Palette */

@@ -1,0 +1,55 @@
+/* The appearance control in the dashboard chrome. */
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--t-chrome-border);
+  border-radius: var(--t-radius-pill);
+  background: var(--t-chrome-hover);
+}
+
+.theme-toggle__option {
+  font: inherit;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--t-radius-pill);
+  background: transparent;
+  color: var(--t-chrome-ink-muted);
+  cursor: pointer;
+  transition: background var(--t-motion-fast), color var(--t-motion-fast);
+}
+
+.theme-toggle__option:hover { color: var(--t-chrome-ink); }
+
+.theme-toggle__option--on {
+  background: transparent;
+  color: var(--t-chrome-ink);
+  box-shadow: var(--t-ring);
+}
+
+.theme-toggle__option:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+}
+
+/* On a narrow chrome the labels go and the icons carry the control. */
+@media (max-width: 1100px) {
+  .theme-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .theme-toggle__option { padding: 6px 8px; }
+}

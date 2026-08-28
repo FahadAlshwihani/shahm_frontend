@@ -1,0 +1,269 @@
+/* ============================================================
+   CMS FORM LAYER — scoped under .sf-*
+   ============================================================
+
+   The shared field, save bar and draft notice used by dashboard content
+   screens. Every value is read from an --sf-* token defined on :root, so a
+   screen hands the layer its own palette by redefining the tokens on its own
+   container instead of restyling the controls:
+
+     .ca-root { --sf-border: var(--ca-border); }
+
+   The defaults below match the dashboard as it stands today, so a screen that
+   maps nothing still looks native.
+============================================================ */
+
+:root {
+  --sf-primary: #353c3c;
+  --sf-secondary: #7c8d8d;
+  --sf-muted: #97a5a5;
+  --sf-border: #e9ecec;
+  --sf-surface: #ffffff;
+  --sf-sunk: #f7f8f9;
+  --sf-danger: #ef4444;
+  --sf-danger-bg: rgba(239, 68, 68, 0.09);
+  --sf-amber: #f59e0b;
+  --sf-radius: var(--t-radius-control);
+  --sf-font: var(--font-content, "Noto Kufi Arabic", sans-serif);
+  --sf-transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sf-field,
+.sf-savebar,
+.sf-draft {
+  font-family: var(--sf-font);
+}
+
+/* ── field ───────────────────────────────────────────────── */
+
+.sf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.sf-field__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 26px;
+}
+
+.sf-field__label {
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
+  color: var(--sf-secondary);
+}
+
+.sf-field__required {
+  color: var(--sf-danger);
+  margin-inline-start: 3px;
+}
+
+.sf-control {
+  width: 100%;
+  height: var(--t-control-h-lg);
+  padding: 0 12px;
+  border: 1.5px solid var(--sf-border);
+  border-radius: var(--sf-radius);
+  font-family: inherit;
+  font-size: var(--t-text-base);
+  color: var(--sf-primary);
+  background: var(--sf-surface);
+  box-sizing: border-box;
+  transition: border-color var(--sf-transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.sf-control--area {
+  height: auto;
+  min-height: 90px;
+  padding: 12px 14px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.sf-control:focus {
+  outline: 2px solid var(--sf-primary);
+  outline-offset: 2px;
+  border-color: var(--sf-primary);
+}
+
+.sf-control::placeholder { color: var(--sf-muted); }
+
+.sf-control:disabled {
+  background: var(--sf-sunk);
+  color: var(--sf-muted);
+  cursor: not-allowed;
+}
+
+.sf-field--invalid .sf-control {
+  border-color: var(--sf-danger);
+  background: var(--sf-danger-bg);
+}
+
+/* ── language switch ─────────────────────────────────────── */
+
+.sf-tabs {
+  display: inline-flex;
+  border: 1px solid var(--sf-border);
+  border-radius: var(--t-radius-small);
+  overflow: hidden;
+  flex: none;
+}
+
+.sf-tab {
+  font: inherit;
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
+  line-height: 1;
+  padding: 6px 12px;
+  border: 0;
+  background: var(--sf-surface);
+  color: var(--sf-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background var(--sf-transition), color var(--sf-transition);
+}
+
+.sf-tab + .sf-tab { border-inline-start: 1px solid var(--sf-border); }
+
+.sf-tab:hover { color: var(--sf-primary); }
+
+.sf-tab--active {
+  background: var(--sf-primary);
+  color: #ffffff;
+}
+
+.sf-tab:focus-visible {
+  outline: 2px solid var(--sf-primary);
+  outline-offset: -2px;
+}
+
+.sf-tab__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sf-amber);
+  display: inline-block;
+}
+
+.sf-tab--active .sf-tab__dot { background: #ffffff; }
+
+.sf-tab__dot--error { background: var(--sf-danger); }
+.sf-tab--active .sf-tab__dot--error { background: #ffffff; }
+.sf-tab--rejected { color: var(--sf-danger); }
+.sf-tab--rejected.sf-tab--active { background: var(--sf-danger); color: #ffffff; }
+
+/* ── field footer ────────────────────────────────────────── */
+
+.sf-field__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 16px;
+}
+
+.sf-field__hint,
+.sf-field__error {
+  font-size: var(--t-text-xs);
+  line-height: var(--t-leading);
+}
+
+.sf-field__hint { color: var(--sf-muted); }
+.sf-field__error { color: var(--sf-danger); font-weight: 600; }
+
+.sf-field__action {
+  font: inherit;
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
+  color: var(--sf-primary);
+  background: none;
+  border: 0;
+  border-block-end: 1px solid currentColor;
+  padding: 0 0 1px;
+  cursor: pointer;
+  flex: none;
+}
+
+.sf-field__action:focus-visible {
+  outline: 2px solid var(--sf-primary);
+  outline-offset: 2px;
+}
+
+/* ── save bar ────────────────────────────────────────────── */
+
+.sf-savebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-block-start: 12px;
+  border-block-start: 1px solid var(--sf-border);
+}
+
+.sf-savebar__state { font-size: 12px; }
+.sf-savebar__dirty { color: var(--sf-amber); font-weight: 600; }
+.sf-savebar__clean { color: var(--sf-muted); }
+.sf-savebar__error { color: var(--sf-danger); font-weight: 600; }
+
+.sf-savebar__actions { display: flex; align-items: center; gap: 10px; }
+
+.sf-btn {
+  font: inherit;
+  font-size: var(--t-text-base);
+  font-weight: var(--t-weight-medium);
+  height: var(--t-control-h-lg);
+  padding: 0 18px;
+  border-radius: var(--sf-radius);
+  border: 1.5px solid var(--sf-primary);
+  background: var(--sf-primary);
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity var(--sf-transition);
+}
+
+.sf-btn:hover:not(:disabled) { opacity: 0.88; }
+
+.sf-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.sf-btn:focus-visible { outline: 2px solid var(--sf-primary); outline-offset: 2px; }
+
+.sf-btn--quiet {
+  background: var(--sf-surface);
+  color: var(--sf-primary);
+  border-color: var(--sf-border);
+}
+
+.sf-btn--small { height: var(--t-control-h); padding: 0 14px; font-size: var(--t-text-sm); }
+
+/* ── draft notice ────────────────────────────────────────── */
+
+.sf-draft {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--sf-amber);
+  border-radius: var(--sf-radius);
+  background: rgba(245, 158, 11, 0.08);
+  font-size: var(--t-text-base);
+  color: var(--sf-primary);
+}
+
+.sf-draft__stamp { color: var(--sf-secondary); margin-inline-start: 8px; font-size: 12px; }
+.sf-draft__actions { display: flex; gap: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-control,
+  .sf-tab,
+  .sf-btn { transition: none; }
+}
