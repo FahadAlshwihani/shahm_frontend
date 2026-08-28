@@ -71,19 +71,60 @@
   --t-info: #0071e3;
   --t-info-soft: rgba(0, 122, 255, 0.12);
 
-  /* ── Elevation ───────────────────────────────────────────── */
-  --t-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -16px rgba(0, 0, 0, 0.18);
-  --t-shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.06), 0 18px 44px -22px rgba(0, 0, 0, 0.26);
-  --t-shadow-chrome: 0 1px 0 rgba(0, 0, 0, 0.04), 0 12px 40px -24px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 var(--t-glass-highlight);
+  /* ── Elevation ───────────────────────────────────────────────
+     There is no drop shadow anywhere. A surface is told apart from the
+     one behind it by a hairline and by the glass, not by a cast shadow.
+     The tokens stay so call sites keep working. */
+  --t-shadow-card: none;
+  --t-shadow-raised: none;
+  --t-shadow-chrome: none;
 
-  /* ── Geometry and motion ─────────────────────────────────── */
-  --t-radius-panel: 18px;
-  --t-radius-card: 14px;
+  /* ── Type ────────────────────────────────────────────────────
+     One scale for the whole interface. Arabic in this face runs larger
+     than a Latin face at the same size, so the steps sit lower than a
+     Latin scale would.
+
+     Two rules hold everywhere: no letter-spacing, because Arabic is a
+     joined script and spacing pulls the letters of a word apart; and no
+     uppercase, which does nothing to Arabic and shouts in Latin. */
+  --t-text-2xs: 10.5px;
+  --t-text-xs: 11.5px;
+  --t-text-sm: 12.5px;
+  --t-text-base: 13.5px;
+  --t-text-md: 15px;
+  --t-text-lg: 17px;
+  --t-text-xl: 20px;
+
+  --t-weight-regular: 400;
+  --t-weight-medium: 500;
+  --t-weight-semibold: 600;
+
+  --t-leading-tight: 1.35;
+  --t-leading: 1.6;
+  --t-leading-loose: 1.8;
+
+  /* ── Shape ───────────────────────────────────────────────────
+     Four radii and three control heights, so a field, a button and a
+     pill in different corners of the dashboard are the same rectangle. */
+  --t-radius-panel: 22px;
+  --t-radius-card: 16px;
   --t-radius-control: 10px;
+  --t-radius-small: 8px;
   --t-radius-pill: 999px;
-  --t-motion: 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-  --t-motion-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --t-control-h: 32px;
+  --t-control-h-sm: 26px;
+  --t-control-h-lg: 38px;
+
+  /* What marks a thing as chosen: a ring, not a wash. A filled tint changes
+     the surface and takes the text's contrast with it; a ring leaves the card
+     exactly as it was and still reads across the page. */
+  --t-ring: inset 0 0 0 2px var(--t-marking);
+  --t-ring-thin: inset 0 0 0 1px var(--t-marking);
+
+  /* ── Motion ──────────────────────────────────────────────── */
+  --t-motion: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --t-motion-fast: 0.16s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* A pad behind uploaded artwork. Logos and partner marks are
      saved with white baked into them, so on the evening theme they
@@ -137,10 +178,6 @@
     --t-info: #0a84ff;
     --t-info-soft: rgba(10, 132, 255, 0.18);
 
-    --t-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 30px -18px rgba(0, 0, 0, 0.8);
-    --t-shadow-raised: 0 2px 8px rgba(0, 0, 0, 0.55), 0 24px 56px -26px rgba(0, 0, 0, 0.9);
-    --t-shadow-chrome: 0 8px 40px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 var(--t-glass-highlight);
 
     --t-media-pad: rgba(255, 255, 255, 0.92);
 
@@ -191,10 +228,6 @@
   --t-info: #0a84ff;
   --t-info-soft: rgba(10, 132, 255, 0.18);
 
-  --t-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 30px -18px rgba(0, 0, 0, 0.8);
-  --t-shadow-raised: 0 2px 8px rgba(0, 0, 0, 0.55), 0 24px 56px -26px rgba(0, 0, 0, 0.9);
-  --t-shadow-chrome: 0 8px 40px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 var(--t-glass-highlight);
 
   --t-media-pad: rgba(255, 255, 255, 0.92);
 
@@ -245,7 +278,7 @@
   --ds-blur: var(--t-glass-blur);
   --ds-border: var(--t-chrome-border);
   --ds-border-spec: 1px solid var(--t-chrome-border);
-  --ds-shadow: 0 8px 40px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --ds-shadow: none;
   --ds-text: var(--t-chrome-ink);
   --ds-text-muted: var(--t-chrome-ink-muted);
   --ds-active-bg: var(--t-marking-soft);

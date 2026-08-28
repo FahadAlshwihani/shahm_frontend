@@ -23,7 +23,7 @@
   --sf-danger: #ef4444;
   --sf-danger-bg: rgba(239, 68, 68, 0.09);
   --sf-amber: #f59e0b;
-  --sf-radius: 10px;
+  --sf-radius: var(--t-radius-control);
   --sf-font: var(--font-content, "Noto Kufi Arabic", sans-serif);
   --sf-transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -51,11 +51,9 @@
 }
 
 .sf-field__label {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: var(--t-text-sm);
+  font-weight: var(--t-weight-medium);
   color: var(--sf-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .sf-field__required {
@@ -65,12 +63,12 @@
 
 .sf-control {
   width: 100%;
-  height: 44px;
-  padding: 0 14px;
+  height: var(--t-control-h-lg);
+  padding: 0 12px;
   border: 1.5px solid var(--sf-border);
   border-radius: var(--sf-radius);
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--t-text-base);
   color: var(--sf-primary);
   background: var(--sf-surface);
   box-sizing: border-box;
@@ -111,15 +109,15 @@
 .sf-tabs {
   display: inline-flex;
   border: 1px solid var(--sf-border);
-  border-radius: 8px;
+  border-radius: var(--t-radius-small);
   overflow: hidden;
   flex: none;
 }
 
 .sf-tab {
   font: inherit;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
   line-height: 1;
   padding: 6px 12px;
   border: 0;
@@ -173,8 +171,8 @@
 
 .sf-field__hint,
 .sf-field__error {
-  font-size: 11.5px;
-  line-height: 1.6;
+  font-size: var(--t-text-xs);
+  line-height: var(--t-leading);
 }
 
 .sf-field__hint { color: var(--sf-muted); }
@@ -182,8 +180,8 @@
 
 .sf-field__action {
   font: inherit;
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: var(--t-text-xs);
+  font-weight: var(--t-weight-medium);
   color: var(--sf-primary);
   background: none;
   border: 0;
@@ -219,10 +217,10 @@
 
 .sf-btn {
   font: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  height: 40px;
-  padding: 0 20px;
+  font-size: var(--t-text-base);
+  font-weight: var(--t-weight-medium);
+  height: var(--t-control-h-lg);
+  padding: 0 18px;
   border-radius: var(--sf-radius);
   border: 1.5px solid var(--sf-primary);
   background: var(--sf-primary);
@@ -243,7 +241,7 @@
   border-color: var(--sf-border);
 }
 
-.sf-btn--small { height: 32px; padding: 0 14px; font-size: 12px; }
+.sf-btn--small { height: var(--t-control-h); padding: 0 14px; font-size: var(--t-text-sm); }
 
 /* ── draft notice ────────────────────────────────────────── */
 
@@ -257,7 +255,7 @@
   border: 1.5px solid var(--sf-amber);
   border-radius: var(--sf-radius);
   background: rgba(245, 158, 11, 0.08);
-  font-size: 13px;
+  font-size: var(--t-text-base);
   color: var(--sf-primary);
 }
 

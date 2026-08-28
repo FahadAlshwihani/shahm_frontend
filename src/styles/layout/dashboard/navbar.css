@@ -18,22 +18,10 @@
   z-index: 100;        /* sidebar z-index:1000 sits above */
   color: var(--ds-text, var(--t-chrome-ink));
   box-shadow: none;    /* no shadow */
-  animation: glassIn 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) both;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-/* Grain */
-.dashboard-navbar::after {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: 0.3;
-  mix-blend-mode: overlay;
-  z-index: 0;
-}
 .dashboard-navbar > * { position: relative; z-index: 1; }
 
 /* ── Start: logo ── */
@@ -68,10 +56,9 @@
 
 .dashboard-navbar-title {
   font-family: var(--font-ar-heading, inherit);
-  font-size: 15px;
-  font-weight: 700;
+  font-size: var(--t-text-md);
+  font-weight: var(--t-weight-semibold);
   color: var(--ds-text, var(--t-chrome-ink));
-  letter-spacing: 0.01em;
   white-space: nowrap;
 }
 
@@ -92,7 +79,7 @@
   padding: 6px 14px 6px 8px;
   background: var(--t-chrome-hover);
   border: 1px solid var(--ds-border, var(--t-chrome-border));
-  border-radius: 12px;
+  border-radius: var(--t-radius-panel);
   cursor: default;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
@@ -109,7 +96,7 @@
   width: 32px;
   height: 32px;
   background: var(--t-chrome-active);
-  border-radius: 9px;
+  border-radius: var(--t-radius-control);
   color: var(--t-chrome-ink-secondary);
   flex-shrink: 0;
 }
@@ -122,18 +109,16 @@
 
 .dashboard-navbar-user-greeting {
   font-family: var(--font-content, inherit);
-  font-size: 10px;
+  font-size: var(--t-text-2xs);
   color: var(--ds-text-muted, var(--t-chrome-ink-muted));
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-weight: var(--t-weight-medium);
 }
 
 .dashboard-navbar-user-name {
   font-family: var(--font-content, inherit);
-  font-size: 13px;
+  font-size: var(--t-text-base);
   color: var(--ds-text, var(--t-chrome-ink));
-  font-weight: 600;
+  font-weight: var(--t-weight-semibold);
   line-height: 1;
   white-space: nowrap;
 }
@@ -150,7 +135,7 @@
 @media (max-width: 480px) {
   .dashboard-navbar { padding: 0 14px; height: 56px; }
   .dashboard-navbar-logo-img { height: 22px; }
-  .dashboard-navbar-title { font-size: 13px; }
+  .dashboard-navbar-title { font-size: var(--t-text-base); }
 }
 
 /* ==========================================
